@@ -1,2 +1,3 @@
-rootProject.name = 'kurswahlApp2'
+rootProject.name = 'kurswahlApp'
+include 'app'
 
