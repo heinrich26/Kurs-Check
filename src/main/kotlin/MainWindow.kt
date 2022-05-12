@@ -40,7 +40,7 @@ class GridLayoutDemo(name: String?) : JFrame(name) {
     var horGapComboBox: JComboBox<*>? = null
     var verGapComboBox: JComboBox<*>? = null
     var applyButton = JButton("Apply gaps")
-    var experimentLayout = GridLayout(0, 2)
+    var experimentLayout = GridBagLayout()
 
     init {
         isResizable = false
@@ -69,9 +69,13 @@ class GridLayoutDemo(name: String?) : JFrame(name) {
         //Add buttons to experiment with Grid Layout
         compsToExperiment.add(JLabel("KurswahlApp"))
         compsToExperiment.add(JButton("Button 1"))
-        compsToExperiment.add(JButton("Button 2"))
-        compsToExperiment.add(JButton("Button 3"))
-        compsToExperiment.add(JButton("Long-Named Button 4"), GridBagConstraints().apply { this.gridwidth = 2 })
+        compsToExperiment.add(JButton("Button 2"), GridBagConstraints().apply { this.gridx = 0
+        this.gridy=1})
+        compsToExperiment.add(JButton("Button 3"), GridBagConstraints().apply { this.gridx = 0
+        this.gridy=2})
+        compsToExperiment.add(JButton("Long-Named Button 4"), GridBagConstraints().apply { this.gridy = 2
+            this.gridx = 0
+            this.gridwidth = 2 })
         compsToExperiment.add(JButton("5"))
 
         //Add controls to set up horizontal and vertical gaps
