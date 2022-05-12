@@ -2,6 +2,9 @@
 
 import data.KurswahlData
 import javax.swing.JFrame
+import javax.swing.SwingUtilities
+import javax.swing.UIManager
+import javax.swing.UnsupportedLookAndFeelException
 
 fun setupApp(): JFrame {
     val frame = JFrame("kurswahlApp")
@@ -17,6 +20,6 @@ fun setupApp(): JFrame {
 
 fun main(args: Array<String>) {
     val data = KurswahlData()
-    data.pf3 = Fach("Französisch", "F", 2)
+    data.pf3 = Fach("Französisch", "F", 2, true)
     val frame = setupApp()
 }

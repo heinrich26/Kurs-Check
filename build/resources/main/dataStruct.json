@@ -1,0 +1,43 @@
+{
+	"availableCourses": {
+		"Informatik": {
+			"kürzel": "Inf",
+			"aufgabenfeld": 2
+		},
+		"Deutsch": {
+			"kürzel": "De",
+			"aufgabenfeld": 1
+		},
+		"Physik": {
+			"kürzel": "Ph",
+			"aufgabenfeld": 2
+		},
+		"Chemie": {
+			"kürzel": "Ch",
+			"aufgabenfeld": 2
+		},
+		"Biologie": {
+			"kürzel": "Bi",
+			"aufgabenfeld": 2
+		}
+	},
+	"aufgabenfelder": {
+		"naturwissenschaften": ["Physik", "Chemie", "Biologie"],
+		"sozialwissenschaften": ["Geschichte", "Erdkunde", "Politik", "Philosophie"],
+		"sprachen": ["Deutsch", "Französisch", "Spanisch"],
+		"künste": ["Musik", "Darstellendes Spiel", "Kunst"]
+	},
+	"regeln": {
+		"required": [
+			{
+				"fächer": [
+					"Physik",
+					"Chemie",
+					"Biologie"
+				],
+				"anzahl": 4
+			},
+			{}
+		]
+	}
+}
