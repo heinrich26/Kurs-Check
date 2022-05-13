@@ -29,13 +29,12 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import data.FachData
+import data.Fach
 import data.KurswahlData
-import gui.RoundedBorder
+import data.Wahlmoeglichkeit
 import java.awt.*
 import javax.swing.*
 import kotlin.String
-import kotlin.arrayOf
 
 class MainScreen(name: String?) : JFrame(name) {
     var layout = GridBagLayout()
@@ -51,7 +50,8 @@ class MainScreen(name: String?) : JFrame(name) {
             lk2 = faecher[1]
             pf3 = faecher[2]
             pf4 = faecher[3]
-            pf5= faecher[4] })
+            pf5= faecher[4]
+            gks = faecher.map { it to Wahlmoeglichkeit.DRITTES_VIERTES }})
 
         val printButton = JButton("Drucken")
         val editButton = JButton("Wahl ändern")
@@ -95,7 +95,9 @@ class MainScreen(name: String?) : JFrame(name) {
             Fach("Mathe", "Ma", 2, true),
             Fach("Deutsch", "De", 1, true),
             Fach("Informatik", "Inf", 2, true),
-            Fach("Geographie", "Geo", 3, true)
+            Fach("Geographie", "Geo", 3, true),
+            Fach("Sport", "Sp", null, false),
+            Fach("Geschichte", "Ge", 3, true)
         )
 
         /**

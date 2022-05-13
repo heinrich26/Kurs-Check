@@ -1,7 +1,5 @@
 package data
 
-import Fach
-
 data class KurswahlData(
     var lk1: Fach?,
     var lk2: Fach?,

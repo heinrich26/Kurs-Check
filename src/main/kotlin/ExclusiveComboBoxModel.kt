@@ -1,3 +1,4 @@
+import data.Fach
 import javax.swing.ComboBoxModel
 import javax.swing.JComboBox
 import javax.swing.event.ListDataListener

@@ -1,7 +1,5 @@
 package data
 
-import Fach
-
 class FachData(
     val feacher: List<Fach>,
     val fremdsprachen: List<Fach>,
