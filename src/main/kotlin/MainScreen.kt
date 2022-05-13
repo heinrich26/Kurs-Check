@@ -97,6 +97,7 @@ class MainScreen(name: String?) : JFrame(name) {
             Fach("Informatik", "Inf", 2, true),
             Fach("Geographie", "Geo", 3, true)
         )
+
         /**
          * Create the GUI and show it.  For thread safety,
          * this method is invoked from the
