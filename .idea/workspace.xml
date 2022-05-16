@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="gitignore update">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/gui/kurswahlPanel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="abstrakte klasse hinzugefügt">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/MainScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/MainScreen.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/BaseDialog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/BaseDialog.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/fremdsprachen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/fremdsprachen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/fremdsprachen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/Fremdsprachen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/kurswahlPanel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/kurswahlPanel.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,7 +149,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652452695243</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="abstrakte klasse hinzugefügt">
+      <created>1652695266924</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1652695266924</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -174,6 +178,7 @@
     <MESSAGE value="anfang mit visualizer für kurswahl" />
     <MESSAGE value="reimpl. der fremdsprachen wahl" />
     <MESSAGE value="gitignore update" />
-    <option name="LAST_COMMIT_MESSAGE" value="gitignore update" />
+    <MESSAGE value="abstrakte klasse hinzugefügt" />
+    <option name="LAST_COMMIT_MESSAGE" value="abstrakte klasse hinzugefügt" />
   </component>
 </project>
