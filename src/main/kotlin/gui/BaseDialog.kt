@@ -14,6 +14,7 @@ class BaseDialog(wahlData: KurswahlData, fachData: FachData) : JDialog() {
     private lateinit var buttonBack: JButton
     private lateinit var buttonCancel: JButton
     private lateinit var buttonNext: JButton
+    private var panel: JPanel = Fremdsprachen()
 
     override fun getTitle(): String = "Base Dialog"
 

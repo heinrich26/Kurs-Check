@@ -46,12 +46,14 @@ class MainScreen(name: String?) : JFrame(name) {
     fun addComponentsToPane(pane: Container) {
         val panel = JPanel()
         panel.layout = layout
-        val overview = WahlVisualizer(KurswahlData().apply { lk1 = faecher[0]
+        val overview = WahlVisualizer(KurswahlData().apply {
+            lk1 = faecher[0]
             lk2 = faecher[1]
             pf3 = faecher[2]
             pf4 = faecher[3]
-            pf5= faecher[4]
-            gks = faecher.map { it to Wahlmoeglichkeit.DRITTES_VIERTES }})
+            pf5 = faecher[4]
+            gks = faecher.map { it to Wahlmoeglichkeit.DRITTES_VIERTES }
+        })
 
         val printButton = JButton("Drucken")
         val editButton = JButton("Wahl ändern")

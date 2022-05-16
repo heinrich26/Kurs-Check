@@ -6,10 +6,8 @@ import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.Insets
 import javax.swing.*
-import javax.swing.event.ListDataListener
 
-
-class Fremdsprachen : JPanel() {
+class Fremdsprachen() : JPanel() {
 
     companion object {
         @JvmStatic
@@ -85,10 +83,10 @@ class Fremdsprachen : JPanel() {
             add(JLabel("$i."), row = i, column = 0)
         }
 
-        add(fs1, row = 1, column = 1)
-        add(fs2, row = 2, column = 1)
-        add(fs3, row = 3, column = 1)
-        add(fs4, row = 4, column = 1)
+        add(fs1, row = 1, column = 1, fill=GridBagConstraints.BOTH)
+        add(fs2, row = 2, column = 1, fill=GridBagConstraints.BOTH)
+        add(fs3, row = 3, column = 1, fill=GridBagConstraints.BOTH)
+        add(fs4, row = 4, column = 1, fill=GridBagConstraints.BOTH)
 
 
         val wpf1 = JComboBox(choices)
@@ -103,8 +101,8 @@ class Fremdsprachen : JPanel() {
             } else wpf2.isEnabled = true
         }
 
-        add(wpf1, row = 6, column = 1)
-        add(wpf2, row = 7, column = 1)
-        add(checker, row = 7, column = 0)
+        add(wpf1, row = 6, column = 1, fill=GridBagConstraints.BOTH)
+        add(wpf2, row = 7, column = 1, fill=GridBagConstraints.BOTH)
+        add(checker, row = 7, column = 0, anchor = GridBagConstraints.EAST)
     }
 }
