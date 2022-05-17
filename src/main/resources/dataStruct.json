@@ -1,33 +1,143 @@
 {
 	"availableCourses": {
-		"Inf": {
-			"name": "Informatik",
-			"kürzel": "Inf",
+		"De": {
+			"name": "Deutsch",
+			"kürzel": "De",
+			"aufgabenfeld": 1,
+			"lk": true
+		},
+		"En": {
+			"name": "Englisch",
+			"kürzel": "En",
+			"aufgabenfeld": 1,
+			"lk": true
+		},
+		"Spa": {
+			"name": "Spanisch",
+			"kürzel": "Spa",
+			"aufgabenfeld": 1,
+			"lk": true
+		},
+		"Fr": {
+			"name": "Französisch",
+			"kürzel": "Fr",
+			"aufgabenfeld": 1,
+			"lk": false
+		},
+		"Lat": {
+			"name": "Latein",
+			"kürzel": "Lat",
+			"aufgabenfeld": 1,
+			"lk": false
+		},
+		"Ku": {
+			"name": "Kunst",
+			"kürzel": "Ku",
+			"aufgabenfeld": 1,
+			"lk": true
+		},
+		"Mu": {
+			"name": "Musik",
+			"kürzel": "Mu",
+			"aufgabenfeld": 1,
+			"lk": false
+		},
+		"DS": {
+			"name": "Darstellendes Spiel",
+			"kürzel": "DS",
+			"aufgabenfeld": 1,
+			"lk": false
+		},
+		"Ge": {
+			"name": "Geschichte",
+			"kürzel": "Ge",
 			"aufgabenfeld": 2,
 			"lk": true
 		},
-		"De": {
-			"kürzel": "De",
-			"aufgabenfeld": 1
+		"PW": {
+			"name": "Politikwissenschaft",
+			"kürzel": "PW",
+			"aufgabenfeld": 2,
+			"lk": true
 		},
-		"Ph": {
-			"kürzel": "Ph",
-			"aufgabenfeld": 2
+		"Geo": {
+			"name": "Geografie",
+			"kürzel": "Geo",
+			"aufgabenfeld": 2,
+			"lk": true
 		},
-		"Ch": {
-			"kürzel": "Ch",
-			"aufgabenfeld": 2
+		"Ma": {
+			"name": "Mathematik",
+			"kürzel": "Ma",
+			"aufgabenfeld": 3,
+			"lk": true
 		},
-		"Bi": {
-			"kürzel": "Bi",
-			"aufgabenfeld": 2
+		"Phy": {
+			"name": "Physik",
+			"kürzel": "Phy",
+			"aufgabenfeld": 3,
+			"lk": true
+		},
+		"Che": {
+			"name": "Chemie",
+			"kürzel": "Che",
+			"aufgabenfeld": 3,
+			"lk": true
+		},
+		"Bio": {
+			"name": "Biologie",
+			"kürzel": "Bio",
+			"aufgabenfeld": 3,
+			"lk": true
+		},
+		"Inf": {
+			"name": "Informatik",
+			"kürzel": "Inf",
+			"aufgabenfeld": 3,
+			"lk": true
+		},
+		"SuB": {
+			"name": "Studium und Beruf",
+			"kürzel": "SuB",
+			"aufgabenfeld": 0,
+			"lk": false
+		},
+		"ED": {
+			"name": "Englisch Debating",
+			"kürzel": "ED",
+			"aufgabenfeld": 0,
+			"lk": false
+		},
+		"Psy": {
+			"name": "Psychologie",
+			"kürzel": "Psy",
+			"aufgabenfeld": 0,
+			"lk": false
+		},
+		"Med": {
+			"name": "Medizin",
+			"kürzel": "Med",
+			"aufgabenfeld": 0,
+			"lk": false
+		},
+		"Sp": {
+			"name": "Sport",
+			"kürzel": "Sp",
+			"aufgabenfeld": 0,
+			"lk": false
+		},
+		"SpT": {
+			"name": "Sport Theorie",
+			"kürzel": "SpT",
+			"aufgabenfeld": 0,
+			"lk": false
 		}
 	},
 	"aufgabenfelder": {
-		"naturwissenschaften": ["Physik", "Chemie", "Biologie"],
-		"sozialwissenschaften": ["Geschichte", "Erdkunde", "Politik", "Philosophie"],
-		"sprachen": ["Deutsch", "Französisch", "Spanisch"],
-		"künste": ["Musik", "Darstellendes Spiel", "Kunst"]
+		"0": ["Studium und Beruf","Englisch Debating","Psychologie","Medizin","Sport","Sport Theorie"],
+		"1": ["Deutsch","Englisch", "Spanisch","Französisch","Latein","Kunst","Musik","Darstellendes Spiel"],
+		"2": ["Geschichte", "Politikwissenschft", "Geografie"],
+		"3": ["Mathematik", "Physik", "Chemie","Biologie","Informatik"]
 	},
 	"regeln": {
 		"required": [
