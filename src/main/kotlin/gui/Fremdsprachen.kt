@@ -2,30 +2,24 @@ package gui
 
 import ExclusiveComboBoxModel
 import add
+import data.Fach
+import data.FachData
+import data.KurswahlData
+import testFachdata
+import testKurswahl
+import java.awt.Component
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.Insets
 import javax.swing.*
 
-class Fremdsprachen() : JPanel() {
+
+class Fremdsprachen(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(wahlData, fachData) {
 
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
-            try {
-                UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel")
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-            }
-
-            val panel = Fremdsprachen()
-            val frame = JFrame("Fremdsprachen")
-            frame.contentPane = panel
-
-            frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-            frame.setSize(300, 300)
-            frame.setLocation(430, 100)
-            frame.isVisible = true
+            runTest(Fremdsprachen(testKurswahl, testFachdata))
         }
 
         val choices = arrayOf(
@@ -65,23 +59,44 @@ class Fremdsprachen() : JPanel() {
         add(JSpinner(value3), row = 3, column = 3)
         add(JSpinner(value4), row = 4, column = 3)
 
-        val model1 = ExclusiveComboBoxModel(MainScreen.faecher, emptyArray())
+        val model1 = ExclusiveComboBoxModel(fachData.fremdsprachen, emptyArray())
         val fs1 = JComboBox(model1)
 
-        val model2 = ExclusiveComboBoxModel(MainScreen.faecher, arrayOf(fs1))
+        val model2 = ExclusiveComboBoxModel(fachData.fremdsprachen, arrayOf(fs1))
         val fs2 = JComboBox(model2)
 
-        val model3 = ExclusiveComboBoxModel(MainScreen.faecher, arrayOf(fs1, fs2))
+        val model3 = ExclusiveComboBoxModel(fachData.fremdsprachen, arrayOf(fs1, fs2))
         val fs3 = JComboBox(model3)
 
-        val model4 = ExclusiveComboBoxModel(MainScreen.faecher, arrayOf(fs1, fs2, fs3))
+        val model4 = ExclusiveComboBoxModel(fachData.fremdsprachen, arrayOf(fs1, fs2, fs3))
         val fs4 = JComboBox(model4)
 
-        fs3.selectedIndex = 2
+//        fs3.selectedIndex = 2
 
         for (i in 1..4) {
             add(JLabel("$i."), row = i, column = 0)
         }
+
+        val renderer = object: DefaultListCellRenderer() {
+            override fun getListCellRendererComponent(
+                list: JList<*>?,
+                value: Any?,
+                index: Int,
+                isSelected: Boolean,
+                cellHasFocus: Boolean
+            ): Component? = super.getListCellRendererComponent(
+                    list,
+                    if (value is Fach) value.name else "Ungesetzt",
+                    index,
+                    isSelected,
+                    cellHasFocus
+                ) //To change body of generated methods, choose Tools | Templates.
+        }
+
+        fs1.renderer = renderer
+        fs2.renderer = renderer
+        fs3.renderer = renderer
+        fs4.renderer = renderer
 
         add(fs1, row = 1, column = 1, fill=GridBagConstraints.BOTH)
         add(fs2, row = 2, column = 1, fill=GridBagConstraints.BOTH)
@@ -105,4 +120,11 @@ class Fremdsprachen() : JPanel() {
         add(wpf2, row = 7, column = 1, fill=GridBagConstraints.BOTH)
         add(checker, row = 7, column = 0, anchor = GridBagConstraints.EAST)
     }
+
+    override fun close(): KurswahlData {
+        TODO("Not yet implemented")
+    }
+
+    override val windowName: String
+        get() = TODO("Not yet implemented")
 }

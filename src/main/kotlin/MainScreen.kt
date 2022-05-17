@@ -92,16 +92,6 @@ class MainScreen(name: String?) : JFrame(name) {
     }
 
     companion object {
-        val faecher = listOf(
-            Fach("Englisch", "E", 1, true),
-            Fach("Mathe", "Ma", 2, true),
-            Fach("Deutsch", "De", 1, true),
-            Fach("Informatik", "Inf", 2, true),
-            Fach("Geographie", "Geo", 3, true),
-            Fach("Sport", "Sp", null, false),
-            Fach("Geschichte", "Ge", 3, true)
-        )
-
         /**
          * Create the GUI and show it.  For thread safety,
          * this method is invoked from the

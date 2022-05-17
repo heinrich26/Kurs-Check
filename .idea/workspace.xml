@@ -5,7 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="abstrakte klasse hinzugefügt">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/TestData.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/WahlzeileLinientyp.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ExclusiveComboBoxModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ExclusiveComboBoxModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/MainScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/MainScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/Fremdsprachen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/Fremdsprachen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/kurswahlPanel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/KurswahlPanel.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/dataStruct.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dataStruct.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,6 +43,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin Class" />
+        <option value="Kotlin Enum" />
       </list>
     </option>
   </component>
@@ -155,7 +162,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652695266924</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="abstrakte klasse hinzugefügt">
+      <created>1652774721624</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1652774721624</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

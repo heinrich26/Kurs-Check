@@ -11,16 +11,15 @@ abstract class KurswahlPanel(val wahlData: KurswahlData, val fachData: FachData)
 
     abstract val windowName: String
 
-    companion object {
+    companion object comp {
         @JvmStatic
-        fun main(args: Array<String>) {
+        fun runTest(panel: KurswahlPanel) {
             try {
                 UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel")
             } catch (ex: Exception) {
                 ex.printStackTrace()
             }
 
-            val panel = JPanel()
             val frame = JFrame()
             frame.contentPane = panel
 
