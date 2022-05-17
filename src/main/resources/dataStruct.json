@@ -1,33 +1,143 @@
 {
 	"availableCourses": {
-		"Inf": {
-			"name": "Informatik",
-			"kürzel": "Inf",
+		"De": {
+			"name": "Deutsch",
+			"kürzel": "De",
+			"aufgabenfeld": 1,
+			"lk": true
+		},
+		"En": {
+			"name": "Englisch",
+			"kürzel": "En",
+			"aufgabenfeld": 1,
+			"lk": true
+		},
+		"Spa": {
+			"name": "Spanisch",
+			"kürzel": "Spa",
+			"aufgabenfeld": 1,
+			"lk": true
+		},
+		"Fr": {
+			"name": "Französisch",
+			"kürzel": "Fr",
+			"aufgabenfeld": 1,
+			"lk": false
+		},
+		"Lat": {
+			"name": "Latein",
+			"kürzel": "Lat",
+			"aufgabenfeld": 1,
+			"lk": false
+		},
+		"Ku": {
+			"name": "Kunst",
+			"kürzel": "Ku",
+			"aufgabenfeld": 1,
+			"lk": true
+		},
+		"Mu": {
+			"name": "Musik",
+			"kürzel": "Mu",
+			"aufgabenfeld": 1,
+			"lk": false
+		},
+		"DS": {
+			"name": "Darstellendes Spiel",
+			"kürzel": "DS",
+			"aufgabenfeld": 1,
+			"lk": false
+		},
+		"Ge": {
+			"name": "Geschichte",
+			"kürzel": "Ge",
 			"aufgabenfeld": 2,
 			"lk": true
 		},
-		"De": {
-			"kürzel": "De",
-			"aufgabenfeld": 1
+		"PW": {
+			"name": "Politikwissenschaft",
+			"kürzel": "PW",
+			"aufgabenfeld": 2,
+			"lk": true
 		},
-		"Ph": {
-			"kürzel": "Ph",
-			"aufgabenfeld": 2
+		"Geo": {
+			"name": "Geografie",
+			"kürzel": "Geo",
+			"aufgabenfeld": 2,
+			"lk": true
 		},
-		"Ch": {
-			"kürzel": "Ch",
-			"aufgabenfeld": 2
+		"Ma": {
+			"name": "Mathematik",
+			"kürzel": "Ma",
+			"aufgabenfeld": 3,
+			"lk": true
 		},
-		"Bi": {
-			"kürzel": "Bi",
-			"aufgabenfeld": 2
+		"Phy": {
+			"name": "Physik",
+			"kürzel": "Phy",
+			"aufgabenfeld": 3,
+			"lk": true
+		},
+		"Che": {
+			"name": "Chemie",
+			"kürzel": "Che",
+			"aufgabenfeld": 3,
+			"lk": true
+		},
+		"Bio": {
+			"name": "Biologie",
+			"kürzel": "Bio",
+			"aufgabenfeld": 3,
+			"lk": true
+		},
+		"Inf": {
+			"name": "Informatik",
+			"kürzel": "Inf",
+			"aufgabenfeld": 3,
+			"lk": true
+		},
+		"SuB": {
+			"name": "Studium und Beruf",
+			"kürzel": "SuB",
+			"aufgabenfeld": 0,
+			"lk": false
+		},
+		"ED": {
+			"name": "Englisch Debating",
+			"kürzel": "ED",
+			"aufgabenfeld": 0,
+			"lk": false
+		},
+		"Psy": {
+			"name": "Psychologie",
+			"kürzel": "Psy",
+			"aufgabenfeld": 0,
+			"lk": false
+		},
+		"Med": {
+			"name": "Medizin",
+			"kürzel": "Med",
+			"aufgabenfeld": 0,
+			"lk": false
+		},
+		"Sp": {
+			"name": "Sport",
+			"kürzel": "Sp",
+			"aufgabenfeld": 0,
+			"lk": false
+		},
+		"SpT": {
+			"name": "Sport Theorie",
+			"kürzel": "SpT",
+			"aufgabenfeld": 0,
+			"lk": false
 		}
 	},
 	"aufgabenfelder": {
-		"naturwissenschaften": ["Physik", "Chemie", "Biologie"],
-		"sozialwissenschaften": ["Geschichte", "Erdkunde", "Politik", "Philosophie"],
-		"sprachen": ["Deutsch", "Französisch", "Spanisch"],
-		"künste": ["Musik", "Darstellendes Spiel", "Kunst"]
+		"0": ["Studium und Beruf","Englisch Debating","Psychologie","Medizin","Sport","Sport Theorie"],
+		"1": ["Deutsch","Englisch", "Spanisch","Französisch","Latein","Kunst","Musik","Darstellendes Spiel"],
+		"2": ["Geschichte", "Politikwissenschft", "Geografie"],
+		"3": ["Mathematik", "Physik", "Chemie","Biologie","Informatik"]
 	},
 	"regeln": {
 		"required": [
@@ -41,5 +151,215 @@
 			},
 			{}
 		]
-	}
+	},
+  "wahlzeile": {
+    "1": {
+      "lk1": "$FS",
+      "lk2": "De",
+      "pf3": "$AF2",
+      "pf4": "Ma",
+      "pf5": "*",
+      "linien": "keine"
+    },
+    "2": {
+      "lk1": "$FS",
+      "lk2": "De",
+      "pf3": "$AF2",
+      "pf4": "$NW",
+      "pf5": "*",
+      "linien": "keine"
+    },
+    "3": {
+      "lk1": "$FS",
+      "lk2": "De",
+      "pf3": "$AF2",
+      "pf4": "In",
+      "pf5": "*",
+      "linien": "keine"
+    },
+    "4": {
+      "lk1": "$FS",
+      "lk2": "$FS",
+      "pf3": "De",
+      "pf4": "$AF2",
+      "pf5": "$NW",
+      "linien": "gestrichelt"
+    },
+    "5": {
+      "lk1": "$FS",
+      "lk2": "$FS",
+      "pf3": "De",
+      "pf4": "$AF2",
+      "pf5": "In",
+      "linien": "gestrichelt"
+    },
+    "6": {
+      "lk1": "$FS",
+      "lk2": "$FS",
+      "pf3": "Ma",
+      "pf4": "$AF2",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "7": {
+      "lk1": "$FS",
+      "lk2": "$Mu/Ku",
+      "pf3": "De",
+      "pf4": "$AF2",
+      "pf5": "$NW",
+      "linien": "gestrichelt"
+    },
+    "8": {
+      "lk1": "$FS",
+      "lk2": "$Mu/Ku",
+      "pf3": "De",
+      "pf4": "$AF2",
+      "pf5": "In",
+      "linien": "gestrichelt"
+    },
+    "9": {
+      "lk1": "$FS",
+      "lk2": "$Mu/Ku",
+      "pf3": "Ma",
+      "pf4": "$AF2",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "10": {
+      "lk1": "$FS",
+      "lk2": "$AF2",
+      "pf3": "De",
+      "pf4": "$NW",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "11": {
+      "lk1": "$FS",
+      "lk2": "$AF2",
+      "pf3": "De",
+      "pf4": "In",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "12": {
+      "lk1": "$FS",
+      "lk2": "$AF2",
+      "pf3": "Ma",
+      "pf4": "*",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "13": {
+      "lk1": "$FS",
+      "lk2": "Ma",
+      "pf3": "$AF2",
+      "pf4": "*",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "14": {
+      "lk1": "$FS",
+      "lk2": "$NW",
+      "pf3": "De",
+      "pf4": "$AF2",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "15": {
+      "lk1": "$FS",
+      "lk2": "$NW",
+      "pf3": "Ma",
+      "pf4": "%AF2",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "16": {
+      "lk1": "$FS",
+      "lk2": "In",
+      "pf3": "De",
+      "pf4": "AF2",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "17": {
+      "lk1": "$FS",
+      "lk2": "In",
+      "pf3": "Ma",
+      "pf4": "$AF2",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "21": {
+      "lk1": "Ma",
+      "lk2": "De",
+      "pf3": "$AF2",
+      "pf4": "*",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "22": {
+      "lk1": "Ma",
+      "lk2": "$Mu/Ku",
+      "pf3": "De",
+      "pf4": "$AF2",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "23": {
+      "lk1": "Ma",
+      "lk2": "$Mu/Ku",
+      "pf3": "$FS",
+      "pf4": "$AF2",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "24": {
+      "lk1": "Ma",
+      "lk2": "$AF2",
+      "pf3": "De",
+      "pf4": "*",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "25": {
+      "lk1": "Ma",
+      "lk2": "$AF2",
+      "pf3": "$FS",
+      "pf4": "*",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "26": {
+      "lk1": "Ma",
+      "lk2": "$NW",
+      "pf3": "De",
+      "pf4": "$AF2",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "27": {
+      "lk1": "Ma",
+      "lk2": "$NW",
+      "pf3": "$FS",
+      "pf4": "$AF2",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "28": {
+      "lk1": "Ma",
+      "lk2": "In",
+      "pf3": "De",
+      "pf4": "$AF2",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "29": {
+      "lk1": "Ma",
+      "lk2": "In",
+      "pf3": "$FS",
+      "pf4": "$AF2",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    }
+  }
 }
