@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="abstrakte klasse hinzugefügt">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/fremdsprachen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/Fremdsprachen.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/kurswahlPanel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/kurswahlPanel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/dataStruct.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dataStruct.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

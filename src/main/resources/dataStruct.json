@@ -1,22 +1,24 @@
 {
 	"availableCourses": {
-		"Informatik": {
+		"Inf": {
+			"name": "Informatik",
 			"kürzel": "Inf",
-			"aufgabenfeld": 2
+			"aufgabenfeld": 2,
+			"lk": true
 		},
-		"Deutsch": {
+		"De": {
 			"kürzel": "De",
 			"aufgabenfeld": 1
 		},
-		"Physik": {
+		"Ph": {
 			"kürzel": "Ph",
 			"aufgabenfeld": 2
 		},
-		"Chemie": {
+		"Ch": {
 			"kürzel": "Ch",
 			"aufgabenfeld": 2
 		},
-		"Biologie": {
+		"Bi": {
 			"kürzel": "Bi",
 			"aufgabenfeld": 2
 		}
