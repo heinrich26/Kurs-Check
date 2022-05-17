@@ -151,5 +151,215 @@
 			},
 			{}
 		]
-	}
+	},
+  "wahlzeile": {
+    "1": {
+      "lk1": "$FS",
+      "lk2": "De",
+      "pf3": "$AF2",
+      "pf4": "Ma",
+      "pf5": "*",
+      "linien": "keine"
+    },
+    "2": {
+      "lk1": "$FS",
+      "lk2": "De",
+      "pf3": "$AF2",
+      "pf4": "$NW",
+      "pf5": "*",
+      "linien": "keine"
+    },
+    "3": {
+      "lk1": "$FS",
+      "lk2": "De",
+      "pf3": "$AF2",
+      "pf4": "In",
+      "pf5": "*",
+      "linien": "keine"
+    },
+    "4": {
+      "lk1": "$FS",
+      "lk2": "$FS",
+      "pf3": "De",
+      "pf4": "$AF2",
+      "pf5": "$NW",
+      "linien": "gestrichelt"
+    },
+    "5": {
+      "lk1": "$FS",
+      "lk2": "$FS",
+      "pf3": "De",
+      "pf4": "$AF2",
+      "pf5": "In",
+      "linien": "gestrichelt"
+    },
+    "6": {
+      "lk1": "$FS",
+      "lk2": "$FS",
+      "pf3": "Ma",
+      "pf4": "$AF2",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "7": {
+      "lk1": "$FS",
+      "lk2": "$Mu/Ku",
+      "pf3": "De",
+      "pf4": "$AF2",
+      "pf5": "$NW",
+      "linien": "gestrichelt"
+    },
+    "8": {
+      "lk1": "$FS",
+      "lk2": "$Mu/Ku",
+      "pf3": "De",
+      "pf4": "$AF2",
+      "pf5": "In",
+      "linien": "gestrichelt"
+    },
+    "9": {
+      "lk1": "$FS",
+      "lk2": "$Mu/Ku",
+      "pf3": "Ma",
+      "pf4": "$AF2",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "10": {
+      "lk1": "$FS",
+      "lk2": "$AF2",
+      "pf3": "De",
+      "pf4": "$NW",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "11": {
+      "lk1": "$FS",
+      "lk2": "$AF2",
+      "pf3": "De",
+      "pf4": "In",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "12": {
+      "lk1": "$FS",
+      "lk2": "$AF2",
+      "pf3": "Ma",
+      "pf4": "*",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "13": {
+      "lk1": "$FS",
+      "lk2": "Ma",
+      "pf3": "$AF2",
+      "pf4": "*",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "14": {
+      "lk1": "$FS",
+      "lk2": "$NW",
+      "pf3": "De",
+      "pf4": "$AF2",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "15": {
+      "lk1": "$FS",
+      "lk2": "$NW",
+      "pf3": "Ma",
+      "pf4": "%AF2",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "16": {
+      "lk1": "$FS",
+      "lk2": "In",
+      "pf3": "De",
+      "pf4": "AF2",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "17": {
+      "lk1": "$FS",
+      "lk2": "In",
+      "pf3": "Ma",
+      "pf4": "$AF2",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "21": {
+      "lk1": "Ma",
+      "lk2": "De",
+      "pf3": "$AF2",
+      "pf4": "*",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "22": {
+      "lk1": "Ma",
+      "lk2": "$Mu/Ku",
+      "pf3": "De",
+      "pf4": "$AF2",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "23": {
+      "lk1": "Ma",
+      "lk2": "$Mu/Ku",
+      "pf3": "$FS",
+      "pf4": "$AF2",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "24": {
+      "lk1": "Ma",
+      "lk2": "$AF2",
+      "pf3": "De",
+      "pf4": "*",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "25": {
+      "lk1": "Ma",
+      "lk2": "$AF2",
+      "pf3": "$FS",
+      "pf4": "*",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "26": {
+      "lk1": "Ma",
+      "lk2": "$NW",
+      "pf3": "De",
+      "pf4": "$AF2",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "27": {
+      "lk1": "Ma",
+      "lk2": "$NW",
+      "pf3": "$FS",
+      "pf4": "$AF2",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "28": {
+      "lk1": "Ma",
+      "lk2": "In",
+      "pf3": "De",
+      "pf4": "$AF2",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    },
+    "29": {
+      "lk1": "Ma",
+      "lk2": "In",
+      "pf3": "$FS",
+      "pf4": "$AF2",
+      "pf5": "*",
+      "linien": "gestrichelt"
+    }
+  }
 }
