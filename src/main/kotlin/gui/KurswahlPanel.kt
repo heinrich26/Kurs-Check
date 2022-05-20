@@ -9,11 +9,15 @@ import javax.swing.UIManager
 abstract class KurswahlPanel(val wahlData: KurswahlData, val fachData: FachData) : JPanel() {
     abstract fun close() : KurswahlData
 
+    abstract fun isDataValid(): Boolean
+
+    open fun cancel() {}
+
     abstract val windowName: String
 
-    companion object comp {
+    companion object {
         @JvmStatic
-        fun runTest(panel: KurswahlPanel) {
+        fun runTest(gen: () -> KurswahlPanel) {
             try {
                 UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel")
             } catch (ex: Exception) {
@@ -21,7 +25,7 @@ abstract class KurswahlPanel(val wahlData: KurswahlData, val fachData: FachData)
             }
 
             val frame = JFrame()
-            frame.contentPane = panel
+            frame.contentPane = gen()
 
             frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
             frame.setSize(300, 300)

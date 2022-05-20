@@ -9,7 +9,7 @@ data class KurswahlData(
     var pf5_typ: Pf5Typ,
     var gks: List<Pair<Fach, Wahlmoeglichkeit>>,
     var fremdsprachen: List<Pair<Fach, Int>>,
-    val wpfs: Pair<Fach, Fach>?
+    var wpfs: Pair<Fach, Fach?>?
 ) {
     constructor(): this(null, null, null, null, null, Pf5Typ.PRAESENTATION, emptyList(), emptyList(), null)
 

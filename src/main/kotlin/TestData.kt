@@ -26,6 +26,8 @@ val testKurswahl = KurswahlData().apply {
     pf4 = faecher[3]
     pf5 = faecher[4]
     gks = faecher.map { it to Wahlmoeglichkeit.DRITTES_VIERTES }
+    fremdsprachen = listOf(eng to 3, spa to 7)
+    wpfs = inf to null
 }
 
 val testFachdata = FachData(faecher, fremdsprachen, wpfs)

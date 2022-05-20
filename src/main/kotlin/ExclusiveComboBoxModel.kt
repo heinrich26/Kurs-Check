@@ -3,23 +3,34 @@ import javax.swing.ComboBoxModel
 import javax.swing.JComboBox
 import javax.swing.event.ListDataListener
 
-class ExclusiveComboBoxModel(val data: List<Fach?>, private val vorgaenger: Array<JComboBox<Fach?>>): ComboBoxModel<Fach?> {
-    override fun getSize(): Int = data.size - vorgaenger.size + 1
+class ExclusiveComboBoxModel(var data: List<Fach>, private val vorgaenger: JComboBox<Fach>? = null): ComboBoxModel<Fach> {
+    override fun getSize(): Int = data.size + 1
 
     private val listeners = mutableListOf<ListDataListener>()
 
-    private var selectedItem = data[0]
+    private var selectedItem: Fach? = null
 
+    private val itemsAfter: List<Fach>
+        get() {
+            val vorgaengerData = (vorgaenger!!.model as ExclusiveComboBoxModel).data
+            return when (val i = vorgaenger.selectedIndex) {
+                0 -> vorgaengerData.toList()
+                1 -> vorgaengerData.subList(1, vorgaengerData.size)
+                vorgaengerData.size -> vorgaengerData.subList(0, vorgaengerData.size - 1)
+                else -> vorgaengerData.subList(0, i - 1) + vorgaengerData.subList(i, vorgaengerData.size)
+            }
+        }
+
+    fun updateData() {
+        ((vorgaenger?.model ?: return) as ExclusiveComboBoxModel).updateData()
+        data = itemsAfter
+        if (selectedItem !in data || vorgaenger.selectedIndex == 0) selectedItem = null
+    }
 
     override fun getElementAt(index: Int): Fach? {
         if (index == 0) return null
 
-        var newIndex = index - 1
-        println(vorgaenger.map { it.selectedIndex - 1 })
-        for (i in vorgaenger.map { it.selectedIndex - 1 })
-            if (i != -1 && i <= index) newIndex++
-
-        return data[newIndex]
+        return data[index - 1]
     }
 
     override fun addListDataListener(l: ListDataListener?) {
@@ -31,7 +42,7 @@ class ExclusiveComboBoxModel(val data: List<Fach?>, private val vorgaenger: Arra
     }
 
     override fun setSelectedItem(anItem: Any?) {
-        selectedItem = if (anItem is Fach) anItem else null
+        selectedItem = anItem as Fach?
     }
 
     override fun getSelectedItem(): Fach? = selectedItem
