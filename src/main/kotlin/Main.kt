@@ -51,7 +51,7 @@ class Main : JPanel() {
         FsWpfIcon { navTo(Fremdsprachen::class, 0) },
         SidebarLabel("LKs") { navTo(Fremdsprachen::class, 1) },
         SidebarLabel("PKs") { navTo(Fremdsprachen::class, 2) },
-        SidebarLabel("GKs") { navTo(Fremdsprachen::class, 3) },
+        SidebarLabel("GKs") { navTo(GrundkursWahl::class, 3) },
         PolyIcon(HOME_POLY, true) { navTo(Overview::class, 4) }
     ).apply {
         this.forEachIndexed { i, dest ->
