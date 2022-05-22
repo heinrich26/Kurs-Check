@@ -1,14 +1,20 @@
 // Copyright 2000-2021 JetBrains s.r.o. and contributors. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 
-import data.Fach
-import data.KurswahlData
-import gui.BottomShadowBorder
-import gui.FsWpfIcon
+import data.*
+import gui.*
+import gui.Consts.COLOR_BACKGROUND
+import gui.Consts.HOME_POLY
+import gui.Consts.SIDEBAR_SIZE
 import java.awt.*
 import javax.swing.*
 import javax.swing.border.EmptyBorder
+import kotlin.reflect.KClass
+import kotlin.reflect.safeCast
 
 class Main : JPanel() {
+    private var wahlData: KurswahlData = KurswahlData()
+    private val fachData: FachData = testFachdata
+
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
@@ -34,23 +40,54 @@ class Main : JPanel() {
         }
     }
 
-    val header: JPanel = JPanel(BorderLayout())
+    private val header: JPanel = JPanel(BorderLayout())
 
-    val sidebar = JPanel(GridBagLayout()).apply {
-        this.preferredSize = Dimension(72, -1)
+    private var curPanel: KurswahlPanel = Overview(wahlData, fachData)
+
+    // Nav Bar Logik
+    private val sidebar = JPanel(GridBagLayout()).apply {
+        this.preferredSize = Dimension(SIDEBAR_SIZE, -1)
     }
 
-    val sidebarBtns = arrayOf(FsWpfIcon(), JLabel("LKs"), JLabel("PKs"), JLabel("GKs")).let { arr ->
-        arr.forEachIndexed { i, it ->
-            it.isOpaque = true
-            it.background = Color.RED
-            it.preferredSize = Dimension(72, 72)
-            it.minimumSize = Dimension(72, 72)
-            sidebar.add(it, row = i)
+    private val sidebarBtns = arrayOf(
+        ClickableDestionation(FsWpfIcon()) { navTo(Fremdsprachen::class, 0) },
+        ClickableDestionation(SidebarLabel("LKs")) { navTo(Fremdsprachen::class, 1) },
+        ClickableDestionation(SidebarLabel("PKs")) { navTo(Fremdsprachen::class, 2) },
+        ClickableDestionation(SidebarLabel("GKs")) { navTo(Fremdsprachen::class, 3) },
+        ClickableDestionation(PolyIcon(HOME_POLY), true) { navTo(Overview::class, 4) }
+    ).apply {
+        this.forEachIndexed { i, dest ->
+            dest.holder.let {
+                it.isOpaque = false
+                sidebar.add(it, row = i, anchor = GridBagConstraints.SOUTH, weighty = if (i == 4) 1.0 else 0.0)
+            }
         }
     }
 
-    val titleLabel = JLabel("Kurswahl App", SwingConstants.LEFT).apply {
+    private fun <T : KurswahlPanel> navTo(panel: KClass<T>, selectedIndex: Int) {
+        if (!curPanel.isDataValid()) {
+            val choice = JOptionPane.showConfirmDialog(
+                this,
+                "Deine Daten sind ungültig und gehen verloren wenn du jetzt weitergehst!",
+                "Ungültige Daten",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.WARNING_MESSAGE
+            )
+            if (choice == JOptionPane.CANCEL_OPTION) return // Abbruch durch Nutzer
+        } else wahlData = curPanel.close()
+
+        remove(curPanel)
+
+        curPanel = panel.constructors.first().call(wahlData, fachData)
+        add(curPanel, row = 1, column = 2, fill = GridBagConstraints.BOTH, weightx = 1.0)
+        SwingUtilities.windowForComponent(this).pack()
+
+
+        // Sidebar Knöpfe updaten
+        for ((i, dest) in sidebarBtns.withIndex()) dest.holder.isEnabled = i == selectedIndex
+    }
+
+    private val titleLabel = JLabel("Kurswahl App", SwingConstants.LEFT).apply {
         this.font = font.deriveFont(Font.BOLD, 20f)
         this.foreground = Color.WHITE
         this.border = EmptyBorder(0, 8, 0, 0)
@@ -73,10 +110,8 @@ class Main : JPanel() {
             fill = GridBagConstraints.VERTICAL, weighty = 1.0
         )
 
-        add(JPanel().apply {
-            background = Color.RED
-        }, row = 1, column = 2, fill = GridBagConstraints.BOTH, weightx = 1.0)
+        add(curPanel, row = 1, column = 2, fill = GridBagConstraints.BOTH, weightx = 1.0)
 
-        add(sidebar, row = 1, column = 0, fill = GridBagConstraints.VERTICAL, weighty = 1.0)
+        add(sidebar, row = 1, column = 0, fill = GridBagConstraints.VERTICAL, weighty = 1.0, )
     }
 }

@@ -224,8 +224,10 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
         val sprachen: MutableList<Pair<Fach, Int>> =
             mutableListOf(fs1.selectedItem!! to fsJahr1.number, fs2.selectedItem!! to fsJahr2.number)
         fs3.selectedItem.let { sel ->
-            if (sel != null) sprachen.add(sel to fsJahr3.number)
-            fs4.selectedItem.let { if (it != null) sprachen.add(it to fsJahr4.number) }
+            if (sel != null) {
+                sprachen.add(sel to fsJahr3.number)
+                fs4.selectedItem.let { if (it != null) sprachen.add(it to fsJahr4.number) }
+            }
         }
 
         return wahlData.copy(fremdsprachen = sprachen, wpfs = wpf1.selectedItem!! to wpf2.selectedItem)
