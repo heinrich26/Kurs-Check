@@ -8,10 +8,10 @@ object Consts {
     val COLOR_PRIMARY = Color(96, 2, 238)
 
     @JvmStatic
-    val COLOR_CONTROL = Color(COLOR_PRIMARY.colorSpace, COLOR_PRIMARY.getRGBColorComponents(FloatArray(3)), .4f)
+    val COLOR_CONTROL = Color(COLOR_PRIMARY.colorSpace, COLOR_PRIMARY.getRGBColorComponents(FloatArray(3)), .1f)
 
     @JvmStatic
-    val COLOR_ON_BACKGROUND: Color = Color.decode("#5E6367")
+    val COLOR_ON_BACKGROUND = Color(94, 99, 103)
 
     @JvmStatic
     val COLOR_BACKGROUND: Color = Color.WHITE

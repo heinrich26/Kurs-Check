@@ -3,12 +3,9 @@ package gui
 import gui.Consts.COLOR_CONTROL
 import gui.Consts.SIDEBAR_SIZE
 import java.awt.*
-import java.awt.event.FocusEvent
-import java.awt.event.FocusListener
 import java.awt.geom.AffineTransform
-import javax.swing.JComponent
 
-class PolyIcon(private val poly: Polygon) : JComponent(), Focusable {
+class PolyIcon(poly: Polygon, defaultEnabled: Boolean, clickEvent: () -> Unit) : ClickableDestionation(defaultEnabled, clickEvent = clickEvent) {
     companion object {
         @JvmStatic
         val transform1 = AffineTransform(1.0, 0.0, 0.0, 1.0, -12.0, -12.0)
@@ -48,17 +45,4 @@ class PolyIcon(private val poly: Polygon) : JComponent(), Focusable {
         g2D.draw(shape)
         g2D.fill(shape)
     }
-
-    init {
-        Dimension(SIDEBAR_SIZE, SIDEBAR_SIZE).let {
-            minimumSize = it
-            preferredSize = it
-        }
-    }
-
-    override var hasFocus: Boolean = false
-        set(value) {
-            field = value
-            repaint()
-        }
 }

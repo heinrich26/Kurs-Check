@@ -1,16 +1,28 @@
 package gui
 
+import java.awt.Dimension
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
 import javax.swing.JComponent
 
-class ClickableDestionation(val holder: JComponent, defaultEnabled: Boolean = false, activationEvent: () -> Unit) {
-    init {
-        holder.isEnabled = defaultEnabled
+open class ClickableDestionation(defaultEnabled: Boolean = false, clickEvent: () -> Unit) : JComponent() {
+    var hasFocus = false
+        set(value) {
+            field = value
+            repaint()
+        }
 
-        holder.addMouseListener(object : MouseListener {
+    init {
+        isEnabled = defaultEnabled
+
+        Dimension(Consts.SIDEBAR_SIZE, Consts.SIDEBAR_SIZE).let {
+            minimumSize = it
+            preferredSize = it
+        }
+
+        this.addMouseListener(object : MouseListener {
             override fun mouseClicked(e: MouseEvent?) {
-                if (!holder.isEnabled) activationEvent()
+                if (!isEnabled) clickEvent()
             }
 
             override fun mousePressed(e: MouseEvent?) {}
@@ -18,11 +30,11 @@ class ClickableDestionation(val holder: JComponent, defaultEnabled: Boolean = fa
             override fun mouseReleased(e: MouseEvent?) {}
 
             override fun mouseEntered(e: MouseEvent?) {
-                (holder as Focusable).hasFocus = true
+                hasFocus = true
             }
 
             override fun mouseExited(e: MouseEvent?) {
-                (holder as Focusable).hasFocus = false
+                hasFocus = false
             }
         })
     }

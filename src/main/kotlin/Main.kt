@@ -2,14 +2,12 @@
 
 import data.*
 import gui.*
-import gui.Consts.COLOR_BACKGROUND
 import gui.Consts.HOME_POLY
 import gui.Consts.SIDEBAR_SIZE
 import java.awt.*
 import javax.swing.*
 import javax.swing.border.EmptyBorder
 import kotlin.reflect.KClass
-import kotlin.reflect.safeCast
 
 class Main : JPanel() {
     private var wahlData: KurswahlData = KurswahlData()
@@ -50,15 +48,14 @@ class Main : JPanel() {
     }
 
     private val sidebarBtns = arrayOf(
-        ClickableDestionation(FsWpfIcon()) { navTo(Fremdsprachen::class, 0) },
-        ClickableDestionation(SidebarLabel("LKs")) { navTo(Fremdsprachen::class, 1) },
-        ClickableDestionation(SidebarLabel("PKs")) { navTo(Fremdsprachen::class, 2) },
-        ClickableDestionation(SidebarLabel("GKs")) { navTo(Fremdsprachen::class, 3) },
-        ClickableDestionation(PolyIcon(HOME_POLY), true) { navTo(Overview::class, 4) }
+        FsWpfIcon { navTo(Fremdsprachen::class, 0) },
+        SidebarLabel("LKs") { navTo(Fremdsprachen::class, 1) },
+        SidebarLabel("PKs") { navTo(Fremdsprachen::class, 2) },
+        SidebarLabel("GKs") { navTo(Fremdsprachen::class, 3) },
+        PolyIcon(HOME_POLY, true) { navTo(Overview::class, 4) }
     ).apply {
         this.forEachIndexed { i, dest ->
-            dest.holder.let {
-                it.isOpaque = false
+            dest.let {
                 sidebar.add(it, row = i, anchor = GridBagConstraints.SOUTH, weighty = if (i == 4) 1.0 else 0.0)
             }
         }
@@ -68,7 +65,7 @@ class Main : JPanel() {
         if (!curPanel.isDataValid()) {
             val choice = JOptionPane.showConfirmDialog(
                 this,
-                "Deine Daten sind ungültig und gehen verloren wenn du jetzt weitergehst!",
+                "Deine Daten sind ungültig und gehen verloren, wenn du jetzt weitergehst!",
                 "Ungültige Daten",
                 JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.WARNING_MESSAGE
@@ -84,7 +81,7 @@ class Main : JPanel() {
 
 
         // Sidebar Knöpfe updaten
-        for ((i, dest) in sidebarBtns.withIndex()) dest.holder.isEnabled = i == selectedIndex
+        for ((i, dest) in sidebarBtns.withIndex()) dest.isEnabled = i == selectedIndex
     }
 
     private val titleLabel = JLabel("Kurswahl App", SwingConstants.LEFT).apply {
