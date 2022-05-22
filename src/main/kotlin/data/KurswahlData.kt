@@ -1,17 +1,16 @@
 package data
 
 data class KurswahlData(
-    var lk1: Fach?,
-    var lk2: Fach?,
-    var pf3: Fach?,
-    var pf4: Fach?,
-    var pf5: Fach?,
-    var pf5_typ: Pf5Typ,
-    var gks: List<Pair<Fach, Wahlmoeglichkeit>>,
-    var fremdsprachen: List<Pair<Fach, Int>>,
-    var wpfs: Pair<Fach, Fach?>?
+    var lk1: Fach? = null,
+    var lk2: Fach? = null,
+    var pf3: Fach? = null,
+    var pf4: Fach? = null,
+    var pf5: Fach? = null,
+    var pf5_typ: Pf5Typ = Pf5Typ.PRAESENTATION,
+    var gks: List<Pair<Fach, Wahlmoeglichkeit>> = emptyList(),
+    var fremdsprachen: List<Pair<Fach, Int>> = emptyList(),
+    var wpfs: Pair<Fach, Fach?>? = null
 ) {
-    constructor(): this(null, null, null, null, null, Pf5Typ.PRAESENTATION, emptyList(), emptyList(), null)
 
     /**
      * Zählt die gewählten Kurse pro Semester

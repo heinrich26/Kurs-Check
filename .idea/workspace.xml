@@ -4,22 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="abstrakte klasse hinzugefügt">
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/gui/GrundkursWahl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/KurswahlData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/KurswahlData.kt" afterDir="false" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Arbeit am Hauptfenster">
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/SidebarLabel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/SidebarLabel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/ClickableDestionation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/ClickableDestionation.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/Consts.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/Consts.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/FsWpfIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/FsWpfIcon.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/PolyIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/PolyIcon.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="CodeStyleSettingsInfer">
-    <option name="done" value="true" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -41,8 +37,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Kotlin Enum" />
+        <option value="Kotlin Data Class" />
+        <option value="Kotlin File" />
         <option value="Kotlin Class" />
+        <option value="Kotlin Interface" />
       </list>
     </option>
   </component>
@@ -57,12 +55,6 @@
   </component>
   <component name="KotlinMultiplatform">
     <allAvailableExecutables />
-  </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
-  </component>
-  <component name="ProjectCodeStyleSettingsMigration">
-    <option name="version" value="2" />
   </component>
   <component name="ProjectId" id="296po7uV0AJaZ4AMNRrxxq4a7lI" />
   <component name="ProjectLevelVcsManager">
@@ -79,6 +71,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File" value="kotlin" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -86,10 +79,14 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="gui" />
       <recent name="data" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
   </component>
-  <component name="RunManager" selected="Kotlin.GrundkursWahl">
+  <component name="RunManager" selected="Kotlin.Main">
     <configuration name="BaseDialog" type="JetRunConfigurationType" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="gui.BaseDialog" />
       <module name="kurswahlApp.main" />
@@ -104,8 +101,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GrundkursWahl" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="gui.GrundkursWahl" />
+    <configuration name="Main" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="kurswahlApp.main" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -122,11 +119,11 @@
       <item itemvalue="Kotlin.MainScreen" />
       <item itemvalue="Kotlin.BaseDialog" />
       <item itemvalue="Kotlin.Fremdsprachen" />
-      <item itemvalue="Kotlin.GrundkursWahl" />
+      <item itemvalue="Kotlin.Main" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Kotlin.GrundkursWahl" />
+        <item itemvalue="Kotlin.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -152,7 +149,10 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1652443574971</updated>
-      <workItem from="1652443581364" duration="12529000" />
+      <workItem from="1652443581364" duration="12775000" />
+      <workItem from="1652881494566" duration="3606000" />
+      <workItem from="1652941873137" duration="30095000" />
+      <workItem from="1653124331707" duration="24426000" />
     </task>
     <task id="LOCAL-00003" summary="reimpl. der fremdsprachen wahl">
       <created>1652452601911</created>
@@ -168,21 +168,35 @@
       <option name="project" value="LOCAL" />
       <updated>1652452695243</updated>
     </task>
-    <task id="LOCAL-00005" summary="abstrakte klasse hinzugefügt">
-      <created>1652695266924</created>
+    <task id="LOCAL-00005" summary="visualizer fertiggestellt">
+      <created>1652456375035</created>
       <option name="number" value="00005" />
       <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
-      <updated>1652695266924</updated>
+      <updated>1652456375035</updated>
     </task>
-    <task id="LOCAL-00006" summary="abstrakte klasse hinzugefügt">
-      <created>1652774721624</created>
+    <task id="LOCAL-00006" summary="Fremdsprachen / Wahlpflicht soweit fertig">
+      <created>1653059985870</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1652774721624</updated>
+      <updated>1653059985870</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Arbeit am Hauptfenster">
+      <created>1653215112241</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1653215112241</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Arbeit am Hauptfenster">
+      <created>1653235504055</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1653235504055</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -205,7 +219,9 @@
     <MESSAGE value="anfang mit visualizer für kurswahl" />
     <MESSAGE value="reimpl. der fremdsprachen wahl" />
     <MESSAGE value="gitignore update" />
-    <MESSAGE value="abstrakte klasse hinzugefügt" />
-    <option name="LAST_COMMIT_MESSAGE" value="abstrakte klasse hinzugefügt" />
+    <MESSAGE value="visualizer fertiggestellt" />
+    <MESSAGE value="Fremdsprachen / Wahlpflicht soweit fertig" />
+    <MESSAGE value="Arbeit am Hauptfenster" />
+    <option name="LAST_COMMIT_MESSAGE" value="Arbeit am Hauptfenster" />
   </component>
 </project>

@@ -30,4 +30,4 @@ val testKurswahl = KurswahlData().apply {
     wpfs = inf to null
 }
 
-val testFachdata = FachData(faecher, fremdsprachen, wpfs)
+val testFachdata = FachData(faecher, fremdsprachen, wpfs, listOf(ma to Wahlmoeglichkeit.DURCHGEHEND, de to Wahlmoeglichkeit.DURCHGEHEND, sp to Wahlmoeglichkeit.DURCHGEHEND))
