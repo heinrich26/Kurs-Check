@@ -57,4 +57,7 @@ data class KurswahlData(
         val weekly = countCourses().map{ it * 3 + 3 } // 3h p. GK + 5h p. Lk (um auf 10 für lks zu kommen fehlen 4, sport sind nur 2, dh +3)
         return (weekly[0] + weekly[1]) / 2 to (weekly[2] + weekly[3]) / 2
     }
+
+    val pfs: List<Fach?>
+        get() = listOf(lk1, lk2, pf3, pf4, pf5)
 }
