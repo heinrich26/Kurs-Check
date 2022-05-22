@@ -179,9 +179,6 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
         }
 
 
-
-
-
         val wpfModel1 = ExclusiveComboBoxModel(fachData.wpfs)
         wpf1 = MyComboBox(wpfModel1)
         wpf1.renderer = renderer
@@ -207,7 +204,7 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
         }
 
         // Anzeigen
-            // Margin hinzufügen
+        // Margin hinzufügen
         Insets(1, 0, 1, 0).let {
             add(fs1, row = 1, column = 1, fill = GridBagConstraints.BOTH, margin = it)
             add(fs2, row = 2, column = 1, fill = GridBagConstraints.BOTH, margin = it)
@@ -224,7 +221,8 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
 
 
     override fun close(): KurswahlData {
-        val sprachen: MutableList<Pair<Fach, Int>> = mutableListOf(fs1.selectedItem!! to fsJahr1.number, fs2.selectedItem!! to fsJahr2.number)
+        val sprachen: MutableList<Pair<Fach, Int>> =
+            mutableListOf(fs1.selectedItem!! to fsJahr1.number, fs2.selectedItem!! to fsJahr2.number)
         fs3.selectedItem.let { sel ->
             if (sel != null) sprachen.add(sel to fsJahr3.number)
             fs4.selectedItem.let { if (it != null) sprachen.add(it to fsJahr4.number) }

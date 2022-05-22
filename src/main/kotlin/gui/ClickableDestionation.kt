@@ -1,0 +1,3 @@
+package gui
+
+interface ClickableDestionation {}
