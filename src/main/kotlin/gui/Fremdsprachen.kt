@@ -215,8 +215,6 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
             add(wpf2, row = 7, column = 1, fill = GridBagConstraints.BOTH, margin = it)
         }
         add(checker, row = 7, column = 0, anchor = GridBagConstraints.EAST)
-
-        add(JButton("Print Result").apply { this.addActionListener { println(close()) } })
     }
 
 

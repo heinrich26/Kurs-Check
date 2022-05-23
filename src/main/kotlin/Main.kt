@@ -1,5 +1,3 @@
-// Copyright 2000-2021 JetBrains s.r.o. and contributors. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
-
 import data.*
 import gui.*
 import gui.Consts.HOME_POLY
@@ -31,7 +29,7 @@ class Main : JPanel() {
             frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
             // Set up the content pane.
             frame.contentPane = Main()
-            frame.minimumSize = Dimension(640, 480)
+            frame.minimumSize = Dimension(640, 560)
             // Display the window.
             frame.pack()
             frame.isVisible = true
@@ -77,8 +75,8 @@ class Main : JPanel() {
 
         curPanel = panel.constructors.first().call(wahlData, fachData)
         add(curPanel, row = 1, column = 2, fill = GridBagConstraints.BOTH, weightx = 1.0)
-        SwingUtilities.windowForComponent(this).pack()
-//        this.repaint()
+
+        validate()
 
 
         // Sidebar Knöpfe updaten

@@ -2,6 +2,9 @@ package gui
 
 import data.FachData
 import data.KurswahlData
+import gui.Consts.PANEL_HEIGHT
+import gui.Consts.PANEL_WIDTH
+import java.awt.Dimension
 import javax.swing.JFrame
 import javax.swing.JPanel
 import javax.swing.UIManager
@@ -14,6 +17,11 @@ abstract class KurswahlPanel(val wahlData: KurswahlData, val fachData: FachData)
     open fun cancel() {}
 
     abstract val windowName: String
+
+    init {
+        preferredSize = Dimension(PANEL_WIDTH, PANEL_HEIGHT)
+        isOpaque = false
+    }
 
     companion object {
         @JvmStatic

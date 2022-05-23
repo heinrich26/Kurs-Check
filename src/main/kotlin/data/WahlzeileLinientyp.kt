@@ -1,5 +1,12 @@
 package data
 
+import com.google.gson.annotations.SerializedName
+
 enum class WahlzeileLinientyp(val key: String) {
-    KEINE("keine"), GESTRICHELT("gestrichelt"), DURCHGEZOGEN("durchgezogen")
+    @SerializedName("keine")
+    KEINE("keine"),
+    @SerializedName("gestrichelt")
+    GESTRICHELT("gestrichelt"),
+    @SerializedName("durchgezogen")
+    DURCHGEZOGEN("durchgezogen")
 }

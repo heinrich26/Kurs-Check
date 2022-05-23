@@ -2,133 +2,133 @@
 	"availableCourses": {
 		"De": {
 			"name": "Deutsch",
-			"kürzel": "De",
+			"kuerzel": "De",
 			"aufgabenfeld": 1,
 			"lk": true
 		},
 		"En": {
 			"name": "Englisch",
-			"kürzel": "En",
+			"kuerzel": "En",
 			"aufgabenfeld": 1,
 			"lk": true
 		},
 		"Spa": {
 			"name": "Spanisch",
-			"kürzel": "Spa",
+			"kuerzel": "Spa",
 			"aufgabenfeld": 1,
 			"lk": true
 		},
 		"Fr": {
 			"name": "Französisch",
-			"kürzel": "Fr",
+			"kuerzel": "Fr",
 			"aufgabenfeld": 1,
 			"lk": false
 		},
 		"Lat": {
 			"name": "Latein",
-			"kürzel": "Lat",
+			"kuerzel": "Lat",
 			"aufgabenfeld": 1,
 			"lk": false
 		},
 		"Ku": {
 			"name": "Kunst",
-			"kürzel": "Ku",
+			"kuerzel": "Ku",
 			"aufgabenfeld": 1,
 			"lk": true
 		},
 		"Mu": {
 			"name": "Musik",
-			"kürzel": "Mu",
+			"kuerzel": "Mu",
 			"aufgabenfeld": 1,
 			"lk": false
 		},
 		"DS": {
 			"name": "Darstellendes Spiel",
-			"kürzel": "DS",
+			"kuerzel": "DS",
 			"aufgabenfeld": 1,
 			"lk": false
 		},
 		"Ge": {
 			"name": "Geschichte",
-			"kürzel": "Ge",
+			"kuerzel": "Ge",
 			"aufgabenfeld": 2,
 			"lk": true
 		},
 		"PW": {
 			"name": "Politikwissenschaft",
-			"kürzel": "PW",
+			"kuerzel": "PW",
 			"aufgabenfeld": 2,
 			"lk": true
 		},
 		"Geo": {
 			"name": "Geografie",
-			"kürzel": "Geo",
+			"kuerzel": "Geo",
 			"aufgabenfeld": 2,
 			"lk": true
 		},
 		"Ma": {
 			"name": "Mathematik",
-			"kürzel": "Ma",
+			"kuerzel": "Ma",
 			"aufgabenfeld": 3,
 			"lk": true
 		},
 		"Phy": {
 			"name": "Physik",
-			"kürzel": "Phy",
+			"kuerzel": "Phy",
 			"aufgabenfeld": 3,
 			"lk": true
 		},
 		"Che": {
 			"name": "Chemie",
-			"kürzel": "Che",
+			"kuerzel": "Che",
 			"aufgabenfeld": 3,
 			"lk": true
 		},
 		"Bio": {
 			"name": "Biologie",
-			"kürzel": "Bio",
+			"kuerzel": "Bio",
 			"aufgabenfeld": 3,
 			"lk": true
 		},
 		"Inf": {
 			"name": "Informatik",
-			"kürzel": "Inf",
+			"kuerzel": "Inf",
 			"aufgabenfeld": 3,
 			"lk": true
 		},
 		"SuB": {
 			"name": "Studium und Beruf",
-			"kürzel": "SuB",
+			"kuerzel": "SuB",
 			"aufgabenfeld": 0,
 			"lk": false
 		},
 		"ED": {
 			"name": "Englisch Debating",
-			"kürzel": "ED",
+			"kuerzel": "ED",
 			"aufgabenfeld": 0,
 			"lk": false
 		},
 		"Psy": {
 			"name": "Psychologie",
-			"kürzel": "Psy",
+			"kuerzel": "Psy",
 			"aufgabenfeld": 0,
 			"lk": false
 		},
 		"Med": {
 			"name": "Medizin",
-			"kürzel": "Med",
+			"kuerzel": "Med",
 			"aufgabenfeld": 0,
 			"lk": false
 		},
 		"Sp": {
 			"name": "Sport",
-			"kürzel": "Sp",
+			"kuerzel": "Sp",
 			"aufgabenfeld": 0,
 			"lk": false
 		},
 		"SpT": {
 			"name": "Sport Theorie",
-			"kürzel": "SpT",
+			"kuerzel": "SpT",
 			"aufgabenfeld": 0,
 			"lk": false
 		}

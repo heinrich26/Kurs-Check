@@ -8,10 +8,8 @@ import data.Wahlmoeglichkeit
 import data.Wahlmoeglichkeit.*
 import testFachdata
 import testKurswahl
-import java.awt.Color
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
-import javax.swing.BorderFactory
 import javax.swing.JCheckBox
 import javax.swing.JLabel
 import javax.swing.JToggleButton
@@ -50,7 +48,8 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
     }
 
 
-    private val checkboxArray = ArrayList<JCheckBox>()
+    private val checkboxArray = ArrayList<JToggleButton>()
+
     private var anzahl: Int = 0
         set(value) {
             field = value
@@ -61,11 +60,6 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
     init {
         layout = GridBagLayout()
         add(anzahlLabel, row = fachData.feacher.size)
-
-        val blackline = BorderFactory.createLineBorder(Color(229, 229, 229), 2)
-        setBounds(150, 250, 1500, 700)
-        background = Color.white
-        border = blackline
 
         buildCheckboxes()
         for (pf in wahlData.pfs.filterNotNull()) {
@@ -101,17 +95,15 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
     // ignorierte Fächer werden ausgeblendet das man sie nicht sieht aber das sie in dem Array sind (damit auslesen noch funktioniert)
 
     private fun buildCheckboxes() {
-        //Erstellt Checkboxen
+        // Erstellt Checkboxen
         for ((i, fach) in fachData.feacher.withIndex()) {
             val labs = JLabel(fach.name)
             add(labs, row = i, column = 0, fill = GridBagConstraints.HORIZONTAL)
             for (j in 1..4) {
 //                val box = ColoredCheckBox()
                 val box = JCheckBox()
-                box.isFocusable = false
                 box.isOpaque = false
-                box.addActionListener { if ((it.source as JCheckBox).isSelected) anzahl++ else anzahl-- }
-                box.background = Color.CYAN
+                box.addActionListener { if ((it.source as JToggleButton).isSelected) anzahl++ else anzahl-- }
                 checkboxArray.add(box)
                 add(box, row = i, column = j, fill = GridBagConstraints.HORIZONTAL)
             }
