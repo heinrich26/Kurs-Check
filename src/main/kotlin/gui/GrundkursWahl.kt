@@ -14,8 +14,7 @@ import java.awt.GridBagLayout
 import javax.swing.BorderFactory
 import javax.swing.JCheckBox
 import javax.swing.JLabel
-import javax.swing.event.ChangeEvent
-import javax.swing.event.ChangeListener
+import javax.swing.JToggleButton
 
 
 class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(wahlData, fachData) {
@@ -37,7 +36,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
     }
 
     override fun isDataValid(): Boolean {
-        //TODO nicht final
+        // TODO nicht final
         return true
     }
 
@@ -49,13 +48,13 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
     }
 
 
-    val checkboxArray = ArrayList<JCheckBox>()
-    var anzahl: Int = 0
+    private val checkboxArray = ArrayList<JToggleButton>()
+    private var anzahl: Int = 0
         set(value) {
             field = value
             anzahlLabel.text = "$anzahl Kurse"
         }
-    val anzahlLabel = JLabel("$anzahl Kurse")
+    private val anzahlLabel = JLabel("$anzahl Kurse")
 
     init {
         layout = GridBagLayout()
@@ -66,7 +65,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
         background = Color.white
         border = blackline
 
-        checkboxenUp()
+        buildCheckboxes()
         for (pf in wahlData.pfs.filterNotNull()) {
             val pos = fachPos(pf)
             for (k in pos * 4..pos * 4 + 3) {
@@ -91,35 +90,33 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
             for (k in 0..3) {
                 if (acti[k])
                     anzahl++
-                checkboxArray[k + pos * 4].let {
-                    it.isSelected = true
-                }
+                checkboxArray[k + pos * 4].isSelected = true
             }
         }
 
     }
 
-    //ignorierte Fächer werden ausgebländet das man sie nicht sieht aber das sie in dem Array sind
+    // ignorierte Fächer werden ausgeblendet das man sie nicht sieht aber das sie in dem Array sind (damit auslesen noch funktioniert)
 
-    fun checkboxenUp() {
+    private fun buildCheckboxes() {
         //Erstellt Checkboxen
         for ((i, fach) in fachData.feacher.withIndex()) {
             val labs = JLabel(fach.name)
             add(labs, row = i, column = 0, fill = GridBagConstraints.HORIZONTAL)
             for (j in 1..4) {
-                val n = JCheckBox()
-                n.setFocusable(false)
-                n.setOpaque(false)
-                n.addActionListener { if ((it.source as JCheckBox).isSelected) anzahl++ else anzahl--}
-                n.background = Color.CYAN
-                checkboxArray.add(n)
-                add(n, row = i, column = j, fill = GridBagConstraints.HORIZONTAL)
-                //Locked Fächer
+//                val box = ColoredCheckBox()
+                val box = JCheckBox()
+                box.isFocusable = false
+                box.isOpaque = false
+                box.addActionListener { if ((it.source as JToggleButton).isSelected) anzahl++ else anzahl-- }
+                box.background = Color.CYAN
+                checkboxArray.add(box)
+                add(box, row = i, column = j, fill = GridBagConstraints.HORIZONTAL)
             }
         }
     }
 
-    fun fachPos(fach: Fach) = fachData.feacher.indexOf(fach)
+    private fun fachPos(fach: Fach) = fachData.feacher.indexOf(fach)
 
     override val windowName: String
         get() = "Grundkurse"

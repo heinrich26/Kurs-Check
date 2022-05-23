@@ -20,5 +20,10 @@ object Consts {
 
     const val SIDEBAR_SIZE = 72
 
+    // Checkbox Consts
+    const val CHECKBOX_WIDTH = 72
+    const val CHECKBOX_HEIGHT = 60
+
+    // Poly Graphics
     val HOME_POLY = Polygon(intArrayOf(12, 20, 18, 18, 15, 15, 9, 9, 6, 6, 4), intArrayOf(4, 11, 11, 19, 19, 13, 13, 19, 19, 11, 11),11)
 }

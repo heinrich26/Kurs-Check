@@ -18,7 +18,7 @@ class Main : JPanel() {
         fun main(args: Array<String>) {
             // Windows UI verwenden
             try {
-                UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+                UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel")
             } catch (ex: Exception) {
                 ex.printStackTrace()
             }
@@ -109,6 +109,6 @@ class Main : JPanel() {
 
         add(curPanel, row = 1, column = 2, fill = GridBagConstraints.BOTH, weightx = 1.0)
 
-        add(sidebar, row = 1, column = 0, fill = GridBagConstraints.VERTICAL, weighty = 1.0, )
+        add(sidebar, row = 1, column = 0, fill = GridBagConstraints.VERTICAL, weighty = 1.0)
     }
 }
