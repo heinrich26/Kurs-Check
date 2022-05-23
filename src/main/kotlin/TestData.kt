@@ -14,8 +14,8 @@ val spa = Fach("Spanisch", "Spa", 1, true)
 val lat = Fach("Latein", "Lat", 1, false)
 val fr = Fach("Französisch", "Fr", 1, true)
 
-val faecher = listOf(eng, ma, de, inf, geo, sp, ge)
 val fremdsprachen = listOf(eng, spa, lat, fr)
+var faecher = listOf(eng, ma, de, inf, geo, sp, ge, spa, lat, fr)
 val wpfs = listOf(inf, lat)
 
 

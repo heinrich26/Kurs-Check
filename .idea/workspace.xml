@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Arbeit am Hauptfenster">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/gui/ColoredCheckBox.kt" afterDir="false" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="abstrakte klasse hinzugefügt">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/gui/Leistungskurse.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/MainScreen.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/Consts.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/Consts.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/Focusable.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/TestData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/TestData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/WahlVisualizer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/WahlVisualizer.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/GrundkursWahl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/GrundkursWahl.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -86,6 +85,9 @@
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
     </key>
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="gui" />
+    </key>
   </component>
   <component name="RunManager" selected="Kotlin.Main">
     <configuration name="BaseDialog" type="JetRunConfigurationType" nameIsGenerated="true">
@@ -97,6 +99,13 @@
     </configuration>
     <configuration name="Fremdsprachen" type="JetRunConfigurationType" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="gui.Fremdsprachen" />
+      <module name="kurswahlApp.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GrundkursWahl" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="gui.GrundkursWahl" />
       <module name="kurswahlApp.main" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -121,10 +130,12 @@
       <item itemvalue="Kotlin.BaseDialog" />
       <item itemvalue="Kotlin.Fremdsprachen" />
       <item itemvalue="Kotlin.Main" />
+      <item itemvalue="Kotlin.GrundkursWahl" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Kotlin.Main" />
+        <item itemvalue="Kotlin.GrundkursWahl" />
       </list>
     </recent_temporary>
   </component>
@@ -220,7 +231,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />

@@ -21,6 +21,8 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
     override fun close(): KurswahlData {
         val gks = ArrayList<Pair<Fach, Wahlmoeglichkeit>>()
         for ((i, fach) in fachData.feacher.withIndex()) {
+            if (fach in wahlData.pfs) continue
+
             val zeile = checkboxArray.subList(i * 4, i * 4 + 4).map { it.isSelected }
             val pair = fach to when (zeile) {
                 listOf(true, true, false, false) -> ERSTES_ZWEITES
@@ -48,7 +50,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
     }
 
 
-    private val checkboxArray = ArrayList<JToggleButton>()
+    private val checkboxArray = ArrayList<JCheckBox>()
     private var anzahl: Int = 0
         set(value) {
             field = value
@@ -78,7 +80,6 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
         }
 
         for ((gk, choice) in wahlData.gks) {
-
             val pos = fachPos(gk)
             val acti = when (choice) {
                 ERSTES_ZWEITES -> listOf(true, true, false, false)
@@ -88,9 +89,10 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
                 DURCHGEHEND -> listOf(true, true, true, true)
             }
             for (k in 0..3) {
-                if (acti[k])
+                if (acti[k]) {
                     anzahl++
-                checkboxArray[k + pos * 4].isSelected = true
+                    checkboxArray[k + (pos * 4)].isSelected = true
+                }
             }
         }
 
@@ -108,7 +110,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
                 val box = JCheckBox()
                 box.isFocusable = false
                 box.isOpaque = false
-                box.addActionListener { if ((it.source as JToggleButton).isSelected) anzahl++ else anzahl-- }
+                box.addActionListener { if ((it.source as JCheckBox).isSelected) anzahl++ else anzahl-- }
                 box.background = Color.CYAN
                 checkboxArray.add(box)
                 add(box, row = i, column = j, fill = GridBagConstraints.HORIZONTAL)

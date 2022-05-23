@@ -120,7 +120,7 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
         }
         val bold = Font(font.name, Font.BOLD, font.size)
         add(
-            JLabel("gesammt").apply { this.font = bold },
+            JLabel("ges. ").apply { this.font = bold },
             row = i + 4,
             column = 1,
             anchor = GridBagConstraints.WEST

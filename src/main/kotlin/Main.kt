@@ -49,7 +49,7 @@ class Main : JPanel() {
 
     private val sidebarBtns = arrayOf(
         FsWpfIcon { navTo(Fremdsprachen::class, 0) },
-        SidebarLabel("LKs") { navTo(Fremdsprachen::class, 1) },
+        SidebarLabel("LKs") { navTo(Leistungskurse::class, 1) },
         SidebarLabel("PKs") { navTo(Fremdsprachen::class, 2) },
         SidebarLabel("GKs") { navTo(GrundkursWahl::class, 3) },
         PolyIcon(HOME_POLY, true) { navTo(Overview::class, 4) }
@@ -78,6 +78,7 @@ class Main : JPanel() {
         curPanel = panel.constructors.first().call(wahlData, fachData)
         add(curPanel, row = 1, column = 2, fill = GridBagConstraints.BOTH, weightx = 1.0)
         SwingUtilities.windowForComponent(this).pack()
+//        this.repaint()
 
 
         // Sidebar Knöpfe updaten
