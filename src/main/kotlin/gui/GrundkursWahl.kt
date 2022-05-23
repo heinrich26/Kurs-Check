@@ -10,12 +10,15 @@ import testFachdata
 import testKurswahl
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
+import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
+import javax.swing.JButton
 import javax.swing.JCheckBox
 import javax.swing.JLabel
 import javax.swing.JToggleButton
 
 
-class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(wahlData, fachData) {
+class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(wahlData, fachData), ActionListener {
     override fun close(): KurswahlData {
         val gks = ArrayList<Pair<Fach, Wahlmoeglichkeit>>()
         for ((i, fach) in fachData.feacher.withIndex()) {
@@ -62,6 +65,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
         add(anzahlLabel, row = fachData.feacher.size)
 
         buildCheckboxes()
+        anzahlKurseCheck()
         for (pf in wahlData.pfs.filterNotNull()) {
             val pos = fachPos(pf)
             for (k in pos * 4..pos * 4 + 3) {
@@ -109,10 +113,23 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
             }
         }
     }
+    val checkText = JLabel()
+    private fun anzahlKurseCheck(){
+        val checkButton = JButton("Check deine Wahl")
+        checkButton.addActionListener(this)
+        add(checkButton)
+    }
 
     private fun fachPos(fach: Fach) = fachData.feacher.indexOf(fach)
 
     override val windowName: String
         get() = "Grundkurse"
+
+    override fun actionPerformed(e: ActionEvent?) {
+        add(checkText)
+        if(anzahl < 34 /*TODO Übergabe von minimum anzahl der Kurse*/ ){checkText.text = "Es wurden zu wenig Kurse gewählt. Bitte wählen Sie mehr Kurse aus."}
+        else if (anzahl > 44 /*TODO Übergabe von minimum anzahl der Kurse*/){checkText.text = "Es wurden zu viele Kurse gewählt. Bitte wählen Sie weniger aus."}
+        else{checkText.text = "nice"}
+    }
 
 }
