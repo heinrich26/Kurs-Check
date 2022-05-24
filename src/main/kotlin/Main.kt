@@ -32,6 +32,7 @@ class Main : JPanel() {
             frame.minimumSize = Dimension(640, 560)
             // Display the window.
             frame.pack()
+            frame.setLocation(500,200)
             frame.isVisible = true
         }
     }

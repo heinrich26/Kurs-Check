@@ -6,8 +6,8 @@ class JsonDataStructure {
     var aufgabenfelder: Map<Int, List<String>>? = null
 
     override fun toString(): String {
-        return "Kurse: $availableCourses\nAufgabenfelder: $aufgabenfelder\nWahlzeilen: $wahlzeile"
+        return "Kurse: $availableCourses\nAufgabenfelder: $aufgabenfelder\nWahlzeilen: $wahlzeilen"
     }
 
-    var wahlzeile: Map<Int, Wahlzeile>? = null
+    var wahlzeilen: Map<Int, Wahlzeile>? = null
 }
