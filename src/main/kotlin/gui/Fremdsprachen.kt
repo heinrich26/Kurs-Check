@@ -34,10 +34,10 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
         }
     }
 
-    private val fsJahr1: ChainedSpinnerNumberModel
-    private val fsJahr2: ChainedSpinnerNumberModel
-    private val fsJahr3: ChainedSpinnerNumberModel
-    private val fsJahr4: ChainedSpinnerNumberModel
+    private val fsJahr1: SpinnerNumberModel
+    private val fsJahr2: SpinnerNumberModel
+    private val fsJahr3: SpinnerNumberModel
+    private val fsJahr4: SpinnerNumberModel
 
     private val fs1: MyComboBox
     private val fs2: MyComboBox
@@ -67,10 +67,15 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
             margin = Insets(10, 0, 4, 0)
         )
 
-        fsJahr4 = ChainedSpinnerNumberModel(1, 1, 10)
-        fsJahr3 = ChainedSpinnerNumberModel(1, 1, 10, fsJahr4)
-        fsJahr2 = ChainedSpinnerNumberModel(1, 1, 10, fsJahr3)
-        fsJahr1 = ChainedSpinnerNumberModel(1, 1, 10, fsJahr2)
+//        fsJahr4 = ChainedSpinnerNumberModel(1, 1, 10)
+//        fsJahr3 = ChainedSpinnerNumberModel(1, 1, 10, fsJahr4)
+//        fsJahr2 = ChainedSpinnerNumberModel(1, 1, 10, fsJahr3)
+//        fsJahr1 = ChainedSpinnerNumberModel(1, 1, 10, fsJahr2)
+
+        fsJahr4 = SpinnerNumberModel(1, 1, 10,1)
+        fsJahr3 = SpinnerNumberModel(1, 1, 10,1)
+        fsJahr2 = SpinnerNumberModel(1, 1, 10,1)
+        fsJahr1 = SpinnerNumberModel(1, 1, 10,1)
 
         val spinner3 = JSpinner(fsJahr3)
         val spinner4 = JSpinner(fsJahr4)
@@ -220,11 +225,11 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
 
     override fun close(): KurswahlData {
         val sprachen: MutableList<Pair<Fach, Int>> =
-            mutableListOf(fs1.selectedItem!! to fsJahr1.number, fs2.selectedItem!! to fsJahr2.number)
+            mutableListOf(fs1.selectedItem!! to fsJahr1.number as Int, fs2.selectedItem!! to fsJahr2.number as Int)
         fs3.selectedItem.let { sel ->
             if (sel != null) {
-                sprachen.add(sel to fsJahr3.number)
-                fs4.selectedItem.let { if (it != null) sprachen.add(it to fsJahr4.number) }
+                sprachen.add(sel to fsJahr3.number as Int)
+                fs4.selectedItem.let { if (it != null) sprachen.add(it to fsJahr4.number as Int) }
             }
         }
 
