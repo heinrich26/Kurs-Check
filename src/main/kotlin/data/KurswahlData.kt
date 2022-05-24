@@ -60,5 +60,5 @@ data class KurswahlData(
     }
 
     val pfs: List<Fach?>
-        get() = listOf(lk1, lk2, pf3, pf4, pf5, pk3 , pk4)
+        get() = listOf(lk1, lk2, pf3, pf4, pf5)
 }

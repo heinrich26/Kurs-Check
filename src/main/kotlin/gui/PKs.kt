@@ -52,16 +52,16 @@ class PKs(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(wahlData, 
 
 
 
-        val model1 = ExclusiveComboBoxModel(fachData.feacher)
+        val model1 = ExclusiveComboBoxModel(fachData.faecher)
         pk1 = MyComboBox(model1)
 
-        val model2 = ExclusiveComboBoxModel(fachData.feacher, pk1)
+        val model2 = ExclusiveComboBoxModel(fachData.faecher, pk1)
         pk2 = MyComboBox(model2)
 
-        val model3 = ExclusiveComboBoxModel(fachData.feacher, pk2)
+        val model3 = ExclusiveComboBoxModel(fachData.faecher, pk2)
         pk3 = MyComboBox(model3)
 
-        val model4 = ExclusiveComboBoxModel(fachData.feacher, pk3)
+        val model4 = ExclusiveComboBoxModel(fachData.faecher, pk3)
         pk4 = MyComboBox(model4)
 
 

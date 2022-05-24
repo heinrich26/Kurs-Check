@@ -21,7 +21,7 @@ import javax.swing.JToggleButton
 class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(wahlData, fachData), ActionListener {
     override fun close(): KurswahlData {
         val gks = ArrayList<Pair<Fach, Wahlmoeglichkeit>>()
-        for ((i, fach) in fachData.feacher.withIndex()) {
+        for ((i, fach) in fachData.faecher.withIndex()) {
             if (fach in wahlData.pfs) continue
 
             val zeile = checkboxArray.subList(i * 4, i * 4 + 4).map { it.isSelected }
@@ -62,7 +62,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
 
     init {
         layout = GridBagLayout()
-        add(anzahlLabel, row = fachData.feacher.size)
+        add(anzahlLabel, row = fachData.faecher.size)
 
         buildCheckboxes()
         anzahlKurseCheck()
@@ -100,7 +100,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
 
     private fun buildCheckboxes() {
         // Erstellt Checkboxen
-        for ((i, fach) in fachData.feacher.withIndex()) {
+        for ((i, fach) in fachData.faecher.withIndex()) {
             val labs = JLabel(fach.name)
             add(labs, row = i, column = 0, fill = GridBagConstraints.HORIZONTAL)
             for (j in 1..4) {
@@ -120,7 +120,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
         add(checkButton)
     }
 
-    private fun fachPos(fach: Fach) = fachData.feacher.indexOf(fach)
+    private fun fachPos(fach: Fach) = fachData.faecher.indexOf(fach)
 
     override val windowName: String
         get() = "Grundkurse"

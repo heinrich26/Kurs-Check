@@ -1,5 +1,5 @@
 {
-	"availableCourses": {
+	"faecher": {
 		"De": {
 			"name": "Deutsch",
 			"kuerzel": "De",
@@ -133,6 +133,10 @@
 			"lk": false
 		}
 	},
+	"fremdsprachen": ["En", "Spa", "Lat", "Fr"],
+	"naturwissenschaften": ["Phy", "Che", "Bio"],
+	"wpfs": ["Inf", "Lat", "Fr"],
+	"mu/ku": ["Mu", "Ku"],
 	"aufgabenfelder": {
 		"0": [
 			"Studium und Beruf", "Englisch Debating", "Psychologie",
@@ -367,7 +371,7 @@
 			"lk1": "$NW",
 			"lk2": "De",
 			"pf3": "$FS",
-			"pf4": "$2AF",
+			"pf4": "$AF2",
 			"pf5": "*",
 			"linien": "gestrichelt"
 		},
@@ -375,7 +379,7 @@
 			"lk1": "$NW",
 			"lk2": "De",
 			"pf3": "Ma",
-			"pf4": "$2AF",
+			"pf4": "$AF2",
 			"pf5": "*",
 			"linien": "gestrichelt"
 		},
@@ -384,7 +388,7 @@
 			"lk2": "$Mu/Ku",
 			"pf3": "$FS",
 			"pf4": "De",
-			"pf5": "$2AF",
+			"pf5": "$AF2",
 			"linien": "durchgezogen"
 		},
 		"35": {
@@ -392,7 +396,7 @@
 			"lk2": "$Mu/Ku",
 			"pf3": "$FS",
 			"pf4": "Ma",
-			"pf5": "$2AF",
+			"pf5": "$AF2",
 			"linien": "durchgezogen"
 		},
 		"36": {
@@ -400,12 +404,12 @@
 			"lk2": "$Mu/Ku",
 			"pf3": "Ma",
 			"pf4": "De",
-			"pf5": "$2AF",
+			"pf5": "$AF2",
 			"linien": "durchgezogen"
 		},
 		"37": {
 			"lk1": "$NW",
-			"lk2": "$2AF",
+			"lk2": "$AF2",
 			"pf3": "$FS",
 			"pf4": "De",
 			"pf5": "*",
@@ -413,7 +417,7 @@
 		},
 		"38": {
 			"lk1": "$NW",
-			"lk2": "$2AF",
+			"lk2": "$AF2",
 			"pf3": "$FS",
 			"pf4": "Ma",
 			"pf5": "*",
@@ -421,7 +425,7 @@
 		},
 		"39": {
 			"lk1": "$NW",
-			"lk2": "$2AF",
+			"lk2": "$AF2",
 			"pf3": "Ma",
 			"pf4": "De",
 			"pf5": "*",
@@ -432,7 +436,7 @@
 			"lk2": "$NW",
 			"pf3": "$FS",
 			"pf4": "De",
-			"pf5": "$2AF",
+			"pf5": "$AF2",
 			"linien": "durchgezogen"
 		},
 		"41": {
@@ -440,7 +444,7 @@
 			"lk2": "$NW",
 			"pf3": "$FS",
 			"pf4": "Ma",
-			"pf5": "$2AF",
+			"pf5": "$AF2",
 			"linien": "durchgezogen"
 		},
 		"42": {
@@ -448,7 +452,7 @@
 			"lk2": "$NW",
 			"pf3": "Ma",
 			"pf4": "De",
-			"pf5": "$2AF",
+			"pf5": "$AF2",
 			"linien": "durchgezogen"
 		},
 		"43": {
@@ -456,7 +460,7 @@
 			"lk2": "In",
 			"pf3": "$FS",
 			"pf4": "De",
-			"pf5": "$2AF",
+			"pf5": "$AF2",
 			"linien": "durchgezogen"
 		},
 		"44": {
@@ -464,7 +468,7 @@
 			"lk2": "In",
 			"pf3": "$FS",
 			"pf4": "Ma",
-			"pf5": "$2AF",
+			"pf5": "$AF2",
 			"linien": "durchgezogen"
 		},
 		"45": {
@@ -472,14 +476,14 @@
 			"lk2": "In",
 			"pf3": "Ma",
 			"pf4": "De",
-			"pf5": "$2AF",
+			"pf5": "$AF2",
 			"linien": "durchgezogen"
 		},
 		"49": {
 			"lk1": "De",
 			"lk2": "$Mu/Ku",
 			"pf3": "$FS",
-			"pf4": "$2AF",
+			"pf4": "$AF2",
 			"pf5": "$NW",
 			"linien": "gestrichelt"
 		},
@@ -487,7 +491,7 @@
 			"lk1": "De",
 			"lk2": "$Mu/Ku",
 			"pf3": "$FS",
-			"pf4": "$2AF",
+			"pf4": "$AF2",
 			"pf5": "In",
 			"linien": "gestrichelt"
 		},
@@ -495,13 +499,13 @@
 			"lk1": "De",
 			"lk2": "%Mu/Ku",
 			"pf3": "Ma",
-			"pf4": "$2AF",
+			"pf4": "$AF2",
 			"pf5": "*",
 			"linien": "gestrichelt"
 		},
 		"52": {
 			"lk1": "De",
-			"lk2": "$2AF",
+			"lk2": "$AF2",
 			"pf3": "$FS",
 			"pf4": "$NW",
 			"pf5": "*",
@@ -509,7 +513,7 @@
 		},
 		"53": {
 			"lk1": "De",
-			"lk2": "$2AF",
+			"lk2": "$AF2",
 			"pf3": "$FS",
 			"pf4": "In",
 			"pf5": "*",
@@ -517,7 +521,7 @@
 		},
 		"54": {
 			"lk1": "De",
-			"lk2": "$2AF",
+			"lk2": "$AF2",
 			"pf3": "Ma",
 			"pf4": "*",
 			"pf5": "*",
@@ -527,7 +531,7 @@
 			"lk1": "De",
 			"lk2": "In",
 			"pf3": "$FS",
-			"pf4": "$2AF",
+			"pf4": "$AF2",
 			"pf5": "*",
 			"linien": "gestrichelt"
 		},
@@ -535,9 +539,15 @@
 			"lk1": "De",
 			"lk2": "In",
 			"pf3": "Ma",
-			"pf4": "$2AF",
+			"pf4": "$AF2",
 			"pf5": "*",
 			"linien": "gestrichelt"
 		}
+	},
+	"wildcards": {
+		"$AF2": ["Ge", "PW", "Geo"], // Kurse aus dem Aufgabenfeld 2
+		"$FS": ["Fr", "Spa", "Lat", "En"],
+		"$NW": ["Che", "Phy", "Bio"],
+		"$Mu/Ku": ["Mu", "Ku"]
 	}
 }

@@ -4,13 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="abstrakte klasse hinzugefügt">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/gui/Leistungskurse.kt" afterDir="false" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Json deserialisierung umgesetzt">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/TestData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/TestData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/WahlVisualizer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/WahlVisualizer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/FachData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/FachData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/JsonDataStructure.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/JsonDataStructure.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/KurswahlData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/KurswahlData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Wahlzeile.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Wahlzeile.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/GrundkursWahl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/GrundkursWahl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/PKs.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/PKs.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/dataStruct.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dataStruct.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,9 +39,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Kotlin Data Class" />
         <option value="Kotlin File" />
         <option value="Kotlin Interface" />
+        <option value="Kotlin Data Class" />
         <option value="Kotlin Class" />
       </list>
     </option>
@@ -78,6 +80,9 @@
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
   </component>
   <component name="RecentsManager">
+    <key name="CreateKotlinClassDialog.RecentsKey">
+      <recent name="data" />
+    </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
       <recent name="gui" />
       <recent name="data" />
@@ -89,9 +94,16 @@
       <recent name="gui" />
     </key>
   </component>
-  <component name="RunManager" selected="Kotlin.Main">
+  <component name="RunManager" selected="Kotlin.DataReadingTestKt">
     <configuration name="BaseDialog" type="JetRunConfigurationType" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="gui.BaseDialog" />
+      <module name="kurswahlApp.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DataReadingTestKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="data.DataReadingTestKt" />
       <module name="kurswahlApp.main" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -131,9 +143,11 @@
       <item itemvalue="Kotlin.Fremdsprachen" />
       <item itemvalue="Kotlin.Main" />
       <item itemvalue="Kotlin.GrundkursWahl" />
+      <item itemvalue="Kotlin.DataReadingTestKt" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Kotlin.DataReadingTestKt" />
         <item itemvalue="Kotlin.Main" />
         <item itemvalue="Kotlin.GrundkursWahl" />
       </list>
@@ -164,7 +178,7 @@
       <workItem from="1652443581364" duration="12775000" />
       <workItem from="1652881494566" duration="3606000" />
       <workItem from="1652941873137" duration="30095000" />
-      <workItem from="1653124331707" duration="28283000" />
+      <workItem from="1653124331707" duration="38815000" />
     </task>
     <task id="LOCAL-00003" summary="reimpl. der fremdsprachen wahl">
       <created>1652452601911</created>
@@ -215,7 +229,21 @@
       <option name="project" value="LOCAL" />
       <updated>1653243799007</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Arbeit am GK-Wahl-Fenster (Checkboxfärbung etc.)">
+      <created>1653290498633</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1653290498633</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Json deserialisierung umgesetzt">
+      <created>1653313572790</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1653313572790</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -231,6 +259,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
@@ -240,6 +269,22 @@
     <MESSAGE value="visualizer fertiggestellt" />
     <MESSAGE value="Fremdsprachen / Wahlpflicht soweit fertig" />
     <MESSAGE value="Arbeit am Hauptfenster" />
-    <option name="LAST_COMMIT_MESSAGE" value="Arbeit am Hauptfenster" />
+    <MESSAGE value="Arbeit am GK-Wahl-Fenster (Checkboxfärbung etc.)" />
+    <MESSAGE value="Json deserialisierung umgesetzt" />
+    <option name="LAST_COMMIT_MESSAGE" value="Json deserialisierung umgesetzt" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-function">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/Utils.kt</url>
+          <line>7</line>
+          <properties method="getResource">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
