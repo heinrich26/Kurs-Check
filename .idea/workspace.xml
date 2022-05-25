@@ -4,18 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Wahlzeilenmatching weitergeführt">
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/TestData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/TestData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/FachData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/FachData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/JsonDataStructure.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/JsonDataStructure.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Pf5Typ.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Pf5Typ.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Wahlmoeglichkeit.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Wahlmoeglichkeit.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/dataReadingTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/dataReadingTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/dataStruct.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dataStruct.json" afterDir="false" />
-    </list>
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Wahldaten kommen nun komplett aus der JSON" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -164,7 +153,7 @@
       <workItem from="1652881494566" duration="3606000" />
       <workItem from="1652941873137" duration="30095000" />
       <workItem from="1653124331707" duration="38875000" />
-      <workItem from="1653483671237" duration="4039000" />
+      <workItem from="1653483671237" duration="4480000" />
     </task>
     <task id="LOCAL-00003" summary="reimpl. der fremdsprachen wahl">
       <created>1652452601911</created>
@@ -243,7 +232,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653485210774</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Wahldaten kommen nun komplett aus der JSON">
+      <created>1653488040281</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1653488040281</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -273,7 +269,8 @@
     <MESSAGE value="Json deserialisierung umgesetzt" />
     <MESSAGE value="Wahlzeilenmatching implementiert und JSON Struktur geändert! Ausführen sollte bissn kaputt sein" />
     <MESSAGE value="Wahlzeilenmatching weitergeführt" />
-    <option name="LAST_COMMIT_MESSAGE" value="Wahlzeilenmatching weitergeführt" />
+    <MESSAGE value="Wahldaten kommen nun komplett aus der JSON" />
+    <option name="LAST_COMMIT_MESSAGE" value="Wahldaten kommen nun komplett aus der JSON" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

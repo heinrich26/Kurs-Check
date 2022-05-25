@@ -13,6 +13,10 @@ class JsonDataStructure(
         return "Kurse: $faecher\nWahlzeilen: $wahlzeilen"
     }
 
+    /**
+     * Das [FachData] Objekt erstellen,
+     * indem wenn nötig eingelesene Daten umgeformt werden
+     */
     fun toFachData(): FachData = FachData(
         faecher = faecher.values.toList(),
         fremdsprachen = fremdsprachen.map { faecher[it]!! },
