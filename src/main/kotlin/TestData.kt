@@ -1,7 +1,5 @@
-import data.Fach
-import data.FachData
-import data.KurswahlData
-import data.Wahlmoeglichkeit
+import com.google.gson.Gson
+import data.*
 
 val eng = Fach("Englisch", "E", 1, true)
 val ma = Fach("Mathe", "Ma", 2, true)
@@ -30,4 +28,5 @@ val testKurswahl = KurswahlData().apply {
     wpfs = inf to null
 }
 
-val testFachdata = FachData(faecher, fremdsprachen, wpfs, listOf(ma to Wahlmoeglichkeit.DURCHGEHEND, de to Wahlmoeglichkeit.DURCHGEHEND, sp to Wahlmoeglichkeit.DURCHGEHEND))
+//val testFachdata = FachData(faecher, fremdsprachen, wpfs, mapOf(ma to Wahlmoeglichkeit.DURCHGEHEND, de to Wahlmoeglichkeit.DURCHGEHEND, sp to Wahlmoeglichkeit.DURCHGEHEND), )
+val testFachdata = Gson().fromJson(getResource("dataStruct.json"), JsonDataStructure::class.java).toFachData()

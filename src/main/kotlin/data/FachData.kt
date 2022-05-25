@@ -4,9 +4,8 @@ class FachData(
     val faecher: List<Fach>,
     val fremdsprachen: List<Fach>,
     val wpfs: List<Fach>,
-    val pflichtfaecher: List<Pair<Fach, Wahlmoeglichkeit>>,
+    val pflichtfaecher: Map<Fach, Wahlmoeglichkeit>,
     val wahlzeilen: Map<Int, Wahlzeile>,
-    val naturwissenschaften: List<Fach>,
     val wildcards: Map<String, List<Fach>>
 ) {
     /**

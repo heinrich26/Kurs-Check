@@ -4,9 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Wahlzeilenmatching implementiert und JSON Struktur geändert! Ausführen sollte bissn kaputt sein">
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Wahlzeilenmatching weitergeführt">
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/TestData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/TestData.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/FachData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/FachData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/JsonDataStructure.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/JsonDataStructure.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Pf5Typ.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Pf5Typ.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Wahlmoeglichkeit.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Wahlmoeglichkeit.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/dataReadingTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/dataReadingTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/dataStruct.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dataStruct.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,14 +97,7 @@
       <recent name="gui" />
     </key>
   </component>
-  <component name="RunManager" selected="Kotlin.DataReadingTestKt">
-    <configuration name="BaseDialog" type="JetRunConfigurationType" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="gui.BaseDialog" />
-      <module name="kurswahlApp.main" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Kotlin.Main">
     <configuration name="DataReadingTestKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="data.DataReadingTestKt" />
       <module name="kurswahlApp.main" />
@@ -111,30 +112,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GrundkursWahl" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+    <configuration name="GrundkursWahl" type="JetRunConfigurationType" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="gui.GrundkursWahl" />
       <module name="kurswahlApp.main" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Main" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+    <configuration name="Main" type="JetRunConfigurationType" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="kurswahlApp.main" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MainScreen" type="JetRunConfigurationType" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="MainScreen" />
-      <module name="kurswahlApp.main" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
-      <item itemvalue="Kotlin.MainScreen" />
-      <item itemvalue="Kotlin.BaseDialog" />
       <item itemvalue="Kotlin.Fremdsprachen" />
       <item itemvalue="Kotlin.Main" />
       <item itemvalue="Kotlin.GrundkursWahl" />
@@ -143,8 +135,6 @@
     <recent_temporary>
       <list>
         <item itemvalue="Kotlin.DataReadingTestKt" />
-        <item itemvalue="Kotlin.Main" />
-        <item itemvalue="Kotlin.GrundkursWahl" />
       </list>
     </recent_temporary>
   </component>
@@ -174,7 +164,7 @@
       <workItem from="1652881494566" duration="3606000" />
       <workItem from="1652941873137" duration="30095000" />
       <workItem from="1653124331707" duration="38875000" />
-      <workItem from="1653483671237" duration="1181000" />
+      <workItem from="1653483671237" duration="4039000" />
     </task>
     <task id="LOCAL-00003" summary="reimpl. der fremdsprachen wahl">
       <created>1652452601911</created>
@@ -246,7 +236,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653415438772</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Wahlzeilenmatching weitergeführt">
+      <created>1653485210774</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1653485210774</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -275,7 +272,8 @@
     <MESSAGE value="Arbeit am GK-Wahl-Fenster (Checkboxfärbung etc.)" />
     <MESSAGE value="Json deserialisierung umgesetzt" />
     <MESSAGE value="Wahlzeilenmatching implementiert und JSON Struktur geändert! Ausführen sollte bissn kaputt sein" />
-    <option name="LAST_COMMIT_MESSAGE" value="Wahlzeilenmatching implementiert und JSON Struktur geändert! Ausführen sollte bissn kaputt sein" />
+    <MESSAGE value="Wahlzeilenmatching weitergeführt" />
+    <option name="LAST_COMMIT_MESSAGE" value="Wahlzeilenmatching weitergeführt" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

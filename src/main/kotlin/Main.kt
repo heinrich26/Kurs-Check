@@ -1,3 +1,4 @@
+import com.google.gson.Gson
 import data.*
 import gui.*
 import gui.Consts.HOME_POLY
@@ -9,7 +10,8 @@ import kotlin.reflect.KClass
 
 class Main : JPanel() {
     private var wahlData: KurswahlData = KurswahlData()
-    private val fachData: FachData = testFachdata
+    private val fachData: FachData =
+        Gson().fromJson(getResource("dataStruct.json"), JsonDataStructure::class.java).toFachData()
 
     companion object {
         @JvmStatic
@@ -32,7 +34,7 @@ class Main : JPanel() {
             frame.minimumSize = Dimension(640, 560)
             // Display the window.
             frame.pack()
-            frame.setLocation(500,200)
+            frame.setLocation(500, 200)
             frame.isVisible = true
         }
     }

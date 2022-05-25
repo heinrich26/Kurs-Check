@@ -1,154 +1,145 @@
 {
-	"faecher": {
-		"De": {
-			"name": "Deutsch",
-			"kuerzel": "De",
-			"aufgabenfeld": 1,
-			"lk": true
-		},
-		"En": {
-			"name": "Englisch",
-			"kuerzel": "En",
-			"aufgabenfeld": 1,
-			"lk": true
-		},
-		"Spa": {
-			"name": "Spanisch",
-			"kuerzel": "Spa",
-			"aufgabenfeld": 1,
-			"lk": true
-		},
-		"Fr": {
-			"name": "Französisch",
-			"kuerzel": "Fr",
-			"aufgabenfeld": 1,
-			"lk": false
-		},
-		"Lat": {
-			"name": "Latein",
-			"kuerzel": "Lat",
-			"aufgabenfeld": 1,
-			"lk": false
-		},
-		"Ku": {
-			"name": "Kunst",
-			"kuerzel": "Ku",
-			"aufgabenfeld": 1,
-			"lk": true
-		},
-		"Mu": {
-			"name": "Musik",
-			"kuerzel": "Mu",
-			"aufgabenfeld": 1,
-			"lk": false
-		},
-		"DS": {
-			"name": "Darstellendes Spiel",
-			"kuerzel": "DS",
-			"aufgabenfeld": 1,
-			"lk": false
-		},
-		"Ge": {
-			"name": "Geschichte",
-			"kuerzel": "Ge",
-			"aufgabenfeld": 2,
-			"lk": true
-		},
-		"PW": {
-			"name": "Politikwissenschaft",
-			"kuerzel": "PW",
-			"aufgabenfeld": 2,
-			"lk": true
-		},
-		"Geo": {
-			"name": "Geografie",
-			"kuerzel": "Geo",
-			"aufgabenfeld": 2,
-			"lk": true
-		},
-		"Ma": {
-			"name": "Mathematik",
-			"kuerzel": "Ma",
-			"aufgabenfeld": 3,
-			"lk": true
-		},
-		"Phy": {
-			"name": "Physik",
-			"kuerzel": "Phy",
-			"aufgabenfeld": 3,
-			"lk": true
-		},
-		"Che": {
-			"name": "Chemie",
-			"kuerzel": "Che",
-			"aufgabenfeld": 3,
-			"lk": true
-		},
-		"Bio": {
-			"name": "Biologie",
-			"kuerzel": "Bio",
-			"aufgabenfeld": 3,
-			"lk": true
-		},
-		"Inf": {
-			"name": "Informatik",
-			"kuerzel": "Inf",
-			"aufgabenfeld": 3,
-			"lk": true
-		},
-		"SuB": {
-			"name": "Studium und Beruf",
-			"kuerzel": "SuB",
-			"aufgabenfeld": 0,
-			"lk": false
-		},
-		"ED": {
-			"name": "Englisch Debating",
-			"kuerzel": "ED",
-			"aufgabenfeld": 0,
-			"lk": false
-		},
-		"Psy": {
-			"name": "Psychologie",
-			"kuerzel": "Psy",
-			"aufgabenfeld": 0,
-			"lk": false
-		},
-		"Med": {
-			"name": "Medizin",
-			"kuerzel": "Med",
-			"aufgabenfeld": 0,
-			"lk": false
-		},
-		"Sp": {
-			"name": "Sport",
-			"kuerzel": "Sp",
-			"aufgabenfeld": 0,
-			"lk": false
-		},
-		"SpT": {
-			"name": "Sport Theorie",
-			"kuerzel": "SpT",
-			"aufgabenfeld": 0,
-			"lk": false
-		}
-	},
+    "faecher": {
+    "De": {
+      "name": "Deutsch",
+      "kuerzel": "De",
+      "aufgabenfeld": 1,
+      "lk": true
+    },
+    "En": {
+      "name": "Englisch",
+      "kuerzel": "En",
+      "aufgabenfeld": 1,
+      "lk": true
+    },
+    "Spa": {
+      "name": "Spanisch",
+      "kuerzel": "Spa",
+      "aufgabenfeld": 1,
+      "lk": true
+    },
+    "Fr": {
+      "name": "Französisch",
+      "kuerzel": "Fr",
+      "aufgabenfeld": 1,
+      "lk": false
+    },
+    "Lat": {
+      "name": "Latein",
+      "kuerzel": "Lat",
+      "aufgabenfeld": 1,
+      "lk": false
+    },
+    "Ku": {
+      "name": "Kunst",
+      "kuerzel": "Ku",
+      "aufgabenfeld": 1,
+      "lk": true
+    },
+    "Mu": {
+      "name": "Musik",
+      "kuerzel": "Mu",
+      "aufgabenfeld": 1,
+      "lk": false
+    },
+    "DS": {
+      "name": "Darstellendes Spiel",
+      "kuerzel": "DS",
+      "aufgabenfeld": 1,
+      "lk": false
+    },
+    "Ge": {
+      "name": "Geschichte",
+      "kuerzel": "Ge",
+      "aufgabenfeld": 2,
+      "lk": true
+    },
+    "PW": {
+      "name": "Politikwissenschaft",
+      "kuerzel": "PW",
+      "aufgabenfeld": 2,
+      "lk": true
+    },
+    "Geo": {
+      "name": "Geografie",
+      "kuerzel": "Geo",
+      "aufgabenfeld": 2,
+      "lk": true
+    },
+    "Ma": {
+      "name": "Mathematik",
+      "kuerzel": "Ma",
+      "aufgabenfeld": 3,
+      "lk": true
+    },
+    "Phy": {
+      "name": "Physik",
+      "kuerzel": "Phy",
+      "aufgabenfeld": 3,
+      "lk": true
+    },
+    "Che": {
+      "name": "Chemie",
+      "kuerzel": "Che",
+      "aufgabenfeld": 3,
+      "lk": true
+    },
+    "Bio": {
+      "name": "Biologie",
+      "kuerzel": "Bio",
+      "aufgabenfeld": 3,
+      "lk": true
+    },
+    "Inf": {
+      "name": "Informatik",
+      "kuerzel": "Inf",
+      "aufgabenfeld": 3,
+      "lk": true
+    },
+    "SuB": {
+      "name": "Studium und Beruf",
+      "kuerzel": "SuB",
+      "aufgabenfeld": 0,
+      "lk": false
+    },
+    "ED": {
+      "name": "Englisch Debating",
+      "kuerzel": "ED",
+      "aufgabenfeld": 0,
+      "lk": false
+    },
+    "Psy": {
+      "name": "Psychologie",
+      "kuerzel": "Psy",
+      "aufgabenfeld": 0,
+      "lk": false
+    },
+    "Med": {
+      "name": "Medizin",
+      "kuerzel": "Med",
+      "aufgabenfeld": 0,
+      "lk": false
+    },
+    "Sp": {
+      "name": "Sport",
+      "kuerzel": "Sp",
+      "aufgabenfeld": 0,
+      "lk": false
+    },
+    "SpT": {
+      "name": "Sport Theorie",
+      "kuerzel": "SpT",
+      "aufgabenfeld": 0,
+      "lk": false
+    }
+  },
+    "pflichtfaecher": {
+	    "Ma": "1-4",
+        "De": "1-4",
+        "Sp": "1-4"
+    },
 	"fremdsprachen": ["En", "Spa", "Lat", "Fr"],
-	"naturwissenschaften": ["Phy", "Che", "Bio"],
 	"wpfs": ["Inf", "Lat", "Fr"],
-	"mu/ku": ["Mu", "Ku"],
-	"aufgabenfelder": {
-		"0": [
-			"Studium und Beruf", "Englisch Debating", "Psychologie",
-			"Medizin", "Sport", "Sport Theorie"
-		],
-		"1": [
-			"Deutsch", "Englisch", "Spanisch", "Französisch",
-			"Latein", "Kunst", "Musik", "Darstellendes Spiel"
-		],
-		"2": ["Geschichte", "Politikwissenschft", "Geografie"],
-		"3": ["Mathematik", "Physik", "Chemie", "Biologie", "Informatik"]
-	},
 	"regeln": {
 		"required": [
 			{
