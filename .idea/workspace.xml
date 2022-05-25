@@ -4,15 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Json deserialisierung umgesetzt">
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Wahlzeilenmatching implementiert und JSON Struktur geändert! Ausführen sollte bissn kaputt sein">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/FachData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/FachData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/JsonDataStructure.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/JsonDataStructure.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/KurswahlData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/KurswahlData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Wahlzeile.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Wahlzeile.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/GrundkursWahl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/GrundkursWahl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/PKs.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/PKs.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/dataStruct.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dataStruct.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,6 +66,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="TODO_SCOPE" value="All Places" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File" value="kotlin" />
     <property name="project.structure.last.edited" value="Artifacts" />
@@ -178,7 +173,8 @@
       <workItem from="1652443581364" duration="12775000" />
       <workItem from="1652881494566" duration="3606000" />
       <workItem from="1652941873137" duration="30095000" />
-      <workItem from="1653124331707" duration="38815000" />
+      <workItem from="1653124331707" duration="38875000" />
+      <workItem from="1653483671237" duration="1181000" />
     </task>
     <task id="LOCAL-00003" summary="reimpl. der fremdsprachen wahl">
       <created>1652452601911</created>
@@ -243,7 +239,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653313572790</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Wahlzeilenmatching implementiert und JSON Struktur geändert! Ausführen sollte bissn kaputt sein">
+      <created>1653415438772</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1653415438772</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -271,7 +274,8 @@
     <MESSAGE value="Arbeit am Hauptfenster" />
     <MESSAGE value="Arbeit am GK-Wahl-Fenster (Checkboxfärbung etc.)" />
     <MESSAGE value="Json deserialisierung umgesetzt" />
-    <option name="LAST_COMMIT_MESSAGE" value="Json deserialisierung umgesetzt" />
+    <MESSAGE value="Wahlzeilenmatching implementiert und JSON Struktur geändert! Ausführen sollte bissn kaputt sein" />
+    <option name="LAST_COMMIT_MESSAGE" value="Wahlzeilenmatching implementiert und JSON Struktur geändert! Ausführen sollte bissn kaputt sein" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
