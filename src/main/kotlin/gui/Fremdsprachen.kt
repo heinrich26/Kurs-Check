@@ -1,6 +1,5 @@
 package gui
 
-import ChainedSpinnerNumberModel
 import ExclusiveComboBoxModel
 import add
 import data.Fach

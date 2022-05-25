@@ -20,12 +20,11 @@ import javax.swing.JToggleButton
 
 class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(wahlData, fachData), ActionListener {
     override fun close(): KurswahlData {
-        val gks = ArrayList<Pair<Fach, Wahlmoeglichkeit>>()
+        val gks = mutableMapOf<Fach, Wahlmoeglichkeit>()
         for ((i, fach) in fachData.faecher.withIndex()) {
             if (fach in wahlData.pfs) continue
 
-            val zeile = checkboxArray.subList(i * 4, i * 4 + 4).map { it.isSelected }
-            val pair = fach to when (zeile) {
+            val value = when (checkboxArray.subList(i * 4, i * 4 + 4).map { it.isSelected }) {
                 listOf(true, true, false, false) -> ERSTES_ZWEITES
                 listOf(true, true, true, false) -> ERSTES_DRITTES
                 listOf(false, true, true, true) -> ZWEITES_VIERTES
@@ -33,9 +32,9 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
                 listOf(true, true, true, true) -> DURCHGEHEND
                 else -> continue
             }
-            gks.add(pair)
+            gks[fach] = value
         }
-        return wahlData.copy(gks = gks)
+        return wahlData.copy(gks = gks.toMap())
     }
 
     override fun isDataValid(): Boolean {

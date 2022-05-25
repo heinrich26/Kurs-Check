@@ -7,7 +7,7 @@ data class KurswahlData(
     var pf4: Fach? = null,
     var pf5: Fach? = null,
     var pf5_typ: Pf5Typ = Pf5Typ.PRAESENTATION,
-    var gks: List<Pair<Fach, Wahlmoeglichkeit>> = emptyList(),
+    var gks: Map<Fach, Wahlmoeglichkeit> = emptyMap(),
     var fremdsprachen: List<Pair<Fach, Int>> = emptyList(),
     var wpfs: Pair<Fach, Fach?>? = null
 ) {
