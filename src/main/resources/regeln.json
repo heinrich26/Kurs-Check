@@ -1,0 +1,39 @@
+{
+	"regeln": [
+		{
+			"type": "Wildcard",
+			"value": {
+				"wildcard": "$AF2",
+				"anzahl": 4,
+				"wann": null,
+				"desc": "Hi",
+				"errorMsg": "error"
+			}
+		},
+		{
+			"type": "IfThen",
+			"value": {
+				"regel1": {
+					"type": "Wildcard",
+					"value": {
+						"wildcard": "$AF2",
+						"anzahl": 4,
+						"wann": null,
+						"desc": "Hi",
+						"errorMsg": "error"
+					}
+				},
+				"regel2": {
+					"type": "Wildcard",
+					"value": {
+						"wildcard": "$AF2",
+						"anzahl": 4,
+						"wann": null,
+						"desc": "Hi",
+						"errorMsg": "error"
+					}
+				}
+			}
+		}
+	]
+}

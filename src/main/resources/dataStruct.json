@@ -140,15 +140,14 @@
     },
 	"fremdsprachen": ["En", "Spa", "Lat", "Fr"],
 	"wpfs": ["Inf", "Lat", "Fr"],
-	"regeln": {
-		"required": [
-			{
-				"fächer": ["Physik", "Chemie", "Biologie"],
-				"anzahl": 4
-			},
-			{}
-		]
-	},
+	"regeln": [
+		{
+			"type": "WildcardRegel",
+			"value": {
+
+			}
+		}
+	],
 	"wahlzeilen": {
 		"1": {
 			"lk1": "$FS",
@@ -539,6 +538,8 @@
 		"$AF2": ["Ge", "PW", "Geo"], // Kurse aus dem Aufgabenfeld 2
 		"$FS": ["Fr", "Spa", "Lat", "En"],
 		"$NW": ["Che", "Phy", "Bio"],
-		"$Mu/Ku": ["Mu", "Ku"]
-	}
+		"$Mu/Ku": ["Mu", "Ku"],
+		"$ART": ["Mu", "Ku", "DS"]
+	},
+	"wzWildcards": ["$AF2", "$FS", "$NW", "$Mu/Ku"]
 }
