@@ -39,8 +39,21 @@ class FachData(
     fun filterWahlzeilen(data: KurswahlData): Map<Int, Wahlzeile> =
         filterWahlzeilen(data.lk1, data.lk2, data.pf3, data.pf4, data.pf5)
 
-    @Deprecated("Ineffizient und brauch ich halt ned")
+    @Deprecated("Ineffizient und brauchte ich erstmal nicht")
     fun matchField(fach: Fach, selector: String): Boolean =
         selector == "*" || selector == fach.kuerzel || fach in wildcards[selector]!!
 
+    override fun toString(): String =
+        arrayOf(
+            "faecher=$faecher",
+            "fremdsprachen=$fremdsprachen",
+            "wpfs=$wpfs",
+            "pflichtfaecher=$pflichtfaecher",
+            "wahlzeilen=$wahlzeilen",
+            "wildcards=$wildcards"
+        ).joinToString(
+            ",\n\t",
+            "FachData(\n\t",
+            "\n)"
+        )
 }
