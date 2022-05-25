@@ -90,8 +90,8 @@ class PKs(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(wahlData, 
         // Daten einsetzen
         pk1.selectedItem = wahlData.lk1
         pk2.selectedItem = wahlData.lk2
-        pk3.selectedItem = wahlData.pk3
-        pk4.selectedItem = wahlData.pk4
+        pk3.selectedItem = wahlData.pf3
+        pk4.selectedItem = wahlData.pf4
 
 
         // Anzeigen
