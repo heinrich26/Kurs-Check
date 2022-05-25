@@ -1,18 +1,13 @@
 package data
 
 class JsonDataStructure(
-    val faecher: Map<String, Fach>,
-    val pflichtfaecher: Map<String, Wahlmoeglichkeit>,
-    val wahlzeilen: Map<Int, Wahlzeile>,
-    val fremdsprachen: List<String>,
-    val wpfs: List<String>,
-    val wildcards: Map<String, List<String>>
+    private val faecher: Map<String, Fach>,
+    private val pflichtfaecher: Map<String, Wahlmoeglichkeit>,
+    private val wahlzeilen: Map<Int, Wahlzeile>,
+    private val fremdsprachen: List<String>,
+    private val wpfs: List<String>,
+    private val wildcards: Map<String, List<String>>
 ) {
-
-    override fun toString(): String {
-        return "Kurse: $faecher\nWahlzeilen: $wahlzeilen"
-    }
-
     /**
      * Das [FachData] Objekt erstellen,
      * indem wenn nötig eingelesene Daten umgeformt werden
