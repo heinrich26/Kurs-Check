@@ -128,17 +128,6 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
                 }
             }
         }
-        //Blockt Pflichtfächer
-        for (pfl in wahlData.pfs.filterNotNull()) {
-            val pos = fachPos(pfl)
-            for (k in pos * 4..pos * 4 + 3) {
-                anzahl++
-                checkboxArray[k].let {
-                    it.isSelected = true
-                    it.isEnabled = false
-                }
-            }
-        }
     }
 
     private fun fachPos(fach: Fach) = fachData.faecher.indexOf(fach)
