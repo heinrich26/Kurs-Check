@@ -1,3 +1,4 @@
+import data.Wahlmoeglichkeit
 import java.awt.*
 import java.lang.IllegalArgumentException
 

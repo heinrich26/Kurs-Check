@@ -9,6 +9,7 @@ import com.google.gson.stream.JsonToken
 import com.google.gson.stream.JsonWriter
 import java.io.IOException
 
+@Suppress("UNCHECKED_CAST")
 class RegelAdapterFactory: TypeAdapterFactory {
     override fun <T : Any?> create(gson: Gson, type: TypeToken<T>): TypeAdapter<T>? {
         return when (type.rawType) {
@@ -31,6 +32,7 @@ class RegelAdapterFactory: TypeAdapterFactory {
                         "Wildcard" -> WildcardRegel::class.java
                         "IfThen" -> IfThenRegel::class.java
                         "Kuerzel" -> KuerzelRegel::class.java
+                        "Or" -> OrRegel::class.java
                         else -> return null
                     })) as T
                     reader.endObject()

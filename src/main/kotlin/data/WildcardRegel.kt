@@ -4,13 +4,13 @@ class WildcardRegel(
     private val wildcard: String,
     private val anzahl: Int,
     private val wann: Wahlmoeglichkeit? = null,
-    desc: String,
-    errorMsg: String
+    desc: String? = null,
+    errorMsg: String? = null
 ) :
     Regel(desc, errorMsg) {
     // nicht jedes mal neu auf null checken
     private val predicate: (Wahlmoeglichkeit) -> Boolean =
-        if (wann == null) { it -> (it.n >= anzahl) } else { it -> (it.n >= anzahl && it == wann) }
+        if (wann == null) { it -> (it.n >= anzahl) } else { it -> (it.n >= anzahl && it in wann) }
 
     private var scope: List<Fach> = emptyList()
 
