@@ -541,5 +541,7 @@
 		"$Mu/Ku": ["Mu", "Ku"],
 		"$ART": ["Mu", "Ku", "DS"]
 	},
-	"wzWildcards": ["$AF2", "$FS", "$NW", "$Mu/Ku"]
+	"wzWildcards": ["$AF2", "$FS", "$NW", "$Mu/Ku"],
+	"minKurse": 32, //Grundkurse und Leistungskurse zusammen
+	"maxKurse": 36  //Grundkurse und Leistungskurse zusammen
 }

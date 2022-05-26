@@ -8,22 +8,21 @@ import data.Wahlmoeglichkeit
 import data.Wahlmoeglichkeit.*
 import testFachdata
 import testKurswahl
+import java.awt.Dimension
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
+import java.awt.GridLayout
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
-import javax.swing.JButton
-import javax.swing.JCheckBox
-import javax.swing.JLabel
-import javax.swing.JToggleButton
+import javax.swing.*
 
 
-class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(wahlData, fachData), ActionListener {
+class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(wahlData, fachData) {
     override fun close(): KurswahlData {
         val gks = mutableMapOf<Fach, Wahlmoeglichkeit>()
         for ((i, fach) in fachData.faecher.withIndex()) {
             if (fach in wahlData.pfs) continue
-
+            //Übergabe der gewählten Grundkurse und dessen Semester
             val value = when (checkboxArray.subList(i * 4, i * 4 + 4).map { it.isSelected }) {
                 listOf(true, true, false, false) -> ERSTES_ZWEITES
                 listOf(true, true, true, false) -> ERSTES_DRITTES
@@ -56,26 +55,34 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
         set(value) {
             field = value
             anzahlLabel.text = "$anzahl Kurse"
+
+            checkText.text = when{
+               value < fachData.minKurse -> "Bitte wählt mindestens ${fachData.minKurse} aus"
+                value > fachData.maxKurse -> "Bitte wählt maximal ${fachData.maxKurse} aus"
+                else -> "Es wurden genug Kurse gewählt"
+            }
         }
+    private val checkText = JLabel()
+
     private val anzahlLabel = JLabel("$anzahl Kurse")
+    val panel = JPanel()
 
     init {
         layout = GridBagLayout()
+        panel.layout = GridBagLayout()
         add(anzahlLabel, row = fachData.faecher.size)
+        add(checkText, row = fachData.faecher.size+1)
 
         buildCheckboxes()
-        anzahlKurseCheck()
-        for (pf in wahlData.pfs.filterNotNull()) {
-            val pos = fachPos(pf)
-            for (k in pos * 4..pos * 4 + 3) {
-                anzahl++
-                checkboxArray[k].let {
-                    it.isSelected = true
-                    it.isEnabled = false
-                }
-            }
-        }
 
+        val scrollPane = JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER)
+        scrollPane.preferredSize = Dimension(250, 350)
+        add(scrollPane)
+
+        blockFae()
+
+        //Automatisches Ankreuzen nach Tab wechsel
+        //TODO das benutzen bei Pflichtfächern
         for ((gk, choice) in wahlData.gks) {
             val pos = fachPos(gk)
             val acti = when (choice) {
@@ -101,22 +108,42 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
         // Erstellt Checkboxen
         for ((i, fach) in fachData.faecher.withIndex()) {
             val labs = JLabel(fach.name)
-            add(labs, row = i, column = 0, fill = GridBagConstraints.HORIZONTAL)
+            panel.add(labs, row = i, column = 0, fill = GridBagConstraints.HORIZONTAL)
             for (j in 1..4) {
-//                val box = ColoredCheckBox()
                 val box = JCheckBox()
                 box.isOpaque = false
                 box.addActionListener { if ((it.source as JToggleButton).isSelected) anzahl++ else anzahl-- }
                 checkboxArray.add(box)
-                add(box, row = i, column = j, fill = GridBagConstraints.HORIZONTAL)
+                panel.add(box, row = i, column = j, fill = GridBagConstraints.HORIZONTAL)
             }
         }
     }
-    val checkText = JLabel()
-    private fun anzahlKurseCheck(){
-        val checkButton = JButton("Check deine Wahl")
-        checkButton.addActionListener(this)
-        add(checkButton)
+
+    //TODO Fächer wie LKs und Pks müssen ausgewählt und geblockt  werden
+    private fun blockFae(){
+        //Blockt Prüfungsfächer
+        for (pf in wahlData.pfs.filterNotNull()) {
+            val pos = fachPos(pf)
+            for (k in pos * 4..pos * 4 + 3) {
+                anzahl++
+                checkboxArray[k].let {
+                    it.isSelected = true
+                    it.isEnabled = false
+                }
+            }
+        }
+        //Blockt Pflichtfächer
+        //TODO Jetzt Alle gesperrt, aber es gibt auch fächer wo nur bestimmte gesperrt
+        for ((pf, wm) in fachData.pflichtfaecher) {
+            val pos = fachPos(pf)
+            for (k in pos * 4..pos * 4 + 3) {
+                anzahl++
+                checkboxArray[k].let {
+                    it.isSelected = true
+                    it.isEnabled = false
+                }
+            }
+        }
     }
 
     private fun fachPos(fach: Fach) = fachData.faecher.indexOf(fach)
@@ -124,11 +151,5 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
     override val windowName: String
         get() = "Grundkurse"
 
-    override fun actionPerformed(e: ActionEvent?) {
-        add(checkText)
-        if(anzahl < 34 /*TODO Übergabe von minimum anzahl der Kurse*/ ){checkText.text = "Es wurden zu wenig Kurse gewählt. Bitte wählen Sie mehr Kurse aus."}
-        else if (anzahl > 44 /*TODO Übergabe von minimum anzahl der Kurse*/){checkText.text = "Es wurden zu viele Kurse gewählt. Bitte wählen Sie weniger aus."}
-        else{checkText.text = "nice"}
-    }
 
 }
