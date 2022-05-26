@@ -17,7 +17,7 @@ import java.awt.event.ActionListener
 import javax.swing.*
 
 
-class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(wahlData, fachData), ActionListener {
+class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(wahlData, fachData) {
     override fun close(): KurswahlData {
         val gks = mutableMapOf<Fach, Wahlmoeglichkeit>()
         for ((i, fach) in fachData.faecher.withIndex()) {
@@ -55,7 +55,15 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
         set(value) {
             field = value
             anzahlLabel.text = "$anzahl Kurse"
+
+            checkText.text = when{
+               value < fachData.minKurse -> "Bitte wählt mindestens ${fachData.minKurse} aus"
+                value > fachData.maxKurse -> "Bitte wählt maximal ${fachData.maxKurse} aus"
+                else -> "Es wurden genug Kurse gewählt"
+            }
         }
+    private val checkText = JLabel()
+
     private val anzahlLabel = JLabel("$anzahl Kurse")
     val panel = JPanel()
 
@@ -63,6 +71,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
         layout = GridBagLayout()
         panel.layout = GridBagLayout()
         add(anzahlLabel, row = fachData.faecher.size)
+        add(checkText, row = fachData.faecher.size+1)
 
         buildCheckboxes()
 
@@ -70,10 +79,10 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
         scrollPane.preferredSize = Dimension(250, 350)
         add(scrollPane)
 
-        anzahlKurseCheck()
         blockFae()
 
         //Automatisches Ankreuzen nach Tab wechsel
+        //TODO das benutzen bei Pflichtfächern
         for ((gk, choice) in wahlData.gks) {
             val pos = fachPos(gk)
             val acti = when (choice) {
@@ -109,16 +118,23 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
             }
         }
     }
-    val checkText = JLabel()
-    private fun anzahlKurseCheck(){
-        val checkButton = JButton("Check deine Wahl")
-        checkButton.addActionListener(this)
-        add(checkButton)
-    }
+
     //TODO Fächer wie LKs und Pks müssen ausgewählt und geblockt  werden
     private fun blockFae(){
         //Blockt Prüfungsfächer
         for (pf in wahlData.pfs.filterNotNull()) {
+            val pos = fachPos(pf)
+            for (k in pos * 4..pos * 4 + 3) {
+                anzahl++
+                checkboxArray[k].let {
+                    it.isSelected = true
+                    it.isEnabled = false
+                }
+            }
+        }
+        //Blockt Pflichtfächer
+        //TODO Jetzt Alle gesperrt, aber es gibt auch fächer wo nur bestimmte gesperrt
+        for ((pf, wm) in fachData.pflichtfaecher) {
             val pos = fachPos(pf)
             for (k in pos * 4..pos * 4 + 3) {
                 anzahl++
@@ -135,11 +151,5 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
     override val windowName: String
         get() = "Grundkurse"
 
-    override fun actionPerformed(e: ActionEvent?) {
-        add(checkText, row = fachData.faecher.size+1)
-        if(anzahl < 34 /*TODO Übergabe von minimum anzahl der Kurse*/ ){checkText.text = "Es wurden zu wenig Kurse gewählt. Bitte wählen Sie mehr Kurse aus."}
-        else if (anzahl > 44 /*TODO Übergabe von minimum anzahl der Kurse*/){checkText.text = "Es wurden zu viele Kurse gewählt. Bitte wählen Sie weniger aus."}
-        else{checkText.text = "nice"}
-    }
 
 }

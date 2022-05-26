@@ -6,7 +6,9 @@ class FachData(
     val wpfs: List<Fach>,
     val pflichtfaecher: Map<Fach, Wahlmoeglichkeit>,
     val wahlzeilen: Map<Int, Wahlzeile>,
-    val wildcards: Map<String, List<Fach>>
+    val wildcards: Map<String, List<Fach>>,
+    val minKurse: Int,
+    val maxKurse: Int
 ) {
     /**
      * Gibt die die LKs zurück
@@ -50,7 +52,9 @@ class FachData(
             "wpfs=$wpfs",
             "pflichtfaecher=$pflichtfaecher",
             "wahlzeilen=$wahlzeilen",
-            "wildcards=$wildcards"
+            "wildcards=$wildcards",
+            "minKurse=$minKurse",
+            "maxKurse=$maxKurse"
         ).joinToString(
             ",\n\t",
             "FachData(\n\t",
