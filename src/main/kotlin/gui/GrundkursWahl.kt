@@ -14,6 +14,7 @@ import java.awt.GridBagLayout
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
+import javax.lang.model.element.Element
 import javax.swing.*
 
 
@@ -110,14 +111,17 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
             val labs = JLabel(fach.name)
 
             //Wenn man ein Label anklickt werden alle Checkboxen ausgewählt
-            //TODO jetzt noch wenn ich auf ausgewählte klicke klicke gehen die weg und wenn nur ein paar ausgewählt sind und so.Kommt gleich nach essen
             labs.addMouseListener(object : MouseAdapter() {
                 override fun mousePressed(e: MouseEvent) {
-                    for (k in i*4..i*4+3){
-                        checkboxArray[k].let {
-                            it.isSelected = true
-                        }
-                    }
+                    var cou = 0
+                    val subl = checkboxArray.subList(i*4, i*4+4) //Erstellt Sublist
+                    for (l in 0..3){ if(subl[l].isSelected){ cou++ }}
+                    println(cou)
+                    //Auswählen und Abwählen
+                    if(cou>1 && cou<4) { for (k in i*4..i*4+3){ checkboxArray[k].let { it.isSelected = true } } }
+                    else if (cou ==4){for (c in i*4..i*4+3){ checkboxArray[c].let { it.isSelected = false } }}
+                    else if (cou ==0){for (p in i*4..i*4+3){ checkboxArray[p].let { it.isSelected = true } }}
+                    else{for (h in i*4..i*4+3){ checkboxArray[h].let { it.isSelected = false } }}
                 }})
 
             panel.add(labs, row = i, column = 0, fill = GridBagConstraints.HORIZONTAL)
