@@ -38,8 +38,8 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
     }
 
     override fun isDataValid(): Boolean {
-        // TODO nicht final
-        return true
+        val data = close()
+        return fachData.regeln.all { it.match(data) }
     }
 
     companion object {
@@ -104,10 +104,12 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
 
         // Regel Panel
         val regelPanel = JPanel()
+        regelPanel.maximumSize = Dimension(200, -1)
         regelPanel.layout = BoxLayout(regelPanel, BoxLayout.PAGE_AXIS)
         println(fachData.regeln)
         for (regel in fachData.regeln) {
             val label = RegelLabel(regel)
+            label.maximumSize = Dimension(200, -1)
             label.alignmentX = 0f
             regelPanel.add(label)
         }

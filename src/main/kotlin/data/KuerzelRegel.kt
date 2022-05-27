@@ -9,9 +9,11 @@ class KuerzelRegel(
     errorMsg: String? = null
 ) : Regel(desc, errorMsg) {
 
+    @Exclude
     private val predicate: (Wahlmoeglichkeit) -> Boolean =
         if (wann == null) { it -> (it.n >= anzahl) } else { it -> (it.n >= anzahl && it in wann) }
 
+    @Exclude
     private val dataScope: (KurswahlData) -> Map<Fach, Wahlmoeglichkeit> =
         when (scope) {
             null -> { it -> it.kurse }
@@ -21,6 +23,7 @@ class KuerzelRegel(
             RegelScope.LK1_2 -> { it -> it.lks.filterNotNull().associateWith { Wahlmoeglichkeit.DURCHGEHEND } }
         }
 
+    @Exclude
     private lateinit var target: Fach
 
     override fun match(data: KurswahlData): Boolean {

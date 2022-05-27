@@ -12,10 +12,13 @@ class WildcardRegel(
     errorMsg: String? = null
 ) :
     Regel(desc, errorMsg) {
+
     // nicht jedes mal neu auf null checken
+    @Exclude
     private val predicate: (Wahlmoeglichkeit) -> Boolean =
         if (wann == null) { it -> (it.n >= anzahl) } else { it -> (it.n >= anzahl && it in wann) }
 
+    @Exclude
     private val dataScope: (KurswahlData) -> Map<Fach, Wahlmoeglichkeit> =
         when (scope) {
             null -> { it -> it.kurse }
@@ -25,11 +28,13 @@ class WildcardRegel(
             LK1_2 -> { it -> it.lks.filterNotNull().associateWith { DURCHGEHEND } }
         }
 
+    @Exclude
     private lateinit var wCardScope: List<Fach>
 
     override fun match(data: KurswahlData): Boolean {
 //        val scope = fachData.wildcards[wildcard]!!
-        for ((fach, wmoegl) in dataScope(data)) {
+        for ((fach, wmoegl) in dataScope.invoke(data)) {
+            println("hello")
             // Checken ob die Wahlmoeglichkeit passt
             if (!predicate(wmoegl)) continue
 

@@ -15,6 +15,7 @@ class Main : JPanel() {
     init {
         val builder = GsonBuilder()
         builder.registerTypeAdapterFactory(RegelAdapterFactory())
+        builder.setExclusionStrategies(AnnotationExclusionStrategy())
         val gson = builder.create()
         fachData = gson.fromJson(getResource("dataStruct.json"), JsonDataStructure::class.java).toFachData()
     }
