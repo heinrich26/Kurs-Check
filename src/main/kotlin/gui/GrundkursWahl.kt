@@ -110,6 +110,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
             val labs = JLabel(fach.name)
 
             //Wenn man ein Label anklickt werden alle Checkboxen ausgewählt
+            //TODO jetzt noch wenn ich auf ausgewählte klicke klicke gehen die weg und wenn nur ein paar ausgewählt sind und so.Kommt gleich nach essen
             labs.addMouseListener(object : MouseAdapter() {
                 override fun mousePressed(e: MouseEvent) {
                     for (k in i*4..i*4+3){
