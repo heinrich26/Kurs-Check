@@ -13,6 +13,8 @@ import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
+import java.awt.event.MouseListener
+import javax.lang.model.element.Element
 import javax.swing.*
 
 
@@ -47,7 +49,6 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
         }
     }
 
-    //TODO Wenn man auf ein Fach Namen klickt, dann werden alle Checkboxen ausgewählt
     private val checkboxArray = ArrayList<JToggleButton>()
 
     private var anzahl: Int = 0
@@ -82,7 +83,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
 
         faecherBlocken()
 
-        //Automatisches Ankreuzen nach Tabwechsel
+        //Automatisches Ankreuzen nach Tab wechsel
         //TODO das benutzen bei Pflichtfächern
         for ((gk, choice) in wahlData.gks) {
             val pos = fachPos(gk)
@@ -125,12 +126,44 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
             val labs = JLabel(fach.name)
 
             //Wenn man ein Label anklickt werden alle Checkboxen ausgewählt
-            //TODO jetzt noch wenn ich auf ausgewählte klicke klicke gehen die weg und wenn nur ein paar ausgewählt sind und so.Kommt gleich nach essen
             labs.addMouseListener(object : MouseAdapter() {
                 override fun mousePressed(e: MouseEvent) {
-                    for (k in i * 4..i * 4 + 3) {
-                        checkboxArray[k].let {
-                            it.isSelected = true
+                    var cou = 0
+                    val subl = checkboxArray.subList(i * 4, i * 4 + 4) //Erstellt Sublist
+                    for (l in 0..3) {
+                        if (subl[l].isSelected) {
+                            cou++
+                        }
+                    }
+                    //Auswählen und Abwählen
+                    when (cou) {
+                        in 2..3 -> {
+                            for (k in i * 4..i * 4 + 3) {
+                                var che = checkboxArray[k]
+                                if (che.isEnabled)
+                                    che.isSelected = true
+                            }
+                        }
+                        4 -> {
+                            for (k in i * 4..i * 4 + 3) {
+                                var che = checkboxArray[k]
+                                if (che.isEnabled)
+                                    che.isSelected = false
+                            }
+                        }
+                        0 -> {
+                            for (k in i * 4..i * 4 + 3) {
+                                var che = checkboxArray[k]
+                                if (che.isEnabled)
+                                    che.isSelected = true
+                            }
+                        }
+                        else -> {
+                            for (k in i * 4..i * 4 + 3) {
+                                var che = checkboxArray[k]
+                                if (che.isEnabled)
+                                    che.isSelected = false
+                            }
                         }
                     }
                 }
