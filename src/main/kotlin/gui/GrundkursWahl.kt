@@ -56,8 +56,8 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
             field = value
             anzahlLabel.text = "$anzahl Kurse"
 
-            checkText.text = when{
-               value < fachData.minKurse -> "Bitte wählt mindestens ${fachData.minKurse} aus"
+            checkText.text = when {
+                value < fachData.minKurse -> "Bitte wählt mindestens ${fachData.minKurse} aus"
                 value > fachData.maxKurse -> "Bitte wählt maximal ${fachData.maxKurse} aus"
                 else -> "Es wurden genug Kurse gewählt"
             }
@@ -72,11 +72,12 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
         layout = GridBagLayout()
         panel.layout = GridBagLayout()
         add(anzahlLabel, row = fachData.faecher.size)
-        add(checkText, row = fachData.faecher.size+1)
+        add(checkText, row = fachData.faecher.size + 1)
 
         buildCheckboxes()
 
-        val scrollPane = JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER)
+        val scrollPane =
+            JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER)
         scrollPane.preferredSize = Dimension(250, 350)
         add(scrollPane)
 
@@ -113,14 +114,45 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
             labs.addMouseListener(object : MouseAdapter() {
                 override fun mousePressed(e: MouseEvent) {
                     var cou = 0
-                    val subl = checkboxArray.subList(i*4, i*4+4) //Erstellt Sublist
-                    for (l in 0..3){ if(subl[l].isSelected){ cou++ }}
+                    val subl = checkboxArray.subList(i * 4, i * 4 + 4) //Erstellt Sublist
+                    for (l in 0..3) {
+                        if (subl[l].isSelected) {
+                            cou++
+                        }
+                    }
                     //Auswählen und Abwählen
-                    if(cou>1 && cou<4) { for (k in i*4..i*4+3){ checkboxArray[k].let { it.isSelected = true } } }
-                    else if (cou ==4){for (c in i*4..i*4+3){ checkboxArray[c].let { it.isSelected = false } }}
-                    else if (cou ==0){for (p in i*4..i*4+3){ checkboxArray[p].let { it.isSelected = true } }}
-                    else{for (h in i*4..i*4+3){ checkboxArray[h].let { it.isSelected = false } }}
-                }})
+                    when (cou) {
+                        in 2..3 -> {
+                            for (k in i * 4..i * 4 + 3) {
+                                var che = checkboxArray[k]
+                                if (che.isEnabled)
+                                    che.isSelected = true
+                            }
+                        }
+                        4 -> {
+                            for (k in i * 4..i * 4 + 3) {
+                                var che = checkboxArray[k]
+                                if (che.isEnabled)
+                                    che.isSelected = false
+                            }
+                        }
+                        0 -> {
+                            for (k in i * 4..i * 4 + 3) {
+                                var che = checkboxArray[k]
+                                if (che.isEnabled)
+                                    che.isSelected = true
+                            }
+                        }
+                        else -> {
+                            for (k in i * 4..i * 4 + 3) {
+                                var che = checkboxArray[k]
+                                if (che.isEnabled)
+                                    che.isSelected = false
+                            }
+                        }
+                    }
+                }
+            })
 
             panel.add(labs, row = i, column = 0, fill = GridBagConstraints.HORIZONTAL)
             for (j in 1..4) {
@@ -134,7 +166,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
     }
 
     //TODO Fächer wie LKs und Pks müssen ausgewählt und geblockt  werden
-    private fun blockFae(){
+    private fun blockFae() {
         //Blockt Prüfungsfächer
         for (pf in wahlData.pfs.filterNotNull()) {
             val pos = fachPos(pf)
