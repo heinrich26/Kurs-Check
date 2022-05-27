@@ -49,7 +49,6 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
         }
     }
 
-    //TODO Wenn man auf ein Fach Namen klickt, dann werden alle Checkboxen ausgewählt
     private val checkboxArray = ArrayList<JToggleButton>()
 
     private var anzahl: Int = 0
@@ -116,7 +115,6 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
                     var cou = 0
                     val subl = checkboxArray.subList(i*4, i*4+4) //Erstellt Sublist
                     for (l in 0..3){ if(subl[l].isSelected){ cou++ }}
-                    println(cou)
                     //Auswählen und Abwählen
                     if(cou>1 && cou<4) { for (k in i*4..i*4+3){ checkboxArray[k].let { it.isSelected = true } } }
                     else if (cou ==4){for (c in i*4..i*4+3){ checkboxArray[c].let { it.isSelected = false } }}
