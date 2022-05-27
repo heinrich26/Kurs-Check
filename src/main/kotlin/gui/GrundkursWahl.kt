@@ -11,9 +11,9 @@ import testKurswahl
 import java.awt.Dimension
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
-import java.awt.GridLayout
-import java.awt.event.ActionEvent
-import java.awt.event.ActionListener
+import java.awt.event.MouseAdapter
+import java.awt.event.MouseEvent
+import java.awt.event.MouseListener
 import javax.swing.*
 
 
@@ -48,7 +48,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
         }
     }
 
-
+    //TODO Wenn man auf ein Fach Namen klickt, dann werden alle Checkboxen ausgewählt
     private val checkboxArray = ArrayList<JToggleButton>()
 
     private var anzahl: Int = 0
@@ -66,6 +66,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
 
     private val anzahlLabel = JLabel("$anzahl Kurse")
     val panel = JPanel()
+    var ank = false
 
     init {
         layout = GridBagLayout()
@@ -103,11 +104,21 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
     }
 
     // ignorierte Fächer werden ausgeblendet das man sie nicht sieht aber das sie in dem Array sind (damit auslesen noch funktioniert)
-
     private fun buildCheckboxes() {
         // Erstellt Checkboxen
         for ((i, fach) in fachData.faecher.withIndex()) {
             val labs = JLabel(fach.name)
+
+            //Wenn man ein Label anklickt werden alle Checkboxen ausgewählt
+            labs.addMouseListener(object : MouseAdapter() {
+                override fun mousePressed(e: MouseEvent) {
+                    for (k in i*4..i*4+3){
+                        checkboxArray[k].let {
+                            it.isSelected = true
+                        }
+                    }
+                }})
+
             panel.add(labs, row = i, column = 0, fill = GridBagConstraints.HORIZONTAL)
             for (j in 1..4) {
                 val box = JCheckBox()
@@ -150,6 +161,5 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
 
     override val windowName: String
         get() = "Grundkurse"
-
-
 }
+
