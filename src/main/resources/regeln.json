@@ -116,6 +116,38 @@
 				"desc": "Geographie 4 Semester -> zusätzlich Ge min. in Q3 & Q4",
 				"errorMsg": "Wähle Ge in Q3 & Q4!"
 			}
+		},
+		{
+			"type": "Wildcard",
+			"value": {
+				"wildcard": "$ART",
+				"anzahl": 2,
+				"desc": "Ein künstlerisches Fach muss 2 Semester belegt werden",
+				"errorMsg": "Wähle 2 Semester ein künstlerisches Fach!"
+			}
+		},
+		{
+			"type": "IfThen",
+			"value": {
+				"regel1": {
+					"type": "Kuerzel",
+					"value": {
+						"kuerzel": "Sp",
+						"anzahl": 4,
+						"scope": "1-5"
+					}
+				},
+				"regel2": {
+					"type": "Kuerzel",
+					"value": {
+						"kuerzel": "SpT",
+						"anzahl": 2,
+						"wann": "3-4"
+					}
+				},
+				"desc": "Sport as PF -> zusätzlich Sport Theorie min. in Q3 & Q4",
+				"errorMsg": "Wähle Sport Theorie in Q3 & Q4!"
+			}
 		}
 	]
 }
