@@ -1,6 +1,8 @@
 import data.Wahlmoeglichkeit
 import java.awt.*
 import java.lang.IllegalArgumentException
+import java.net.URI
+import java.net.URL
 
 /**
  * Gibt den Inhalt der angeforderten Ressource zurück
@@ -8,6 +10,11 @@ import java.lang.IllegalArgumentException
  */
 fun getResource(fileName: String): String? = {}.javaClass.getResource(fileName)?.readText()
 
+/**
+ * Gibt die URL der angeforderten Ressource zurück
+ * @param fileName Name/Pfad der Datei
+ */
+fun getResourceURL(fileName: String): URL? = {}.javaClass.getResource(fileName)
 //enum class FILLS(val value: Int) { NONE(0), BOTH(1), HORIZONTAL(2), VERTICAL(3) }
 
 class GridConstraint {

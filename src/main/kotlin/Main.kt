@@ -1,4 +1,5 @@
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import data.*
 import gui.*
 import gui.Consts.HOME_POLY
@@ -7,11 +8,17 @@ import java.awt.*
 import javax.swing.*
 import javax.swing.border.EmptyBorder
 import kotlin.reflect.KClass
-
 class Main : JPanel() {
     private var wahlData: KurswahlData = KurswahlData()
-    private val fachData: FachData =
-        Gson().fromJson(getResource("dataStruct.json"), JsonDataStructure::class.java).toFachData()
+    private val fachData: FachData
+
+    init {
+        val builder = GsonBuilder()
+        builder.registerTypeAdapterFactory(RegelAdapterFactory())
+        val gson = builder.create()
+        fachData = gson.fromJson(getResource("dataStruct.json"), JsonDataStructure::class.java).toFachData()
+    }
+
 
     companion object {
         @JvmStatic
@@ -112,5 +119,8 @@ class Main : JPanel() {
         add(curPanel, row = 1, column = 2, fill = GridBagConstraints.BOTH, weightx = 1.0)
 
         add(sidebar, row = 1, column = 0, fill = GridBagConstraints.VERTICAL, weighty = 1.0)
+
+        println(fachData)
     }
 }
+

@@ -13,7 +13,6 @@ import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
-import java.awt.event.MouseListener
 import javax.swing.*
 
 
@@ -56,8 +55,8 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
             field = value
             anzahlLabel.text = "$anzahl Kurse"
 
-            checkText.text = when{
-               value < fachData.minKurse -> "Bitte wählt mindestens ${fachData.minKurse} aus"
+            checkText.text = when {
+                value < fachData.minKurse -> "Bitte wählt mindestens ${fachData.minKurse} aus"
                 value > fachData.maxKurse -> "Bitte wählt maximal ${fachData.maxKurse} aus"
                 else -> "Es wurden genug Kurse gewählt"
             }
@@ -65,24 +64,25 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
     private val checkText = JLabel()
 
     private val anzahlLabel = JLabel("$anzahl Kurse")
-    val panel = JPanel()
+    private val panel = JPanel()
     var ank = false
 
     init {
         layout = GridBagLayout()
         panel.layout = GridBagLayout()
         add(anzahlLabel, row = fachData.faecher.size)
-        add(checkText, row = fachData.faecher.size+1)
+        add(checkText, row = fachData.faecher.size + 1)
 
         buildCheckboxes()
 
-        val scrollPane = JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER)
+        val scrollPane =
+            JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER)
         scrollPane.preferredSize = Dimension(250, 350)
         add(scrollPane)
 
-        blockFae()
+        faecherBlocken()
 
-        //Automatisches Ankreuzen nach Tab wechsel
+        //Automatisches Ankreuzen nach Tabwechsel
         //TODO das benutzen bei Pflichtfächern
         for ((gk, choice) in wahlData.gks) {
             val pos = fachPos(gk)
@@ -101,6 +101,21 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
             }
         }
 
+        // Regel Panel
+        val regelPanel = JPanel()
+        regelPanel.layout = BoxLayout(regelPanel, BoxLayout.PAGE_AXIS)
+        println(fachData.regeln)
+        for (regel in fachData.regeln) {
+            val label = RegelLabel(regel)
+            label.alignmentX = 0f
+            regelPanel.add(label)
+        }
+
+        val scrollPane2 =
+            JScrollPane(regelPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER)
+        scrollPane2.preferredSize = Dimension(200, 350)
+
+        add(scrollPane2)
     }
 
     // ignorierte Fächer werden ausgeblendet das man sie nicht sieht aber das sie in dem Array sind (damit auslesen noch funktioniert)
@@ -113,12 +128,13 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
             //TODO jetzt noch wenn ich auf ausgewählte klicke klicke gehen die weg und wenn nur ein paar ausgewählt sind und so.Kommt gleich nach essen
             labs.addMouseListener(object : MouseAdapter() {
                 override fun mousePressed(e: MouseEvent) {
-                    for (k in i*4..i*4+3){
+                    for (k in i * 4..i * 4 + 3) {
                         checkboxArray[k].let {
                             it.isSelected = true
                         }
                     }
-                }})
+                }
+            })
 
             panel.add(labs, row = i, column = 0, fill = GridBagConstraints.HORIZONTAL)
             for (j in 1..4) {
@@ -132,7 +148,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
     }
 
     //TODO Fächer wie LKs und Pks müssen ausgewählt und geblockt  werden
-    private fun blockFae(){
+    private fun faecherBlocken() {
         //Blockt Prüfungsfächer
         for (pf in wahlData.pfs.filterNotNull()) {
             val pos = fachPos(pf)
