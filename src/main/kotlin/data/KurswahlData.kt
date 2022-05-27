@@ -61,6 +61,12 @@ data class KurswahlData(
     val pfs: List<Fach?>
         get() = listOf(lk1, lk2, pf3, pf4, pf5)
 
+    val pf1_4: List<Fach?>
+        get() = listOf(lk1, lk2, pf3, pf4)
+
+    val lks: List<Fach?>
+        get() = listOf(lk1, lk2)
+
     val kurse: Map<Fach, Wahlmoeglichkeit>
         get() = gks + pfs.filterNotNull().associateWith { Wahlmoeglichkeit.DURCHGEHEND }
 }
