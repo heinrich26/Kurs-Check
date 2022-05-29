@@ -12,9 +12,13 @@ open class ClickableDestionation(defaultEnabled: Boolean = false, clickEvent: ()
             repaint()
         }
 
-    init {
-        isEnabled = defaultEnabled
+    var isSelected = defaultEnabled
+        set(value) {
+            field = value
+            repaint()
+        }
 
+    init {
         Dimension(Consts.SIDEBAR_SIZE, Consts.SIDEBAR_SIZE).let {
             minimumSize = it
             preferredSize = it
@@ -22,7 +26,7 @@ open class ClickableDestionation(defaultEnabled: Boolean = false, clickEvent: ()
 
         this.addMouseListener(object : MouseListener {
             override fun mouseClicked(e: MouseEvent?) {
-                if (!isEnabled) clickEvent()
+                if (isEnabled && !isSelected) clickEvent()
             }
 
             override fun mousePressed(e: MouseEvent?) {}
@@ -30,7 +34,7 @@ open class ClickableDestionation(defaultEnabled: Boolean = false, clickEvent: ()
             override fun mouseReleased(e: MouseEvent?) {}
 
             override fun mouseEntered(e: MouseEvent?) {
-                hasFocus = true
+                hasFocus = isEnabled
             }
 
             override fun mouseExited(e: MouseEvent?) {

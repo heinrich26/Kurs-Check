@@ -1,153 +1,113 @@
 {
 	"regeln": [
 		{
-			"type": "Wildcard",
-			"value": {
-				"wildcard": "$FS",
-				"anzahl": 4,
-				"desc": "Eine Fremdsprache muss 4 Semester belegt werden",
-				"errorMsg": "Wähle eine Fremdsprache durchgehend!"
-			}
+			"type": "WildcardRegel",
+			"wildcard": "$FS",
+			"anzahl": 4,
+			"desc": "Eine Fremdsprache muss 4 Semester belegt werden",
+			"errorMsg": "Wähle eine Fremdsprache durchgehend!"
 		},
 		{
-			"type": "Wildcard",
-			"value": {
-				"wildcard": "$NW",
-				"anzahl": 4,
-				"desc": "Eine Naturwissenschaft muss 4 Semester belegt werden",
-				"errorMsg": "Wähle eine Naturwissenschaft durchgehend!"
-			}
+			"type": "WildcardRegel",
+			"wildcard": "$NW",
+			"anzahl": 4,
+			"desc": "Eine Naturwissenschaft muss 4 Semester belegt werden",
+			"errorMsg": "Wähle eine Naturwissenschaft durchgehend!"
 		},
 		{
-			"type": "IfThen",
-			"value": {
+			"type": "IfThenRegel",
+			"regel1": {
+				"type": "KuerzelRegel",
+				"kuerzel": "Bio",
+				"anzahl": 4
+			},
+			"regel2": {
+				"type": "OrRegel",
 				"regel1": {
-					"type": "Kuerzel",
-					"value": {
-						"kuerzel": "Bio",
-						"anzahl": 4
-					}
+					"type": "KuerzelRegel",
+					"kuerzel": "Che",
+					"anzahl": 2
 				},
 				"regel2": {
-					"type": "Or",
-					"value": {
-						"regel1": {
-							"type": "Kuerzel",
-							"value": {
-								"kuerzel": "Che",
-								"anzahl": 2
-							}
-						},
-						"regel2": {
-							"type": "Kuerzel",
-							"value": {
-								"kuerzel": "Phy",
-								"anzahl": 2
-							}
-						}
-					}
-				},
-				"desc": "Bio 4 Semester -> zusätzliche Naturwissenschaft min. 2 Semester",
-				"errorMsg": "Wähle eine 2. Naturwissenschaft für min. 2 Semester!"
-			}
+					"type": "KuerzelRegel",
+					"kuerzel": "Phy",
+					"anzahl": 2
+				}
+			},
+			"desc": "Bio 4 Semester -> zusätzliche Naturwissenschaft min. 2 Semester",
+			"errorMsg": "Wähle eine 2. Naturwissenschaft für min. 2 Semester!"
 		},
 		{
-			"type": "IfThen",
-			"value": {
-				"regel1": {
-					"type": "Kuerzel",
-					"value": {
-						"kuerzel": "Ge",
-						"anzahl": 4
-					}
-				},
-				"regel2": {
-					"type": "Kuerzel",
-					"value": {
-						"kuerzel": "PW",
-						"anzahl": 2,
-						"wann": "3-4"
-					}
-				},
-				"desc": "Geschichte 4 Semester -> zusätzlich PW min. in Q3 & Q4",
-				"errorMsg": "Wähle PW in Q3 & Q4!"
-			}
-		},
-		{
-			"type": "IfThen",
-			"value": {
-				"regel1": {
-					"type": "Kuerzel",
-					"value": {
-						"kuerzel": "PW",
-						"anzahl": 4
-					}
-				},
-				"regel2": {
-					"type": "Kuerzel",
-					"value": {
-						"kuerzel": "Ge",
-						"anzahl": 2,
-						"wann": "3-4"
-					}
-				},
-				"desc": "PW 4 Semester -> zusätzlich Ge min. in Q3 & Q4",
-				"errorMsg": "Wähle Ge in Q3 & Q4!"
-			}
-		},
-		{
-			"type": "IfThen",
-			"value": {
-				"regel1": {
-					"type": "Kuerzel",
-					"value": {
-						"kuerzel": "Geo",
-						"anzahl": 4
-					}
-				},
-				"regel2": {
-					"type": "Kuerzel",
-					"value": {
-						"kuerzel": "Ge",
-						"anzahl": 2,
-						"wann": "3-4"
-					}
-				},
-				"desc": "Geographie 4 Semester -> zusätzlich Ge min. in Q3 & Q4",
-				"errorMsg": "Wähle Ge in Q3 & Q4!"
-			}
-		},
-		{
-			"type": "Wildcard",
-			"value": {
-				"wildcard": "$ART",
+			"type": "IfThenRegel",
+			"regel1": {
+				"type": "KuerzelRegel",
+				"kuerzel": "Ge",
+				"anzahl": 4
+			},
+			"regel2": {
+				"type": "KuerzelRegel",
+				"kuerzel": "PW",
 				"anzahl": 2,
-				"desc": "Ein künstlerisches Fach muss 2 Semester belegt werden",
-				"errorMsg": "Wähle 2 Semester ein künstlerisches Fach!"
-			}
+				"wann": "3-4"
+			},
+			"desc": "Geschichte 4 Semester -> zusätzlich PW min. in Q3 & Q4",
+			"errorMsg": "Wähle PW in Q3 & Q4!"
 		},
 		{
-			"type": "IfThen",
-			"value": {
-				"regel1": {
-					"type": "Kuerzel",
-					"value": {
-						"kuerzel": "Sp",
-						"anzahl": 4,
-						"scope": "1-5"
-					}
-				},
-				"regel2": {
-					"type": "Kuerzel",
-					"value": {
-						"kuerzel": "SpT",
-						"anzahl": 2,
-						"wann": "3-4"
-					}
-				},
-				"desc": "Sport as PF -> zusätzlich Sport Theorie min. in Q3 & Q4",
-				"errorMsg": "Wähle Sport Theorie in Q3 & Q4!"
-			}
+			"type": "IfThenRegel",
+			"regel1": {
+				"type": "KuerzelRegel",
+				"kuerzel": "PW",
+				"anzahl": 4
+			},
+			"regel2": {
+				"type": "KuerzelRegel",
+				"kuerzel": "Ge",
+				"anzahl": 2,
+				"wann": "3-4"
+			},
+			"desc": "PW 4 Semester -> zusätzlich Ge min. in Q3 & Q4",
+			"errorMsg": "Wähle Ge in Q3 & Q4!"
+		},
+		{
+			"type": "IfThenRegel",
+			"regel1": {
+				"type": "KuerzelRegel",
+				"kuerzel": "Geo",
+				"anzahl": 4
+			},
+			"regel2": {
+				"type": "KuerzelRegel",
+				"kuerzel": "Ge",
+				"anzahl": 2,
+				"wann": "3-4"
+			},
+			"desc": "Geographie 4 Semester -> zusätzlich Ge min. in Q3 & Q4",
+			"errorMsg": "Wähle Ge in Q3 & Q4!"
+		},
+		{
+			"type": "WildcardRegel",
+			"wildcard": "$ART",
+			"anzahl": 2,
+			"desc": "Ein künstlerisches Fach muss 2 Semester belegt werden",
+			"errorMsg": "Wähle 2 Semester ein künstlerisches Fach!"
+		},
+		{
+			"type": "IfThenRegel",
+			"regel1": {
+				"type": "KuerzelRegel",
+				"kuerzel": "Sp",
+				"anzahl": 4,
+				"scope": "1-5"
+			},
+			"regel2": {
+				"type": "KuerzelRegel",
+				"kuerzel": "SpT",
+				"anzahl": 2,
+				"wann": "3-4"
+			},
+			"desc": "Sport as PF -> zusätzlich Sport Theorie min. in Q3 & Q4",
+			"errorMsg": "Wähle Sport Theorie in Q3 & Q4!"
 		}
 	]
 }

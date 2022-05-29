@@ -1,4 +1,3 @@
-import com.google.gson.Gson
 import data.*
 
 val eng = Fach("Englisch", "E", 1, true)
@@ -6,7 +5,7 @@ val ma = Fach("Mathe", "Ma", 2, true)
 val de = Fach("Deutsch", "De", 1, true)
 val inf = Fach("Informatik", "Inf", 2, true)
 val geo = Fach("Geographie", "Geo", 3, true)
-val sp = Fach("Sport", "Sp", null, false)
+val sp = Fach("Sport", "Sp", 0, false)
 val ge = Fach("Geschichte", "Ge", 3, true)
 val spa = Fach("Spanisch", "Spa", 1, true)
 val lat = Fach("Latein", "Lat", 1, false)
@@ -29,4 +28,4 @@ val testKurswahl = KurswahlData().apply {
 }
 
 //val testFachdata = FachData(faecher, fremdsprachen, wpfs, mapOf(ma to Wahlmoeglichkeit.DURCHGEHEND, de to Wahlmoeglichkeit.DURCHGEHEND, sp to Wahlmoeglichkeit.DURCHGEHEND), )
-val testFachdata = Gson().fromJson(getResource("dataStruct.json"), JsonDataStructure::class.java).toFachData()
+val testFachdata = readDataStruct()

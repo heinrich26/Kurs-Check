@@ -9,11 +9,10 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
-    mavenCentral()
 }
 
 dependencies {
-    implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3'
 
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.21'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'

@@ -1,7 +1,7 @@
-package data
+package gui
 
-import WahlVisualizer
-import gui.KurswahlPanel
+import data.FachData
+import data.KurswahlData
 import java.awt.GridBagLayout
 
 class Overview(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(wahlData, fachData) {

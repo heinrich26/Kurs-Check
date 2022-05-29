@@ -1,13 +1,13 @@
 package data
 
-import com.google.gson.annotations.SerializedName
+import com.fasterxml.jackson.annotation.JsonProperty
 
 enum class Wahlmoeglichkeit(val n: Int) {
-    @SerializedName("1-2") ERSTES_ZWEITES(2),
-    @SerializedName("1-3") ERSTES_DRITTES(3),
-    @SerializedName("2-4") ZWEITES_VIERTES(3),
-    @SerializedName("3-4") DRITTES_VIERTES(2),
-    @SerializedName("1-4") DURCHGEHEND(4);
+    @JsonProperty("1-2") ERSTES_ZWEITES(2),
+    @JsonProperty("1-3") ERSTES_DRITTES(3),
+    @JsonProperty("2-4") ZWEITES_VIERTES(3),
+    @JsonProperty("3-4") DRITTES_VIERTES(2),
+    @JsonProperty("1-4") DURCHGEHEND(4);
 
     operator fun contains(wmoegl: Wahlmoeglichkeit): Boolean {
         return when (this) {

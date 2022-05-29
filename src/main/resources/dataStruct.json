@@ -10,25 +10,29 @@
 			"name": "Englisch",
 			"kuerzel": "En",
 			"aufgabenfeld": 1,
-			"lk": true
+			"lk": true,
+			"fremdsprache": true
 		},
 		"Spa": {
 			"name": "Spanisch",
 			"kuerzel": "Spa",
 			"aufgabenfeld": 1,
-			"lk": true
+			"lk": true,
+			"fremdsprache": true
 		},
 		"Fr": {
 			"name": "Französisch",
 			"kuerzel": "Fr",
 			"aufgabenfeld": 1,
-			"lk": false
+			"fremdsprache": true,
+			"brauchtWPF": true
 		},
 		"Lat": {
 			"name": "Latein",
 			"kuerzel": "Lat",
 			"aufgabenfeld": 1,
-			"lk": false
+			"fremdsprache": true,
+			"brauchtWPF": true
 		},
 		"Ku": {
 			"name": "Kunst",
@@ -39,14 +43,13 @@
 		"Mu": {
 			"name": "Musik",
 			"kuerzel": "Mu",
-			"aufgabenfeld": 1,
-			"lk": false
+			"aufgabenfeld": 1
 		},
 		"DS": {
 			"name": "Darstellendes Spiel",
 			"kuerzel": "DS",
 			"aufgabenfeld": 1,
-			"lk": false
+			"brauchtWPF": true
 		},
 		"Ge": {
 			"name": "Geschichte",
@@ -94,43 +97,38 @@
 			"name": "Informatik",
 			"kuerzel": "Inf",
 			"aufgabenfeld": 3,
-			"lk": true
+			"lk": true,
+			"brauchtWPF": true
 		},
 		"SuB": {
 			"name": "Studium und Beruf",
 			"kuerzel": "SuB",
-			"aufgabenfeld": 0,
-			"lk": false
+			"aufgabenfeld": 0
 		},
 		"ED": {
 			"name": "Englisch Debating",
 			"kuerzel": "ED",
-			"aufgabenfeld": 0,
-			"lk": false
+			"aufgabenfeld": 0
 		},
 		"Psy": {
 			"name": "Psychologie",
 			"kuerzel": "Psy",
-			"aufgabenfeld": 0,
-			"lk": false
+			"aufgabenfeld": 0
 		},
 		"Med": {
 			"name": "Medizin",
 			"kuerzel": "Med",
-			"aufgabenfeld": 0,
-			"lk": false
+			"aufgabenfeld": 0
 		},
 		"Sp": {
 			"name": "Sport",
 			"kuerzel": "Sp",
-			"aufgabenfeld": 0,
-			"lk": false
+			"aufgabenfeld": 0
 		},
 		"SpT": {
 			"name": "Sport Theorie",
 			"kuerzel": "SpT",
-			"aufgabenfeld": 0,
-			"lk": false
+			"aufgabenfeld": 0
 		}
 	},
 	"pflichtfaecher": {
@@ -138,157 +136,117 @@
 		"De": "1-4",
 		"Sp": "1-4"
 	},
-	"fremdsprachen": ["En", "Spa", "Lat", "Fr"],
+	// "fremdsprachen": ["En", "Spa", "Lat", "Fr"],
 	"wpfs": ["Inf", "Lat", "Fr"],
 	"regeln": [
 		{
-			"type": "Wildcard",
-			"value": {
-				"wildcard": "$FS",
-				"anzahl": 4,
-				"desc": "Eine Fremdsprache muss 4 Semester belegt werden",
-				"errorMsg": "Wähle eine Fremdsprache durchgehend!"
-			}
+			"type": "WildcardRegel",
+			"wildcard": "$FS",
+			"anzahl": 4,
+			"desc": "Eine Fremdsprache muss 4 Semester belegt werden",
+			"errorMsg": "Wähle eine Fremdsprache durchgehend!"
 		},
 		{
-			"type": "Wildcard",
-			"value": {
-				"wildcard": "$NW",
-				"anzahl": 4,
-				"desc": "Eine Naturwissenschaft muss 4 Semester belegt werden",
-				"errorMsg": "Wähle eine Naturwissenschaft durchgehend!"
-			}
+			"type": "WildcardRegel",
+			"wildcard": "$NW",
+			"anzahl": 4,
+			"desc": "Eine Naturwissenschaft muss 4 Semester belegt werden",
+			"errorMsg": "Wähle eine Naturwissenschaft durchgehend!"
 		},
 		{
-			"type": "IfThen",
-			"value": {
+			"type": "IfThenRegel",
+			"regel1": {
+				"type": "KuerzelRegel",
+				"kuerzel": "Bio",
+				"anzahl": 4
+			},
+			"regel2": {
+				"type": "OrRegel",
 				"regel1": {
-					"type": "Kuerzel",
-					"value": {
-						"kuerzel": "Bio",
-						"anzahl": 4
-					}
+					"type": "KuerzelRegel",
+					"kuerzel": "Che",
+					"anzahl": 2
 				},
 				"regel2": {
-					"type": "Or",
-					"value": {
-						"regel1": {
-							"type": "Kuerzel",
-							"value": {
-								"kuerzel": "Che",
-								"anzahl": 2
-							}
-						},
-						"regel2": {
-							"type": "Kuerzel",
-							"value": {
-								"kuerzel": "Phy",
-								"anzahl": 2
-							}
-						}
-					}
-				},
-				"desc": "Bio 4 Semester -> zusätzliche Naturwissenschaft min. 2 Semester",
-				"errorMsg": "Wähle eine 2. Naturwissenschaft für min. 2 Semester!"
-			}
+					"type": "KuerzelRegel",
+					"kuerzel": "Phy",
+					"anzahl": 2
+				}
+			},
+			"desc": "Bio 4 Semester -> zusätzliche Naturwissenschaft min. 2 Semester",
+			"errorMsg": "Wähle eine 2. Naturwissenschaft für min. 2 Semester!"
 		},
 		{
-			"type": "IfThen",
-			"value": {
-				"regel1": {
-					"type": "Kuerzel",
-					"value": {
-						"kuerzel": "Ge",
-						"anzahl": 4
-					}
-				},
-				"regel2": {
-					"type": "Kuerzel",
-					"value": {
-						"kuerzel": "PW",
-						"anzahl": 2,
-						"wann": "3-4"
-					}
-				},
-				"desc": "Geschichte 4 Semester -> zusätzlich PW min. in Q3 & Q4",
-				"errorMsg": "Wähle PW in Q3 & Q4!"
-			}
-		},
-		{
-			"type": "IfThen",
-			"value": {
-				"regel1": {
-					"type": "Kuerzel",
-					"value": {
-						"kuerzel": "PW",
-						"anzahl": 4
-					}
-				},
-				"regel2": {
-					"type": "Kuerzel",
-					"value": {
-						"kuerzel": "Ge",
-						"anzahl": 2,
-						"wann": "3-4"
-					}
-				},
-				"desc": "PW 4 Semester -> zusätzlich Ge min. in Q3 & Q4",
-				"errorMsg": "Wähle Ge in Q3 & Q4!"
-			}
-		},
-		{
-			"type": "IfThen",
-			"value": {
-				"regel1": {
-					"type": "Kuerzel",
-					"value": {
-						"kuerzel": "Geo",
-						"anzahl": 4
-					}
-				},
-				"regel2": {
-					"type": "Kuerzel",
-					"value": {
-						"kuerzel": "Ge",
-						"anzahl": 2,
-						"wann": "3-4"
-					}
-				},
-				"desc": "Geographie 4 Semester -> zusätzlich Ge min. in Q3 & Q4",
-				"errorMsg": "Wähle Ge in Q3 & Q4!"
-			}
-		},
-		{
-			"type": "Wildcard",
-			"value": {
-				"wildcard": "$ART",
+			"type": "IfThenRegel",
+			"regel1": {
+				"type": "KuerzelRegel",
+				"kuerzel": "Ge",
+				"anzahl": 4
+			},
+			"regel2": {
+				"type": "KuerzelRegel",
+				"kuerzel": "PW",
 				"anzahl": 2,
-				"desc": "Ein künstlerisches Fach muss 2 Semester belegt werden",
-				"errorMsg": "Wähle 2 Semester ein künstlerisches Fach!"
-			}
+				"wann": "3-4"
+			},
+			"desc": "Geschichte 4 Semester -> zusätzlich PW min. in Q3 & Q4",
+			"errorMsg": "Wähle PW in Q3 & Q4!"
 		},
 		{
-			"type": "IfThen",
-			"value": {
-				"regel1": {
-					"type": "Kuerzel",
-					"value": {
-						"kuerzel": "Sp",
-						"anzahl": 4,
-						"scope": "1-5"
-					}
-				},
-				"regel2": {
-					"type": "Kuerzel",
-					"value": {
-						"kuerzel": "SpT",
-						"anzahl": 2,
-						"wann": "3-4"
-					}
-				},
-				"desc": "Sport as PF -> zusätzlich Sport Theorie min. in Q3 & Q4",
-				"errorMsg": "Wähle Sport Theorie in Q3 & Q4!"
-			}
+			"type": "IfThenRegel",
+			"regel1": {
+				"type": "KuerzelRegel",
+				"kuerzel": "PW",
+				"anzahl": 4
+			},
+			"regel2": {
+				"type": "KuerzelRegel",
+				"kuerzel": "Ge",
+				"anzahl": 2,
+				"wann": "3-4"
+			},
+			"desc": "PW 4 Semester -> zusätzlich Ge min. in Q3 & Q4",
+			"errorMsg": "Wähle Ge in Q3 & Q4!"
+		},
+		{
+			"type": "IfThenRegel",
+			"regel1": {
+				"type": "KuerzelRegel",
+				"kuerzel": "Geo",
+				"anzahl": 4
+			},
+			"regel2": {
+				"type": "KuerzelRegel",
+				"kuerzel": "Ge",
+				"anzahl": 2,
+				"wann": "3-4"
+			},
+			"desc": "Geographie 4 Semester -> zusätzlich Ge min. in Q3 & Q4",
+			"errorMsg": "Wähle Ge in Q3 & Q4!"
+		},
+		{
+			"type": "WildcardRegel",
+			"wildcard": "$ART",
+			"anzahl": 2,
+			"desc": "Ein künstlerisches Fach muss 2 Semester belegt werden",
+			"errorMsg": "Wähle 2 Semester ein künstlerisches Fach!"
+		},
+		{
+			"type": "IfThenRegel",
+			"regel1": {
+				"type": "KuerzelRegel",
+				"kuerzel": "Sp",
+				"anzahl": 4,
+				"scope": "1-5"
+			},
+			"regel2": {
+				"type": "KuerzelRegel",
+				"kuerzel": "SpT",
+				"anzahl": 2,
+				"wann": "3-4"
+			},
+			"desc": "Sport as PF -> zusätzlich Sport Theorie min. in Q3 & Q4",
+			"errorMsg": "Wähle Sport Theorie in Q3 & Q4!"
 		}
 	],
 	"wahlzeilen": {
@@ -312,7 +270,7 @@
 			"lk1": "$FS",
 			"lk2": "De",
 			"pf3": "$AF2",
-			"pf4": "In",
+			"pf4": "Inf",
 			"pf5": "*",
 			"linien": "keine"
 		},
@@ -329,7 +287,7 @@
 			"lk2": "$FS",
 			"pf3": "De",
 			"pf4": "$AF2",
-			"pf5": "In",
+			"pf5": "Inf",
 			"linien": "gestrichelt"
 		},
 		"6": {
@@ -353,7 +311,7 @@
 			"lk2": "$Mu/Ku",
 			"pf3": "De",
 			"pf4": "$AF2",
-			"pf5": "In",
+			"pf5": "Inf",
 			"linien": "gestrichelt"
 		},
 		"9": {
@@ -376,7 +334,7 @@
 			"lk1": "$FS",
 			"lk2": "$AF2",
 			"pf3": "De",
-			"pf4": "In",
+			"pf4": "Inf",
 			"pf5": "*",
 			"linien": "gestrichelt"
 		},
@@ -408,13 +366,13 @@
 			"lk1": "$FS",
 			"lk2": "$NW",
 			"pf3": "Ma",
-			"pf4": "%AF2",
+			"pf4": "$AF2",
 			"pf5": "*",
 			"linien": "gestrichelt"
 		},
 		"16": {
 			"lk1": "$FS",
-			"lk2": "In",
+			"lk2": "Inf",
 			"pf3": "De",
 			"pf4": "AF2",
 			"pf5": "*",
@@ -422,7 +380,7 @@
 		},
 		"17": {
 			"lk1": "$FS",
-			"lk2": "In",
+			"lk2": "Inf",
 			"pf3": "Ma",
 			"pf4": "$AF2",
 			"pf5": "*",
@@ -486,7 +444,7 @@
 		},
 		"28": {
 			"lk1": "Ma",
-			"lk2": "In",
+			"lk2": "Inf",
 			"pf3": "De",
 			"pf4": "$AF2",
 			"pf5": "*",
@@ -494,7 +452,7 @@
 		},
 		"29": {
 			"lk1": "Ma",
-			"lk2": "In",
+			"lk2": "Inf",
 			"pf3": "$FS",
 			"pf4": "$AF2",
 			"pf5": "*",
@@ -590,7 +548,7 @@
 		},
 		"43": {
 			"lk1": "$NW",
-			"lk2": "In",
+			"lk2": "Inf",
 			"pf3": "$FS",
 			"pf4": "De",
 			"pf5": "$AF2",
@@ -598,7 +556,7 @@
 		},
 		"44": {
 			"lk1": "$NW",
-			"lk2": "In",
+			"lk2": "Inf",
 			"pf3": "$FS",
 			"pf4": "Ma",
 			"pf5": "$AF2",
@@ -606,7 +564,7 @@
 		},
 		"45": {
 			"lk1": "$NW",
-			"lk2": "In",
+			"lk2": "Inf",
 			"pf3": "Ma",
 			"pf4": "De",
 			"pf5": "$AF2",
@@ -625,12 +583,12 @@
 			"lk2": "$Mu/Ku",
 			"pf3": "$FS",
 			"pf4": "$AF2",
-			"pf5": "In",
+			"pf5": "Inf",
 			"linien": "gestrichelt"
 		},
 		"51": {
 			"lk1": "De",
-			"lk2": "%Mu/Ku",
+			"lk2": "$Mu/Ku",
 			"pf3": "Ma",
 			"pf4": "$AF2",
 			"pf5": "*",
@@ -648,7 +606,7 @@
 			"lk1": "De",
 			"lk2": "$AF2",
 			"pf3": "$FS",
-			"pf4": "In",
+			"pf4": "Inf",
 			"pf5": "*",
 			"linien": "gestrichelt"
 		},
@@ -662,7 +620,7 @@
 		},
 		"55": {
 			"lk1": "De",
-			"lk2": "In",
+			"lk2": "Inf",
 			"pf3": "$FS",
 			"pf4": "$AF2",
 			"pf5": "*",
@@ -670,7 +628,7 @@
 		},
 		"56": {
 			"lk1": "De",
-			"lk2": "In",
+			"lk2": "Inf",
 			"pf3": "Ma",
 			"pf4": "$AF2",
 			"pf5": "*",
@@ -686,5 +644,6 @@
 	},
 	"wzWildcards": ["$AF2", "$FS", "$NW", "$Mu/Ku"],
 	"minKurse": 32, // Grundkurse und Leistungskurse zusammen
-	"maxKurse": 36  // Grundkurse und Leistungskurse zusammen
+	"maxKurse": 36 // Grundkurse und Leistungskurse zusammen
+	// "lk1Moeglichkeiten": ["Ma", "De", "$FS", "$NW"] // Mögliche Fächer für den ersten LK
 }

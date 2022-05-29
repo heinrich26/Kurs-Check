@@ -1,8 +1,11 @@
-import data.Wahlmoeglichkeit
+import com.fasterxml.jackson.core.JsonParser
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
+import data.FachData
 import java.awt.*
-import java.lang.IllegalArgumentException
-import java.net.URI
 import java.net.URL
+import javax.swing.ImageIcon
+
 
 /**
  * Gibt den Inhalt der angeforderten Ressource zurück
@@ -15,39 +18,22 @@ fun getResource(fileName: String): String? = {}.javaClass.getResource(fileName)?
  * @param fileName Name/Pfad der Datei
  */
 fun getResourceURL(fileName: String): URL? = {}.javaClass.getResource(fileName)
-//enum class FILLS(val value: Int) { NONE(0), BOTH(1), HORIZONTAL(2), VERTICAL(3) }
 
-class GridConstraint {
-    companion object {
-        fun create(
-            column: Int = GridBagConstraints.RELATIVE,
-            row: Int = GridBagConstraints.RELATIVE,
-            columnspan: Int = 1,
-            rowspan: Int = 1,
-            weightx: Double = 0.0,
-            weighty: Double = 0.0,
-            anchor: Int = GridBagConstraints.CENTER,
-            fill: Int = GridBagConstraints.NONE,
-            insets: Insets = Insets(0, 0, 0, 0),
-            ipadx: Int = 0,
-            ipady: Int = 0
-        ): GridBagConstraints {
-            return GridBagConstraints(
-                column,
-                row,
-                columnspan,
-                rowspan,
-                weightx,
-                weighty,
-                anchor,
-                fill,
-                insets,
-                ipadx,
-                ipady
-            )
-        }
-    }
+/**
+ * Ließt die `dataStruct.json` als [FachData] Objekt ein
+ */
+fun readDataStruct(): FachData {
+    val mapper = jacksonObjectMapper()
+    mapper.factory.enable(JsonParser.Feature.ALLOW_COMMENTS)
+    return mapper.readValue(getResourceURL("dataStruct.json")!!)
 }
+
+/**
+ * Macht einen String "wrappable", sodass er sich an den Component anpasst.
+ * @param width Optionale Länge, bei der ein Umbruch erzwugen wird
+ */
+fun String.wrappable(width: Int? = null) =
+    if (width == null) "<html>$this</html>" else "<html><div style=\"width:${width}px;\">$this</div></html>"
 
 
 /**
@@ -67,12 +53,28 @@ fun Container.add(
     margin: Insets = Insets(0, 0, 0, 0),
     ipadx: Int = 0,
     ipady: Int = 0
-): Unit {
-    /* if (this.layout !is GridBagLayout?)
-        println(this.layout.javaClass.name)
-        throw IllegalArgumentException("Der Component muss ein GridBagLayout besitzen") */
+) {
+    if (this.layout !is GridBagLayout?) {
+        println()
+        throw IllegalArgumentException("Falsches Layout: ${this.layout.javaClass.name}! Der Component muss ein GridBagLayout besitzen")
+    }
 
-    this.add(component,
-        GridBagConstraints(column, row, columnspan, rowspan,
-            weightx, weighty, anchor, fill, margin, ipadx, ipady))
+    this.add(
+        component,
+        GridBagConstraints(
+            column, row, columnspan, rowspan,
+            weightx, weighty, anchor, fill, margin, ipadx, ipady
+        )
+    )
+}
+
+/** Returns an ImageIcon, or null if the path was invalid. */
+fun createImageIcon(path: String, description: String? = null): ImageIcon? {
+    val imgURL: URL? = getResourceURL(path)
+    return if (imgURL != null) {
+        ImageIcon(imgURL, description)
+    } else {
+        System.err.println("Couldn't find file: $path")
+        null
+    }
 }

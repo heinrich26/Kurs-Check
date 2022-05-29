@@ -1,20 +1,18 @@
 package gui
 
-import ChainedSpinnerNumberModel
-import ExclusiveComboBoxModel
 import add
 import data.Fach
+import data.FachComboBoxModel
 import data.FachData
 import data.KurswahlData
 import testFachdata
 import testKurswahl
-import java.awt.Component
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.Insets
-import java.awt.event.ActionEvent
-import javax.swing.*
-import kotlin.math.max
+import java.awt.event.ItemEvent
+import javax.swing.Box
+import javax.swing.JLabel
 
 
 class Leistungskurse(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(wahlData, fachData) {
@@ -25,60 +23,57 @@ class Leistungskurse(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel
             runTest { Leistungskurse(testKurswahl, testFachdata) }
         }
 
-        class MyComboBox(model: ExclusiveComboBoxModel) : JComboBox<Fach>(model) {
-            override fun getSelectedIndex(): Int = max(super.getSelectedIndex(), 0)
+        class LKComboBoxModel(data: Collection<Fach>, other: FachComboBox) : FachComboBoxModel(data = data) {
+            private var excludedItem: Pair<Fach, Int>? = null
 
-            override fun getSelectedItem(): Fach? {
-                return super.getSelectedItem() as Fach?
+            init {
+                other.addItemListener {
+                    if (it.stateChange == ItemEvent.SELECTED) {
+                        if (excludedItem != null) {
+                            insertElementAt(excludedItem!!.first, excludedItem!!.second)
+                            excludedItem = null
+                        }
+                        val item = (it.item ?: return@addItemListener) as Fach
+
+                        if (selectedItem == item)
+                            selectedItem = null
+                        excludedItem = item to getIndexOf(item).also { i -> removeElementAt(i) }
+                    }
+                }
             }
         }
     }
 
-    private val lk1: MyComboBox
-    private val lk2: MyComboBox
+    private val lk1: FachComboBox
+    private val lk2: FachComboBox
 
     init {
-        this.layout = GridBagLayout()
+        layout = GridBagLayout()
 
-        add(
-            JLabel("Leistungskurse:"),
-            column = 0,
-            columnspan = 2,
-            margin = Insets(0, 0, 4, 0),
-            anchor = GridBagConstraints.WEST
-        )
+
         add(Box.createHorizontalStrut(50), column = 2)
-        
 
 
-        val model1 = ExclusiveComboBoxModel(fachData.fremdsprachen)
-        lk1 = MyComboBox(model1)
+        // Eine Fremdsprache, die erst in der Jahrgangsstufe 10 oder in der Einführungsphase begonnen wurde,
+        // darf nur als 3. oder 4. Prüfungsfach oder als Referenzfach der 5. PK gewählt werden.
+        val fs = wahlData.fremdsprachen.mapNotNull { (fach, jahr) -> if (jahr >= 10) null else fach }
+
+        val model1 = FachComboBoxModel(fachData.lk1Moeglichkeiten.filter { !it.fremdsprache || it in fs })
+        lk1 = FachComboBox(model1)
 
 
-        val model2 = ExclusiveComboBoxModel(fachData.fremdsprachen, lk1)
-        lk2 = MyComboBox(model2)
-
-
-
-        
-        val renderer = object : DefaultListCellRenderer() {
-            override fun getListCellRendererComponent(
-                list: JList<*>?,
-                value: Any?,
-                index: Int,
-                isSelected: Boolean,
-                cellHasFocus: Boolean
-            ): Component? = super.getListCellRendererComponent(
-                list,
-                if (value is Fach) value.name else "Ungesetzt",
-                index,
-                isSelected,
-                cellHasFocus
-            )
+        val wpfs = wahlData.wpfs
+        val moeglichkeiten = fachData.lk2Moeglichkeiten.filter {
+            (!it.fremdsprache || it in fs) &&
+                    /* Hat keine WPF or Fach ist weder 1./2. WPF */
+                    (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second)))
         }
+        val model2 = LKComboBoxModel(moeglichkeiten, lk1)
+        lk2 = FachComboBox(model2)
+        
 
-        lk1.renderer = renderer
-        lk2.renderer = renderer
+        lk1.renderer = FachRenderer
+        lk2.renderer = FachRenderer
 
 
         // Daten einsetzen
@@ -94,16 +89,10 @@ class Leistungskurse(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel
     }
 
 
-    override fun close(): KurswahlData {
+    override fun close(): KurswahlData = wahlData.updateLKs(lk1 = lk1.selectedItem!!, lk2 = lk2.selectedItem!!)
 
-
-        return wahlData.copy(lk1 = lk1.selectedItem, lk2 = lk2.selectedItem)
-    }
-
-    override fun isDataValid(): Boolean {
-        return (lk1.selectedItem != null && lk2.selectedItem != null)
-    }
+    override fun isDataValid(): Boolean = (lk1.selectedItem != null && lk2.selectedItem != null)
 
     override val windowName: String
-        get() = "Fremdsprachen & Wahlpflichtfächer"
+        get() = "Leistungskurse"
 }

@@ -4,7 +4,60 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Wahldaten kommen nun komplett aus der JSON" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Arbeit an den Regeln, Einbindung in GrundkursWahl.kt">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/FachComboBoxModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/gui/FachComboBox.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/gui/FachRenderer.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/gui/ScrollablePanel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MainWindow.form" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MainWindow.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/overviewWidget.form" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/overviewWidget.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ExclusiveComboBoxModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ExclusiveComboBoxModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/PruefungsfachUebersicht.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/PruefungsfachUebersicht.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/TestData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/TestData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Utils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Utils.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/WahlVisualizer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/WahlVisualizer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/AnnotationExclusionStrategy.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Exclude.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Fach.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Fach.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/FachData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/FachData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/IfThenRegel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/IfThenRegel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/JsonDataStructure.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/KuerzelRegel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/KuerzelRegel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/KurswahlData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/KurswahlData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/OrRegel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/OrRegel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Overview.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/Overview.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Pf5Typ.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Pf5Typ.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Regel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Regel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/RegelAdapterFactory.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/RegelHolder.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/RegelScope.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/RegelScope.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Regeln.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Wahlmoeglichkeit.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Wahlmoeglichkeit.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/WahlzeileLinientyp.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/WahlzeileLinientyp.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/WildcardRegel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/WildcardRegel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/dataReadingTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/dataReadingTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/ClickableDestionation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/ClickableDestionation.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/ColoredCheckBox.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/ColoredCheckBox.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/Consts.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/Consts.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/Fremdsprachen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/Fremdsprachen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/FsWpfIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/FsWpfIcon.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/GrundkursWahl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/GrundkursWahl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/Leistungskurse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/Leistungskurse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/PKs.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/Pruefungsfaecher.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/PolyIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/PolyIcon.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/RegelLabel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/RegelLabel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/SidebarLabel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/SidebarLabel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/TextIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/TextIcon.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/check.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/check.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cross.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/cross.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/dataStruct.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dataStruct.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/regeln.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/regeln.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,10 +83,14 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Kotlin File" />
         <option value="Kotlin Interface" />
         <option value="Kotlin Data Class" />
+        <option value="Kotlin Enum" />
+        <option value="Kotlin File" />
+        <option value="Class" />
+        <option value="JUnit5 Test Class" />
         <option value="Kotlin Class" />
+        <option value="Kotlin Object" />
       </list>
     </option>
   </component>
@@ -66,12 +123,22 @@
     <property name="TODO_SCOPE" value="All Places" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File" value="kotlin" />
-    <property name="project.structure.last.edited" value="Artifacts" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
   </component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="javax.swing.text.html" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
     <key name="CreateKotlinClassDialog.RecentsKey">
       <recent name="data" />
     </key>
@@ -81,6 +148,9 @@
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="data" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
       <recent name="gui" />
@@ -153,7 +223,11 @@
       <workItem from="1652881494566" duration="3606000" />
       <workItem from="1652941873137" duration="30095000" />
       <workItem from="1653124331707" duration="38875000" />
-      <workItem from="1653483671237" duration="4480000" />
+      <workItem from="1653483671237" duration="17691000" />
+      <workItem from="1653571785959" duration="30212000" />
+      <workItem from="1653730055455" duration="1428000" />
+      <workItem from="1653731524679" duration="28960000" />
+      <workItem from="1653817851913" duration="12131000" />
     </task>
     <task id="LOCAL-00003" summary="reimpl. der fremdsprachen wahl">
       <created>1652452601911</created>
@@ -239,7 +313,77 @@
       <option name="project" value="LOCAL" />
       <updated>1653488040281</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Wahldaten kommen nun komplett aus der JSON">
+      <created>1653488331600</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1653488331600</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Änderungen an der JsonDataStructure.kt">
+      <created>1653488523168</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1653488523168</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Verbessertes Printing von FachData.kt">
+      <created>1653489425476</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1653489425476</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Irgendwer hat weirden Stuff bei KurswahlData.kt hinzugefügt...">
+      <created>1653489552831</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1653489552831</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Irgendwer hat weirden Stuff bei KurswahlData.kt hinzugefügt...">
+      <created>1653489693230</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1653489693230</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Refractoring und Typenänderungen">
+      <created>1653490634145</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1653490634145</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Arbeit an den Regeln">
+      <created>1653583719724</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1653583719724</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Arbeit an den Regeln, Einbindung in FachData.kt">
+      <created>1653649413222</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1653649413222</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Arbeit an den Regeln, Einbindung in FachData.kt">
+      <created>1653665742145</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1653665742145</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Arbeit an den Regeln, Einbindung in GrundkursWahl.kt">
+      <created>1653667551425</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1653667551425</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -270,20 +414,13 @@
     <MESSAGE value="Wahlzeilenmatching implementiert und JSON Struktur geändert! Ausführen sollte bissn kaputt sein" />
     <MESSAGE value="Wahlzeilenmatching weitergeführt" />
     <MESSAGE value="Wahldaten kommen nun komplett aus der JSON" />
-    <option name="LAST_COMMIT_MESSAGE" value="Wahldaten kommen nun komplett aus der JSON" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="kotlin-function">
-          <url>file://$PROJECT_DIR$/src/main/kotlin/Utils.kt</url>
-          <line>7</line>
-          <properties method="getResource">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Änderungen an der JsonDataStructure.kt" />
+    <MESSAGE value="Verbessertes Printing von FachData.kt" />
+    <MESSAGE value="Irgendwer hat weirden Stuff bei KurswahlData.kt hinzugefügt..." />
+    <MESSAGE value="Refractoring und Typenänderungen" />
+    <MESSAGE value="Arbeit an den Regeln" />
+    <MESSAGE value="Arbeit an den Regeln, Einbindung in FachData.kt" />
+    <MESSAGE value="Arbeit an den Regeln, Einbindung in GrundkursWahl.kt" />
+    <option name="LAST_COMMIT_MESSAGE" value="Arbeit an den Regeln, Einbindung in GrundkursWahl.kt" />
   </component>
 </project>

@@ -13,7 +13,6 @@ import java.awt.GridBagLayout
 import java.awt.Insets
 import java.awt.event.ActionEvent
 import javax.swing.*
-import kotlin.math.max
 
 
 class Fremdsprachen(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(wahlData, fachData) {
@@ -23,14 +22,6 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
         fun main(args: Array<String>) {
             runTest { Fremdsprachen(testKurswahl, testFachdata) }
         }
-
-        class MyComboBox(model: ExclusiveComboBoxModel) : JComboBox<Fach>(model) {
-            override fun getSelectedIndex(): Int = max(super.getSelectedIndex(), 0)
-
-            override fun getSelectedItem(): Fach? {
-                return super.getSelectedItem() as Fach?
-            }
-        }
     }
 
     private val fsJahr1: SpinnerNumberModel
@@ -38,12 +29,12 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
     private val fsJahr3: SpinnerNumberModel
     private val fsJahr4: SpinnerNumberModel
 
-    private val fs1: MyComboBox
-    private val fs2: MyComboBox
-    private val fs3: MyComboBox
-    private val fs4: MyComboBox
-    private val wpf1: MyComboBox
-    private val wpf2: MyComboBox
+    private val fs1: FachComboBox
+    private val fs2: FachComboBox
+    private val fs3: FachComboBox
+    private val fs4: FachComboBox
+    private val wpf1: FachComboBox
+    private val wpf2: FachComboBox
 
     init {
         this.layout = GridBagLayout()
@@ -88,18 +79,18 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
 
 
         val model1 = ExclusiveComboBoxModel(fachData.fremdsprachen)
-        fs1 = MyComboBox(model1)
+        fs1 = FachComboBox(model1)
 
 
         val model2 = ExclusiveComboBoxModel(fachData.fremdsprachen, fs1)
-        fs2 = MyComboBox(model2)
+        fs2 = FachComboBox(model2)
 
         val model3 = ExclusiveComboBoxModel(fachData.fremdsprachen, fs2)
-        fs3 = MyComboBox(model3)
+        fs3 = FachComboBox(model3)
         fs3.isEnabled = false
 
         val model4 = ExclusiveComboBoxModel(fachData.fremdsprachen, fs3)
-        fs4 = MyComboBox(model4)
+        fs4 = FachComboBox(model4)
         fs4.isEnabled = false
 
 
@@ -133,26 +124,10 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
             add(JLabel("$i."), row = i, column = 0)
         }
 
-        val renderer = object : DefaultListCellRenderer() {
-            override fun getListCellRendererComponent(
-                list: JList<*>?,
-                value: Any?,
-                index: Int,
-                isSelected: Boolean,
-                cellHasFocus: Boolean
-            ): Component? = super.getListCellRendererComponent(
-                list,
-                if (value is Fach) value.name else "Ungesetzt",
-                index,
-                isSelected,
-                cellHasFocus
-            )
-        }
-
-        fs1.renderer = renderer
-        fs2.renderer = renderer
-        fs3.renderer = renderer
-        fs4.renderer = renderer
+        fs1.renderer = FachRenderer
+        fs2.renderer = FachRenderer
+        fs3.renderer = FachRenderer
+        fs4.renderer = FachRenderer
 
         // Daten einsetzen
         wahlData.fremdsprachen.let { fs ->
@@ -184,12 +159,12 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
 
 
         val wpfModel1 = ExclusiveComboBoxModel(fachData.wpfs)
-        wpf1 = MyComboBox(wpfModel1)
-        wpf1.renderer = renderer
+        wpf1 = FachComboBox(wpfModel1)
+        wpf1.renderer = FachRenderer
         val wpfModel2 = ExclusiveComboBoxModel(fachData.wpfs, wpf1)
-        wpf2 = MyComboBox(wpfModel2)
+        wpf2 = FachComboBox(wpfModel2)
         wpf2.isEnabled = false
-        wpf2.renderer = renderer
+        wpf2.renderer = FachRenderer
 
         wpf1.addActionListener { if (it.actionCommand == "comboBoxChanged") wpfModel2.updateData() }
 

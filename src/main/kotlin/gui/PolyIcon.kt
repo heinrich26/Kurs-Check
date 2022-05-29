@@ -1,11 +1,15 @@
 package gui
 
 import gui.Consts.COLOR_CONTROL
+import gui.Consts.COLOR_ON_BACKGROUND
+import gui.Consts.COLOR_ON_BACKGROUND_DISABLED
+import gui.Consts.COLOR_PRIMARY
 import gui.Consts.SIDEBAR_SIZE
 import java.awt.*
 import java.awt.geom.AffineTransform
 
-class PolyIcon(poly: Polygon, defaultEnabled: Boolean, clickEvent: () -> Unit) : ClickableDestionation(defaultEnabled, clickEvent = clickEvent) {
+class PolyIcon(poly: Polygon, defaultEnabled: Boolean, clickEvent: () -> Unit) :
+    ClickableDestionation(defaultEnabled, clickEvent = clickEvent) {
     companion object {
         @JvmStatic
         val transform1 = AffineTransform(1.0, 0.0, 0.0, 1.0, -12.0, -12.0)
@@ -36,10 +40,12 @@ class PolyIcon(poly: Polygon, defaultEnabled: Boolean, clickEvent: () -> Unit) :
 
         if (hasFocus) {
             g2D.color = COLOR_CONTROL
-            g2D.fillOval(10, 10, width-20, height-20)
+            g2D.fillOval(10, 10, width - 20, height - 20)
         }
 
-        g2D.color = if (isEnabled) Consts.COLOR_PRIMARY else Consts.COLOR_ON_BACKGROUND
+        g2D.color = if (isSelected) COLOR_PRIMARY
+                    else if (isEnabled) COLOR_ON_BACKGROUND
+                    else COLOR_ON_BACKGROUND_DISABLED
 
         g2D.stroke = BasicStroke(5.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND)
         g2D.draw(shape)

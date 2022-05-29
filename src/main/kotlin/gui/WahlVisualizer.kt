@@ -1,5 +1,7 @@
+package gui
+
+import add
 import data.KurswahlData
-import gui.RoundedBorder
 import java.awt.Font
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout

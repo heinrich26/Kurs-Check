@@ -1,5 +1,12 @@
 package data
 
-data class Fach(val name: String, val kuerzel: String, val aufgabenfeld: Int?, val lk: Boolean) {
-    fun nameFormatted() = if (aufgabenfeld == null) name else "$name ($aufgabenfeld)"
+data class Fach(
+    val name: String,
+    val kuerzel: String,
+    val aufgabenfeld: Int,
+    val lk: Boolean = false,
+    val fremdsprache: Boolean = false,
+    val brauchtWPF: Boolean = false
+) {
+    fun nameFormatted() = if (aufgabenfeld == 0) name else "$name ($aufgabenfeld)"
 }

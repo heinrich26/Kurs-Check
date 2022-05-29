@@ -1,9 +1,9 @@
 package data
 
-import com.google.gson.annotations.SerializedName
+import com.fasterxml.jackson.annotation.JsonProperty
 
 enum class Pf5Typ(val repr: String) {
-    @SerializedName("schriftl") SCHRIFTLICH("schriftl."),
-    @SerializedName("praes") PRAESENTATION("Präs."),
-    @SerializedName("wettbewerb") WETTBEWERB("Wettbewerb")
+    @JsonProperty("schriftl") SCHRIFTLICH("schriftl."),
+    @JsonProperty("praes") PRAESENTATION("Präs."),
+    @JsonProperty("wettbewerb") WETTBEWERB("Wettbewerb")
 }

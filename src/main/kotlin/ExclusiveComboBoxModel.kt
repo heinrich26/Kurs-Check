@@ -1,16 +1,17 @@
 import data.Fach
+import gui.FachComboBox
 import javax.swing.ComboBoxModel
 import javax.swing.JComboBox
 import javax.swing.event.ListDataListener
 
-class ExclusiveComboBoxModel(var data: List<Fach>, private val vorgaenger: JComboBox<Fach>? = null): ComboBoxModel<Fach> {
+open class ExclusiveComboBoxModel(var data: List<Fach>, val vorgaenger: FachComboBox? = null): ComboBoxModel<Fach?> {
     override fun getSize(): Int = data.size + 1
 
     private val listeners = mutableListOf<ListDataListener>()
 
     private var selectedItem: Fach? = null
 
-    private val itemsAfter: List<Fach>
+    open val itemsAfter: List<Fach>
         get() {
             val vorgaengerData = (vorgaenger!!.model as ExclusiveComboBoxModel).data
             return when (val i = vorgaenger.selectedIndex) {
@@ -19,6 +20,7 @@ class ExclusiveComboBoxModel(var data: List<Fach>, private val vorgaenger: JComb
                 vorgaengerData.size -> vorgaengerData.subList(0, vorgaengerData.size - 1)
                 else -> vorgaengerData.subList(0, i - 1) + vorgaengerData.subList(i, vorgaengerData.size)
             }
+//            return if (selectedItem == null) vorgaengerData else vorgaengerData - selectedItem!!
         }
 
     fun updateData() {

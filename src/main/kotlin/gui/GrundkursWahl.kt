@@ -8,21 +8,18 @@ import data.Wahlmoeglichkeit
 import data.Wahlmoeglichkeit.*
 import testFachdata
 import testKurswahl
-import java.awt.Dimension
-import java.awt.GridBagConstraints
-import java.awt.GridBagLayout
+import java.awt.*
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
-import java.awt.event.MouseListener
-import javax.lang.model.element.Element
 import javax.swing.*
 
 
 class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(wahlData, fachData) {
     override fun close(): KurswahlData {
         val gks = mutableMapOf<Fach, Wahlmoeglichkeit>()
+        val pfs = wahlData.pfs
         for ((i, fach) in fachData.faecher.withIndex()) {
-            if (fach in wahlData.pfs) continue
+            if (fach in pfs) continue
             //Übergabe der gewählten Grundkurse und dessen Semester
             val value = when (checkboxArray.subList(i * 4, i * 4 + 4).map { it.isSelected }) {
                 listOf(true, true, false, false) -> ERSTES_ZWEITES
@@ -38,8 +35,18 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
     }
 
     override fun isDataValid(): Boolean {
-        val data = close()
-        return fachData.regeln.all { it.match(data) }
+        val pfs = wahlData.pfs
+        for ((i, fach) in fachData.faecher.withIndex()) {
+            if (fach in pfs) continue
+            // Übergabe der gewählten Grundkurse und dessen Semester
+            when (checkboxArray.subList(i * 4, i * 4 + 4).map { it.isSelected }) {
+                listOf(true, true, false, false), listOf(true, true, true, false),
+                listOf(false, true, true, true), listOf(false, false, true, true),
+                listOf(true, true, true, true), listOf(false, false, false, false) -> continue
+                else -> return false
+            }
+        }
+        return true
     }
 
     companion object {
@@ -49,30 +56,45 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
         }
     }
 
+    private fun checkData(): Boolean {
+        val data = close()
+        data.lock()
+        return fachData.regeln.mapIndexed { i, it ->
+            val result = it.match(data)
+            regelLabelArray[i].setAppearance(result)
+            result
+        }.all { it }
+    }
+
     private val checkboxArray = ArrayList<JToggleButton>()
+
+    private val regelLabelArray = fachData.regeln.map { RegelLabel(it) }.toTypedArray()
 
     private var anzahl: Int = 0
         set(value) {
             field = value
             anzahlLabel.text = "$anzahl Kurse"
 
-            checkText.text = when {
-                value < fachData.minKurse -> "Bitte wählt mindestens ${fachData.minKurse} aus"
-                value > fachData.maxKurse -> "Bitte wählt maximal ${fachData.maxKurse} aus"
+            anzahlInfoLabel.text = when {
+                value < fachData.minKurse -> "Bitte wähle mindestens ${fachData.minKurse} Kurse"
+                value > fachData.maxKurse -> "Bitte wähle maximal ${fachData.maxKurse} Kurse"
                 else -> "Es wurden genug Kurse gewählt"
             }
         }
-    private val checkText = JLabel()
 
     private val anzahlLabel = JLabel("$anzahl Kurse")
-    private val panel = JPanel()
-    var ank = false
+    private val anzahlInfoLabel = JLabel()
+
+    private val panel = JPanel(GridBagLayout())
+
+    private val checkButton = JButton("Überprüfen")
 
     init {
         layout = GridBagLayout()
-        panel.layout = GridBagLayout()
-        add(anzahlLabel, row = fachData.faecher.size)
-        add(checkText, row = fachData.faecher.size + 1)
+        add(anzahlLabel, row = 1)
+        add(anzahlInfoLabel, row = 1)
+        checkButton.addActionListener { checkData() }
+        add(checkButton, row = 1)
 
         buildCheckboxes()
 
@@ -83,8 +105,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
 
         faecherBlocken()
 
-        //Automatisches Ankreuzen nach Tab wechsel
-        //TODO das benutzen bei Pflichtfächern
+        // Grundkurse eintragen
         for ((gk, choice) in wahlData.gks) {
             val pos = fachPos(gk)
             val acti = when (choice) {
@@ -96,116 +117,125 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
             }
             for (k in 0..3) {
                 if (acti[k]) {
-                    anzahl++
                     checkboxArray[k + (pos * 4)].isSelected = true
                 }
             }
         }
 
-        // Regel Panel
-        val regelPanel = JPanel()
-        regelPanel.maximumSize = Dimension(200, -1)
-        regelPanel.layout = BoxLayout(regelPanel, BoxLayout.PAGE_AXIS)
-        println(fachData.regeln)
-        for (regel in fachData.regeln) {
-            val label = RegelLabel(regel)
-            label.maximumSize = Dimension(200, -1)
-            label.alignmentX = 0f
-            regelPanel.add(label)
+
+        // Kurse zählen
+        /*for (box in checkboxArray) {
+            if (box.isVisible && box.isSelected) anzahl++
         }
+        Equivalent zu: */
+        anzahl = checkboxArray.count { it.isVisible && it.isSelected }
+
+
+        // Regeln darstellen
+        val regelPanel = ScrollablePanel(null)
+        regelPanel.layout = BoxLayout(regelPanel, BoxLayout.PAGE_AXIS)
+        regelPanel.setScrollableWidth(ScrollablePanel.ScrollableSizeHint.FIT)
+        regelLabelArray.forEach { regelPanel.add(it) }
 
         val scrollPane2 =
-            JScrollPane(regelPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER)
+            JScrollPane(regelPanel)
         scrollPane2.preferredSize = Dimension(200, 350)
+
+        checkData()
 
         add(scrollPane2)
     }
 
-    // ignorierte Fächer werden ausgeblendet das man sie nicht sieht aber das sie in dem Array sind (damit auslesen noch funktioniert)
+
+    /**
+     * Erstellt Checkboxen mit Labels und versteckt jene, die der Schüler nicht wählen kann
+     */
     private fun buildCheckboxes() {
-        // Erstellt Checkboxen
+        // fremdsprachen & wpfs holen
         for ((i, fach) in fachData.faecher.withIndex()) {
-            val labs = JLabel(fach.name)
+            // TODO alle Fremdsprachen, die nicht in fachData.fremdsprachen sind, verstecken
+            // TODO alle WPFs Fächer, die nicht in fachData.wpfs sind, verstecken
+            // TODO das Label brauchst du dann nicht zu erstellen, nur die Checkbox (ohne listener etc.)
 
-            //Wenn man ein Label anklickt werden alle Checkboxen ausgewählt
-            labs.addMouseListener(object : MouseAdapter() {
-                override fun mousePressed(e: MouseEvent) {
-                    var cou = 0
-                    val subl = checkboxArray.subList(i * 4, i * 4 + 4) //Erstellt Sublist
-                    for (l in 0..3) {
-                        if (subl[l].isSelected) {
-                            cou++
+            // TODO Condition aus Leistungskurse.kt... mach dir eine Zwischenvariable, weil effizienz
+            /*
+            Das kommt außerhalb des for-Loops :)
+            val fs = fachData.fremdsprachen
+            val wpfs = fachData.wpfs
+
+            (!it.fremdsprache || it in fs) &&
+                    /* Hat keine WPF or Fach ist weder 1./2. WPF */
+                    (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second)))
+            */
+
+
+            if (true /* TODO hier kommt deine Zwischenvariable rein ;) */) {
+                val label = JLabel(fach.name)
+
+                // Wenn man das Label anklickt wird die ganze Zeile ausgewählt
+                label.addMouseListener(object : MouseAdapter() {
+                    override fun mousePressed(e: MouseEvent) {
+                        // Checkboxen der Zeile holen
+                        val zeile = checkboxArray.subList(i * 4, i * 4 + 4)
+
+                        // An- und Abwählen
+                        when (zeile.count { it.isSelected }) {
+                            0, 2, 3 -> {
+                                for (box in zeile)
+                                    if (box.isEnabled && !box.isSelected) {
+                                        box.isSelected = true
+                                        anzahl++
+                                    }
+                            }
+                            else /* 1, 4 */ -> {
+                                for (box in zeile)
+                                    if (box.isEnabled && box.isSelected) {
+                                        box.isSelected = false
+                                        anzahl--
+                                    }
+                            }
                         }
                     }
-                    //Auswählen und Abwählen
-                    when (cou) {
-                        in 2..3 -> {
-                            for (k in i * 4..i * 4 + 3) {
-                                var che = checkboxArray[k]
-                                if (che.isEnabled)
-                                    che.isSelected = true
-                            }
-                        }
-                        4 -> {
-                            for (k in i * 4..i * 4 + 3) {
-                                var che = checkboxArray[k]
-                                if (che.isEnabled)
-                                    che.isSelected = false
-                            }
-                        }
-                        0 -> {
-                            for (k in i * 4..i * 4 + 3) {
-                                var che = checkboxArray[k]
-                                if (che.isEnabled)
-                                    che.isSelected = true
-                            }
-                        }
-                        else -> {
-                            for (k in i * 4..i * 4 + 3) {
-                                var che = checkboxArray[k]
-                                if (che.isEnabled)
-                                    che.isSelected = false
-                            }
-                        }
-                    }
-                }
-            })
+                })
+                panel.add(label, row = i, column = 0, fill = GridBagConstraints.HORIZONTAL)
+            }
 
-            panel.add(labs, row = i, column = 0, fill = GridBagConstraints.HORIZONTAL)
+            // Checkbox bauen und hinzufügen
             for (j in 1..4) {
                 val box = JCheckBox()
-                box.isOpaque = false
-                box.addActionListener { if ((it.source as JToggleButton).isSelected) anzahl++ else anzahl-- }
+
+                if (true /* TODO hier kommt deine Zwischenvariable rein ;) */) {
+                    box.isOpaque = false
+                    box.addActionListener { if ((it.source as JToggleButton).isSelected) anzahl++ else anzahl-- }
+                } else box.isVisible = false
+
                 checkboxArray.add(box)
                 panel.add(box, row = i, column = j, fill = GridBagConstraints.HORIZONTAL)
             }
         }
     }
 
-    //TODO Fächer wie LKs und Pks müssen ausgewählt und geblockt  werden
+    /**
+     * Blockt Prüfungs- und Pflichtfächer, damit der Nutzer nichts an der auswahl verändern kann
+     */
     private fun faecherBlocken() {
-        //Blockt Prüfungsfächer
-        for (pf in wahlData.pfs.filterNotNull()) {
-            val pos = fachPos(pf)
-            for (k in pos * 4..pos * 4 + 3) {
-                anzahl++
+        // Blockt Prüfungsfächer
+        for (pos in wahlData.pfs.filterNotNull().map { fachPos(it) }) {
+            for (k in pos * 4..pos * 4 + 3)
                 checkboxArray[k].let {
                     it.isSelected = true
                     it.isEnabled = false
                 }
-            }
         }
-        //Blockt Pflichtfächer
-        //TODO Jetzt Alle gesperrt, aber es gibt auch fächer wo nur bestimmte gesperrt
+        // Blockt Pflichtfächer
+        // TODO zurzeit sind 1-4 gesperrt, aber es könnte auch Fächer geben, wo nur bestimmte gesperrt sind
         for ((pf, wm) in fachData.pflichtfaecher) {
             val pos = fachPos(pf)
-            for (k in pos * 4..pos * 4 + 3) {
-                anzahl++
+            for (k in pos * 4..pos * 4 + 3)
                 checkboxArray[k].let {
                     it.isSelected = true
                     it.isEnabled = false
                 }
-            }
         }
     }
 

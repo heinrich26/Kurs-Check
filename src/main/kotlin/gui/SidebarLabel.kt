@@ -1,17 +1,21 @@
 package gui
 
 import gui.Consts.COLOR_ON_BACKGROUND
+import gui.Consts.COLOR_ON_BACKGROUND_DISABLED
 import gui.Consts.COLOR_PRIMARY
 import gui.Consts.FONT_NAME
 import gui.Consts.SIDEBAR_SIZE
-import java.awt.*
+import java.awt.Font
+import java.awt.Graphics
+import java.awt.Graphics2D
+import java.awt.RenderingHints
 
-class SidebarLabel(private val text: String, clickEvent: () -> Unit) : ClickableDestionation(clickEvent = clickEvent) {
+class SidebarLabel(private val lText: String, clickEvent: () -> Unit) : ClickableDestionation(clickEvent = clickEvent) {
     init {
         font = Font(FONT_NAME, Font.BOLD, 24)
     }
 
-    private val tLen = getFontMetrics(font).stringWidth(text)
+    private val tLen = getFontMetrics(font).stringWidth(lText)
     private val tHeight = 18
     private val insetX: Int = (SIDEBAR_SIZE - tLen) / 2
     private val insetY: Int = (SIDEBAR_SIZE - tHeight) / 2 + tHeight
@@ -31,7 +35,7 @@ class SidebarLabel(private val text: String, clickEvent: () -> Unit) : Clickable
             g2D.fillOval(10, 10, width-20, height-20)
         }
 
-        g2D.color = if (isEnabled) COLOR_PRIMARY else COLOR_ON_BACKGROUND
-        g2D.drawString(text, insetX, insetY)
+        g2D.color = if (isSelected) COLOR_PRIMARY else if (isEnabled) COLOR_ON_BACKGROUND else COLOR_ON_BACKGROUND_DISABLED
+        g2D.drawString(lText, insetX, insetY)
     }
 }

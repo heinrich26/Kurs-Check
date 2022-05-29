@@ -4,7 +4,6 @@ import gui.Consts.CHECKBOX_HEIGHT
 import gui.Consts.CHECKBOX_WIDTH
 import java.awt.*
 import javax.swing.JToggleButton
-import javax.swing.border.EmptyBorder
 
 /**
  * This is a Checkbox, that doesnt expect Borders!

@@ -1,12 +1,12 @@
 package data
 
-class OrRegel(private val regel1: RegelHolder, private val regel2: RegelHolder, desc: String? = null, errorMsg: String? = null) : Regel(desc, errorMsg) {
-    override fun match(data: KurswahlData): Boolean = regel1.regel.match(data) || regel2.regel.match(data)
+class OrRegel(private val regel1: Regel, private val regel2: Regel, desc: String? = null, errorMsg: String? = null) : Regel(desc, errorMsg) {
+    override fun match(data: KurswahlData): Boolean = regel1.match(data) || regel2.match(data)
 
     override fun fillData(data: FachData) {
-        regel1.regel.fillData(data)
-        regel2.regel.fillData(data)
+        regel1.fillData(data)
+        regel2.fillData(data)
     }
 
-    override fun toString(): String = "OrRegel(regel1=${regel1.regel}, regel2=${regel2.regel})"
+    override fun toString(): String = "OrRegel(regel1=${regel1}, regel2=${regel2})"
 }

@@ -1,5 +1,3 @@
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import data.*
 import gui.*
 import gui.Consts.HOME_POLY
@@ -8,17 +6,10 @@ import java.awt.*
 import javax.swing.*
 import javax.swing.border.EmptyBorder
 import kotlin.reflect.KClass
-class Main : JPanel() {
-    private var wahlData: KurswahlData = KurswahlData()
-    private val fachData: FachData
 
-    init {
-        val builder = GsonBuilder()
-        builder.registerTypeAdapterFactory(RegelAdapterFactory())
-        builder.setExclusionStrategies(AnnotationExclusionStrategy())
-        val gson = builder.create()
-        fachData = gson.fromJson(getResource("dataStruct.json"), JsonDataStructure::class.java).toFachData()
-    }
+class Main : JPanel() {
+    private val fachData: FachData = readDataStruct()
+    private var wahlData: KurswahlData = KurswahlData(gks = fachData.pflichtfaecher)
 
 
     companion object {
@@ -53,13 +44,13 @@ class Main : JPanel() {
 
     // Nav Bar Logik
     private val sidebar = JPanel(GridBagLayout()).apply {
-        this.preferredSize = Dimension(SIDEBAR_SIZE, -1)
+        this.preferredSize = Dimension(SIDEBAR_SIZE, 0)
     }
 
     private val sidebarBtns = arrayOf(
         FsWpfIcon { navTo(Fremdsprachen::class, 0) },
         SidebarLabel("LKs") { navTo(Leistungskurse::class, 1) },
-        SidebarLabel("PKs") { navTo(Fremdsprachen::class, 2) },
+        SidebarLabel("PKs") { navTo(Pruefungsfaecher::class, 2) },
         SidebarLabel("GKs") { navTo(GrundkursWahl::class, 3) },
         PolyIcon(HOME_POLY, true) { navTo(Overview::class, 4) }
     ).apply {
@@ -73,13 +64,13 @@ class Main : JPanel() {
     private fun <T : KurswahlPanel> navTo(panel: KClass<T>, selectedIndex: Int) {
         if (!curPanel.isDataValid()) {
             val choice = JOptionPane.showConfirmDialog(
-                this,
-                "Deine Daten sind ungültig und gehen verloren, wenn du jetzt weitergehst!",
-                "Ungültige Daten",
-                JOptionPane.OK_CANCEL_OPTION,
-                JOptionPane.WARNING_MESSAGE
-            )
-            if (choice == JOptionPane.CANCEL_OPTION) return // Abbruch durch Nutzer
+                    this,
+                    "Deine Daten sind ungültig und gehen verloren, wenn du jetzt weitergehst!",
+                    "Ungültige Daten",
+                    JOptionPane.OK_CANCEL_OPTION,
+                    JOptionPane.WARNING_MESSAGE
+                )
+                if (choice == JOptionPane.CANCEL_OPTION) return // Abbruch durch Nutzer
         } else wahlData = curPanel.close()
 
         remove(curPanel)
@@ -89,10 +80,21 @@ class Main : JPanel() {
 
         validate()
 
-
         // Sidebar Knöpfe updaten
-        for ((i, dest) in sidebarBtns.withIndex()) dest.isEnabled = i == selectedIndex
+//        disableDestinations(selectedIndex + 2)
+        for ((i, dest) in sidebarBtns.withIndex()) dest.isSelected = i == selectedIndex
     }
+
+    /*private fun disableDestinations(min: Int = 1) {
+        val start: Int = max(min,
+            if (wahlData.fremdsprachen.isEmpty()) 1
+            else when (wahlData.pfs.indexOfFirst { it == null }) {
+                0, 1 -> 2
+                -1 -> 4
+                else -> 3
+            })
+        for (i in 0..3) sidebarBtns[i].isEnabled = i < start
+    }*/
 
     private val titleLabel = JLabel("Kurswahl App", SwingConstants.LEFT).apply {
         this.font = font.deriveFont(Font.BOLD, 20f)
@@ -111,6 +113,7 @@ class Main : JPanel() {
 
         add(header, fill = GridBagConstraints.HORIZONTAL, row = 0, column = 0, columnspan = 3)
 
+//        disableDestinations()
 
         add(
             JSeparator(JSeparator.VERTICAL), row = 0, column = 1, rowspan = 2,
@@ -120,8 +123,6 @@ class Main : JPanel() {
         add(curPanel, row = 1, column = 2, fill = GridBagConstraints.BOTH, weightx = 1.0)
 
         add(sidebar, row = 1, column = 0, fill = GridBagConstraints.VERTICAL, weighty = 1.0)
-
-        println(fachData)
     }
 }
 
