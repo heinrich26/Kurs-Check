@@ -12,7 +12,6 @@ import java.awt.GridBagLayout
 import java.awt.Insets
 import java.awt.event.ItemEvent
 import javax.swing.Box
-import javax.swing.JLabel
 
 
 class Leistungskurse(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(wahlData, fachData) {

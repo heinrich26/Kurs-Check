@@ -2,15 +2,13 @@ package gui
 
 import ExclusiveComboBoxModel
 import add
-import data.Fach
-import data.FachData
-import data.KurswahlData
+import data.*
 import testFachdata
 import testKurswahl
-import java.awt.Component
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.Insets
+import java.util.*
 import javax.swing.*
 
 
@@ -40,8 +38,13 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
         )
         add(Box.createHorizontalStrut(50), column = 2)
 
+        val fs = wahlData.fremdsprachen.map { it.first }
+        val wpfs = wahlData.wpfs
+        val prefilteredZeilen = fachData.filterWahlzeilen(wahlData.lk1, wahlData.lk2)
+        val pf3faecher = faecherAusWahlzeilen(prefilteredZeilen, fs, wpfs)
 
-        val model1 = ExclusiveComboBoxModel(fachData.faecher)
+
+        val model1 = FachComboBoxModel(fachData.faecher)
         pf3 = FachComboBox(model1)
 
         val model2 = ExclusiveComboBoxModel(fachData.faecher, pf3)
@@ -76,6 +79,25 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
         }
     }
 
+
+    /**
+     * Gibt die Fächer, die die gegebenen Wahlzeilen zulassen zurück
+     * TODO funzt noch nicht so ganz
+     */
+    private fun faecherAusWahlzeilen(
+        wahlzeilen: Map<Int, Wahlzeile>,
+        fremdsprachen: List<Fach>,
+        wpfs: Pair<Fach, Fach?>?
+    ): List<Fach> =
+        LinkedHashSet(wahlzeilen.values.flatMap { wz ->
+            val kuerzel = wz.lk2
+            if (kuerzel.startsWith("$")) fachData.wzWildcards[kuerzel]!!
+            else Collections.singleton(fachData.faecherMap[kuerzel]!!)
+        }).filter {
+            (!it.fremdsprache || it in fremdsprachen) &&
+                    /* Hat keine WPF or Fach ist weder 1./2. WPF */
+                    (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second)))
+        }
 
     override fun close(): KurswahlData =
         wahlData.updatePFs(pf3 = pf3.selectedItem!!, pf4 = pf4.selectedItem!!, pf5 = pf5.selectedItem!!)

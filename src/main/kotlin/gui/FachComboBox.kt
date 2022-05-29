@@ -1,6 +1,5 @@
 package gui
 
-import ExclusiveComboBoxModel
 import data.Fach
 import javax.swing.ComboBoxModel
 import javax.swing.JComboBox

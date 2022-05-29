@@ -4,59 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Arbeit an den Regeln, Einbindung in GrundkursWahl.kt">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/FachComboBoxModel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/gui/FachComboBox.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/gui/FachRenderer.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/gui/ScrollablePanel.kt" afterDir="false" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Arbeit an Leistungskurse.kt, zeigt jetzt nur die möglichen LKs an!&#10;&#10;Ein Paar TODOs für Konrad in GrundkursWahl.kt&#10;&#10;Umstieg von GSON auf jackson-module-kotlin, weil GSON Kotlin nicht mag">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MainWindow.form" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MainWindow.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/overviewWidget.form" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/overviewWidget.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/ExclusiveComboBoxModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ExclusiveComboBoxModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/PruefungsfachUebersicht.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/PruefungsfachUebersicht.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/TestData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/TestData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Utils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Utils.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/WahlVisualizer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/WahlVisualizer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/AnnotationExclusionStrategy.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Exclude.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Fach.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Fach.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/FachData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/FachData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/IfThenRegel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/IfThenRegel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/JsonDataStructure.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/KuerzelRegel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/KuerzelRegel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/KurswahlData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/KurswahlData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/OrRegel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/OrRegel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Overview.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/Overview.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Pf5Typ.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Pf5Typ.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Regel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Regel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/RegelAdapterFactory.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/RegelHolder.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/RegelScope.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/RegelScope.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Regeln.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Wahlmoeglichkeit.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Wahlmoeglichkeit.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/WahlzeileLinientyp.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/WahlzeileLinientyp.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/WildcardRegel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/WildcardRegel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/dataReadingTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/dataReadingTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/ClickableDestionation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/ClickableDestionation.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/ColoredCheckBox.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/ColoredCheckBox.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/Consts.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/Consts.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/Fremdsprachen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/Fremdsprachen.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/FsWpfIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/FsWpfIcon.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/GrundkursWahl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/GrundkursWahl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/FachComboBox.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/FachComboBox.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/Leistungskurse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/Leistungskurse.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/PKs.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/Pruefungsfaecher.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/PolyIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/PolyIcon.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/RegelLabel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/RegelLabel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/SidebarLabel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/SidebarLabel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/TextIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/TextIcon.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/check.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/check.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cross.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/cross.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/dataStruct.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dataStruct.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/regeln.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/regeln.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/Pruefungsfaecher.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/Pruefungsfaecher.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -227,7 +181,7 @@
       <workItem from="1653571785959" duration="30212000" />
       <workItem from="1653730055455" duration="1428000" />
       <workItem from="1653731524679" duration="28960000" />
-      <workItem from="1653817851913" duration="12131000" />
+      <workItem from="1653817851913" duration="14478000" />
     </task>
     <task id="LOCAL-00003" summary="reimpl. der fremdsprachen wahl">
       <created>1652452601911</created>
@@ -383,7 +337,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653667551425</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Arbeit an Leistungskurse.kt, zeigt jetzt nur die möglichen LKs an!&#10;&#10;Ein Paar TODOs für Konrad in GrundkursWahl.kt&#10;&#10;Umstieg von GSON auf jackson-module-kotlin, weil GSON Kotlin nicht mag">
+      <created>1653830522088</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1653830522088</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -421,6 +382,7 @@
     <MESSAGE value="Arbeit an den Regeln" />
     <MESSAGE value="Arbeit an den Regeln, Einbindung in FachData.kt" />
     <MESSAGE value="Arbeit an den Regeln, Einbindung in GrundkursWahl.kt" />
-    <option name="LAST_COMMIT_MESSAGE" value="Arbeit an den Regeln, Einbindung in GrundkursWahl.kt" />
+    <MESSAGE value="Arbeit an Leistungskurse.kt, zeigt jetzt nur die möglichen LKs an!&#10;&#10;Ein Paar TODOs für Konrad in GrundkursWahl.kt&#10;&#10;Umstieg von GSON auf jackson-module-kotlin, weil GSON Kotlin nicht mag" />
+    <option name="LAST_COMMIT_MESSAGE" value="Arbeit an Leistungskurse.kt, zeigt jetzt nur die möglichen LKs an!&#10;&#10;Ein Paar TODOs für Konrad in GrundkursWahl.kt&#10;&#10;Umstieg von GSON auf jackson-module-kotlin, weil GSON Kotlin nicht mag" />
   </component>
 </project>

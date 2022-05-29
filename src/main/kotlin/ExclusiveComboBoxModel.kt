@@ -20,7 +20,6 @@ open class ExclusiveComboBoxModel(var data: List<Fach>, val vorgaenger: FachComb
                 vorgaengerData.size -> vorgaengerData.subList(0, vorgaengerData.size - 1)
                 else -> vorgaengerData.subList(0, i - 1) + vorgaengerData.subList(i, vorgaengerData.size)
             }
-//            return if (selectedItem == null) vorgaengerData else vorgaengerData - selectedItem!!
         }
 
     fun updateData() {

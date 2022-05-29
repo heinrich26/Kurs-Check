@@ -83,12 +83,19 @@ class FachData(
         faecher.associateWith { wildcards.filter { wCard -> it in wCard.value }.keys + it.kuerzel }
 
     private val wzWildcardMapping =
-        faecher.associateWith { wzWildcards.filter { wCard -> it in wCard.value }.keys + it.kuerzel }
+        faecher.associateWith { wzWildcards.filterValues { value -> it in value }.keys + it.kuerzel }
 
     /**
      * Gibt alle möglichen Wahlzeilen für die gegebenen LKs zurück
      */
-    fun filterWahlzeilen(lk1: Fach?, lk2: Fach?, pf3: Fach?, pf4: Fach?, pf5: Fach?): Map<Int, Wahlzeile> {
+    fun filterWahlzeilen(
+        lk1: Fach?,
+        lk2: Fach?,
+        pf3: Fach? = null,
+        pf4: Fach? = null,
+        pf5: Fach? = null,
+        wahlzeilen: Map<Int, Wahlzeile> = this.wahlzeilen
+    ): Map<Int, Wahlzeile> {
         val predicates = mutableListOf<(Wahlzeile) -> Boolean>()
         if (lk1 != null) predicates.add { it.lk1 == "*" || it.lk1 in wzWildcardMapping[lk1]!! }
         if (lk2 != null) predicates.add { it.lk2 == "*" || it.lk2 in wzWildcardMapping[lk2]!! }
