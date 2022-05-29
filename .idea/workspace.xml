@@ -4,13 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Arbeit an Leistungskurse.kt, zeigt jetzt nur die möglichen LKs an!&#10;&#10;Ein Paar TODOs für Konrad in GrundkursWahl.kt&#10;&#10;Umstieg von GSON auf jackson-module-kotlin, weil GSON Kotlin nicht mag">
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="ich habe keinen Bock mehr">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/pdfTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Uebersichtsplan.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/out.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ExclusiveComboBoxModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ExclusiveComboBoxModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/FachData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/FachData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/FachComboBox.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/FachComboBox.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/Leistungskurse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/Leistungskurse.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/Pruefungsfaecher.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/Pruefungsfaecher.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/Overview.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/Overview.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,11 +41,11 @@
         <option value="Kotlin Interface" />
         <option value="Kotlin Data Class" />
         <option value="Kotlin Enum" />
-        <option value="Kotlin File" />
         <option value="Class" />
         <option value="JUnit5 Test Class" />
         <option value="Kotlin Class" />
         <option value="Kotlin Object" />
+        <option value="Kotlin File" />
       </list>
     </option>
   </component>
@@ -110,7 +111,7 @@
       <recent name="gui" />
     </key>
   </component>
-  <component name="RunManager" selected="Kotlin.Main">
+  <component name="RunManager" selected="Kotlin.PdfTestKt">
     <configuration name="DataReadingTestKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="data.DataReadingTestKt" />
       <module name="kurswahlApp.main" />
@@ -139,14 +140,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="PdfTestKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="PdfTestKt" />
+      <module name="kurswahlApp.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Kotlin.Fremdsprachen" />
       <item itemvalue="Kotlin.Main" />
       <item itemvalue="Kotlin.GrundkursWahl" />
       <item itemvalue="Kotlin.DataReadingTestKt" />
+      <item itemvalue="Kotlin.PdfTestKt" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Kotlin.PdfTestKt" />
         <item itemvalue="Kotlin.DataReadingTestKt" />
       </list>
     </recent_temporary>
@@ -181,7 +191,7 @@
       <workItem from="1653571785959" duration="30212000" />
       <workItem from="1653730055455" duration="1428000" />
       <workItem from="1653731524679" duration="28960000" />
-      <workItem from="1653817851913" duration="14478000" />
+      <workItem from="1653817851913" duration="18313000" />
     </task>
     <task id="LOCAL-00003" summary="reimpl. der fremdsprachen wahl">
       <created>1652452601911</created>
@@ -344,7 +354,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653830522088</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="ich habe keinen Bock mehr">
+      <created>1653832869992</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1653832869992</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -383,6 +400,7 @@
     <MESSAGE value="Arbeit an den Regeln, Einbindung in FachData.kt" />
     <MESSAGE value="Arbeit an den Regeln, Einbindung in GrundkursWahl.kt" />
     <MESSAGE value="Arbeit an Leistungskurse.kt, zeigt jetzt nur die möglichen LKs an!&#10;&#10;Ein Paar TODOs für Konrad in GrundkursWahl.kt&#10;&#10;Umstieg von GSON auf jackson-module-kotlin, weil GSON Kotlin nicht mag" />
-    <option name="LAST_COMMIT_MESSAGE" value="Arbeit an Leistungskurse.kt, zeigt jetzt nur die möglichen LKs an!&#10;&#10;Ein Paar TODOs für Konrad in GrundkursWahl.kt&#10;&#10;Umstieg von GSON auf jackson-module-kotlin, weil GSON Kotlin nicht mag" />
+    <MESSAGE value="ich habe keinen Bock mehr" />
+    <option name="LAST_COMMIT_MESSAGE" value="ich habe keinen Bock mehr" />
   </component>
 </project>

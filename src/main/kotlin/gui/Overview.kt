@@ -10,7 +10,7 @@ class Overview(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(wahlD
     override fun isDataValid(): Boolean = true // TODO Finales Checking???
 
     override val windowName: String
-        get() = "Übersicht"
+        get() = "Deine Kurswahl"
 
     init {
         this.layout = GridBagLayout()

@@ -78,6 +78,8 @@ class Main : JPanel() {
         curPanel = panel.constructors.first().call(wahlData, fachData)
         add(curPanel, row = 1, column = 2, fill = GridBagConstraints.BOTH, weightx = 1.0)
 
+        titleLabel.text = curPanel.windowName
+
         validate()
 
         // Sidebar Knöpfe updaten
@@ -96,7 +98,7 @@ class Main : JPanel() {
         for (i in 0..3) sidebarBtns[i].isEnabled = i < start
     }*/
 
-    private val titleLabel = JLabel("Kurswahl App", SwingConstants.LEFT).apply {
+    private val titleLabel = JLabel(curPanel.windowName, SwingConstants.LEFT).apply {
         this.font = font.deriveFont(Font.BOLD, 20f)
         this.foreground = Color.WHITE
         this.border = EmptyBorder(0, 8, 0, 0)
