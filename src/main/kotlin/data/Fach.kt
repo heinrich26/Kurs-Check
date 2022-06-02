@@ -1,5 +1,8 @@
 package data
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+
+@JsonSerialize(using = FachSerializer::class)
 data class Fach(
     val name: String,
     val kuerzel: String,

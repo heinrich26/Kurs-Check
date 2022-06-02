@@ -1,5 +1,8 @@
 package data
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+
+
 data class KurswahlData(
     var lk1: Fach? = null,
     var lk2: Fach? = null,
@@ -7,7 +10,7 @@ data class KurswahlData(
     var pf4: Fach? = null,
     var pf5: Fach? = null,
     var pf5_typ: Pf5Typ = Pf5Typ.PRAESENTATION,
-    var gks: Map<Fach, Wahlmoeglichkeit> = emptyMap(),
+    @JsonSerialize(using = MapSerializer::class) var gks: Map<Fach, Wahlmoeglichkeit> = emptyMap(),
     var fremdsprachen: List<Pair<Fach, Int>> = emptyList(),
     var wpfs: Pair<Fach, Fach?>? = null
 ) {
