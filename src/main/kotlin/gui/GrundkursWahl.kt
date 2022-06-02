@@ -153,7 +153,6 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
     private fun buildCheckboxes() {
         // fremdsprachen & wpfs holen
         val fs = wahlData.fremdsprachen.map { it.first }
-        println(wahlData.fremdsprachen)
         val wpfs = wahlData.wpfs
 
         for ((i, fach) in fachData.faecher.withIndex()) {
@@ -162,12 +161,12 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
             // TODO das Label brauchst du dann nicht zu erstellen, nur die Checkbox (ohne listener etc.)
 
             // TODO Condition aus Leistungskurse.kt... mach dir eine Zwischenvariable, weil effizienz
-            val cond = (!fach.fremdsprache || fach in fs) &&
+            val cond = (!fach.fremdsprache || fach in fs) && // TODO Fall beachten, dass es eine Fremdsprache & WPF is, aber nur FS angekreuzt ist, also in dem Fall sollte es eig. OR sein
                     /* Hat keine WPF or Fach ist weder 1./2. WPF */
                     (!fach.brauchtWPF || (wpfs != null && (fach == wpfs.first || fach == wpfs.second)))
 
 
-            if (cond /* TODO hier kommt deine Zwischenvariable rein ;) */) {
+            if (cond) {
                 val label = JLabel(fach.name)
 
                 // Wenn man das Label anklickt wird die ganze Zeile ausgewählt
@@ -202,7 +201,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
             for (j in 1..4) {
                 val box = JCheckBox()
 
-                if (cond /* TODO hier kommt deine Zwischenvariable rein ;) */) {
+                if (cond) {
                     box.isOpaque = false
                     box.addActionListener { if ((it.source as JToggleButton).isSelected) anzahl++ else anzahl-- }
                 } else box.isVisible = false
