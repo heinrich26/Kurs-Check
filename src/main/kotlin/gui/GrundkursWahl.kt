@@ -156,14 +156,10 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
         val wpfs = wahlData.wpfs
 
         for ((i, fach) in fachData.faecher.withIndex()) {
-            // TODO alle Fremdsprachen, die nicht in wahlData.fremdsprachen sind, verstecken
-            // TODO alle WPFs Fächer, die nicht in wahlData.wpfs sind, verstecken
-            // TODO das Label brauchst du dann nicht zu erstellen, nur die Checkbox (ohne listener etc.)
-
-            // TODO Condition aus Leistungskurse.kt... mach dir eine Zwischenvariable, weil effizienz
-            val cond = (!fach.fremdsprache || fach in fs) && // TODO Fall beachten, dass es eine Fremdsprache & WPF is, aber nur FS angekreuzt ist, also in dem Fall sollte es eig. OR sein
-                    /* Hat keine WPF or Fach ist weder 1./2. WPF */
-                    (!fach.brauchtWPF || (wpfs != null && (fach == wpfs.first || fach == wpfs.second)))
+            // if A: B else true == !A or B
+            // TODO herausfinden, ob das If-Else aufgelöst werden kann
+            val cond: Boolean = if (fach.fremdsprache) fach in fs else (!fach.brauchtWPF || (wpfs != null && (fach == wpfs.first || fach == wpfs.second)))
+            // cond == true -> wählbar, sonst versteckt
 
 
             if (cond) {
