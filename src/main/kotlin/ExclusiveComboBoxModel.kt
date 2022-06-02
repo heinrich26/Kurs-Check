@@ -1,10 +1,9 @@
 import data.Fach
 import gui.FachComboBox
 import javax.swing.ComboBoxModel
-import javax.swing.JComboBox
 import javax.swing.event.ListDataListener
 
-open class ExclusiveComboBoxModel(var data: List<Fach>, val vorgaenger: FachComboBox? = null): ComboBoxModel<Fach?> {
+open class ExclusiveComboBoxModel(var data: List<Fach>, private val vorgaenger: FachComboBox? = null): ComboBoxModel<Fach?> {
     override fun getSize(): Int = data.size + 1
 
     private val listeners = mutableListOf<ListDataListener>()
