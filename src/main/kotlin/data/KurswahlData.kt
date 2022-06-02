@@ -1,8 +1,10 @@
 package data
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.annotation.JsonIncludeProperties
+import com.fasterxml.jackson.annotation.JsonProperty
 
 
+@JsonIncludeProperties("jsonVersion", "lk1", "lk2", "pf3", "pf4", "pf5", "pf5_typ", "gks", "fremdsprachen", "wpfs")
 data class KurswahlData(
     var lk1: Fach? = null,
     var lk2: Fach? = null,
@@ -10,7 +12,7 @@ data class KurswahlData(
     var pf4: Fach? = null,
     var pf5: Fach? = null,
     var pf5_typ: Pf5Typ = Pf5Typ.PRAESENTATION,
-    @JsonSerialize(using = MapSerializer::class) var gks: Map<Fach, Wahlmoeglichkeit> = emptyMap(),
+    var gks: Map<Fach, Wahlmoeglichkeit> = emptyMap(),
     var fremdsprachen: List<Pair<Fach, Int>> = emptyList(),
     var wpfs: Pair<Fach, Fach?>? = null
 ) {
@@ -61,12 +63,29 @@ data class KurswahlData(
         return (weekly[0] + weekly[1]) / 2 to (weekly[2] + weekly[3]) / 2
     }
 
+    /**
+     * Version der FachData, um einen Mix von Formaten vorzubeugen
+     */
+    @Suppress("unused")
+    private val jsonVersion: Int
+        @JsonProperty get() = FachData.instanceHash
+
+    /**
+     * Alle 5 Prüfungsfächer
+     */
     val pfs: List<Fach?>
         get() = listOf(lk1, lk2, pf3, pf4, pf5)
 
+    /**
+     * Prüfungsfächer 1 bis 4
+     */
+    @Suppress("PropertyName")
     val pf1_4: List<Fach?>
         get() = listOf(lk1, lk2, pf3, pf4)
 
+    /**
+     * Beide Leistungskurse
+     */
     val lks: List<Fach?>
         get() = listOf(lk1, lk2)
 
@@ -96,7 +115,7 @@ data class KurswahlData(
      * Entfernt LKs aus den PFs und GKs
      */
     fun updateLKs(lk1: Fach, lk2: Fach): KurswahlData =
-        this.copy(lk1 = lk1, lk2 = lk2, gks = gks.filterKeys { it != lk1 && it != lk1 }).apply { 
+        this.copy(lk1 = lk1, lk2 = lk2, gks = gks.filterKeys { it != lk1 && it != lk1 }).apply {
             if (pf3 == lk1 || pf3 != lk2) this.pf3 = null
             if (pf4 == lk1 || pf4 != lk2) this.pf4 = null
             if (pf5 == lk1 || pf5 != lk2) this.pf5 = null

@@ -12,10 +12,9 @@ import java.util.*
  * mit dem Finalen Typen im Primary Constructor hinzugefügt und mit dem Eingelesenen Typ
  * (so wies in der JSON steht) im Secondary Constructor deklariert (u. ggf. umgeformt) werden.
  */
-class FachData(
+data class FachData(
     val faecherMap: Map<String, Fach>,
     val pflichtfaecher: Map<Fach, Wahlmoeglichkeit>,
-    // val fremdsprachen: List<Fach>,
     val wpfs: List<Fach>,
     val regeln: List<Regel>,
     val wahlzeilen: Map<Int, Wahlzeile>,
@@ -23,13 +22,11 @@ class FachData(
     val wzWildcards: Map<String, List<Fach>>,
     val minKurse: Int,
     val maxKurse: Int
-    // val lk1Moeglichkeiten: List<Fach>
 ) {
     @JsonCreator
     constructor(
         faecher: Map<String, Fach>,
         pflichtfaecher: Map<String, Wahlmoeglichkeit>,
-        /*fremdsprachen: List<String>,*/
         wpfs: List<String>,
         regeln: List<Regel>,
         wahlzeilen: Map<Int, Wahlzeile>,
@@ -40,7 +37,6 @@ class FachData(
     ) : this(
         faecherMap = faecher,
         pflichtfaecher = pflichtfaecher.map { (k, v) -> faecher[k]!! to v }.toMap(),
-        //  fremdsprachen = faecher.values.filter { it.fremdsprache },
         wpfs = wpfs.map { faecher[it]!! },
         regeln = regeln,
         wahlzeilen = wahlzeilen,
@@ -48,9 +44,6 @@ class FachData(
         wzWildcards = wzWildcards.associateWith { wCard -> wildcards[wCard]!!.map { faecher[it]!! } },
         minKurse = minKurse,
         maxKurse = maxKurse
-        /*lk1Moeglichkeiten = lk1Moeglichkeiten.map {
-            if (it.startsWith("$")) wildcards[it]!!.map { kz -> faecher[kz]!! } else listOf(faecher[it]!!)
-        }.flatten()*/
     )
 
 
@@ -69,6 +62,7 @@ class FachData(
     }.filter { it.lk })
 
     init {
+        instanceHash = hashCode()
         regeln.forEach { it.fillData(this) }
     }
 
@@ -114,9 +108,8 @@ class FachData(
     fun filterWahlzeilen(data: KurswahlData): Map<Int, Wahlzeile> =
         filterWahlzeilen(data.lk1, data.lk2, data.pf3, data.pf4, data.pf5)
 
-    @Deprecated("Ineffizient und brauchte ich erstmal nicht")
-    fun matchField(fach: Fach, selector: String): Boolean =
-        selector == "*" || selector == fach.kuerzel || fach in wzWildcards[selector]!!
+    /*fun matchField(fach: Fach, selector: String): Boolean =
+        selector == "*" || selector == fach.kuerzel || fach in wzWildcards[selector]!!*/
 
     override fun toString(): String =
         arrayOf(
@@ -135,4 +128,11 @@ class FachData(
             "FachData(\n\t",
             "\n)"
         )
+
+    companion object {
+        /**
+         * Hash der aktuell verwendeten JSON
+         */
+        var instanceHash: Int = -1
+    }
 }
