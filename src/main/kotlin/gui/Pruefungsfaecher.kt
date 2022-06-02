@@ -41,12 +41,14 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
         val fs = wahlData.fremdsprachen.map { it.first }
         val wpfs = wahlData.wpfs
         val prefilteredZeilen = fachData.filterWahlzeilen(wahlData.lk1, wahlData.lk2)
+        println(prefilteredZeilen)
         val pf3faecher = faecherAusWahlzeilen(prefilteredZeilen, fs, wpfs)
 
-
-        val model1 = FachComboBoxModel(fachData.faecher)
+        // geht schon
+        val model1 = FachComboBoxModel(pf3faecher)
         pf3 = FachComboBox(model1)
 
+        // wip
         val model2 = ExclusiveComboBoxModel(fachData.faecher, pf3)
         pf4 = FachComboBox(model2)
 
@@ -90,11 +92,12 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
         wpfs: Pair<Fach, Fach?>?
     ): List<Fach> =
         LinkedHashSet(wahlzeilen.values.flatMap { wz ->
-            val kuerzel = wz.lk2
+            val kuerzel = wz.pf3
+            if (kuerzel == "*") fachData.faecher else // TODO Pfrüfungsfächer Liste erstellen
             if (kuerzel.startsWith("$")) fachData.wzWildcards[kuerzel]!!
             else Collections.singleton(fachData.faecherMap[kuerzel]!!)
         }).filter {
-            (!it.fremdsprache || it in fremdsprachen) &&
+            if (it.fremdsprache) it in fremdsprachen else
                     /* Hat keine WPF or Fach ist weder 1./2. WPF */
                     (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second)))
         }

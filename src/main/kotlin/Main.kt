@@ -1,5 +1,6 @@
 import data.*
 import gui.*
+import gui.Consts.COLOR_PRIMARY
 import gui.Consts.HOME_POLY
 import gui.Consts.SIDEBAR_SIZE
 import java.awt.*
@@ -108,7 +109,7 @@ class Main : JPanel() {
     init {
         layout = GridBagLayout()
 
-        header.background = Color(96, 2, 238)
+        header.background = COLOR_PRIMARY
         header.border = BottomShadowBorder(8)
         header.preferredSize = Dimension(-1, 64)
         header.isOpaque = false
