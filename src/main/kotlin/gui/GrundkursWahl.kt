@@ -152,24 +152,22 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
      */
     private fun buildCheckboxes() {
         // fremdsprachen & wpfs holen
+        val fs = wahlData.fremdsprachen.map { it.first }
+        println(wahlData.fremdsprachen)
+        val wpfs = wahlData.wpfs
+
         for ((i, fach) in fachData.faecher.withIndex()) {
-            // TODO alle Fremdsprachen, die nicht in fachData.fremdsprachen sind, verstecken
-            // TODO alle WPFs Fächer, die nicht in fachData.wpfs sind, verstecken
+            // TODO alle Fremdsprachen, die nicht in wahlData.fremdsprachen sind, verstecken
+            // TODO alle WPFs Fächer, die nicht in wahlData.wpfs sind, verstecken
             // TODO das Label brauchst du dann nicht zu erstellen, nur die Checkbox (ohne listener etc.)
 
             // TODO Condition aus Leistungskurse.kt... mach dir eine Zwischenvariable, weil effizienz
-            /*
-            Das kommt außerhalb des for-Loops :)
-            val fs = fachData.fremdsprachen
-            val wpfs = fachData.wpfs
-
-            (!it.fremdsprache || it in fs) &&
+            val cond = (!fach.fremdsprache || fach in fs) &&
                     /* Hat keine WPF or Fach ist weder 1./2. WPF */
-                    (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second)))
-            */
+                    (!fach.brauchtWPF || (wpfs != null && (fach == wpfs.first || fach == wpfs.second)))
 
 
-            if (true /* TODO hier kommt deine Zwischenvariable rein ;) */) {
+            if (cond /* TODO hier kommt deine Zwischenvariable rein ;) */) {
                 val label = JLabel(fach.name)
 
                 // Wenn man das Label anklickt wird die ganze Zeile ausgewählt
@@ -204,7 +202,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
             for (j in 1..4) {
                 val box = JCheckBox()
 
-                if (true /* TODO hier kommt deine Zwischenvariable rein ;) */) {
+                if (cond /* TODO hier kommt deine Zwischenvariable rein ;) */) {
                     box.isOpaque = false
                     box.addActionListener { if ((it.source as JToggleButton).isSelected) anzahl++ else anzahl-- }
                 } else box.isVisible = false
