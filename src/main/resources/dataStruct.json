@@ -480,7 +480,7 @@
 			"pf3": "$FS",
 			"pf4": "De",
 			"pf5": "$AF2",
-			"linien": "durchgezogen"
+			"linien": "keine|durchgezogen"
 		},
 		"35": {
 			"lk1": "$NW",
@@ -488,7 +488,7 @@
 			"pf3": "$FS",
 			"pf4": "Ma",
 			"pf5": "$AF2",
-			"linien": "durchgezogen"
+			"linien": "keine|durchgezogen"
 		},
 		"36": {
 			"lk1": "$NW",
@@ -496,7 +496,7 @@
 			"pf3": "Ma",
 			"pf4": "De",
 			"pf5": "$AF2",
-			"linien": "durchgezogen"
+			"linien": "keine|durchgezogen"
 		},
 		"37": {
 			"lk1": "$NW",
@@ -504,7 +504,7 @@
 			"pf3": "$FS",
 			"pf4": "De",
 			"pf5": "*",
-			"linien": "durchgezogen"
+			"linien": "keine|durchgezogen"
 		},
 		"38": {
 			"lk1": "$NW",
@@ -512,7 +512,7 @@
 			"pf3": "$FS",
 			"pf4": "Ma",
 			"pf5": "*",
-			"linien": "durchgezogen"
+			"linien": "keine|durchgezogen"
 		},
 		"39": {
 			"lk1": "$NW",
@@ -520,7 +520,7 @@
 			"pf3": "Ma",
 			"pf4": "De",
 			"pf5": "*",
-			"linien": "durchgezogen"
+			"linien": "keine|durchgezogen"
 		},
 		"40": {
 			"lk1": "$NW",
@@ -528,7 +528,7 @@
 			"pf3": "$FS",
 			"pf4": "De",
 			"pf5": "$AF2",
-			"linien": "durchgezogen"
+			"linien": "keine|durchgezogen"
 		},
 		"41": {
 			"lk1": "$NW",
@@ -536,7 +536,7 @@
 			"pf3": "$FS",
 			"pf4": "Ma",
 			"pf5": "$AF2",
-			"linien": "durchgezogen"
+			"linien": "keine|durchgezogen"
 		},
 		"42": {
 			"lk1": "$NW",
@@ -544,7 +544,7 @@
 			"pf3": "Ma",
 			"pf4": "De",
 			"pf5": "$AF2",
-			"linien": "durchgezogen"
+			"linien": "keine|durchgezogen"
 		},
 		"43": {
 			"lk1": "$NW",
@@ -552,7 +552,7 @@
 			"pf3": "$FS",
 			"pf4": "De",
 			"pf5": "$AF2",
-			"linien": "durchgezogen"
+			"linien": "keine|durchgezogen"
 		},
 		"44": {
 			"lk1": "$NW",
@@ -560,7 +560,7 @@
 			"pf3": "$FS",
 			"pf4": "Ma",
 			"pf5": "$AF2",
-			"linien": "durchgezogen"
+			"linien": "keine|durchgezogen"
 		},
 		"45": {
 			"lk1": "$NW",
@@ -568,7 +568,7 @@
 			"pf3": "Ma",
 			"pf4": "De",
 			"pf5": "$AF2",
-			"linien": "durchgezogen"
+			"linien": "keine|durchgezogen"
 		},
 		"49": {
 			"lk1": "De",
