@@ -63,9 +63,10 @@ class Leistungskurse(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel
 
         val wpfs = wahlData.wpfs
         val moeglichkeiten = fachData.lk2Moeglichkeiten.filter {
-            (!it.fremdsprache || it in fs) &&
-                    /* Hat keine WPF or Fach ist weder 1./2. WPF */
-                    (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second)))
+            /* Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1 */
+            if (it.fremdsprache) it in fs
+            /* Hat keine WPF or Fach ist weder 1./2. WPF */
+            else (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second)))
         }
         val model2 = LKComboBoxModel(moeglichkeiten, lk1)
         lk2 = FachComboBox(model2)

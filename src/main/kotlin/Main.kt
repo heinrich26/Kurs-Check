@@ -1,4 +1,5 @@
-import data.*
+import data.FachData
+import data.KurswahlData
 import gui.*
 import gui.Consts.COLOR_PRIMARY
 import gui.Consts.HOME_POLY
@@ -8,9 +9,10 @@ import javax.swing.*
 import javax.swing.border.EmptyBorder
 import kotlin.reflect.KClass
 
-class Main : JPanel() {
+class Main(wahlData: KurswahlData? = null) : JPanel() {
     private val fachData: FachData = readDataStruct()
-    private var wahlData: KurswahlData = KurswahlData(gks = fachData.pflichtfaecher)
+    private var wahlData: KurswahlData =
+        wahlData?.apply { this.gks = fachData.pflichtfaecher } ?: KurswahlData(gks = fachData.pflichtfaecher)
 
 
     companion object {
@@ -23,14 +25,16 @@ class Main : JPanel() {
                 ex.printStackTrace()
             }
 
-            SwingUtilities.invokeLater { createAndShowGUI() }
+            SwingUtilities.invokeLater { createAndShowGUI(args) }
         }
 
-        private fun createAndShowGUI() {
+        private fun createAndShowGUI(args: Array<String>) {
+
+
             val frame = JFrame("kurswahlApp")
             frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
             // Set up the content pane.
-            frame.contentPane = Main()
+            frame.contentPane = if ("--useTestData" in args) Main(wahlData = testKurswahl) else Main()
             frame.minimumSize = Dimension(640, 560)
             // Display the window.
             frame.pack()
@@ -41,7 +45,7 @@ class Main : JPanel() {
 
     private val header: JPanel = JPanel(BorderLayout())
 
-    private var curPanel: KurswahlPanel = Overview(wahlData, fachData)
+    private var curPanel: KurswahlPanel = Overview(this.wahlData, fachData)
 
     // Nav Bar Logik
     private val sidebar = JPanel(GridBagLayout()).apply {
@@ -65,13 +69,13 @@ class Main : JPanel() {
     private fun <T : KurswahlPanel> navTo(panel: KClass<T>, selectedIndex: Int) {
         if (!curPanel.isDataValid()) {
             val choice = JOptionPane.showConfirmDialog(
-                    this,
-                    "Deine Daten sind ungültig und gehen verloren, wenn du jetzt weitergehst!",
-                    "Ungültige Daten",
-                    JOptionPane.OK_CANCEL_OPTION,
-                    JOptionPane.WARNING_MESSAGE
-                )
-                if (choice == JOptionPane.CANCEL_OPTION) return // Abbruch durch Nutzer
+                this,
+                "Deine Daten sind ungültig und gehen verloren, wenn du jetzt weitergehst!",
+                "Ungültige Daten",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.WARNING_MESSAGE
+            )
+            if (choice == JOptionPane.CANCEL_OPTION) return // Abbruch durch Nutzer
         } else wahlData = curPanel.close()
 
         remove(curPanel)

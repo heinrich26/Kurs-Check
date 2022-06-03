@@ -1,7 +1,7 @@
 package data
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import java.util.*
+import com.fasterxml.jackson.annotation.JsonIncludeProperties
 
 /**
  * Hält alle statischen Daten für die Kurswahl
@@ -12,6 +12,10 @@ import java.util.*
  * mit dem Finalen Typen im Primary Constructor hinzugefügt und mit dem Eingelesenen Typ
  * (so wies in der JSON steht) im Secondary Constructor deklariert (u. ggf. umgeformt) werden.
  */
+@JsonIncludeProperties(
+    "faecher", "pflichtfaecher", "wpfs", "regeln", "wahlzeilen", "wildcards",
+    "wzWildcards", "minKurse", "maxKurse", "pf3_4AusschlussFaecher"
+)
 data class FachData(
     val faecherMap: Map<String, Fach>,
     val pflichtfaecher: Map<Fach, Wahlmoeglichkeit>,
@@ -19,9 +23,10 @@ data class FachData(
     val regeln: List<Regel>,
     val wahlzeilen: Map<Int, Wahlzeile>,
     val wildcards: Map<String, List<Fach>>,
-    val wzWildcards: Map<String, List<Fach>>,
+    val wzWildcards: Map<String, List<String>>,
     val minKurse: Int,
-    val maxKurse: Int
+    val maxKurse: Int,
+    val pf3_4AusschlussFaecher: Set<String>
 ) {
     @JsonCreator
     constructor(
@@ -33,7 +38,8 @@ data class FachData(
         wildcards: Map<String, List<String>>,
         wzWildcards: List<String>,
         minKurse: Int,
-        maxKurse: Int
+        maxKurse: Int,
+        pf3_4AusschlussFaecher: Set<String>
     ) : this(
         faecherMap = faecher,
         pflichtfaecher = pflichtfaecher.map { (k, v) -> faecher[k]!! to v }.toMap(),
@@ -41,25 +47,31 @@ data class FachData(
         regeln = regeln,
         wahlzeilen = wahlzeilen,
         wildcards = wildcards.mapValues { it.value.map { key -> faecher[key]!! } },
-        wzWildcards = wzWildcards.associateWith { wCard -> wildcards[wCard]!!.map { faecher[it]!! } },
+        wzWildcards = wzWildcards.associateWith { wildcards[it]!! },
         minKurse = minKurse,
-        maxKurse = maxKurse
+        maxKurse = maxKurse,
+        pf3_4AusschlussFaecher = pf3_4AusschlussFaecher
     )
 
 
     val faecher: List<Fach> = faecherMap.values.toList()
 
     val fremdsprachen = faecher.filter { it.fremdsprache }
-    val lk1Moeglichkeiten = LinkedHashSet(wahlzeilen.values.flatMap { wz ->
-        val kuerzel = wz.lk1
-        if (kuerzel.startsWith("$")) wzWildcards[kuerzel]!!
-        else Collections.singleton(faecherMap[kuerzel]!!)
-    }.filter { it.lk })
-    val lk2Moeglichkeiten = LinkedHashSet(wahlzeilen.values.flatMap { wz ->
-        val kuerzel = wz.lk2
-        if (kuerzel.startsWith("$")) wzWildcards[kuerzel]!!
-        else Collections.singleton(faecherMap[kuerzel]!!)
-    }.filter { it.lk })
+    val lk1Moeglichkeiten = LinkedHashSet<String>().apply {
+        for (wz in wahlzeilen.values) {
+            if (wz.lk1.startsWith("$"))
+                this.addAll(wzWildcards[wz.lk1]!!)
+            else this.add(wz.lk1)
+        }
+    }.map { faecherMap[it]!! }
+    val lk2Moeglichkeiten = LinkedHashSet<String>().apply {
+        for (wz in wahlzeilen.values) {
+            if (wz.lk2.startsWith("$"))
+                this.addAll(wzWildcards[wz.lk2]!!)
+            else this.add(wz.lk2)
+        }
+    }.map { faecherMap[it]!! }
+
 
     init {
         instanceHash = hashCode()
@@ -76,8 +88,8 @@ data class FachData(
     private val wildcardMapping =
         faecher.associateWith { wildcards.filter { wCard -> it in wCard.value }.keys + it.kuerzel }
 
-    private val wzWildcardMapping =
-        faecher.associateWith { wzWildcards.filterValues { value -> it in value }.keys + it.kuerzel }
+    val wzWildcardMapping =
+        faecher.associateWith { (wzWildcards.filterValues { value -> it.kuerzel in value }.keys + it.kuerzel) + "*" }
 
     /**
      * Gibt alle möglichen Wahlzeilen für die gegebenen LKs zurück
@@ -122,7 +134,8 @@ data class FachData(
             "wildcards=$wildcards",
             "wzWildcards=$wzWildcards",
             "minKurse=$minKurse",
-            "maxKurse=$maxKurse"
+            "maxKurse=$maxKurse",
+            "pf3_4AusschlussFaecher=$pf3_4AusschlussFaecher"
         ).joinToString(
             ",\n\t",
             "FachData(\n\t",

@@ -136,7 +136,6 @@
 		"De": "1-4",
 		"Sp": "1-4"
 	},
-	// "fremdsprachen": ["En", "Spa", "Lat", "Fr"],
 	"wpfs": ["Inf", "Lat", "Fr"],
 	"regeln": [
 		{
@@ -226,7 +225,7 @@
 		},
 		{
 			"type": "WildcardRegel",
-			"wildcard": "$ART",
+			"wildcard": "$KF",
 			"anzahl": 2,
 			"desc": "Ein künstlerisches Fach muss 2 Semester belegt werden",
 			"errorMsg": "Wähle 2 Semester ein künstlerisches Fach!"
@@ -640,10 +639,10 @@
 		"$FS": ["Fr", "Spa", "Lat", "En"],
 		"$NW": ["Che", "Phy", "Bio"],
 		"$Mu/Ku": ["Mu", "Ku"],
-		"$ART": ["Mu", "Ku", "DS"]
+		"$KF": ["Mu", "Ku", "DS"]
 	},
 	"wzWildcards": ["$AF2", "$FS", "$NW", "$Mu/Ku"],
 	"minKurse": 32, // Grundkurse und Leistungskurse zusammen
-	"maxKurse": 36 // Grundkurse und Leistungskurse zusammen
-	// "lk1Moeglichkeiten": ["Ma", "De", "$FS", "$NW"] // Mögliche Fächer für den ersten LK
+	"maxKurse": 36, // Grundkurse und Leistungskurse zusammen
+	"pf3_4AusschlussFaecher": ["Mu", "Ku", "DS", "Sp"] // Fächer, von denen nur 1 gewählt werden darf (§ 23,6 VO-GO)
 }

@@ -3,13 +3,14 @@ package gui
 import ExclusiveComboBoxModel
 import add
 import data.*
+import data.WahlzeileLinientyp.*
 import testFachdata
 import testKurswahl
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.Insets
-import java.util.*
-import javax.swing.*
+import javax.swing.Box
+import javax.swing.JLabel
 
 
 class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(wahlData, fachData) {
@@ -19,12 +20,33 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
         fun main(args: Array<String>) {
             runTest { Pruefungsfaecher(testKurswahl, testFachdata) }
         }
+
+        class AwareFachComboBoxModel(vararg vorgaenger: FachComboBox, generator: () -> Collection<Fach>) :
+            FachComboBoxModel(generator()) {
+            init {
+                for (comboBox in vorgaenger) {
+                    comboBox.addActionListener {
+                        this.removeAllElements()
+                        this.addAll(generator())
+                    }
+                }
+            }
+        }
     }
 
     private val pf3: FachComboBox
     private val pf4: FachComboBox
     private val pf5: FachComboBox
 
+    private val userFs = wahlData.fremdsprachen.map { it.first }
+    private val userWpfs = wahlData.wpfs
+    private val filteredZeilen = fachData.filterWahlzeilen(wahlData.lk1, wahlData.lk2)
+    private val filteredFaecher = fachData.faecherMap.filterValues {
+        /* Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1 */
+        it != wahlData.lk1 && it != wahlData.lk2 && if (it.fremdsprache) it in userFs
+        /* Hat keine WPF or Fach ist weder 1./2. WPF */
+        else (!it.brauchtWPF || (userWpfs != null && (it == userWpfs.first || it == userWpfs.second)))
+    } // TODO nur PFs returnen, Fächer evtl. sowieso vorfiltern
 
     init {
         this.layout = GridBagLayout()
@@ -38,18 +60,15 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
         )
         add(Box.createHorizontalStrut(50), column = 2)
 
-        val fs = wahlData.fremdsprachen.map { it.first }
-        val wpfs = wahlData.wpfs
-        val prefilteredZeilen = fachData.filterWahlzeilen(wahlData.lk1, wahlData.lk2)
-        println(prefilteredZeilen)
-        val pf3faecher = faecherAusWahlzeilen(prefilteredZeilen, fs, wpfs)
+        println(filteredZeilen)
+        val pf3faecher = faecherAusWahlzeilen(filteredZeilen, userFs, userWpfs, 3)
 
         // geht schon
         val model1 = FachComboBoxModel(pf3faecher)
         pf3 = FachComboBox(model1)
 
         // wip
-        val model2 = ExclusiveComboBoxModel(fachData.faecher, pf3)
+        val model2 = AwareFachComboBoxModel(pf3) { faecherAusWahlzeilen(filteredZeilen, userFs, userWpfs, 4) }
         pf4 = FachComboBox(model2)
 
         val model3 = ExclusiveComboBoxModel(fachData.faecher, pf4)
@@ -81,6 +100,99 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
         }
     }
 
+    private fun pf3Faecher(): Collection<Fach> {
+        // TODO Performance von LinkedHashSet und MutableSet vergleichen
+        val kuerzel = mutableSetOf<String>()
+
+        for (wz in filteredZeilen.values) {
+            if (wz.pf3 == "*") return filteredFaecher.values
+
+            if (wz.pf3.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf3]!!)
+            else kuerzel.add(wz.pf3)
+
+            if (wz.linien != DURCHGEZOGEN) {
+                if (wz.pf4 == "*") return filteredFaecher.values
+
+                if (wz.pf4.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf4]!!)
+                else kuerzel.add(wz.pf4)
+
+                /*if (wz.linien == KEINE) {*/
+                if (wz.pf5 == "*") return filteredFaecher.values
+
+                if (wz.pf5.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf5]!!)
+                else kuerzel.add(wz.pf5)
+                /*}*/
+            }
+        }
+
+        return kuerzel.mapNotNull { filteredFaecher[it] }
+    }
+
+    private fun pf4Faecher(): List<Fach> {
+        val selectedPf3 = pf3.selectedItem ?: return emptyList()
+        val pf3Groups = fachData.wzWildcardMapping[selectedPf3]!!
+
+        val beliebig: () -> List<Fach> = {
+            if (selectedPf3.kuerzel in fachData.pf3_4AusschlussFaecher)
+                filteredFaecher.values.filter { it != selectedPf3 && it.kuerzel !in fachData.pf3_4AusschlussFaecher }
+            else filteredFaecher.values.filter { it != selectedPf3 }
+        }
+
+        val kuerzel = mutableSetOf<String>()
+        for (wz in filteredZeilen.values) {
+            if (wz.pf3 in pf3Groups) {
+                if (wz.pf4 == "*") return beliebig()
+
+                if (wz.pf4.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf4]!!)
+                else kuerzel.add(wz.pf4)
+
+                if (wz.linien == GESTRICHELT || wz.linien == KEINE) {
+                    if (wz.pf5 == "*") return beliebig()
+
+                    if (wz.pf5.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf5]!!)
+                    else kuerzel.add(wz.pf5)
+                }
+            }
+
+            if (wz.linien != DURCHGEZOGEN) {
+                if (wz.pf4 in pf3Groups) {
+                    if (wz.pf3 == "*") return beliebig()
+
+                    if (wz.pf3.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf3]!!)
+                    else kuerzel.add(wz.pf3)
+
+                    if (wz.linien == KEINE) {
+                        if (wz.pf5 == "*") return beliebig()
+
+                        if (wz.pf5.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf5]!!)
+                        else kuerzel.add(wz.pf5)
+                    }
+                }
+
+                if (wz.pf5 in pf3Groups) {
+                    if (wz.pf3 == "*") return beliebig()
+
+                    if (wz.linien == KEINE) {
+                        if (wz.pf4 == "*") return beliebig()
+
+                        if (wz.pf4.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf4]!!)
+                        else kuerzel.add(wz.pf4)
+                    }
+
+                    if (wz.pf3.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf3]!!)
+                    else kuerzel.add(wz.pf3)
+                }
+            }
+        }
+
+        if (selectedPf3.kuerzel in fachData.pf3_4AusschlussFaecher) kuerzel.removeAll(fachData.pf3_4AusschlussFaecher)
+        kuerzel.remove(selectedPf3.kuerzel) // Prüfungsfach 3 nicht 2x wählen
+        return kuerzel.mapNotNull { filteredFaecher[it] }
+    }
+
+    private fun pf5Faecher(): List<Fach> {
+        TODO("Not yet implemented")
+    }
 
     /**
      * Gibt die Fächer, die die gegebenen Wahlzeilen zulassen zurück
@@ -89,18 +201,38 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
     private fun faecherAusWahlzeilen(
         wahlzeilen: Map<Int, Wahlzeile>,
         fremdsprachen: List<Fach>,
-        wpfs: Pair<Fach, Fach?>?
-    ): List<Fach> =
-        LinkedHashSet(wahlzeilen.values.flatMap { wz ->
-            val kuerzel = wz.pf3
-            if (kuerzel == "*") fachData.faecher else // TODO Pfrüfungsfächer Liste erstellen
-            if (kuerzel.startsWith("$")) fachData.wzWildcards[kuerzel]!!
-            else Collections.singleton(fachData.faecherMap[kuerzel]!!)
-        }).filter {
-            if (it.fremdsprache) it in fremdsprachen else
-                    /* Hat keine WPF or Fach ist weder 1./2. WPF */
-                    (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second)))
+        wpfs: Pair<Fach, Fach?>?,
+        pf: Int
+    ): Collection<Fach> {
+        return when (pf) {
+            3 -> pf3Faecher()
+            4 -> pf4Faecher()
+            else -> pf5Faecher()
+        }/*.filter {
+            *//* Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1 *//*
+            if (it.fremdsprache) it in fremdsprachen
+            *//* Hat keine WPF or Fach ist weder 1./2. WPF *//*
+            else (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second)))
+        } // TODO nur PFs returnen, Fächer evtl. sowieso vorfiltern*/
+    }
+
+
+    /*LinkedHashSet(wahlzeilen.values.flatMap { wz ->
+        val kuerzel = when (pf) {
+            3 -> wz.pf3
+            4 -> wz.pf4
+            else -> wz.pf5
         }
+
+        if (kuerzel == "*") fachData.faecher else
+        if (kuerzel.startsWith("$")) fachData.wzWildcards[kuerzel]!!
+        else Collections.singleton(fachData.faecherMap[kuerzel]!!)
+    }).filter {
+        *//* Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1 *//*
+            if (it.fremdsprache) it in fremdsprachen
+            *//* Hat keine WPF or Fach ist weder 1./2. WPF *//*
+            else (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second)))
+        }*/
 
     override fun close(): KurswahlData =
         wahlData.updatePFs(pf3 = pf3.selectedItem!!, pf4 = pf4.selectedItem!!, pf5 = pf5.selectedItem!!)
