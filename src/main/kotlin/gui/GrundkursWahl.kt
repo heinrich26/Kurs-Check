@@ -8,7 +8,9 @@ import data.Wahlmoeglichkeit
 import data.Wahlmoeglichkeit.*
 import testFachdata
 import testKurswahl
-import java.awt.*
+import java.awt.Dimension
+import java.awt.GridBagConstraints
+import java.awt.GridBagLayout
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 import javax.swing.*
@@ -157,8 +159,9 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
 
         for ((i, fach) in fachData.faecher.withIndex()) {
             // if A: B else true == !A or B
-            // TODO herausfinden, ob das If-Else aufgelöst werden kann
-            val cond: Boolean = if (fach.fremdsprache) fach in fs else (!fach.brauchtWPF || (wpfs != null && (fach == wpfs.first || fach == wpfs.second)))
+            val cond: Boolean =
+                if (fach.fremdsprache) fach in fs
+                else (!fach.brauchtWPF || (wpfs != null && (fach == wpfs.first || fach == wpfs.second)))
             // cond == true -> wählbar, sonst versteckt
 
 
