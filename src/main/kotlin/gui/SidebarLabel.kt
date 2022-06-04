@@ -4,11 +4,11 @@ import gui.Consts.COLOR_ON_BACKGROUND
 import gui.Consts.COLOR_ON_BACKGROUND_DISABLED
 import gui.Consts.COLOR_PRIMARY
 import gui.Consts.FONT_NAME
+import gui.Consts.RENDERING_HINTS
 import gui.Consts.SIDEBAR_SIZE
 import java.awt.Font
 import java.awt.Graphics
 import java.awt.Graphics2D
-import java.awt.RenderingHints
 
 class SidebarLabel(private val lText: String, clickEvent: () -> Unit) : ClickableDestionation(clickEvent = clickEvent) {
     init {
@@ -23,12 +23,7 @@ class SidebarLabel(private val lText: String, clickEvent: () -> Unit) : Clickabl
     override fun paintComponent(g: Graphics) {
         val g2D = g as Graphics2D
 
-        g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-            RenderingHints.VALUE_ANTIALIAS_ON)
-        g2D.setRenderingHint(RenderingHints.KEY_RENDERING,
-            RenderingHints.VALUE_RENDER_QUALITY)
-        g2D.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL,
-            RenderingHints.VALUE_STROKE_PURE)
+        g2D.setRenderingHints(RENDERING_HINTS)
 
         if (hasFocus) {
             g2D.color = Consts.COLOR_CONTROL
