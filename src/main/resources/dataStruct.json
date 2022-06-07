@@ -1,136 +1,139 @@
 {
-	"faecher": {
-		"De": {
+	// Hauptversion ändern, wenn Fächer (als LK, PF, etc.) wegfallen oder regeln strenger werden
+	// ansonsten Subversion ändern, wenn Fächer (als LK, PF, etc.) hinzukommen oder Texte (außer Kürzel) geändert werden
+	"jsonVersion": "1.0", // Hauptversion.Subversion
+	"faecher": [
+		{
 			"name": "Deutsch",
 			"kuerzel": "De",
 			"aufgabenfeld": 1,
 			"lk": true
 		},
-		"En": {
+		{
 			"name": "Englisch",
 			"kuerzel": "En",
 			"aufgabenfeld": 1,
 			"lk": true,
 			"fremdsprache": true
 		},
-		"Spa": {
+		{
 			"name": "Spanisch",
 			"kuerzel": "Spa",
 			"aufgabenfeld": 1,
 			"lk": true,
 			"fremdsprache": true
 		},
-		"Fr": {
+		{
 			"name": "Französisch",
 			"kuerzel": "Fr",
 			"aufgabenfeld": 1,
 			"fremdsprache": true,
 			"brauchtWPF": true
 		},
-		"Lat": {
+		{
 			"name": "Latein",
 			"kuerzel": "Lat",
 			"aufgabenfeld": 1,
 			"fremdsprache": true,
 			"brauchtWPF": true
 		},
-		"Ku": {
+		{
 			"name": "Kunst",
 			"kuerzel": "Ku",
 			"aufgabenfeld": 1,
 			"lk": true
 		},
-		"Mu": {
+		{
 			"name": "Musik",
 			"kuerzel": "Mu",
 			"aufgabenfeld": 1
 		},
-		"DS": {
+		{
 			"name": "Darstellendes Spiel",
 			"kuerzel": "DS",
 			"aufgabenfeld": 1,
 			"brauchtWPF": true
 		},
-		"Ge": {
+		{
 			"name": "Geschichte",
 			"kuerzel": "Ge",
 			"aufgabenfeld": 2,
 			"lk": true
 		},
-		"PW": {
+		{
 			"name": "Politikwissenschaft",
 			"kuerzel": "PW",
 			"aufgabenfeld": 2,
 			"lk": true
 		},
-		"Geo": {
+		{
 			"name": "Geografie",
 			"kuerzel": "Geo",
 			"aufgabenfeld": 2,
 			"lk": true
 		},
-		"Ma": {
+		{
 			"name": "Mathematik",
 			"kuerzel": "Ma",
 			"aufgabenfeld": 3,
 			"lk": true
 		},
-		"Phy": {
+		{
 			"name": "Physik",
 			"kuerzel": "Phy",
 			"aufgabenfeld": 3,
 			"lk": true
 		},
-		"Che": {
+		{
 			"name": "Chemie",
 			"kuerzel": "Che",
 			"aufgabenfeld": 3,
 			"lk": true
 		},
-		"Bio": {
+		{
 			"name": "Biologie",
 			"kuerzel": "Bio",
 			"aufgabenfeld": 3,
 			"lk": true
 		},
-		"Inf": {
+		{
 			"name": "Informatik",
 			"kuerzel": "Inf",
 			"aufgabenfeld": 3,
 			"lk": true,
 			"brauchtWPF": true
 		},
-		"SuB": {
+		{
 			"name": "Studium und Beruf",
 			"kuerzel": "SuB",
 			"aufgabenfeld": 0
 		},
-		"ED": {
+		{
 			"name": "Englisch Debating",
 			"kuerzel": "ED",
 			"aufgabenfeld": 0
 		},
-		"Psy": {
+		{
 			"name": "Psychologie",
 			"kuerzel": "Psy",
 			"aufgabenfeld": 0
 		},
-		"Med": {
+		{
 			"name": "Medizin",
 			"kuerzel": "Med",
 			"aufgabenfeld": 0
 		},
-		"Sp": {
+		{
 			"name": "Sport",
 			"kuerzel": "Sp",
 			"aufgabenfeld": 0
 		},
-		"SpT": {
+		{
 			"name": "Sport Theorie",
 			"kuerzel": "SpT",
 			"aufgabenfeld": 0
 		}
-	},
+	],
 	"pflichtfaecher": {
 		"Ma": "1-4",
 		"De": "1-4",
@@ -642,7 +645,7 @@
 		"$KF": ["Mu", "Ku", "DS"]
 	},
 	"wzWildcards": ["$AF2", "$FS", "$NW", "$Mu/Ku"],
-	"minKurse": 32, // Grundkurse und Leistungskurse zusammen
-	"maxKurse": 36, // Grundkurse und Leistungskurse zusammen
+	"minKurse": 40, // Grundkurse und Leistungskurse zusammen
+	"maxKurse": 44, // Grundkurse und Leistungskurse zusammen
 	"pf3_4AusschlussFaecher": ["Mu", "Ku", "DS", "Sp"] // Fächer, von denen nur 1 gewählt werden darf (§ 23,6 VO-GO)
 }

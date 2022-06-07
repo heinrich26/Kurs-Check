@@ -9,4 +9,6 @@ class OrRegel(private val regel1: Regel, private val regel2: Regel, desc: String
     }
 
     override fun toString(): String = "OrRegel(regel1=${regel1}, regel2=${regel2})"
+
+    override fun hashCode(): Int = 31 * regel2.hashCode() + regel1.hashCode()
 }

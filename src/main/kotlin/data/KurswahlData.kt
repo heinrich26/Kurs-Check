@@ -1,9 +1,17 @@
 package data
 
+import com.fasterxml.jackson.annotation.JacksonInject
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIncludeProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import disassembleVersion
 
-
+/**
+ * Beinhaltet die Daten der Kurswahl
+ *
+ * Sollte niemals vor [FachData] ohne [KurswahlData.jsonVersion] erstellt werden
+ */
 @JsonIncludeProperties("jsonVersion", "lk1", "lk2", "pf3", "pf4", "pf5", "pf5_typ", "gks", "fremdsprachen", "wpfs")
 data class KurswahlData(
     var lk1: Fach? = null,
@@ -13,15 +21,51 @@ data class KurswahlData(
     var pf5: Fach? = null,
     var pf5_typ: Pf5Typ = Pf5Typ.PRAESENTATION,
     var gks: Map<Fach, Wahlmoeglichkeit> = emptyMap(),
-    var fremdsprachen: List<Pair<Fach, Int>> = emptyList(),
-    var wpfs: Pair<Fach, Fach?>? = null
+    @JsonSerialize(converter = ListOfPairConverter::class) var fremdsprachen: List<Pair<Fach, Int>> = emptyList(),
+    var wpfs: Pair<Fach, Fach?>? = null,
+    /**
+     * Version der FachData, um einen Mix von Formaten vorzubeugen
+     */
+    @JsonSerialize(converter = VersionConverter::class) var jsonVersion: Pair<Int, Int> = FachData.jsonVersion
 ) {
+
+    companion object {
+        @JvmStatic
+        @JsonCreator
+        fun fromJson(
+            @JsonProperty jsonVersion: String,
+            @JsonProperty lk1: String?,
+            @JsonProperty lk2: String?,
+            @JsonProperty pf3: String?,
+            @JsonProperty pf4: String?,
+            @JsonProperty pf5: String?,
+            @JsonProperty pf5_typ: Pf5Typ,
+            @JsonProperty gks: Map<String, Wahlmoeglichkeit>,
+            @JsonProperty fremdsprachen: Map<String, Int>,
+            @JsonProperty wpfs: Pair<String, String?>?,
+            @JacksonInject fachData: FachData
+        ): KurswahlData {
+
+            return KurswahlData(
+                lk1 = fachData.faecherMap[lk1].let { if (it != null && it.lk) it else null },
+                lk2 = fachData.faecherMap[lk2].let { if (it != null && it.lk) it else null },
+                pf3 = fachData.faecherMap[pf3],
+                pf4 = fachData.faecherMap[pf4],
+                pf5 = fachData.faecherMap[pf5],
+                pf5_typ = pf5_typ,
+                gks = gks.mapKeys { fachData.faecherMap[it.key]!! },
+                fremdsprachen = fremdsprachen.map { fachData.faecherMap[it.key]!! to it.value },
+                wpfs = if (wpfs == null || wpfs.first !in fachData.faecherMap.keys) null else fachData.faecherMap[wpfs.first]!! to fachData.faecherMap[wpfs.second],
+                jsonVersion = jsonVersion.disassembleVersion()
+            )
+        }
+    }
 
     /**
      * Zählt die gewählten Kurse pro Semester
      */
     fun countCourses(): Array<Int> {
-        val courseCounts = arrayOf(4, 4, 4, 4)
+        val courseCounts = arrayOf(5, 5, 5, 5)
         for ((_, moegl) in gks) {
             when (moegl) {
                 Wahlmoeglichkeit.ERSTES_ZWEITES -> {
@@ -64,13 +108,6 @@ data class KurswahlData(
     }
 
     /**
-     * Version der FachData, um einen Mix von Formaten vorzubeugen
-     */
-    @Suppress("unused")
-    private val jsonVersion: Int
-        @JsonProperty get() = FachData.instanceHash
-
-    /**
      * Alle 5 Prüfungsfächer
      */
     val pfs: List<Fach?>
@@ -110,6 +147,12 @@ data class KurswahlData(
         _kurse = null
         locked = false
     }
+
+    /**
+     * Überprüft ob alle Felder gefüllt sind
+     */
+    val isComplete: Boolean
+        get() = fremdsprachen.size >= 2 && (wpfs?.first != null) && gks.isNotEmpty() && lk1 != null && lk2 != null && pf3 != null && pf4 != null && pf5 != null
 
     /**
      * Entfernt LKs aus den PFs und GKs

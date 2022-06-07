@@ -12,4 +12,6 @@ class IfThenRegel(private val regel1: Regel, private val regel2: Regel, desc: St
     }
 
     override fun toString(): String = "IfThenRegel(regel1=${regel1}, regel2=${regel2})"
+
+    override fun hashCode(): Int = 31 * regel1.hashCode() + regel2.hashCode()
 }

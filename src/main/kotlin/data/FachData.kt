@@ -2,6 +2,11 @@ package data
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIncludeProperties
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.databind.InjectableValues
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import disassembleVersion
+import java.io.File
 
 /**
  * Hält alle statischen Daten für die Kurswahl
@@ -14,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIncludeProperties
  */
 @JsonIncludeProperties(
     "faecher", "pflichtfaecher", "wpfs", "regeln", "wahlzeilen", "wildcards",
-    "wzWildcards", "minKurse", "maxKurse", "pf3_4AusschlussFaecher"
+    "wzWildcards", "minKurse", "maxKurse", "pf3_4AusschlussFaecher", "jsonVersion"
 )
 data class FachData(
     val faecherMap: Map<String, Fach>,
@@ -28,32 +33,6 @@ data class FachData(
     val maxKurse: Int,
     val pf3_4AusschlussFaecher: Set<String>
 ) {
-    @JsonCreator
-    constructor(
-        faecher: Map<String, Fach>,
-        pflichtfaecher: Map<String, Wahlmoeglichkeit>,
-        wpfs: List<String>,
-        regeln: List<Regel>,
-        wahlzeilen: Map<Int, Wahlzeile>,
-        wildcards: Map<String, List<String>>,
-        wzWildcards: List<String>,
-        minKurse: Int,
-        maxKurse: Int,
-        pf3_4AusschlussFaecher: Set<String>
-    ) : this(
-        faecherMap = faecher,
-        pflichtfaecher = pflichtfaecher.map { (k, v) -> faecher[k]!! to v }.toMap(),
-        wpfs = wpfs.map { faecher[it]!! },
-        regeln = regeln,
-        wahlzeilen = wahlzeilen,
-        wildcards = wildcards.mapValues { it.value.map { key -> faecher[key]!! } },
-        wzWildcards = wzWildcards.associateWith { wildcards[it]!! },
-        minKurse = minKurse,
-        maxKurse = maxKurse,
-        pf3_4AusschlussFaecher = pf3_4AusschlussFaecher
-    )
-
-
     val faecher: List<Fach> = faecherMap.values.toList()
 
     val fremdsprachen = faecher.filter { it.fremdsprache }
@@ -74,7 +53,7 @@ data class FachData(
 
 
     init {
-        instanceHash = hashCode()
+        // Regeln initialisieren
         regeln.forEach { it.fillData(this) }
     }
 
@@ -120,8 +99,13 @@ data class FachData(
     fun filterWahlzeilen(data: KurswahlData): Map<Int, Wahlzeile> =
         filterWahlzeilen(data.lk1, data.lk2, data.pf3, data.pf4, data.pf5)
 
-    /*fun matchField(fach: Fach, selector: String): Boolean =
-        selector == "*" || selector == fach.kuerzel || fach in wzWildcards[selector]!!*/
+    fun loadKurswahl(file: File): KurswahlData {
+        val mapper = jacksonObjectMapper()
+        val injectables = InjectableValues.Std()
+        injectables.addValue(FachData::class.java, this)
+        mapper.injectableValues = injectables
+        return mapper.readValue(file, KurswahlData::class.java)
+    }
 
     override fun toString(): String =
         arrayOf(
@@ -142,10 +126,62 @@ data class FachData(
             "\n)"
         )
 
+
     companion object {
         /**
-         * Hash der aktuell verwendeten JSON
+         * (major-, sub-) Version der aktuell verwendeten JSON
          */
-        var instanceHash: Int = -1
+        var jsonVersion: Pair<Int, Int> = 0 to 0
+
+        @JvmStatic
+        @JsonCreator
+        fun fromJson(
+            @JsonProperty jsonVersion: String,
+            @JsonProperty faecher: List<Fach>,
+            @JsonProperty pflichtfaecher: Map<String, Wahlmoeglichkeit>,
+            @JsonProperty wpfs: List<String>,
+            @JsonProperty regeln: List<Regel>,
+            @JsonProperty wahlzeilen: Map<Int, Wahlzeile>,
+            @JsonProperty wildcards: Map<String, List<String>>,
+            @JsonProperty wzWildcards: List<String>,
+            @JsonProperty minKurse: Int,
+            @JsonProperty maxKurse: Int,
+            @JsonProperty pf3_4AusschlussFaecher: Set<String>
+        ): FachData {
+            // jsonVersion in ihre Teile zerlegen (String --> Pair<Int, Int>)
+            FachData.jsonVersion = jsonVersion.disassembleVersion()
+
+            val faecherMap: Map<String, Fach> = faecher.associateBy { it.kuerzel }
+            return FachData(
+                faecherMap = faecherMap,
+                pflichtfaecher = pflichtfaecher.mapKeys { (key: String) -> faecherMap[key]!! },
+                wpfs = wpfs.map { faecherMap[it]!! },
+                regeln = regeln,
+                wahlzeilen = wahlzeilen,
+                wildcards = wildcards.mapValues { it.value.map { key -> faecherMap[key]!! } },
+                wzWildcards = wzWildcards.associateWith { wildcards[it]!! },
+                minKurse = minKurse,
+                maxKurse = maxKurse,
+                pf3_4AusschlussFaecher = pf3_4AusschlussFaecher
+            )
+        }
     }
+
+    /* Außer verwendung, denn Hashcodes sind Buildabhängig und deswegen nicht als
+    Versionsindikator tauglich */
+    /*override fun hashCode(): Int {
+        var result = faecher.toSet().hashCode()
+        result = 31 * result + pflichtfaecher.hashCode()
+        result = 31 * result + fremdsprachen.toSet().hashCode()
+        result = 31 * result + wpfs.toSet().hashCode()
+        result = 31 * result + regeln.toSet().hashCode() // ^ gehen
+        result = 31 * result + wahlzeilen.hashCode()
+        result = 31 * result + wildcards.mapValues { it.value.toSet() }.hashCode()
+        result = 31 * result + wzWildcards.mapValues { it.value.toSet() }.hashCode()
+        result = 31 * result + minKurse.hashCode()
+        result = 31 * result + maxKurse.hashCode()
+        result = 31 * result + pf3_4AusschlussFaecher.hashCode()
+
+        return result
+    }*/
 }

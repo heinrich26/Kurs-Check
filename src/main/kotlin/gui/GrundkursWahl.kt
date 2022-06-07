@@ -61,7 +61,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
     private fun checkData(): Boolean {
         val data = close()
         data.lock()
-        return fachData.regeln.mapIndexed { i, it ->
+        return  fachData.regeln.mapIndexed { i, it ->
             val result = it.match(data)
             regelLabelArray[i].setAppearance(result)
             result

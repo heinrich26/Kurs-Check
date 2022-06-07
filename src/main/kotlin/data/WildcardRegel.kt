@@ -51,4 +51,11 @@ class WildcardRegel(
 
     override fun toString(): String =
         "WildcardRegel(wildcard=$wildcard, anzahl=$anzahl${if (wann != null) ", wann=$wann" else ""}${if (scope != null) ", scope=$scope" else ""}${if (desc != null) ", desc=$desc" else ""}${if (errorMsg != null) ", errorMsg=$errorMsg" else ""})"
+
+    override fun hashCode(): Int {
+        var result = wildcard.hashCode()
+        result = 31 * result + anzahl.hashCode()
+        result = 31 * result + wann.hashCode()
+        return 31 * result + scope.hashCode()
+    }
 }

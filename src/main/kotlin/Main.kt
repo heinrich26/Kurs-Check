@@ -1,12 +1,17 @@
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import data.FachData
 import data.KurswahlData
 import gui.*
-import gui.Consts.COLOR_PRIMARY
+import gui.Consts.FILETYPE_EXTENSION
 import gui.Consts.HOME_POLY
+import gui.Consts.IMPORT_ICON
+import gui.Consts.SAVE_ICON
 import gui.Consts.SIDEBAR_SIZE
-import java.awt.*
+import java.awt.Dimension
+import java.awt.GridBagConstraints
+import java.awt.GridBagLayout
+import java.io.File
 import javax.swing.*
-import javax.swing.border.EmptyBorder
 import kotlin.reflect.KClass
 
 class Main(wahlData: KurswahlData? = null) : JPanel() {
@@ -29,8 +34,6 @@ class Main(wahlData: KurswahlData? = null) : JPanel() {
         }
 
         private fun createAndShowGUI(args: Array<String>) {
-
-
             val frame = JFrame("kurswahlApp")
             frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
             // Set up the content pane.
@@ -43,9 +46,9 @@ class Main(wahlData: KurswahlData? = null) : JPanel() {
         }
     }
 
-    private val header: JPanel = JPanel(BorderLayout())
-
     private var curPanel: KurswahlPanel = Overview(this.wahlData, fachData)
+
+    private val toolbar = Toolbar(curPanel.windowName)
 
     // Nav Bar Logik
     private val sidebar = JPanel(GridBagLayout()).apply {
@@ -83,7 +86,7 @@ class Main(wahlData: KurswahlData? = null) : JPanel() {
         curPanel = panel.constructors.first().call(wahlData, fachData)
         add(curPanel, row = 1, column = 2, fill = GridBagConstraints.BOTH, weightx = 1.0)
 
-        titleLabel.text = curPanel.windowName
+        toolbar.text = curPanel.windowName
 
         validate()
 
@@ -103,23 +106,93 @@ class Main(wahlData: KurswahlData? = null) : JPanel() {
         for (i in 0..3) sidebarBtns[i].isEnabled = i < start
     }*/
 
-    private val titleLabel = JLabel(curPanel.windowName, SwingConstants.LEFT).apply {
-        this.font = font.deriveFont(Font.BOLD, 20f)
-        this.foreground = Color.WHITE
-        this.border = EmptyBorder(0, 8, 0, 0)
-        header.add(this)
-    }
+//    private val titleLabel = JLabel(curPanel.windowName, SwingConstants.LEFT).apply {
+//        this.font = font.deriveFont(Font.BOLD, 20f)
+//        this.foreground = Color.WHITE
+//        toolbar.add(this, anchor = GridBagConstraints.WEST, fill = GridBagConstraints.HORIZONTAL, weightx = 1.0)
+//    }
 
     init {
         layout = GridBagLayout()
 
-        header.background = COLOR_PRIMARY
-        header.border = BottomShadowBorder(8)
-        header.preferredSize = Dimension(-1, 64)
-        header.isOpaque = false
 
-        add(header, fill = GridBagConstraints.HORIZONTAL, row = 0, column = 0, columnspan = 3)
+        add(toolbar, fill = GridBagConstraints.HORIZONTAL, row = 0, column = 0, columnspan = 3)
 
+        toolbar.addActionItem(IMPORT_ICON, "open-action") {
+            val chooser = JFileChooser()
+            chooser.fileFilter = KurswahlFileFilter
+            val ans = chooser.showOpenDialog(this)
+            if (ans == JFileChooser.APPROVE_OPTION) {
+                val file = chooser.selectedFile
+                if (file.exists() && file.canRead()) {
+                    val data = fachData.loadKurswahl(chooser.selectedFile)
+                    when {
+                        data.jsonVersion.first != FachData.jsonVersion.first -> {
+                            JOptionPane.showMessageDialog(
+                                this,
+                                "Die Version deiner Datei ist inkompatibel! Es tut uns leid, aber du musst deine Wahl erneut eingeben!",
+                                "Inkompatible Datei",
+                                JOptionPane.ERROR_MESSAGE
+                            )
+                            return@addActionItem
+                        }
+                        data.jsonVersion.second > data.jsonVersion.second ->
+                            JOptionPane.showMessageDialog(
+                                this,
+                                "Die Version deiner Datei ist neuer als die, des Programms! Unter umständen gehen ein paar Daten verloren!",
+                                "Versionsunterschiede",
+                                JOptionPane.WARNING_MESSAGE
+                            )
+                        data.jsonVersion.second < data.jsonVersion.second ->
+                            JOptionPane.showMessageDialog(
+                                this,
+                                "Die Version deiner Datei ist älter als die Programmversion! Unter umständen müssen ein paar Daten neu eingetragen werden!",
+                                "Versionsunterschiede",
+                                JOptionPane.WARNING_MESSAGE
+                            )
+                    }
+                    this.wahlData = data
+
+                    // Das GUI updaten
+                    remove(curPanel)
+
+                    curPanel = curPanel::class.constructors.first().call(this.wahlData, fachData)
+                    add(curPanel, row = 1, column = 2, fill = GridBagConstraints.BOTH, weightx = 1.0)
+
+                    validate()
+                }
+            }
+        }
+
+        toolbar.addActionItem(SAVE_ICON, "save-action") {
+            this.wahlData.lock()
+
+            if (this.wahlData.isComplete && fachData.regeln.all { it.match(this.wahlData) }) {
+                val chooser = JFileChooser()
+                chooser.fileFilter = KurswahlFileFilter
+
+                if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+                    val file =
+                        File("${chooser.selectedFile.parent}${File.separatorChar}${chooser.selectedFile.nameWithoutExtension}.$FILETYPE_EXTENSION")
+                    try {
+                        file.createNewFile()
+                        jacksonObjectMapper().writeValue(file, this.wahlData)
+                    } catch (exception: SecurityException) {
+                        JOptionPane.showMessageDialog(
+                            this,
+                            "Du hast keine Berechtigung diese Datei zu schreiben! Versuche einen anderen Namen oder Ordner!",
+                            "Keine Rechte", JOptionPane.ERROR_MESSAGE
+                        )
+                    }
+                }
+
+            } else JOptionPane.showMessageDialog(
+                this,
+                "Deine Datei ist ungültig oder unvollständig... Es tut uns leid, aber du musst deine Wahl vervollständigen bevor du sie exportieren kannst!",
+                "Ungültige Wahl", JOptionPane.ERROR_MESSAGE
+            )
+            this.wahlData.unlock()
+        }
 //        disableDestinations()
 
         add(
