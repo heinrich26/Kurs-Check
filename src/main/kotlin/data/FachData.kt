@@ -3,10 +3,13 @@ package data
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIncludeProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.core.exc.StreamReadException
+import com.fasterxml.jackson.databind.DatabindException
 import com.fasterxml.jackson.databind.InjectableValues
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import disassembleVersion
 import java.io.File
+import java.io.IOException
 
 /**
  * Hält alle statischen Daten für die Kurswahl
@@ -99,6 +102,10 @@ data class FachData(
     fun filterWahlzeilen(data: KurswahlData): Map<Int, Wahlzeile> =
         filterWahlzeilen(data.lk1, data.lk2, data.pf3, data.pf4, data.pf5)
 
+    /**
+     * Läd eine Kurswahl-Datei mit der in [gui.Consts] definierten Endung
+     */
+    @Throws(IOException::class, StreamReadException::class, DatabindException::class)
     fun loadKurswahl(file: File): KurswahlData {
         val mapper = jacksonObjectMapper()
         val injectables = InjectableValues.Std()
@@ -136,7 +143,7 @@ data class FachData(
         @JvmStatic
         @JsonCreator
         fun fromJson(
-            @JsonProperty jsonVersion: String,
+            @JsonDeserialize(using = VersionDeserializer::class) @JsonProperty jsonVersion: Pair<Int, Int>,
             @JsonProperty faecher: List<Fach>,
             @JsonProperty pflichtfaecher: Map<String, Wahlmoeglichkeit>,
             @JsonProperty wpfs: List<String>,
@@ -149,7 +156,7 @@ data class FachData(
             @JsonProperty pf3_4AusschlussFaecher: Set<String>
         ): FachData {
             // jsonVersion in ihre Teile zerlegen (String --> Pair<Int, Int>)
-            FachData.jsonVersion = jsonVersion.disassembleVersion()
+            FachData.jsonVersion = jsonVersion
 
             val faecherMap: Map<String, Fach> = faecher.associateBy { it.kuerzel }
             return FachData(

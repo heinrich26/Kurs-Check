@@ -4,14 +4,16 @@ import com.fasterxml.jackson.annotation.JacksonInject
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIncludeProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.databind.annotation.JsonAppend
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import disassembleVersion
 
 /**
  * Beinhaltet die Daten der Kurswahl
  *
- * Sollte niemals vor [FachData] ohne [KurswahlData.jsonVersion] erstellt werden
+ * Sollte niemals vor [FachData] ohne [KurswahlData.readJsonVersion] erstellt werden
  */
+@JsonAppend(attrs = [JsonAppend.Attr(value = "jsonVersion")], prepend = true)
 @JsonIncludeProperties("jsonVersion", "lk1", "lk2", "pf3", "pf4", "pf5", "pf5_typ", "gks", "fremdsprachen", "wpfs")
 data class KurswahlData(
     var lk1: Fach? = null,
@@ -21,19 +23,19 @@ data class KurswahlData(
     var pf5: Fach? = null,
     var pf5_typ: Pf5Typ = Pf5Typ.PRAESENTATION,
     var gks: Map<Fach, Wahlmoeglichkeit> = emptyMap(),
-    @JsonSerialize(converter = ListOfPairConverter::class) var fremdsprachen: List<Pair<Fach, Int>> = emptyList(),
+    @get:JsonSerialize(using = ListOfPairSerializer::class) var fremdsprachen: List<Pair<Fach, Int>> = emptyList(),
     var wpfs: Pair<Fach, Fach?>? = null,
     /**
-     * Version der FachData, um einen Mix von Formaten vorzubeugen
+     * Version der bei der Erstellung verwendeten FachData, um einen Mix von Formaten vorzubeugen
      */
-    @JsonSerialize(converter = VersionConverter::class) var jsonVersion: Pair<Int, Int> = FachData.jsonVersion
+    val readJsonVersion: Pair<Int, Int> = FachData.jsonVersion
 ) {
 
     companion object {
         @JvmStatic
         @JsonCreator
         fun fromJson(
-            @JsonProperty jsonVersion: String,
+            @JsonProperty @JsonDeserialize(using = VersionDeserializer::class) jsonVersion: Pair<Int, Int>,
             @JsonProperty lk1: String?,
             @JsonProperty lk2: String?,
             @JsonProperty pf3: String?,
@@ -44,21 +46,18 @@ data class KurswahlData(
             @JsonProperty fremdsprachen: Map<String, Int>,
             @JsonProperty wpfs: Pair<String, String?>?,
             @JacksonInject fachData: FachData
-        ): KurswahlData {
-
-            return KurswahlData(
-                lk1 = fachData.faecherMap[lk1].let { if (it != null && it.lk) it else null },
-                lk2 = fachData.faecherMap[lk2].let { if (it != null && it.lk) it else null },
-                pf3 = fachData.faecherMap[pf3],
-                pf4 = fachData.faecherMap[pf4],
-                pf5 = fachData.faecherMap[pf5],
-                pf5_typ = pf5_typ,
-                gks = gks.mapKeys { fachData.faecherMap[it.key]!! },
-                fremdsprachen = fremdsprachen.map { fachData.faecherMap[it.key]!! to it.value },
-                wpfs = if (wpfs == null || wpfs.first !in fachData.faecherMap.keys) null else fachData.faecherMap[wpfs.first]!! to fachData.faecherMap[wpfs.second],
-                jsonVersion = jsonVersion.disassembleVersion()
-            )
-        }
+        ): KurswahlData = KurswahlData(
+            lk1 = fachData.faecherMap[lk1].let { if (it != null && it.lk) it else null },
+            lk2 = fachData.faecherMap[lk2].let { if (it != null && it.lk) it else null },
+            pf3 = fachData.faecherMap[pf3],
+            pf4 = fachData.faecherMap[pf4],
+            pf5 = fachData.faecherMap[pf5],
+            pf5_typ = pf5_typ,
+            gks = gks.mapKeys { fachData.faecherMap[it.key]!! },
+            fremdsprachen = fremdsprachen.map { fachData.faecherMap[it.key]!! to it.value },
+            wpfs = if (wpfs == null || wpfs.first !in fachData.faecherMap.keys) null else fachData.faecherMap[wpfs.first]!! to fachData.faecherMap[wpfs.second],
+            readJsonVersion = jsonVersion
+        )
     }
 
     /**

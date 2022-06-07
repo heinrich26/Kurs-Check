@@ -1,3 +1,4 @@
+import com.fasterxml.jackson.databind.DatabindException
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import data.FachData
 import data.KurswahlData
@@ -125,9 +126,22 @@ class Main(wahlData: KurswahlData? = null) : JPanel() {
             if (ans == JFileChooser.APPROVE_OPTION) {
                 val file = chooser.selectedFile
                 if (file.exists() && file.canRead()) {
-                    val data = fachData.loadKurswahl(chooser.selectedFile)
+                    val data: KurswahlData
+                    try {
+                        data = fachData.loadKurswahl(chooser.selectedFile)
+                    } catch (e: DatabindException) {
+                        JOptionPane.showMessageDialog(
+                            this,
+                            "Die Datei konnte nicht gelesen werden! Es tut uns leid, aber du musst deine Wahl erneut eingeben!",
+                            "Fehlerhafte Datei",
+                            JOptionPane.ERROR_MESSAGE
+                        )
+                        e.printStackTrace()
+                        return@addActionItem
+                    }
+
                     when {
-                        data.jsonVersion.first != FachData.jsonVersion.first -> {
+                        data.readJsonVersion.first != FachData.jsonVersion.first -> {
                             JOptionPane.showMessageDialog(
                                 this,
                                 "Die Version deiner Datei ist inkompatibel! Es tut uns leid, aber du musst deine Wahl erneut eingeben!",
@@ -136,14 +150,14 @@ class Main(wahlData: KurswahlData? = null) : JPanel() {
                             )
                             return@addActionItem
                         }
-                        data.jsonVersion.second > data.jsonVersion.second ->
+                        data.readJsonVersion.second > data.readJsonVersion.second ->
                             JOptionPane.showMessageDialog(
                                 this,
                                 "Die Version deiner Datei ist neuer als die, des Programms! Unter umständen gehen ein paar Daten verloren!",
                                 "Versionsunterschiede",
                                 JOptionPane.WARNING_MESSAGE
                             )
-                        data.jsonVersion.second < data.jsonVersion.second ->
+                        data.readJsonVersion.second < data.readJsonVersion.second ->
                             JOptionPane.showMessageDialog(
                                 this,
                                 "Die Version deiner Datei ist älter als die Programmversion! Unter umständen müssen ein paar Daten neu eingetragen werden!",
@@ -176,7 +190,10 @@ class Main(wahlData: KurswahlData? = null) : JPanel() {
                         File("${chooser.selectedFile.parent}${File.separatorChar}${chooser.selectedFile.nameWithoutExtension}.$FILETYPE_EXTENSION")
                     try {
                         file.createNewFile()
-                        jacksonObjectMapper().writeValue(file, this.wahlData)
+
+                        jacksonObjectMapper().writer()
+                            .withAttribute("jsonVersion", FachData.jsonVersion.let { "${it.first}.${it.second}" })
+                            .writeValue(file, this.wahlData)
                     } catch (exception: SecurityException) {
                         JOptionPane.showMessageDialog(
                             this,

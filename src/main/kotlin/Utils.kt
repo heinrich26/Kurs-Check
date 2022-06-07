@@ -7,7 +7,6 @@ import gui.Consts.FILETYPE_EXTENSION
 import java.awt.*
 import java.io.File
 import java.net.URL
-import javax.management.InvalidAttributeValueException
 import javax.swing.ImageIcon
 import javax.swing.filechooser.FileFilter
 
@@ -81,26 +80,6 @@ fun createImageIcon(path: String, description: String? = null): ImageIcon? {
     } else {
         System.err.println("Couldn't find file: $path")
         null
-    }
-}
-
-/**
- * Zerlegt einen Versions String bestehend aus numerischer Major- und Subversion,
- * getrennt durch einen Punkt
- *
- * @throws InvalidAttributeValueException Der String enthält nicht genau einen Punkt
- * oder die einzelnen Versionen sind nicht numerisch
- */
-fun String.disassembleVersion(): Pair<Int, Int> {
-    if (this.count {it == '.'} != 1)
-        throw InvalidAttributeValueException("Ungültige Versionsbezeichnung! Eine Version besteht aus einer numerischen Haupt- und Subversion, getrennt durch einen \".\"!")
-
-    return this.split(".", ignoreCase = true).let {
-        try {
-            it[0].toInt() to it[1].toInt()
-        } catch (e: NumberFormatException) {
-            throw InvalidAttributeValueException("Ungültige Versionsbezeichnung! Eine Version besteht aus einer numerischen Haupt- und Subversion, getrennt durch einen \".\"!")
-        }
     }
 }
 
