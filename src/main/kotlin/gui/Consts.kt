@@ -20,8 +20,6 @@ object Consts {
 
     const val FONT_NAME = "Roboto"
 
-    const val CHECK_CHAR = '\u2705'
-    const val CROSS_CHAR = '\u274C'
 
     const val PANEL_WIDTH = 400
     const val PANEL_HEIGHT = 300

@@ -139,8 +139,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
         regelPanel.setScrollableWidth(ScrollablePanel.ScrollableSizeHint.FIT)
         regelLabelArray.forEach { regelPanel.add(it) }
 
-        val scrollPane2 =
-            JScrollPane(regelPanel)
+        val scrollPane2 = JScrollPane(regelPanel)
         scrollPane2.preferredSize = Dimension(200, 350)
 
         checkData()
