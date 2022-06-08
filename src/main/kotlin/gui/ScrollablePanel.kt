@@ -30,7 +30,7 @@ import javax.swing.SwingConstants
  *
  * @see <a href="https://tips4java.wordpress.com/2009/12/20/scrollable-panel/">Original Source (copied)</a>
  */
-class ScrollablePanel @JvmOverloads constructor(layout: LayoutManager? = FlowLayout()) : JPanel(layout),
+open class ScrollablePanel @JvmOverloads constructor(layout: LayoutManager? = FlowLayout()) : JPanel(layout),
     Scrollable, SwingConstants {
     enum class ScrollableSizeHint {
         NONE, FIT, STRETCH
