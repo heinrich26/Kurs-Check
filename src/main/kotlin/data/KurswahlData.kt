@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize
  * Sollte niemals vor [FachData] ohne [KurswahlData.readJsonVersion] erstellt werden
  */
 @JsonAppend(attrs = [JsonAppend.Attr(value = "jsonVersion")], prepend = true)
-@JsonIncludeProperties("jsonVersion", "lk1", "lk2", "pf3", "pf4", "pf5", "pf5_typ", "gks", "fremdsprachen", "wpfs")
+@JsonIncludeProperties("jsonVersion", "lk1", "lk2", "pf3", "pf4", "pf5", "pf5_typ", "gks", "fremdsprachen", "wpfs", "wahlzeile")
 data class KurswahlData(
     var lk1: Fach? = null,
     var lk2: Fach? = null,
@@ -25,6 +25,7 @@ data class KurswahlData(
     var gks: Map<Fach, Wahlmoeglichkeit> = emptyMap(),
     @get:JsonSerialize(using = ListOfPairSerializer::class) var fremdsprachen: List<Pair<Fach, Int>> = emptyList(),
     var wpfs: Pair<Fach, Fach?>? = null,
+    var wahlzeile: Int = -1,
     /**
      * Version der bei der Erstellung verwendeten FachData, um einen Mix von Formaten vorzubeugen
      */
@@ -45,6 +46,7 @@ data class KurswahlData(
             @JsonProperty gks: Map<String, Wahlmoeglichkeit>,
             @JsonProperty fremdsprachen: Map<String, Int>,
             @JsonProperty wpfs: Pair<String, String?>?,
+            @JsonProperty wahlzeile: Int,
             @JacksonInject fachData: FachData
         ): KurswahlData = KurswahlData(
             lk1 = fachData.faecherMap[lk1].let { if (it != null && it.lk) it else null },
@@ -56,6 +58,7 @@ data class KurswahlData(
             gks = gks.mapKeys { fachData.faecherMap[it.key]!! },
             fremdsprachen = fremdsprachen.map { fachData.faecherMap[it.key]!! to it.value },
             wpfs = if (wpfs == null || wpfs.first !in fachData.faecherMap.keys) null else fachData.faecherMap[wpfs.first]!! to fachData.faecherMap[wpfs.second],
+            wahlzeile = wahlzeile,
             readJsonVersion = jsonVersion
         )
     }
@@ -158,16 +161,25 @@ data class KurswahlData(
      */
     fun updateLKs(lk1: Fach, lk2: Fach): KurswahlData =
         this.copy(lk1 = lk1, lk2 = lk2, gks = gks.filterKeys { it != lk1 && it != lk1 }).apply {
-            if (pf3 == lk1 || pf3 != lk2) this.pf3 = null
-            if (pf4 == lk1 || pf4 != lk2) this.pf4 = null
-            if (pf5 == lk1 || pf5 != lk2) this.pf5 = null
+            if (pf3 == lk1 || pf3 == lk2) {
+                this.pf3 = null
+                this.wahlzeile = -1
+            }
+            if (pf4 == lk1 || pf4 == lk2) {
+                this.pf4 = null
+                this.wahlzeile = -1
+            }
+            if (pf5 == lk1 || pf5 == lk2) {
+                this.pf5 = null
+                this.wahlzeile = -1
+            }
         }
 
     /**
      * Entfernt PFs aus den GKs
      */
-    fun updatePFs(pf3: Fach, pf4: Fach, pf5: Fach): KurswahlData =
-        this.copy(pf3 = pf3, pf4 = pf4, pf5 = pf5, gks = gks.filterKeys { it != pf3 && it != pf4 && it != pf5 })
+    fun updatePFs(pf3: Fach, pf4: Fach, pf5: Fach, pf5_typ: Pf5Typ, wahlzeile: Int): KurswahlData =
+        this.copy(pf3 = pf3, pf4 = pf4, pf5 = pf5, gks = gks.filterKeys { it != pf3 && it != pf4 && it != pf5 }, pf5_typ = pf5_typ, wahlzeile = wahlzeile)
 
     /**
      * Entfernt Fremdsprachen und WPFs, die der Schüler nicht mehr hat aus den Kursen
@@ -182,16 +194,25 @@ data class KurswahlData(
         }
         return this.copy(fremdsprachen = fremdsprachenNew, wpfs = wpfsNew, gks = gks.filterKeys { it !in fachDif })
             .apply {
-                if (lk1 in fachDif)
+                if (lk1 in fachDif) {
                     this.lk1 = null
-                if (lk2 in fachDif)
-                    this.lk1 = null
-                if (pf3 in fachDif)
+                    this.wahlzeile = -1
+                }
+                if (lk2 in fachDif) {
+                    this.lk2 = null
+                    this.wahlzeile = -1
+                }
+                if (pf3 in fachDif) {
                     this.pf3 = null
-                if (pf4 in fachDif)
+                    this.wahlzeile = -1
+                }
+                if (pf4 in fachDif) {
                     this.pf4 = null
-                if (pf5 in fachDif)
+                    this.wahlzeile = -1
+                }
+                if (pf5 in fachDif) {
                     this.pf5 = null
+                }
             }
 
     }

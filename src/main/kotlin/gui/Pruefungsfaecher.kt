@@ -1,17 +1,14 @@
 package gui
 
 import add
-import data.Fach
-import data.FachComboBoxModel
-import data.FachData
-import data.KurswahlData
+import data.*
 import data.WahlzeileLinientyp.*
 import testFachdata
 import testKurswahl
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.Insets
-import javax.swing.Box
+import javax.swing.JComboBox
 import javax.swing.JLabel
 
 
@@ -40,6 +37,9 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
     private val pf4: FachComboBox
     private val pf5: FachComboBox
 
+    @Suppress("PrivatePropertyName")
+    private val pf5_typ: JComboBox<Pf5Typ>
+
     private val userFs = wahlData.fremdsprachen.map { it.first }
     private val userWpfs = wahlData.wpfs
     private val filteredZeilen = fachData.filterWahlzeilen(wahlData.lk1, wahlData.lk2)
@@ -49,18 +49,10 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
         /* Hat keine WPF or Fach ist weder 1./2. WPF */
         else (!it.brauchtWPF || (userWpfs != null && (it == userWpfs.first || it == userWpfs.second)))
     } // TODO nur PFs returnen, Fächer evtl. sowieso vorfiltern
+    private val zeilenFuerFuenfte: MutableSet<Pair<Int, Wahlzeile>> = mutableSetOf()
 
     init {
         this.layout = GridBagLayout()
-
-        add(
-            JLabel("Prüfungsfächer:"),
-            column = 0,
-            columnspan = 2,
-            margin = Insets(0, 0, 4, 0),
-            anchor = GridBagConstraints.WEST
-        )
-        add(Box.createHorizontalStrut(50), column = 2)
 
         println(filteredZeilen)
         val pf3faecher = faecherAusWahlzeilen(3)
@@ -76,16 +68,20 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
         val model3 = AwareFachComboBoxModel(pf3, pf4) { faecherAusWahlzeilen(5) }
         pf5 = FachComboBox(model3)
 
+        pf5_typ = JComboBox(Pf5Typ.values())
+
 
         pf3.renderer = FachRenderer
         pf4.renderer = FachRenderer
         pf5.renderer = FachRenderer
+        pf5_typ.renderer = Pf5Typ.Renderer
 
 
         // Daten einsetzen
         pf3.selectedItem = wahlData.pf3
         pf4.selectedItem = wahlData.pf4
         pf5.selectedItem = wahlData.pf5
+        pf5_typ.selectedItem = wahlData.pf5_typ
 
 
         // Anzeigen
@@ -94,12 +90,14 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
             add(pf3, row = 1, column = 1, fill = GridBagConstraints.BOTH, margin = it)
             add(pf4, row = 2, column = 1, fill = GridBagConstraints.BOTH, margin = it)
             add(pf5, row = 3, column = 1, fill = GridBagConstraints.BOTH, margin = it)
+            add(pf5_typ, row = 3, column = 3, margin = it)
         }
 
         // Beschriftungen hinzufügen
         for (i in 3..5) {
             add(JLabel("PF $i."), row = i - 2, column = 0)
         }
+        add(JLabel(" als "), row = 3, column = 2)
     }
 
     private fun pf3Faecher(): Collection<Fach> {
@@ -207,8 +205,11 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
 
         val kuerzel = mutableSetOf<String>()
 
+        zeilenFuerFuenfte.clear()
+
         for (wz in filteredZeilen.values) {
             if (wz.pf3 in pf3Groups && wz.pf4 in pf4Groups) {
+                zeilenFuerFuenfte.add(5 to wz)
                 if (wz.pf5 == "*") return beliebig()
 
                 if (wz.pf5.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf5]!!)
@@ -217,6 +218,7 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
 
             if (wz.linien != DURCHGEZOGEN) {
                 if (wz.pf4 in pf3Groups && wz.pf3 in pf4Groups) {
+                    zeilenFuerFuenfte.add(5 to wz)
                     if (wz.pf5 == "*") return beliebig()
 
                     if (wz.pf5.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf5]!!)
@@ -225,6 +227,7 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
 
                 if (wz.linien != KEINE_DURCHGEZOGEN) {
                     if ((wz.pf3 in pf3Groups && wz.pf5 in pf4Groups) || (wz.pf3 in pf4Groups && wz.pf5 in pf3Groups)) {
+                        zeilenFuerFuenfte.add(4 to wz)
                         if (wz.pf4 == "*") return beliebig()
 
                         if (wz.pf4.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf4]!!)
@@ -232,6 +235,7 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
                     }
 
                     if ((wz.pf4 in pf3Groups && wz.pf5 in pf4Groups) || (wz.pf4 in pf4Groups && wz.pf5 in pf3Groups)) {
+                        zeilenFuerFuenfte.add(3 to wz)
                         if (wz.pf3 == "*") return beliebig()
 
                         if (wz.pf3.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf3]!!)
@@ -283,8 +287,30 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
             else (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second)))
         }*/
 
-    override fun close(): KurswahlData =
-        wahlData.updatePFs(pf3 = pf3.selectedItem!!, pf4 = pf4.selectedItem!!, pf5 = pf5.selectedItem!!)
+    override fun close(): KurswahlData {
+        val selectedPf5 = pf5.selectedItem!!
+        val pf5Groups = fachData.wzWildcardMapping[selectedPf5]!!
+        var zeile: Int = -1
+        for ((field, wz) in zeilenFuerFuenfte) {
+            val fieldVal = when (field) {
+                3 -> wz.pf3
+                4 -> wz.pf4
+                else -> wz.pf5
+            }
+            if (fieldVal in pf5Groups) {
+                zeile = filteredZeilen.firstNotNullOf { if (it.value == wz) it.key else null }
+                break
+            }
+        }
+
+        return wahlData.updatePFs(
+            pf3 = pf3.selectedItem!!,
+            pf4 = pf4.selectedItem!!,
+            pf5 = selectedPf5,
+            pf5_typ = pf5_typ.selectedItem as Pf5Typ,
+            wahlzeile = zeile
+        )
+    }
 
     override fun isDataValid(): Boolean =
         (pf3.selectedItem != null && pf4.selectedItem != null && pf5.selectedItem != null)
