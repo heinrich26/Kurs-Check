@@ -1,8 +1,6 @@
 name: Gradle Package
 
-on:
-  push:
-  workflow_run:
+on: [push, workflow_run]
 
 jobs:   
   gradle:
