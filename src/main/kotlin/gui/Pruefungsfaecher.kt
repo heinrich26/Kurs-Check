@@ -1,8 +1,10 @@
 package gui
 
-import ExclusiveComboBoxModel
 import add
-import data.*
+import data.Fach
+import data.FachComboBoxModel
+import data.FachData
+import data.KurswahlData
 import data.WahlzeileLinientyp.*
 import testFachdata
 import testKurswahl
@@ -61,17 +63,17 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
         add(Box.createHorizontalStrut(50), column = 2)
 
         println(filteredZeilen)
-        val pf3faecher = faecherAusWahlzeilen(filteredZeilen, userFs, userWpfs, 3)
+        val pf3faecher = faecherAusWahlzeilen(3)
 
         // geht schon
         val model1 = FachComboBoxModel(pf3faecher)
         pf3 = FachComboBox(model1)
 
         // wip
-        val model2 = AwareFachComboBoxModel(pf3) { faecherAusWahlzeilen(filteredZeilen, userFs, userWpfs, 4) }
+        val model2 = AwareFachComboBoxModel(pf3) { faecherAusWahlzeilen(4) }
         pf4 = FachComboBox(model2)
 
-        val model3 = ExclusiveComboBoxModel(fachData.faecher, pf4)
+        val model3 = AwareFachComboBoxModel(pf3, pf4) { faecherAusWahlzeilen(5) }
         pf5 = FachComboBox(model3)
 
 
@@ -134,7 +136,7 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
 
         val beliebig: () -> List<Fach> = {
             if (selectedPf3.kuerzel in fachData.pf3_4AusschlussFaecher)
-                filteredFaecher.values.filter { it != selectedPf3 && it.kuerzel !in fachData.pf3_4AusschlussFaecher }
+                filteredFaecher.values.filter { it.kuerzel !in fachData.pf3_4AusschlussFaecher }
             else filteredFaecher.values.filter { it != selectedPf3 }
         }
 
@@ -191,19 +193,66 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
     }
 
     private fun pf5Faecher(): List<Fach> {
-        TODO("Not yet implemented")
+        val selectedPf3 = pf3.selectedItem ?: return emptyList()
+        val pf3Groups = fachData.wzWildcardMapping[selectedPf3]!!
+
+        val selectedPf4 = pf4.selectedItem ?: return emptyList()
+        val pf4Groups = fachData.wzWildcardMapping[selectedPf4]!!
+
+        val beliebig: () -> List<Fach> = {
+            if (selectedPf3.kuerzel in fachData.pf3_4AusschlussFaecher || selectedPf4.kuerzel in fachData.pf3_4AusschlussFaecher)
+                filteredFaecher.values.filter { it.kuerzel !in fachData.pf3_4AusschlussFaecher }
+            else filteredFaecher.values.filter { it != selectedPf3 && it != selectedPf4 }
+        }
+
+        val kuerzel = mutableSetOf<String>()
+
+        for (wz in filteredZeilen.values) {
+            if (wz.pf3 in pf3Groups && wz.pf4 in pf4Groups) {
+                if (wz.pf5 == "*") return beliebig()
+
+                if (wz.pf5.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf5]!!)
+                else kuerzel.add(wz.pf5)
+            }
+
+            if (wz.linien != DURCHGEZOGEN) {
+                if (wz.pf4 in pf3Groups && wz.pf3 in pf4Groups) {
+                    if (wz.pf5 == "*") return beliebig()
+
+                    if (wz.pf5.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf5]!!)
+                    else kuerzel.add(wz.pf5)
+                }
+
+                if (wz.linien != KEINE_DURCHGEZOGEN) {
+                    if ((wz.pf3 in pf3Groups && wz.pf5 in pf4Groups) || (wz.pf3 in pf4Groups && wz.pf5 in pf3Groups)) {
+                        if (wz.pf4 == "*") return beliebig()
+
+                        if (wz.pf4.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf4]!!)
+                        else kuerzel.add(wz.pf4)
+                    }
+
+                    if ((wz.pf4 in pf3Groups && wz.pf5 in pf4Groups) || (wz.pf4 in pf4Groups && wz.pf5 in pf3Groups)) {
+                        if (wz.pf3 == "*") return beliebig()
+
+                        if (wz.pf3.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf3]!!)
+                        else kuerzel.add(wz.pf3)
+                    }
+                }
+            }
+        }
+
+        if (selectedPf3.kuerzel in fachData.pf3_4AusschlussFaecher || selectedPf4.kuerzel in fachData.pf3_4AusschlussFaecher)
+            kuerzel.removeAll(fachData.pf3_4AusschlussFaecher)
+        kuerzel.remove(selectedPf3.kuerzel) // Prüfungsfach 3 nicht 2x wählen
+        kuerzel.remove(selectedPf4.kuerzel) // Prüfungsfach 4 nicht 2x wählen
+        return kuerzel.mapNotNull { filteredFaecher[it] }
     }
 
     /**
      * Gibt die Fächer, die die gegebenen Wahlzeilen zulassen zurück
      * TODO funzt noch nicht so ganz
      */
-    private fun faecherAusWahlzeilen(
-        wahlzeilen: Map<Int, Wahlzeile>,
-        fremdsprachen: List<Fach>,
-        wpfs: Pair<Fach, Fach?>?,
-        pf: Int
-    ): Collection<Fach> {
+    private fun faecherAusWahlzeilen(pf: Int): Collection<Fach> {
         return when (pf) {
             3 -> pf3Faecher()
             4 -> pf4Faecher()
