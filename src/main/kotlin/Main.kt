@@ -150,14 +150,14 @@ class Main(wahlData: KurswahlData? = null) : JPanel() {
                             )
                             return@addActionItem
                         }
-                        data.readJsonVersion.second > data.readJsonVersion.second ->
+                        data.readJsonVersion.second > FachData.jsonVersion.second ->
                             JOptionPane.showMessageDialog(
                                 this,
                                 "Die Version deiner Datei ist neuer als die, des Programms! Unter umständen gehen ein paar Daten verloren!",
                                 "Versionsunterschiede",
                                 JOptionPane.WARNING_MESSAGE
                             )
-                        data.readJsonVersion.second < data.readJsonVersion.second ->
+                        data.readJsonVersion.second < FachData.jsonVersion.second ->
                             JOptionPane.showMessageDialog(
                                 this,
                                 "Die Version deiner Datei ist älter als die Programmversion! Unter umständen müssen ein paar Daten neu eingetragen werden!",

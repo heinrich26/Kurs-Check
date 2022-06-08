@@ -44,11 +44,13 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
     private val userWpfs = wahlData.wpfs
     private val filteredZeilen = fachData.filterWahlzeilen(wahlData.lk1, wahlData.lk2)
     private val filteredFaecher = fachData.faecherMap.filterValues {
+        // ist kein Zusatzkurs & ...
+        it.aufgabenfeld != -1 &&
         /* Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1 */
-        it != wahlData.lk1 && it != wahlData.lk2 && if (it.fremdsprache) it in userFs
+        (it != wahlData.lk1 && it != wahlData.lk2 && if (it.fremdsprache) it in userFs
         /* Hat keine WPF or Fach ist weder 1./2. WPF */
-        else (!it.brauchtWPF || (userWpfs != null && (it == userWpfs.first || it == userWpfs.second)))
-    } // TODO nur PFs returnen, Fächer evtl. sowieso vorfiltern
+        else (!it.brauchtWPF || (userWpfs != null && (it == userWpfs.first || it == userWpfs.second))))
+    }
     private val zeilenFuerFuenfte: MutableSet<Pair<Int, Wahlzeile>> = mutableSetOf()
 
     init {
@@ -101,23 +103,24 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
     }
 
     private fun pf3Faecher(): Collection<Fach> {
-        // TODO Performance von LinkedHashSet und MutableSet vergleichen
         val kuerzel = mutableSetOf<String>()
 
+        val beliebig: () -> List<Fach> = { filteredFaecher.mapNotNull { if (it.value.nurPf4_5) null else it.value } }
+
         for (wz in filteredZeilen.values) {
-            if (wz.pf3 == "*") return filteredFaecher.values
+            if (wz.pf3 == "*") return beliebig()
 
             if (wz.pf3.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf3]!!)
             else kuerzel.add(wz.pf3)
 
             if (wz.linien != DURCHGEZOGEN) {
-                if (wz.pf4 == "*") return filteredFaecher.values
+                if (wz.pf4 == "*") return beliebig()
 
                 if (wz.pf4.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf4]!!)
                 else kuerzel.add(wz.pf4)
 
                 /*if (wz.linien == KEINE) {*/
-                if (wz.pf5 == "*") return filteredFaecher.values
+                if (wz.pf5 == "*") return beliebig()
 
                 if (wz.pf5.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf5]!!)
                 else kuerzel.add(wz.pf5)
@@ -125,7 +128,10 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
             }
         }
 
-        return kuerzel.mapNotNull { filteredFaecher[it] }
+        return kuerzel.mapNotNull {
+            val fach = filteredFaecher[it] ?: return@mapNotNull null
+            if (fach.nurPf4_5) null else fach
+        }
     }
 
     private fun pf4Faecher(): List<Fach> {

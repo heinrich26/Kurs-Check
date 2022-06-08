@@ -9,20 +9,12 @@ data class Fach(
     val aufgabenfeld: Int,
     val lk: Boolean = false,
     val fremdsprache: Boolean = false,
-    val brauchtWPF: Boolean = false
+    val brauchtWPF: Boolean = false,
+    val nurPf4_5: Boolean = false
 ) {
-    fun nameFormatted() = if (aufgabenfeld == 0) name else "$name ($aufgabenfeld)"
+    fun nameFormatted() = if (aufgabenfeld < 1) name else "$name ($aufgabenfeld)"
 
     override fun equals(other: Any?): Boolean = this === other || (other is Fach && this.kuerzel == other.kuerzel)
 
-    override fun hashCode(): Int {
-        var result = name.hashCode()
-        result = 31 * result + kuerzel.hashCode()
-        result = 31 * result + aufgabenfeld.hashCode()
-        result = 31 * result + lk.hashCode()
-        result = 31 * result + fremdsprache.hashCode()
-        result = 31 * result + brauchtWPF.hashCode()
-
-        return result
-    }
+    override fun hashCode(): Int = kuerzel.hashCode() // nimmt an, dass das selbe Kürzel nur 1x vorkommt
 }

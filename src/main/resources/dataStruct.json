@@ -1,7 +1,8 @@
 {
 	// Hauptversion ändern, wenn Fächer (als LK, PF, etc.) wegfallen oder regeln strenger werden
 	// ansonsten Subversion ändern, wenn Fächer (als LK, PF, etc.) hinzukommen oder Texte (außer Kürzel) geändert werden
-	"jsonVersion": "1.0", // Hauptversion.Subversion
+	"jsonVersion": "1.1", // Hauptversion.Subversion
+	// "aufgabenfeld" -> 0, wenn kein Aufgabenfeld gg. ist (Sport), Zusatzkurse -> -1
 	"faecher": [
 		{
 			"name": "Deutsch",
@@ -52,7 +53,8 @@
 			"name": "Darstellendes Spiel",
 			"kuerzel": "DS",
 			"aufgabenfeld": 1,
-			"brauchtWPF": true
+			"brauchtWPF": true,
+			"nurPf4_5": true
 		},
 		{
 			"name": "Geschichte",
@@ -106,32 +108,33 @@
 		{
 			"name": "Studium und Beruf",
 			"kuerzel": "SuB",
-			"aufgabenfeld": 0
+			"aufgabenfeld": -1
 		},
 		{
 			"name": "Englisch Debating",
 			"kuerzel": "ED",
-			"aufgabenfeld": 0
+			"aufgabenfeld": -1
 		},
 		{
 			"name": "Psychologie",
 			"kuerzel": "Psy",
-			"aufgabenfeld": 0
+			"aufgabenfeld": -1
 		},
 		{
 			"name": "Medizin",
 			"kuerzel": "Med",
-			"aufgabenfeld": 0
+			"aufgabenfeld": -1
 		},
 		{
 			"name": "Sport",
 			"kuerzel": "Sp",
-			"aufgabenfeld": 0
+			"aufgabenfeld": 0,
+			"nurPf4_5": true
 		},
 		{
 			"name": "Sport Theorie",
 			"kuerzel": "SpT",
-			"aufgabenfeld": 0
+			"aufgabenfeld": -1 // Auf -1, damit es nicht als Prüfungsfach gewählt werden kann!
 		}
 	],
 	"pflichtfaecher": {
@@ -247,7 +250,7 @@
 				"anzahl": 2,
 				"wann": "3-4"
 			},
-			"desc": "Sport as PF -> zusätzlich Sport Theorie min. in Q3 & Q4",
+			"desc": "Sport als PF -> zusätzlich Sport Theorie min. in Q3 & Q4",
 			"errorMsg": "Wähle Sport Theorie in Q3 & Q4!"
 		}
 	],

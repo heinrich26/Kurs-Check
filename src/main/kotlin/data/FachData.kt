@@ -129,7 +129,7 @@ data class FachData(
             "pf3_4AusschlussFaecher=$pf3_4AusschlussFaecher"
         ).joinToString(
             ",\n\t",
-            "FachData(\n\t",
+            "FachData[version ${jsonVersion.first}.${jsonVersion.second}](\n\t",
             "\n)"
         )
 
@@ -155,7 +155,7 @@ data class FachData(
             @JsonProperty maxKurse: Int,
             @JsonProperty pf3_4AusschlussFaecher: Set<String>
         ): FachData {
-            // jsonVersion in ihre Teile zerlegen (String --> Pair<Int, Int>)
+            // jsonVersion global setzen
             FachData.jsonVersion = jsonVersion
 
             val faecherMap: Map<String, Fach> = faecher.associateBy { it.kuerzel }
