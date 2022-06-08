@@ -56,7 +56,6 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
     init {
         this.layout = GridBagLayout()
 
-        println(filteredZeilen)
         val pf3faecher = faecherAusWahlzeilen(3)
 
         // geht schon

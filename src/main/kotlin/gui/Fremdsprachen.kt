@@ -45,7 +45,9 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
             margin = Insets(0, 0, 4, 0),
             anchor = GridBagConstraints.WEST
         )
+        // Dummy damit das Fremdsprachen Label nicht alles verzerrt
         add(Box.createHorizontalStrut(50), column = 2)
+
         add(JLabel("ab Kl.:"), column = 3, anchor = GridBagConstraints.NORTHWEST)
         add(
             JLabel("Wahlpflicht:"),
