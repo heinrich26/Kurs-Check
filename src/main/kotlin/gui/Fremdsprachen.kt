@@ -7,7 +7,6 @@ import data.FachData
 import data.KurswahlData
 import testFachdata
 import testKurswahl
-import java.awt.Component
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.Insets
@@ -56,11 +55,6 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
             anchor = GridBagConstraints.WEST,
             margin = Insets(10, 0, 4, 0)
         )
-
-//        fsJahr4 = ChainedSpinnerNumberModel(1, 1, 10)
-//        fsJahr3 = ChainedSpinnerNumberModel(1, 1, 10, fsJahr4)
-//        fsJahr2 = ChainedSpinnerNumberModel(1, 1, 10, fsJahr3)
-//        fsJahr1 = ChainedSpinnerNumberModel(1, 1, 10, fsJahr2)
 
         fsJahr4 = SpinnerNumberModel(1, 1, 10,1)
         fsJahr3 = SpinnerNumberModel(1, 1, 10,1)
@@ -207,7 +201,7 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
             }
         }
 
-        return wahlData.copy(fremdsprachen = sprachen, wpfs = wpf1.selectedItem!! to wpf2.selectedItem)
+        return wahlData.updateWahlfaecher(fremdsprachenNew = sprachen, wpfsNew = wpf1.selectedItem!! to wpf2.selectedItem)
     }
 
     override fun isDataValid(): Boolean {
