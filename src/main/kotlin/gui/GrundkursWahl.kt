@@ -13,6 +13,10 @@ import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
+import java.awt.image.BufferedImage
+import java.io.File
+import java.io.IOException
+import javax.imageio.ImageIO
 import javax.swing.*
 
 
@@ -33,6 +37,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
             }
             gks[fach] = value
         }
+
         return wahlData.copy(gks = gks.toMap())
     }
 
@@ -61,7 +66,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
     private fun checkData(): Boolean {
         val data = close()
         data.lock()
-        return  fachData.regeln.mapIndexed { i, it ->
+        return fachData.regeln.mapIndexed { i, it ->
             val result = it.match(data)
             regelLabelArray[i].setAppearance(result)
             result
@@ -107,7 +112,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
 
         faecherBlocken()
 
-        // Grundkurse eintragen
+        // Grundkurse (Daten) eintragen
         for ((gk, choice) in wahlData.gks) {
             val pos = fachPos(gk)
             val acti = when (choice) {
@@ -231,6 +236,20 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
                     it.isSelected = true
                     it.isEnabled = false
                 }
+        }
+    }
+
+    private fun panelToImage() {
+        if (panel.size == Dimension(0, 0)) return
+
+        val image = BufferedImage(panel.width, panel.height, BufferedImage.TYPE_INT_RGB);
+        val g = image.createGraphics();
+        panel.printAll(g);
+        g.dispose();
+        try {
+            ImageIO.write(image, "png", File("C:\\Users\\Hendrik\\Documents\\Schule\\kurswahl.png"))
+        } catch (e: IOException) {
+            e.printStackTrace();
         }
     }
 

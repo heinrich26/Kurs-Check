@@ -1,3 +1,4 @@
+
 import com.fasterxml.jackson.databind.DatabindException
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import data.FachData
@@ -8,17 +9,21 @@ import gui.Consts.HOME_POLY
 import gui.Consts.IMPORT_ICON
 import gui.Consts.SAVE_ICON
 import gui.Consts.SIDEBAR_SIZE
+import gui.Consts.TEST_FILE_NAME
 import java.awt.Dimension
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.io.File
+import javax.imageio.ImageIO
 import javax.swing.*
 import kotlin.reflect.KClass
 
-class Main(wahlData: KurswahlData? = null) : JPanel() {
+
+class Main(file: File? = null) : JPanel() {
     private val fachData: FachData = readDataStruct()
     private var wahlData: KurswahlData =
-        wahlData?.apply { this.gks = fachData.pflichtfaecher } ?: KurswahlData(gks = fachData.pflichtfaecher)
+        file?.let { loadKurswahlFile(it)?.apply { this.gks += fachData.pflichtfaecher.filter { (fach, _) -> fach !in this.pfs } } }
+            ?: KurswahlData(gks = fachData.pflichtfaecher)
 
 
     companion object {
@@ -37,8 +42,13 @@ class Main(wahlData: KurswahlData? = null) : JPanel() {
         private fun createAndShowGUI(args: Array<String>) {
             val frame = JFrame("kurswahlApp")
             frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-            // Set up the content pane.
-            frame.contentPane = if ("--useTestData" in args) Main(wahlData = testKurswahl) else Main()
+            // Set up the content pane
+            // eventuell Testdatei/gesetzte Datei laden
+            frame.contentPane =
+                if ("--useTestData" in args) Main(File(getResourceURL(TEST_FILE_NAME)!!.toURI()))
+                else if (args.isNotEmpty() && !args[0].startsWith("--")) Main(File(args[0]))
+                else Main()
+
             frame.minimumSize = Dimension(640, 560)
             // Display the window.
             frame.pack()
@@ -124,76 +134,65 @@ class Main(wahlData: KurswahlData? = null) : JPanel() {
             chooser.fileFilter = KurswahlFileFilter
             val ans = chooser.showOpenDialog(this)
             if (ans == JFileChooser.APPROVE_OPTION) {
-                val file = chooser.selectedFile
-                if (file.exists() && file.canRead()) {
-                    val data: KurswahlData
-                    try {
-                        data = fachData.loadKurswahl(chooser.selectedFile)
-                    } catch (e: DatabindException) {
+                val data: KurswahlData = loadKurswahlFile(chooser.selectedFile) ?: return@addActionItem
+
+                when {
+                    data.readJsonVersion.first != FachData.jsonVersion.first -> {
                         JOptionPane.showMessageDialog(
                             this,
-                            "Die Datei konnte nicht gelesen werden! Es tut uns leid, aber du musst deine Wahl erneut eingeben!",
-                            "Fehlerhafte Datei",
+                            "Die Version deiner Datei ist inkompatibel! Es tut uns leid, aber du musst deine Wahl erneut eingeben!",
+                            "Inkompatible Datei",
                             JOptionPane.ERROR_MESSAGE
                         )
-                        e.printStackTrace()
                         return@addActionItem
                     }
-
-                    when {
-                        data.readJsonVersion.first != FachData.jsonVersion.first -> {
-                            JOptionPane.showMessageDialog(
-                                this,
-                                "Die Version deiner Datei ist inkompatibel! Es tut uns leid, aber du musst deine Wahl erneut eingeben!",
-                                "Inkompatible Datei",
-                                JOptionPane.ERROR_MESSAGE
-                            )
-                            return@addActionItem
-                        }
-                        data.readJsonVersion.second > FachData.jsonVersion.second ->
-                            JOptionPane.showMessageDialog(
-                                this,
-                                "Die Version deiner Datei ist neuer als die, des Programms! Unter umständen gehen ein paar Daten verloren!",
-                                "Versionsunterschiede",
-                                JOptionPane.WARNING_MESSAGE
-                            )
-                        data.readJsonVersion.second < FachData.jsonVersion.second ->
-                            JOptionPane.showMessageDialog(
-                                this,
-                                "Die Version deiner Datei ist älter als die Programmversion! Unter umständen müssen ein paar Daten neu eingetragen werden!",
-                                "Versionsunterschiede",
-                                JOptionPane.WARNING_MESSAGE
-                            )
-                    }
-                    this.wahlData = data
-
-                    // Das GUI updaten
-                    remove(curPanel)
-
-                    curPanel = curPanel::class.constructors.first().call(this.wahlData, fachData)
-                    add(curPanel, row = 1, column = 2, fill = GridBagConstraints.BOTH, weightx = 1.0)
-
-                    validate()
+                    data.readJsonVersion.second > FachData.jsonVersion.second ->
+                        JOptionPane.showMessageDialog(
+                            this,
+                            "Die Version deiner Datei ist neuer als die, des Programms! Unter umständen gehen ein paar Daten verloren!",
+                            "Versionsunterschiede",
+                            JOptionPane.WARNING_MESSAGE
+                        )
+                    data.readJsonVersion.second < FachData.jsonVersion.second ->
+                        JOptionPane.showMessageDialog(
+                            this,
+                            "Die Version deiner Datei ist älter als die Programmversion! Unter umständen müssen ein paar Daten neu eingetragen werden!",
+                            "Versionsunterschiede",
+                            JOptionPane.WARNING_MESSAGE
+                        )
                 }
+                this.wahlData = data
+
+                // Das GUI updaten
+                remove(curPanel)
+
+                curPanel = curPanel::class.constructors.first().call(this.wahlData, fachData)
+                add(curPanel, row = 1, column = 2, fill = GridBagConstraints.BOTH, weightx = 1.0)
+
+                validate()
             }
         }
 
         toolbar.addActionItem(SAVE_ICON, "save-action") {
             this.wahlData.lock()
 
-            if (this.wahlData.isComplete && fachData.regeln.all { it.match(this.wahlData) }) {
+            if (this.wahlData.isComplete &&
+                this.wahlData.countCourses().sum() in fachData.minKurse..fachData.maxKurse &&
+                fachData.regeln.all { it.match(this.wahlData) }
+            ) {
                 val chooser = JFileChooser()
                 chooser.fileFilter = KurswahlFileFilter
 
                 if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-                    val file =
-                        File("${chooser.selectedFile.parent}${File.separatorChar}${chooser.selectedFile.nameWithoutExtension}.$FILETYPE_EXTENSION")
+                    val f =
+                        chooser.selectedFile.let { File(it.parent, "${it.nameWithoutExtension}.$FILETYPE_EXTENSION") }
+
                     try {
-                        file.createNewFile()
+                        f.createNewFile()
 
                         jacksonObjectMapper().writer()
                             .withAttribute("jsonVersion", FachData.jsonVersion.let { "${it.first}.${it.second}" })
-                            .writeValue(file, this.wahlData)
+                            .writeValue(f, this.wahlData)
                     } catch (exception: SecurityException) {
                         JOptionPane.showMessageDialog(
                             this,
@@ -202,6 +201,42 @@ class Main(wahlData: KurswahlData? = null) : JPanel() {
                         )
                     }
                 }
+
+                // TODO speichern des Bilds der Kurswahl
+                chooser.resetChoosableFileFilters()
+                chooser.fileFilter = PngFileFilter
+
+                if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+                    val f =
+                        File("${chooser.selectedFile.parent}${File.separatorChar}${chooser.selectedFile.nameWithoutExtension}.png")
+                    try {
+                        // TODO bild speichern
+
+                        val img = ScreenImage.createImage(AusgabeLayout(fachData, this.wahlData))
+                        ImageIO.write(img, "png", f)
+
+
+                        // PNG ist superior
+                        /*val jpegParams = JPEGImageWriteParam(null)
+                        jpegParams.compressionMode = ImageWriteParam.MODE_EXPLICIT
+                        jpegParams.compressionQuality = 1f
+
+                        val writer = ImageIO.getImageWritersByFormatName("jpg").next()
+                        // Outputlocation setzen
+                        writer.output = FileImageOutputStream(f)
+
+                        // Speichert das Bild mit dem gesetzten Kompressionsniveau
+                        // der JPEGImageWriteParam-Instanz
+                        writer.write(null, IIOImage(img, null, null), jpegParams)*/
+                    } catch (exception: SecurityException) {
+                        JOptionPane.showMessageDialog(
+                            this,
+                            "Du hast keine Berechtigung diese Datei zu schreiben! Versuche einen anderen Namen oder Ordner!",
+                            "Keine Rechte", JOptionPane.ERROR_MESSAGE
+                        )
+                    }
+                }
+
 
             } else JOptionPane.showMessageDialog(
                 this,
@@ -220,6 +255,29 @@ class Main(wahlData: KurswahlData? = null) : JPanel() {
         add(curPanel, row = 1, column = 2, fill = GridBagConstraints.BOTH, weightx = 1.0)
 
         add(sidebar, row = 1, column = 0, fill = GridBagConstraints.VERTICAL, weighty = 1.0)
+    }
+
+    /**
+     * Läd eine Kurswahl Datei
+     */
+    private fun loadKurswahlFile(file: File): KurswahlData? {
+        if (file.extension != FILETYPE_EXTENSION) return null
+
+        if (file.exists() && file.canRead()) {
+            try {
+                return fachData.loadKurswahl(file)
+            } catch (e: DatabindException) {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Die Datei konnte nicht gelesen werden! Es tut uns leid, aber du musst deine Wahl erneut eingeben!",
+                    "Fehlerhafte Datei",
+                    JOptionPane.ERROR_MESSAGE
+                )
+                e.printStackTrace()
+            }
+        }
+
+        return null
     }
 }
 

@@ -9,13 +9,10 @@ import javax.swing.border.Border
 
 
 class RoundedBorder(private val radius: Int) : Border {
-    override fun getBorderInsets(c: Component?): Insets {
-        return Insets(radius + 1, radius + 1, radius + 2, radius)
+    override fun getBorderInsets(c: Component?): Insets = (radius/2).let { Insets(it, it, it, it)
     }
 
-    override fun isBorderOpaque(): Boolean {
-        return true
-    }
+    override fun isBorderOpaque(): Boolean = false
 
     override fun paintBorder(c: Component, g: Graphics, x: Int, y: Int, width: Int, height: Int) {
         with(g as Graphics2D) {

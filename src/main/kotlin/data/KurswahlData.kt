@@ -14,7 +14,19 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize
  * Sollte niemals vor [FachData] ohne [KurswahlData.readJsonVersion] erstellt werden
  */
 @JsonAppend(attrs = [JsonAppend.Attr(value = "jsonVersion")], prepend = true)
-@JsonIncludeProperties("jsonVersion", "lk1", "lk2", "pf3", "pf4", "pf5", "pf5_typ", "gks", "fremdsprachen", "wpfs", "wahlzeile")
+@JsonIncludeProperties(
+    "jsonVersion",
+    "lk1",
+    "lk2",
+    "pf3",
+    "pf4",
+    "pf5",
+    "pf5_typ",
+    "gks",
+    "fremdsprachen",
+    "wpfs",
+    "wahlzeile"
+)
 data class KurswahlData(
     var lk1: Fach? = null,
     var lk2: Fach? = null,
@@ -67,8 +79,8 @@ data class KurswahlData(
      * Zählt die gewählten Kurse pro Semester
      */
     fun countCourses(): Array<Int> {
-        val courseCounts = arrayOf(5, 5, 5, 5)
-        for ((_, moegl) in gks) {
+        val courseCounts = arrayOf(0, 0, 0, 0)
+        for ((_, moegl) in kurse) {
             when (moegl) {
                 Wahlmoeglichkeit.ERSTES_ZWEITES -> {
                     courseCounts[0]++
@@ -179,7 +191,14 @@ data class KurswahlData(
      * Entfernt PFs aus den GKs
      */
     fun updatePFs(pf3: Fach, pf4: Fach, pf5: Fach, pf5_typ: Pf5Typ, wahlzeile: Int): KurswahlData =
-        this.copy(pf3 = pf3, pf4 = pf4, pf5 = pf5, gks = gks.filterKeys { it != pf3 && it != pf4 && it != pf5 }, pf5_typ = pf5_typ, wahlzeile = wahlzeile)
+        this.copy(
+            pf3 = pf3,
+            pf4 = pf4,
+            pf5 = pf5,
+            gks = gks.filterKeys { it != pf3 && it != pf4 && it != pf5 },
+            pf5_typ = pf5_typ,
+            wahlzeile = wahlzeile
+        )
 
     /**
      * Entfernt Fremdsprachen und WPFs, die der Schüler nicht mehr hat aus den Kursen

@@ -158,7 +158,8 @@ data class FachData(
             // jsonVersion global setzen
             FachData.jsonVersion = jsonVersion
 
-            val faecherMap: Map<String, Fach> = faecher.associateBy { it.kuerzel }
+            // Fächer zusätzlich sortieren um auf Aufgabenfelder aufzuteilen
+            val faecherMap: Map<String, Fach> = faecher.sortedBy { if (it.aufgabenfeld > 0) it.aufgabenfeld else 4 }.associateBy { it.kuerzel }
             return FachData(
                 faecherMap = faecherMap,
                 pflichtfaecher = pflichtfaecher.mapKeys { (key: String) -> faecherMap[key]!! },

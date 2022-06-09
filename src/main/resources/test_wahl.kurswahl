@@ -1,0 +1,27 @@
+{
+	"jsonVersion": "1.1",
+	"lk1": "Ma",
+	"lk2": "Inf",
+	"pf3": "En",
+	"pf4": "Phy",
+	"pf5": "Geo",
+	"pf5_typ": "praes",
+	"gks": {
+		"De": "1-4",
+		"Ku": "1-3",
+		"Ge": "3-4",
+		"Che": "1-4",
+		"SuB": "1-2",
+		"ED": "1-2",
+		"Sp": "1-4"
+	},
+	"fremdsprachen": {
+		"En": 3,
+		"Fr": 7
+	},
+	"wpfs": {
+		"first": "Inf",
+		"second": null
+	},
+	"wahlzeile": 29
+}
