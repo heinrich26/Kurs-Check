@@ -1,9 +1,11 @@
 package gui
 
 import java.awt.Color
+import java.awt.Font
 import java.awt.Polygon
 import java.awt.RenderingHints
 import java.awt.geom.*
+import javax.swing.JLabel
 
 object Consts {
 
@@ -94,6 +96,57 @@ object Consts {
         transform(AffineTransform.getTranslateInstance(1.0, 1.0))
     }
 
+    val CHECKBOX_CHECKED = Area(RoundRectangle2D.Double(.0, .0, 24.0, 24.0, 10.0, 10.0)).apply {
+        subtract(Area(GeneralPath().apply {
+            moveTo(10.2, 17.4)
+            lineTo(18.6, 9.0)
+            lineTo(17.4, 7.8)
+            lineTo(10.2, 15.0)
+            lineTo(6.6, 11.4)
+            lineTo(5.4, 12.6)
+            closePath()
+        }))
+    }
+
+
+    val CHECKBOX_LK: Area
+    val CHECKBOX_PF3: Area
+    val CHECKBOX_PF4: Area
+    val CHECKBOX_PF5: Area
+
+    init {
+        val f = Font(FONT_NAME, Font.PLAIN, 16)
+        with(JLabel().getFontMetrics(f).fontRenderContext) {
+            val base = Area(RoundRectangle2D.Double(.0, .0, 24.0, 24.0, 10.0, 10.0))
+
+            CHECKBOX_LK = (base.clone() as Area).apply {
+                val vector = f.createGlyphVector(this@with, "LK")
+                subtract(Area(vector.getOutline(((24-vector.logicalBounds.width)/2.0).toFloat(), ((24+vector.visualBounds.height)/2.0).toFloat())))
+            }
+            CHECKBOX_PF3 = (base.clone() as Area).apply {
+                val vector = f.createGlyphVector(this@with, "3.")
+                vector.visualBounds.let {
+                    subtract(Area(vector.getOutline(((24-it.width)/2.0).toFloat(), ((24+it.height)/2.0).toFloat())))
+                }
+            }
+
+            CHECKBOX_PF4 = (base.clone() as Area).apply {
+                val vector = f.createGlyphVector(this@with, "4.")
+                vector.visualBounds.let {
+                    subtract(Area(vector.getOutline(((24-it.width)/2.0).toFloat(), ((24+it.height)/2.0).toFloat())))
+                }
+            }
+
+            CHECKBOX_PF5 = (base.clone() as Area).apply {
+                val vector = f.createGlyphVector(this@with, "5.")
+                vector.visualBounds.let {
+                    subtract(Area(vector.getOutline(((24-it.width)/2.0).toFloat(), ((24+it.height)/2.0).toFloat())))
+                }
+            }
+
+        }
+    }
+
 
     val RENDERING_HINTS = mapOf(
         RenderingHints.KEY_ANTIALIASING to RenderingHints.VALUE_ANTIALIAS_ON,
@@ -102,4 +155,5 @@ object Consts {
     )
 
     const val FILETYPE_EXTENSION = "kurswahl"
+    const val TEST_FILE_NAME = "test_wahl.kurswahl"
 }

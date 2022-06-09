@@ -1,4 +1,3 @@
-
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -83,9 +82,33 @@ fun createImageIcon(path: String, description: String? = null): ImageIcon? {
     }
 }
 
-object KurswahlFileFilter: FileFilter() {
+object KurswahlFileFilter : FileFilter() {
     override fun accept(f: File): Boolean = f.isDirectory || f.extension == FILETYPE_EXTENSION
 
     override fun getDescription(): String = "Kurswahl Dateien (.$FILETYPE_EXTENSION)"
-
 }
+
+object PngFileFilter : FileFilter() {
+    override fun accept(f: File): Boolean = f.isDirectory || f.extension == "png"
+
+    override fun getDescription(): String = "Png Dateien (.png)"
+}
+
+
+/**
+ * Fügt am Anfang und Ende des Strings ein Html-Tag an!
+ * Kann zusätzlich Styles anwenden
+ */
+fun String.wrapHtml(tag: String = "html", vararg styles: String): String =
+    if (styles.isEmpty()) "<$tag>$this</$tag>"
+    else "<$tag style=\"${styles.joinToString(";", postfix = ";")}\">$this</$tag>"
+
+/**
+ * Fügt alle Html-Tags an den Enden des Strings an
+ *
+ * @param tags Die Html-Tags, von außen nach innen
+ */
+fun String.wrapTags(vararg tags: String): String =
+    if (tags.isEmpty()) this
+    else if (tags.size == 1) this.wrapHtml(tags[0])
+    else this.wrapTags(*tags.takeLast(tags.size - 1).toTypedArray()).wrapHtml(tags[0])
