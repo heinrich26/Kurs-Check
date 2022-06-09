@@ -39,7 +39,7 @@ data class KurswahlData(
     var wpfs: Pair<Fach, Fach?>? = null,
     var wahlzeile: Int = -1,
     /**
-     * Version der bei der Erstellung verwendeten FachData, um einen Mix von Formaten vorzubeugen
+     * Version der bei der Erstellung verwendeten [FachData], um einen Mix von Formaten vorzubeugen
      */
     val readJsonVersion: Pair<Int, Int> = FachData.jsonVersion
 ) {
