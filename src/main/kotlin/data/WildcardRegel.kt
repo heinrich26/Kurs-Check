@@ -15,7 +15,7 @@ class WildcardRegel(
 
     // nicht jedes mal neu auf null checken
     private val predicate: (Wahlmoeglichkeit) -> Boolean =
-        if (wann == null) { it -> (it.n >= anzahl) } else { it -> (it.n >= anzahl && it in wann) }
+        if (wann == null) { it -> (it.n >= anzahl) } else { it -> (it.n >= anzahl && wann in it) }
 
     private val dataScope: (KurswahlData) -> Map<Fach, Wahlmoeglichkeit> =
         when (scope) {
