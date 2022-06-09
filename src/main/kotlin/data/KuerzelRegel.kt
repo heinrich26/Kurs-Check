@@ -1,5 +1,6 @@
 package data
 
+@Suppress("unused")
 class KuerzelRegel(
     private val kuerzel: String,
     private val anzahl: Int,
@@ -41,11 +42,4 @@ class KuerzelRegel(
 
     override fun toString(): String =
         "KürzelRegel(kürzel=$kuerzel, anzahl=$anzahl${if (wann != null) ", wann=$wann" else ""}${if (scope != null) ", scope=$scope" else ""}${if (desc != null) ", desc=$desc" else ""}${if (errorMsg != null) ", errorMsg=$errorMsg" else ""})"
-
-    override fun hashCode(): Int {
-        var result = kuerzel.hashCode()
-        result = 31 * result + anzahl.hashCode()
-        result = 31 * result + wann.hashCode()
-        return 31 * result + scope.hashCode()
-    }
 }

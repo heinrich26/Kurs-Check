@@ -20,6 +20,7 @@ import java.io.IOException
  * mit dem Finalen Typen im Primary Constructor hinzugefügt und mit dem Eingelesenen Typ
  * (so wies in der JSON steht) im Secondary Constructor deklariert (u. ggf. umgeformt) werden.
  */
+@Suppress("unused")
 @JsonIncludeProperties(
     "faecher", "pflichtfaecher", "wpfs", "regeln", "wahlzeilen", "wildcards",
     "wzWildcards", "minKurse", "maxKurse", "pf3_4AusschlussFaecher", "jsonVersion"
@@ -79,28 +80,17 @@ data class FachData(
     fun filterWahlzeilen(
         lk1: Fach?,
         lk2: Fach?,
-        pf3: Fach? = null,
-        pf4: Fach? = null,
-        pf5: Fach? = null,
         wahlzeilen: Map<Int, Wahlzeile> = this.wahlzeilen
     ): Map<Int, Wahlzeile> {
         val predicates = mutableListOf<(Wahlzeile) -> Boolean>()
         if (lk1 != null) predicates.add { it.lk1 == "*" || it.lk1 in wzWildcardMapping[lk1]!! }
         if (lk2 != null) predicates.add { it.lk2 == "*" || it.lk2 in wzWildcardMapping[lk2]!! }
-        if (pf3 != null) predicates.add { it.pf3 == "*" || it.pf3 in wzWildcardMapping[pf3]!! }
-        if (pf4 != null) predicates.add { it.pf4 == "*" || it.pf4 in wzWildcardMapping[pf4]!! }
-        if (pf5 != null) predicates.add { it.pf5 == "*" || it.pf5 in wzWildcardMapping[pf5]!! }
 
         if (predicates.isEmpty()) return wahlzeilen
 
         return wahlzeilen.filterValues { zeile -> predicates.all { it(zeile) } }
     }
 
-    /**
-     * Gibt alle möglichen Wahlzeilen für die gegebenen LKs zurück
-     */
-    fun filterWahlzeilen(data: KurswahlData): Map<Int, Wahlzeile> =
-        filterWahlzeilen(data.lk1, data.lk2, data.pf3, data.pf4, data.pf5)
 
     /**
      * Läd eine Kurswahl-Datei mit der in [gui.Consts] definierten Endung
