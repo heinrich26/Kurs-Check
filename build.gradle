@@ -20,6 +20,8 @@ repositories {
 
 dependencies {
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3'
+    implementation 'org.apache.commons:commons-csv:1.9.0'
+    implementation("org.jetbrains.kotlinx:kotlinx-cli:0.3.4")
 
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.21'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
@@ -33,7 +35,7 @@ test {
 
 
 application {
-    mainClass = 'Main'
+    mainClass = mainClassName
     applicationDefaultJvmArgs = [/*'-Dsun.java2d.uiScale=1.25'*/]
 }
 
