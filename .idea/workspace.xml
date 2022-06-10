@@ -9,24 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="AppIcon erstellt und hinzugefügt">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/gui/AusgabeCheckBox.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/gui/AusgabeLayout.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/gui/ScreenImage.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/OutputFormat.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/test_wahl.kurswahl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Weitere Attribute werden nun von `lock()` beeinflusst">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/csvGenerator/Main.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Utils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Utils.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/FachData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/FachData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/KurswahlData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/KurswahlData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/Consts.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/Consts.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/GrundkursWahl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/GrundkursWahl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/gui/RoundedBorder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/gui/RoundedBorder.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/out.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/regeln.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,8 +56,8 @@
         <option value="Class" />
         <option value="JUnit5 Test Class" />
         <option value="Kotlin Object" />
-        <option value="Kotlin File" />
         <option value="Kotlin Class" />
+        <option value="Kotlin File" />
       </list>
     </option>
   </component>
@@ -94,13 +80,13 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/src/main/kotlin/ExclusiveComboBoxModel.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/kotlin/Main.kt" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/kotlin/TestData.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/kotlin/data/KurswahlData.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/kotlin/data/WahlzeileLinientyp.kt" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/kotlin/gui/ClickableDestionation.kt" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/kotlin/gui/GrundkursWahl.kt" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/resources/dataStruct.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/kotlin/data/WahlzeileLinientyp.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/kotlin/Main.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/kotlin/data/KurswahlData.kt" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="KotlinCodeInsightWorkspaceSettings">
     <option name="optimizeImportsOnTheFly" value="true" />
@@ -125,15 +111,12 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "jdk.selected.JAVA_MODULE": "corretto-16"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="javax.swing.text.html" />
@@ -327,6 +310,7 @@
       <workItem from="1654701005658" duration="5813000" />
       <workItem from="1654707102130" duration="19725000" />
       <workItem from="1654780978926" duration="11785000" />
+      <workItem from="1654852576487" duration="9000000" />
     </task>
     <task id="LOCAL-00003" summary="reimpl. der fremdsprachen wahl">
       <created>1652452601911</created>
@@ -615,7 +599,49 @@
       <option name="project" value="LOCAL" />
       <updated>1654778442517</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="Ungenutzte Methoden/Parameter entfernt">
+      <created>1654817779398</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1654817779398</updated>
+    </task>
+    <task id="LOCAL-00045" summary="KDocs Änderung">
+      <created>1654817868896</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1654817868896</updated>
+    </task>
+    <task id="LOCAL-00046" summary="KDocs Änderung">
+      <created>1654818650012</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1654818650012</updated>
+    </task>
+    <task id="LOCAL-00047" summary="CommandLineArgument-Parsing Library hinzugefügt">
+      <created>1654861015121</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1654861015121</updated>
+    </task>
+    <task id="LOCAL-00048" summary="Testdaten werden nun aus `test_wahl.kurswahl` gelesen">
+      <created>1654861451247</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1654861451247</updated>
+    </task>
+    <task id="LOCAL-00049" summary="Weitere Attribute werden nun von `lock()` beeinflusst">
+      <created>1654861506180</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1654861506180</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -631,17 +657,9 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Änderungen an der JsonDataStructure.kt" />
-    <MESSAGE value="Verbessertes Printing von FachData.kt" />
-    <MESSAGE value="Irgendwer hat weirden Stuff bei KurswahlData.kt hinzugefügt..." />
-    <MESSAGE value="Refractoring und Typenänderungen" />
-    <MESSAGE value="Arbeit an den Regeln" />
-    <MESSAGE value="Arbeit an den Regeln, Einbindung in FachData.kt" />
-    <MESSAGE value="Arbeit an den Regeln, Einbindung in GrundkursWahl.kt" />
     <MESSAGE value="Arbeit an Leistungskurse.kt, zeigt jetzt nur die möglichen LKs an!&#10;&#10;Ein Paar TODOs für Konrad in GrundkursWahl.kt&#10;&#10;Umstieg von GSON auf jackson-module-kotlin, weil GSON Kotlin nicht mag" />
     <MESSAGE value="ich habe keinen Bock mehr" />
     <MESSAGE value="readme.md angepasst" />
@@ -660,7 +678,14 @@
     <MESSAGE value="Zusatzfächer können nicht mehr als Prüfungsfach gewählt werden und DS/Sport können nicht mehr als 3. Prüfungsfach gewählt werden (param: nurPf3_4 in Fach.kt)" />
     <MESSAGE value="ich fügte anbei, einen Kommentar und löschte ein `println()`" />
     <MESSAGE value="Zahlendreher geändert" />
-    <option name="LAST_COMMIT_MESSAGE" value="Zahlendreher geändert" />
+    <MESSAGE value="Ungenutzte Methoden entfernt" />
+    <MESSAGE value="Ungenutzte Methoden/Parameter entfernt" />
+    <MESSAGE value="KDocs Änderung" />
+    <MESSAGE value="CommandLineArgument-Parsing Library hinzugefügt" />
+    <MESSAGE value="Wechsel von Propertyänderung zu Constructor-Arguments" />
+    <MESSAGE value="Testdaten werden nun aus `test_wahl.kurswahl` gelesen" />
+    <MESSAGE value="Weitere Attribute werden nun von `lock()` beeinflusst" />
+    <option name="LAST_COMMIT_MESSAGE" value="Weitere Attribute werden nun von `lock()` beeinflusst" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
