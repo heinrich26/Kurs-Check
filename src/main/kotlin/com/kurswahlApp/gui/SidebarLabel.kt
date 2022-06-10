@@ -10,7 +10,9 @@ import java.awt.Font
 import java.awt.Graphics
 import java.awt.Graphics2D
 
-class SidebarLabel(private val lText: String, clickEvent: () -> Unit) : ClickableDestionation(clickEvent = clickEvent) {
+class SidebarLabel(private val lText: String, defaultEnabled: Boolean = false, clickEvent: () -> Unit) :
+    ClickableDestionation(defaultEnabled = defaultEnabled, clickEvent = clickEvent) {
+
     init {
         font = Font(FONT_NAME, Font.BOLD, 24)
     }
@@ -27,10 +29,11 @@ class SidebarLabel(private val lText: String, clickEvent: () -> Unit) : Clickabl
 
         if (hasFocus) {
             g2D.color = Consts.COLOR_CONTROL
-            g2D.fillOval(10, 10, width-20, height-20)
+            g2D.fillOval(10, 10, width - 20, height - 20)
         }
 
-        g2D.color = if (isSelected) COLOR_PRIMARY else if (isEnabled) COLOR_ON_BACKGROUND else COLOR_ON_BACKGROUND_DISABLED
+        g2D.color =
+            if (isSelected) COLOR_PRIMARY else if (isEnabled) COLOR_ON_BACKGROUND else COLOR_ON_BACKGROUND_DISABLED
         g2D.drawString(lText, insetX, insetY)
     }
 }

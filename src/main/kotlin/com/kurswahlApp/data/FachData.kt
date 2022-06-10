@@ -79,16 +79,13 @@ data class FachData(
      */
     fun filterWahlzeilen(
         lk1: Fach?,
-        lk2: Fach?,
-        wahlzeilen: Map<Int, Wahlzeile> = this.wahlzeilen
+        lk2: Fach?
     ): Map<Int, Wahlzeile> {
-        val predicates = mutableListOf<(Wahlzeile) -> Boolean>()
-        if (lk1 != null) predicates.add { it.lk1 == "*" || it.lk1 in wzWildcardMapping[lk1]!! }
-        if (lk2 != null) predicates.add { it.lk2 == "*" || it.lk2 in wzWildcardMapping[lk2]!! }
+        if (lk1 == null || lk2 == null) return wahlzeilen
 
-        if (predicates.isEmpty()) return wahlzeilen
-
-        return wahlzeilen.filterValues { zeile -> predicates.all { it(zeile) } }
+        return wahlzeilen.filterValues {
+            (it.lk1 in wzWildcardMapping[lk1]!! && it.lk2 in wzWildcardMapping[lk2]!!) || (it.lk2 in wzWildcardMapping[lk1]!! && it.lk1 in wzWildcardMapping[lk2]!!)
+        }
     }
 
 

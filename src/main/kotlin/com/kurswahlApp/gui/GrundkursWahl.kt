@@ -1,13 +1,8 @@
 package com.kurswahlApp.gui
 
 import com.kurswahlApp.add
-import com.kurswahlApp.data.Fach
-import com.kurswahlApp.data.FachData
-import com.kurswahlApp.data.KurswahlData
-import com.kurswahlApp.data.Wahlmoeglichkeit
+import com.kurswahlApp.data.*
 import com.kurswahlApp.data.Wahlmoeglichkeit.*
-import com.kurswahlApp.data.testFachdata
-import com.kurswahlApp.data.testKurswahl
 import java.awt.Dimension
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
@@ -16,7 +11,9 @@ import java.awt.event.MouseEvent
 import javax.swing.*
 
 
-class GrundkursWahl(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(wahlData, fachData) {
+class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean) -> Unit = {}) :
+    KurswahlPanel(wahlData, fachData, notifier) {
+
     override fun close(): KurswahlData {
         val gks = mutableMapOf<Fach, Wahlmoeglichkeit>()
         val pfs = wahlData.pfs

@@ -41,7 +41,8 @@ class GuiMain(file: File? = null) : JPanel() {
                 "Die zum öffnen verwendete Datei"
             ).optional()
 
-            val useTestData by parser.option(ArgType.Boolean, "useTestData", description = "Testdaten verwenden").default(false)
+            val useTestData by parser.option(ArgType.Boolean, "useTestData", description = "Testdaten verwenden")
+                .default(false)
 
             parser.parse(args)
 
@@ -100,7 +101,7 @@ class GuiMain(file: File? = null) : JPanel() {
         }
     }
 
-    private fun <T : KurswahlPanel> navTo(panel: KClass<T>, selectedIndex: Int) {
+    private fun <T : KurswahlPanel> navTo(panel: KClass<T>, index: Int) {
         if (!curPanel.isDataValid()) {
             val choice = JOptionPane.showConfirmDialog(
                 this,
@@ -112,9 +113,14 @@ class GuiMain(file: File? = null) : JPanel() {
             if (choice == JOptionPane.CANCEL_OPTION) return // Abbruch durch Nutzer
         } else wahlData = curPanel.close()
 
+        disableDestinations()
+
         remove(curPanel)
 
-        curPanel = panel.constructors.first().call(wahlData, fachData)
+        val callback: (Boolean) -> Unit =
+            if (index < 3) { it -> for (i in (index + 1)..3) sidebarBtns[i].isEnabled = it } else { _ -> }
+
+        curPanel = panel.constructors.first().call(wahlData, fachData, callback)
         add(curPanel, row = 1, column = 2, fill = GridBagConstraints.BOTH, weightx = 1.0)
 
         toolbar.text = curPanel.windowName
@@ -123,25 +129,8 @@ class GuiMain(file: File? = null) : JPanel() {
 
         // Sidebar Knöpfe updaten
 //        disableDestinations(selectedIndex + 2)
-        for ((i, dest) in sidebarBtns.withIndex()) dest.isSelected = i == selectedIndex
+        for ((i, dest) in sidebarBtns.withIndex()) dest.isSelected = i == index
     }
-
-    /*private fun disableDestinations(min: Int = 1) {
-        val start: Int = max(min,
-            if (wahlData.fremdsprachen.isEmpty()) 1
-            else when (wahlData.pfs.indexOfFirst { it == null }) {
-                0, 1 -> 2
-                -1 -> 4
-                else -> 3
-            })
-        for (i in 0..3) sidebarBtns[i].isEnabled = i < start
-    }*/
-
-//    private val titleLabel = JLabel(curPanel.windowName, SwingConstants.LEFT).apply {
-//        this.font = font.deriveFont(Font.BOLD, 20f)
-//        this.foreground = Color.WHITE
-//        toolbar.com.kurswahlApp.add(this, anchor = GridBagConstraints.WEST, fill = GridBagConstraints.HORIZONTAL, weightx = 1.0)
-//    }
 
     init {
         layout = GridBagLayout()
@@ -234,20 +223,6 @@ class GuiMain(file: File? = null) : JPanel() {
 
                         val img = ScreenImage.createImage(AusgabeLayout(fachData, this.wahlData))
                         ImageIO.write(img, "png", f)
-
-
-                        // PNG ist superior
-                        /*val jpegParams = JPEGImageWriteParam(null)
-                        jpegParams.compressionMode = ImageWriteParam.MODE_EXPLICIT
-                        jpegParams.compressionQuality = 1f
-
-                        val writer = ImageIO.getImageWritersByFormatName("jpg").next()
-                        // Outputlocation setzen
-                        writer.output = FileImageOutputStream(f)
-
-                        // Speichert das Bild mit dem gesetzten Kompressionsniveau
-                        // der JPEGImageWriteParam-Instanz
-                        writer.write(null, IIOImage(img, null, null), jpegParams)*/
                     } catch (exception: SecurityException) {
                         JOptionPane.showMessageDialog(
                             this,
@@ -265,7 +240,8 @@ class GuiMain(file: File? = null) : JPanel() {
             )
             this.wahlData.unlock()
         }
-//        disableDestinations()
+
+        disableDestinations()
 
         add(
             JSeparator(JSeparator.VERTICAL), row = 0, column = 1, rowspan = 2,
@@ -298,6 +274,21 @@ class GuiMain(file: File? = null) : JPanel() {
         }
 
         return null
+    }
+
+    /**
+     * Deaktiviert die Sidebar Icons von Sektionen, die nicht anklickbar sein sollen,
+     * da sie daten vorraussetzen die ungesetzt sind
+     */
+    private fun disableDestinations() {
+        if (wahlData.fremdsprachen.isEmpty())
+            for (i in 1..3) sidebarBtns[i].isEnabled = false
+        else if (wahlData.lk1 == null || wahlData.lk2 == null) {
+            sidebarBtns[2].isEnabled = false
+            sidebarBtns[3].isEnabled = false
+        } else if (wahlData.pf3 == null || wahlData.pf4 == null || wahlData.pf5 == null)
+            sidebarBtns[3].isEnabled = false
+        else for (i in 1..3) sidebarBtns[i].isEnabled = true
     }
 }
 

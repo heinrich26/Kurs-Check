@@ -1,11 +1,7 @@
 package com.kurswahlApp.gui
 
 import com.kurswahlApp.add
-import com.kurswahlApp.data.Fach
-import com.kurswahlApp.data.FachData
-import com.kurswahlApp.data.KurswahlData
-import com.kurswahlApp.data.testFachdata
-import com.kurswahlApp.data.testKurswahl
+import com.kurswahlApp.data.*
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.Insets
@@ -13,7 +9,8 @@ import java.awt.event.ActionEvent
 import javax.swing.*
 
 
-class Fremdsprachen(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(wahlData, fachData) {
+class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean) -> Unit = {}) :
+    KurswahlPanel(wahlData, fachData, notifier) {
 
     companion object {
         @JvmStatic
@@ -57,10 +54,10 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
             margin = Insets(10, 0, 4, 0)
         )
 
-        fsJahr4 = SpinnerNumberModel(1, 1, 10,1)
-        fsJahr3 = SpinnerNumberModel(1, 1, 10,1)
-        fsJahr2 = SpinnerNumberModel(1, 1, 10,1)
-        fsJahr1 = SpinnerNumberModel(1, 1, 10,1)
+        fsJahr4 = SpinnerNumberModel(1, 1, 10, 1)
+        fsJahr3 = SpinnerNumberModel(1, 1, 10, 1)
+        fsJahr2 = SpinnerNumberModel(1, 1, 10, 1)
+        fsJahr1 = SpinnerNumberModel(1, 1, 10, 1)
 
         val spinner3 = JSpinner(fsJahr3)
         val spinner4 = JSpinner(fsJahr4)
@@ -72,26 +69,21 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
         add(spinner3, row = 3, column = 3)
         add(spinner4, row = 4, column = 3)
 
-
-        val model1 = ExclusiveComboBoxModel(fachData.fremdsprachen)
+        val model4 = ExclusiveComboBoxModel(fachData.fremdsprachen)
+        fs4 = FachComboBox(model4)
+        val model3 = ExclusiveComboBoxModel(fachData.fremdsprachen, fs4)
+        fs3 = FachComboBox(model3)
+        val model2 = ExclusiveComboBoxModel(fachData.fremdsprachen, fs3)
+        fs2 = FachComboBox(model2)
+        val model1 = ExclusiveComboBoxModel(fachData.fremdsprachen, fs2)
         fs1 = FachComboBox(model1)
 
 
-        val model2 = ExclusiveComboBoxModel(fachData.fremdsprachen, fs1)
-        fs2 = FachComboBox(model2)
-
-        val model3 = ExclusiveComboBoxModel(fachData.fremdsprachen, fs2)
-        fs3 = FachComboBox(model3)
         fs3.isEnabled = false
-
-        val model4 = ExclusiveComboBoxModel(fachData.fremdsprachen, fs3)
-        fs4 = FachComboBox(model4)
         fs4.isEnabled = false
-
 
         val listener3n4: (ActionEvent) -> Unit = { event ->
             if (event.actionCommand == "comboBoxChanged") {
-                model4.updateData()
                 (model2.selectedItem != null).let {
                     fs3.isEnabled = it
                     spinner3.isEnabled = it
@@ -106,14 +98,12 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
         fs2.addActionListener(listener3n4)
         fs3.addActionListener { event ->
             if (event.actionCommand == "comboBoxChanged") {
-                model4.updateData()
                 (model3.selectedItem != null).let {
                     fs4.isEnabled = it
                     spinner4.isEnabled = it
                 }
             }
         }
-        fs4.addActionListener { if (it.actionCommand == "comboBoxChanged") model4.updateData() }
 
         for (i in 1..4) {
             add(JLabel("$i."), row = i, column = 0)
@@ -153,15 +143,16 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
         }
 
 
-        val wpfModel1 = ExclusiveComboBoxModel(fachData.wpfs)
-        wpf1 = FachComboBox(wpfModel1)
-        wpf1.renderer = FachRenderer
-        val wpfModel2 = ExclusiveComboBoxModel(fachData.wpfs, wpf1)
+        val wpfModel2 = ExclusiveComboBoxModel(fachData.wpfs)
         wpf2 = FachComboBox(wpfModel2)
         wpf2.isEnabled = false
+
+        val wpfModel1 = ExclusiveComboBoxModel(fachData.wpfs, wpf2)
+        wpf1 = FachComboBox(wpfModel1)
+
+        wpf1.renderer = FachRenderer
         wpf2.renderer = FachRenderer
 
-        wpf1.addActionListener { if (it.actionCommand == "comboBoxChanged") wpfModel2.updateData() }
 
         val checker = JCheckBox()
         checker.addActionListener {
@@ -176,6 +167,16 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
             wpf1.selectedItem = it.first
             wpf2.selectedItem = it.second
         }
+
+        // Die hauptklasse informieren, ob die eingabe gültig ist
+        wpf1.addActionListener {
+            if (it.actionCommand == "comboBoxChanged") {
+                notifier.invoke(fs2.selectedItem != null && wpf1.selectedItem != null)
+            }
+        }
+
+
+        fs2.addActionListener { notifier.invoke(fs2.selectedItem != null && wpf1.selectedItem != null) }
 
         // Anzeigen
         // Margin hinzufügen
@@ -202,7 +203,10 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(
             }
         }
 
-        return wahlData.updateWahlfaecher(fremdsprachenNew = sprachen, wpfsNew = wpf1.selectedItem!! to wpf2.selectedItem)
+        return wahlData.updateWahlfaecher(
+            fremdsprachenNew = sprachen,
+            wpfsNew = wpf1.selectedItem!! to wpf2.selectedItem
+        )
     }
 
     override fun isDataValid(): Boolean {

@@ -1,11 +1,7 @@
 package com.kurswahlApp.gui
 
 import com.kurswahlApp.add
-import com.kurswahlApp.data.Fach
-import com.kurswahlApp.data.FachData
-import com.kurswahlApp.data.KurswahlData
-import com.kurswahlApp.data.testFachdata
-import com.kurswahlApp.data.testKurswahl
+import com.kurswahlApp.data.*
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.Insets
@@ -13,7 +9,8 @@ import java.awt.event.ItemEvent
 import javax.swing.Box
 
 
-class Leistungskurse(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(wahlData, fachData) {
+class Leistungskurse(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean) -> Unit = {}) :
+    KurswahlPanel(wahlData, fachData, notifier) {
 
     companion object {
         @JvmStatic
@@ -69,7 +66,11 @@ class Leistungskurse(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel
         }
         val model2 = LKComboBoxModel(moeglichkeiten, lk1)
         lk2 = FachComboBox(model2)
-        
+        val listener: (Any) -> Unit = { notifier.invoke(lk2.selectedItem != null) }
+        lk1.addActionListener(listener)
+        lk2.addActionListener(listener)
+        listener.invoke(Any())
+
 
         lk1.renderer = FachRenderer
         lk2.renderer = FachRenderer

@@ -3,8 +3,6 @@ package com.kurswahlApp.gui
 import com.kurswahlApp.add
 import com.kurswahlApp.data.*
 import com.kurswahlApp.data.WahlzeileLinientyp.*
-import com.kurswahlApp.data.testFachdata
-import com.kurswahlApp.data.testKurswahl
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.Insets
@@ -12,7 +10,8 @@ import javax.swing.JComboBox
 import javax.swing.JLabel
 
 
-class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPanel(wahlData, fachData) {
+class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean) -> Unit = {}) :
+    KurswahlPanel(wahlData, fachData, notifier) {
 
     companion object {
         @JvmStatic
@@ -46,10 +45,10 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
     private val filteredFaecher = fachData.faecherMap.filterValues {
         // ist kein Zusatzkurs & ...
         it.aufgabenfeld != -1 &&
-        /* Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1 */
-        (it != wahlData.lk1 && it != wahlData.lk2 && if (it.fremdsprache) it in userFs
-        /* Hat keine WPF or Fach ist weder 1./2. WPF */
-        else (!it.brauchtWPF || (userWpfs != null && (it == userWpfs.first || it == userWpfs.second))))
+                /* Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1 */
+                (it != wahlData.lk1 && it != wahlData.lk2 && if (it.fremdsprache) it in userFs
+                /* Hat keine WPF or Fach ist weder 1./2. WPF */
+                else (!it.brauchtWPF || (userWpfs != null && (it == userWpfs.first || it == userWpfs.second))))
     }
     private val zeilenFuerFuenfte: MutableSet<Pair<Int, Wahlzeile>> = mutableSetOf()
 
@@ -83,6 +82,11 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData) : KurswahlPan
         pf4.selectedItem = wahlData.pf4
         pf5.selectedItem = wahlData.pf5
         pf5_typ.selectedItem = wahlData.pf5_typ
+
+        pf3.addActionListener { notifier.invoke(pf3.selectedItem != null && pf4.selectedItem != null && pf5.selectedItem != null) }
+        pf4.addActionListener { notifier.invoke(pf4.selectedItem != null && pf5.selectedItem != null) }
+        pf5.addActionListener { notifier.invoke(pf5.selectedItem != null) }
+        notifier.invoke(pf5.selectedItem != null)
 
 
         // Anzeigen

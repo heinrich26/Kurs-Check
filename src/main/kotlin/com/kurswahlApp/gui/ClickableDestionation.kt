@@ -5,14 +5,14 @@ import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
 import javax.swing.JComponent
 
-open class ClickableDestionation(defaultEnabled: Boolean = false, clickEvent: () -> Unit) : JComponent() {
+open class ClickableDestionation(defaultSelected: Boolean = false, defaultEnabled: Boolean = true, clickEvent: () -> Unit) : JComponent() {
     var hasFocus = false
         set(value) {
             field = value
             repaint()
         }
 
-    var isSelected = defaultEnabled
+    var isSelected = defaultSelected
         set(value) {
             field = value
             repaint()
@@ -23,6 +23,8 @@ open class ClickableDestionation(defaultEnabled: Boolean = false, clickEvent: ()
             minimumSize = it
             preferredSize = it
         }
+
+        isEnabled = defaultEnabled
 
         this.addMouseListener(object : MouseListener {
             override fun mouseClicked(e: MouseEvent?) {
