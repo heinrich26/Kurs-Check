@@ -3,9 +3,9 @@ package com.kurswahlApp.csvGenerator
 import com.kurswahlApp.data.Wahlmoeglichkeit.*
 import com.kurswahlApp.gui.Consts
 import com.kurswahlApp.listOfNulls
+import com.kurswahlApp.readDataStruct
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVPrinter
-import com.kurswahlApp.readDataStruct
 import java.io.File
 
 
@@ -38,22 +38,19 @@ val CSV_HEADER = arrayOf(
     // ...faecher
 )
 
-fun main(args: Array<String>) {
+fun main(file: String?) {
     val fachData = readDataStruct()
 
 
     val dirFile =
-        if (args.isEmpty()) {
-            File(System.getProperty("user.dir"))
-        } else if (args.size == 1) {
-            File(args[0]).let {
-                if (it.isDirectory) it
-                else throw RuntimeException("Der angegebene Pfad ist kein Ordner!")
-            }
-        } else throw RuntimeException("Zu viele Argumente! --csvGen benötigt maximal einen Parameter!")
+        if (file == null) File(System.getProperty("user.dir"))
+        else File(file).let {
+            if (it.isDirectory) it
+            else throw RuntimeException("Der angegebene Pfad ist kein Ordner!")
+        }
 
 
-    val files = dirFile.listFiles { file -> file.extension == Consts.FILETYPE_EXTENSION }
+    val files = dirFile.listFiles { f -> f.extension == Consts.FILETYPE_EXTENSION }
         ?: throw RuntimeException("Ungültiger Pfad")
     if (files.isEmpty()) throw RuntimeException("Der Ordner war leer, keine Datei konnte erstellt werden!")
 

@@ -11,6 +11,10 @@ import com.kurswahlApp.gui.Consts.IMPORT_ICON
 import com.kurswahlApp.gui.Consts.SAVE_ICON
 import com.kurswahlApp.gui.Consts.SIDEBAR_SIZE
 import com.kurswahlApp.gui.Consts.TEST_FILE_NAME
+import kotlinx.cli.ArgParser
+import kotlinx.cli.ArgType
+import kotlinx.cli.default
+import kotlinx.cli.optional
 import java.awt.Dimension
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
@@ -30,6 +34,21 @@ class GuiMain(file: File? = null) : JPanel() {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
+            val parser = ArgParser("kurswahlApp")
+
+            val input by parser.argument(
+                ArgType.String, "input",
+                "Die zum öffnen verwendete Datei"
+            ).optional()
+
+            val useTestData by parser.option(ArgType.Boolean, "useTestData", description = "Testdaten verwenden").default(false)
+
+            parser.parse(args)
+
+            run(input, useTestData)
+        }
+
+        fun run(file: String?, useTestData: Boolean) {
             // Windows UI verwenden
             try {
                 UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel")
@@ -37,17 +56,17 @@ class GuiMain(file: File? = null) : JPanel() {
                 ex.printStackTrace()
             }
 
-            SwingUtilities.invokeLater { createAndShowGUI(args) }
+            SwingUtilities.invokeLater { createAndShowGUI(file, useTestData) }
         }
 
-        private fun createAndShowGUI(args: Array<String>) {
+        private fun createAndShowGUI(file: String?, useTestData: Boolean) {
             val frame = JFrame("kurswahlApp")
             frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
             // Set up the content pane
             // eventuell Testdatei/gesetzte Datei laden
             frame.contentPane =
-                if ("--useTestData" in args) GuiMain(File(getResourceURL(TEST_FILE_NAME)!!.toURI()))
-                else if (args.isNotEmpty() && !args[0].startsWith("--")) GuiMain(File(args[0]))
+                if (useTestData) GuiMain(File(getResourceURL(TEST_FILE_NAME)!!.toURI()))
+                else if (file != null) GuiMain(File(file))
                 else GuiMain()
 
             frame.minimumSize = Dimension(640, 560)

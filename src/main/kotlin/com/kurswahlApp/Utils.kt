@@ -16,13 +16,13 @@ import javax.swing.filechooser.FileFilter
  * Gibt den Inhalt der angeforderten Ressource zurück
  * @param fileName Name/Pfad der Datei
  */
-fun getResource(fileName: String): String? = {}.javaClass.getResource(fileName)?.readText()
+fun getResource(fileName: String): String? = {}.javaClass.classLoader.getResource(fileName)?.readText()
 
 /**
  * Gibt die URL der angeforderten Ressource zurück
  * @param fileName Name/Pfad der Datei
  */
-fun getResourceURL(fileName: String): URL? = {}.javaClass.getResource(fileName)
+fun getResourceURL(fileName: String): URL? = {}.javaClass.classLoader.getResource(fileName)
 
 /**
  * Ließt die `dataStruct.json` als [FachData] Objekt ein

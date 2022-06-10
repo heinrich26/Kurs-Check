@@ -9,9 +9,9 @@ apply plugin: 'application'
 apply plugin: 'com.github.johnrengelman.shadow'
 
 
-mainClassName = 'Main'
+mainClassName = 'com.kurswahlApp.MainKt'
 
-group 'com.heinrich27'
+group 'com.kurswahlApp'
 version '1.0-SNAPSHOT'
 
 repositories {
