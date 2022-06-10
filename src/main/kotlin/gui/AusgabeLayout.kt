@@ -17,7 +17,7 @@ import javax.swing.JLabel
 import javax.swing.JPanel
 import javax.swing.border.TitledBorder
 
-class AusgabeLayout(private val fachData: FachData, private val wahlData: KurswahlData) : JPanel(GridBagLayout()) {
+class AusgabeLayout(private val fachData: FachData, wahlData: KurswahlData) : JPanel(GridBagLayout()) {
     private val checkboxArray = ArrayList<AusgabeCheckBox>()
 
     private fun fachPos(fach: Fach) = fachData.faecher.indexOf(fach)
