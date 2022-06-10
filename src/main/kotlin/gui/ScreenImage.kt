@@ -1,7 +1,5 @@
 package gui
 
-import gui.ScreenImage.createImage
-import gui.ScreenImage.writeImage
 import java.awt.*
 import java.awt.image.BufferedImage
 import java.io.File
@@ -24,7 +22,7 @@ import javax.swing.*
  *  AWT Robot to create the [BufferedImage].
  *
  *  The created image can then be saved to a file by usig the
- *  [writeImage] method. The type of file must be supported by the
+ *  `writeImage(...)` method. The type of file must be supported by the
  *  [ImageIO.write] method.
  *
  *  Although this class was originally designed to create an image of a
@@ -32,7 +30,7 @@ import javax.swing.*
  *  not displayed on a GUI. Behind the scenes the component will be given a
  *  size and the component will be layed out. The default size will be the
  *  preferred size of the component although you can invoke the `setSize()`
- *  method on the component before invoking a [createImage] method. The
+ *  method on the component before invoking a `createImage(...)` method. The
  *  default functionality should work in most cases. However the only
  *  foolproof way to get a image to is make sure the component has been
  *  added to a realized window with code something like the following:
@@ -42,7 +40,10 @@ import javax.swing.*
  *      frame.contentPane = someComponent
  *      frame.pack()
  *      ScreenImage.createImage(someComponent)
+ *
+ *  See: [Original Source](https://tips4java.wordpress.com/2008/10/13/screen-image/)
  */
+@Suppress("MemberVisibilityCanBePrivate", "unused")
 object ScreenImage {
     private val types = ImageIO.getWriterFileSuffixes().toList()
 
