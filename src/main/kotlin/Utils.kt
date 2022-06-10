@@ -1,3 +1,4 @@
+
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -32,8 +33,8 @@ fun readDataStruct(): FachData {
 }
 
 /**
- * Macht einen String "wrappable", sodass er sich an den Component anpasst.
- * @param width Optionale Länge, bei der ein Umbruch erzwugen wird
+ * Macht einen [String] *wrappable*, sodass er sich an die Breite des Parent-[Component] anpasst.
+ * Optionale [width], bei der ein Umbruch erzwugen wird
  */
 fun String.wrappable(width: Int? = null) =
     if (width == null) "<html>$this</html>" else "<html><div style=\"width:${width}px;\">$this</div></html>"
@@ -71,7 +72,7 @@ fun Container.add(
     )
 }
 
-/** Returns an ImageIcon, or null if the path was invalid. */
+/** Erstellt ein [ImageIcon] mit dem gegebenen [path] und einer optionalen [description]. */
 fun createImageIcon(path: String, description: String? = null): ImageIcon? {
     val imgURL: URL? = getResourceURL(path)
     return if (imgURL != null) {
@@ -96,19 +97,22 @@ object PngFileFilter : FileFilter() {
 
 
 /**
- * Fügt am Anfang und Ende des Strings ein Html-Tag an!
- * Kann zusätzlich Styles anwenden
+ * Fügt am Anfang und Ende ein Html-[tag] an!
+ * Kann zusätzlich [styles] hinzufügen
  */
 fun String.wrapHtml(tag: String = "html", vararg styles: String): String =
     if (styles.isEmpty()) "<$tag>$this</$tag>"
     else "<$tag style=\"${styles.joinToString(";", postfix = ";")}\">$this</$tag>"
 
 /**
- * Fügt alle Html-Tags an den Enden des Strings an
- *
- * @param tags Die Html-Tags, von außen nach innen
+ * Fügt alle Html-[tags] von außen nach innen an den Enden an
  */
 fun String.wrapTags(vararg tags: String): String =
     if (tags.isEmpty()) this
     else if (tags.size == 1) this.wrapHtml(tags[0])
     else this.wrapTags(*tags.takeLast(tags.size - 1).toTypedArray()).wrapHtml(tags[0])
+
+/**
+ * Returns a list of `null`s of the given type with the given [size].
+ */
+inline fun <reified T> listOfNulls(size: Int): List<T?> = arrayOfNulls<T?>(size).toList()
