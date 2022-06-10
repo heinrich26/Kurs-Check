@@ -16,7 +16,7 @@ jobs:
       uses: gradle/gradle-build-action@v2
       
     - name: Run shadowJar
-      run: ./gradlew shadowJar
+      run: gradle shadowJar
     - name: Upload build reports
       uses: actions/upload-artifact@v3
       with:
