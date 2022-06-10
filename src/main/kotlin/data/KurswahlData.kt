@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize
  *
  * Sollte niemals vor [FachData] ohne [KurswahlData.readJsonVersion] erstellt werden
  */
+@Suppress("PropertyName", "PrivatePropertyName")
 @JsonAppend(attrs = [JsonAppend.Attr(value = "jsonVersion")], prepend = true)
 @JsonIncludeProperties(
     "jsonVersion",
@@ -121,18 +122,22 @@ data class KurswahlData(
         return (weekly[0] + weekly[1]) / 2 to (weekly[2] + weekly[3]) / 2
     }
 
+    private var _pfs: List<Fach?>? = null
+
     /**
      * Alle 5 Prüfungsfächer
      */
     val pfs: List<Fach?>
-        get() = listOf(lk1, lk2, pf3, pf4, pf5)
+        get() = if (locked) _pfs!! else listOf(lk1, lk2, pf3, pf4, pf5)
+
+
+    private var _pf1_4: List<Fach?>? = null
 
     /**
      * Prüfungsfächer 1 bis 4
      */
-    @Suppress("PropertyName")
     val pf1_4: List<Fach?>
-        get() = listOf(lk1, lk2, pf3, pf4)
+        get() = if (locked) _pf1_4!! else listOf(lk1, lk2, pf3, pf4)
 
     /**
      * Beide Leistungskurse
@@ -141,6 +146,10 @@ data class KurswahlData(
         get() = listOf(lk1, lk2)
 
     private var _kurse: Map<Fach, Wahlmoeglichkeit>? = null
+
+    /**
+     * Alle gewählten Kurse, einschließlich Prüfungsfächern
+     */
     val kurse: Map<Fach, Wahlmoeglichkeit>
         get() = if (locked) _kurse!! else (gks + pfs.filterNotNull().associateWith { Wahlmoeglichkeit.DURCHGEHEND })
 
@@ -151,6 +160,8 @@ data class KurswahlData(
      */
     fun lock() {
         _kurse = kurse
+        _pfs = pfs
+        _pf1_4 = pf1_4
         locked = true
     }
 
@@ -159,6 +170,8 @@ data class KurswahlData(
      */
     fun unlock() {
         _kurse = null
+        _pfs = null
+        _pf1_4 = null
         locked = false
     }
 
@@ -211,6 +224,7 @@ data class KurswahlData(
             val second = wpfs!!.second
             if (second != null && second != wpfsNew.second) fachDif += second
         }
+
         return this.copy(fremdsprachen = fremdsprachenNew, wpfs = wpfsNew, gks = gks.filterKeys { it !in fachDif })
             .apply {
                 if (lk1 in fachDif) {
