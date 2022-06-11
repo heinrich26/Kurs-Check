@@ -7,6 +7,7 @@ import com.kurswahlApp.readDataStruct
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVPrinter
 import java.io.File
+import java.nio.charset.Charset
 
 
 const val LK = "lk"
@@ -38,13 +39,13 @@ val CSV_HEADER = arrayOf(
     // ...faecher
 )
 
-fun main(file: String?) {
+fun main(directory: String?, output: String?) {
     val fachData = readDataStruct()
 
 
     val dirFile =
-        if (file == null) File(System.getProperty("user.dir"))
-        else File(file).let {
+        if (directory == null) File(System.getProperty("user.dir"))
+        else File(directory).let {
             if (it.isDirectory) it
             else throw RuntimeException("Der angegebene Pfad ist kein Ordner!")
         }
@@ -56,7 +57,16 @@ fun main(file: String?) {
 
     val wahlDataList = files.map { fachData.loadKurswahl(it) }
 
-    val writer = File(dirFile, FILE_NAME).bufferedWriter()
+    val outputFile = if (output != null) {
+        File(output).let {
+            if (it.isFile && it.exists() && it.extension.equals("csv", true)) it else {
+                println("Ungültiger Pfad für die Output-Datei, nutze Default im Ordner ${dirFile}!")
+                File(dirFile, FILE_NAME)
+            }
+        }
+    } else File(dirFile, FILE_NAME)
+
+    val writer = outputFile.bufferedWriter(Charset.forName("UTF-8"))
 
 
     val headerMixin =
@@ -66,6 +76,7 @@ fun main(file: String?) {
     val csvPrinter =
         CSVPrinter(writer, CSVFormat.Builder.create(CSVFormat.EXCEL).setHeader(*CSV_HEADER, *headerMixin).build())
 
+    var filesProcessed = 0
     for (record in wahlDataList) {
         if (record.pfs.filterNotNull().size != 5) {
             println("Ungültige Kurswahl Datei, überspringe!")
@@ -103,7 +114,7 @@ fun main(file: String?) {
             val mappedSprachen = arrayOfNulls<Any?>(8)
             for (i in 0..3) {
                 fremdsprachen.getOrNull(i)?.let {
-                    mappedSprachen[2 * i] = it.first
+                    mappedSprachen[2 * i] = it.first.kuerzel
                     mappedSprachen[2 * i + 1] = it.second
                 } ?: break
             }
@@ -121,8 +132,11 @@ fun main(file: String?) {
                 pf5_typ.toString(), //pf5_typ
                 *row // faecher p. Semester
             )
+            filesProcessed++
         }
     }
 
     csvPrinter.close(true)
+
+    println("$filesProcessed Dateien zusammengefügt")
 }

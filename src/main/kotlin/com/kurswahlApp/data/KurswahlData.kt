@@ -38,7 +38,7 @@ data class KurswahlData(
     var vorname: String? = null,
     var nachname: String? = null,
     @get:JsonSerialize(using = LocalDateSerializer::class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyy-MM-dd")
     var geburtsdatum: LocalDate? = null,
     var geburtsort: String? = null,
     var staatsangehoerigkeit: String = "DE",
@@ -65,7 +65,7 @@ data class KurswahlData(
             @JsonProperty nachname: String,
             @JsonProperty
             @JsonDeserialize(using = LocalDateDeserializer::class)
-            @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
+            @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyy-MM-dd")
             geburtsdatum: LocalDate,
             @JsonProperty geburtsort: String,
             @JsonProperty staatsangehoerigkeit: String,

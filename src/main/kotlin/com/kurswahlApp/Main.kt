@@ -12,8 +12,10 @@ fun main(args: Array<String>) {
 
     val input by parser.argument(
         ArgType.String, "input",
-        "Die zum öffnen verwendete Datei oder der für die CSV-Generierung verwendete Ordner"
+        "Die zum Öffnen verwendete Datei oder der für die CSV-Generierung verwendete Ordner"
     ).optional()
+    val output by parser.argument(ArgType.String, "output", "Speicherort der mit --merge generierten .csv-Datei")
+        .optional()
 
     val csvGen by parser.option(
         ArgType.Boolean, "merge", "m",
@@ -25,7 +27,7 @@ fun main(args: Array<String>) {
     parser.parse(args)
 
     if (csvGen)
-        com.kurswahlApp.csvGenerator.main(input) // CLI merger starten
+        com.kurswahlApp.csvGenerator.main(input, output) // CLI merger starten
     else
         GuiMain.run(input, useTestData) // GUI App starten
 }

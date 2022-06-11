@@ -12,11 +12,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Formatänderung">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="App Icon hinzugefügt und Layout verschönert">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/data/Wahlmoeglichkeit.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/data/Wahlmoeglichkeit.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/GrundkursWahl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/GrundkursWahl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/csvGenerator/generator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/csvGenerator/generator.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,7 +159,7 @@
       <command value="gradle shadowJar" />
     </option>
   </component>
-  <component name="RunManager" selected="Kotlin.Main w. testData">
+  <component name="RunManager" selected="Gradle.kurswahlApp [shadowJar]">
     <configuration name="kurswahlApp [runShadow]" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -288,42 +286,7 @@
       <workItem from="1654707102130" duration="19725000" />
       <workItem from="1654780978926" duration="11785000" />
       <workItem from="1654852576487" duration="9000000" />
-      <workItem from="1654971763714" duration="3008000" />
-    </task>
-    <task id="LOCAL-00013" summary="Wahlzeilenmatching weitergeführt">
-      <created>1653485210774</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1653485210774</updated>
-    </task>
-    <task id="LOCAL-00014" summary="Wahldaten kommen nun komplett aus der JSON">
-      <created>1653488040281</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1653488040281</updated>
-    </task>
-    <task id="LOCAL-00015" summary="Wahldaten kommen nun komplett aus der JSON">
-      <created>1653488331600</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1653488331600</updated>
-    </task>
-    <task id="LOCAL-00016" summary="Änderungen an der JsonDataStructure.kt">
-      <created>1653488523168</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1653488523168</updated>
-    </task>
-    <task id="LOCAL-00017" summary="Verbessertes Printing von FachData.kt">
-      <created>1653489425476</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1653489425476</updated>
+      <workItem from="1654971763714" duration="9440000" />
     </task>
     <task id="LOCAL-00018" summary="Irgendwer hat weirden Stuff bei KurswahlData.kt hinzugefügt...">
       <created>1653489552831</created>
@@ -633,7 +596,42 @@
       <option name="project" value="LOCAL" />
       <updated>1654970714245</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="`bools` Parameter hinzugefügt, um nicht jedes Mal die `[true, true, true, false]`-Listen erstellen zu müssen und Feststellung der Wahlmöglichkeit in die Klasse verschoben">
+      <created>1654975076717</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1654975076717</updated>
+    </task>
+    <task id="LOCAL-00063" summary="Labels werden nun Rot, wenn die Zeile ungültig ist">
+      <created>1654975104864</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1654975104864</updated>
+    </task>
+    <task id="LOCAL-00064" summary="Extra Padding hinzugefügt, um Lesbarkeit zu verbessern">
+      <created>1654975128471</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1654975128471</updated>
+    </task>
+    <task id="LOCAL-00065" summary="IntelliJ Changes">
+      <created>1654975141592</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1654975141592</updated>
+    </task>
+    <task id="LOCAL-00066" summary="App Icon hinzugefügt und Layout verschönert">
+      <created>1654980443830</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1654980443830</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,11 +651,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Nachfolgende Fächer werden geändert, wenn Fremdsprachen wegfallen usw." />
-    <MESSAGE value="Renderer hinzugefügt um in Comboboxen angezeigt zu werden" />
-    <MESSAGE value="Wahlzeile wird nun ermittelt und in der KurswahlData.kt gespeichert" />
-    <MESSAGE value="Zusatzfächer können nicht mehr als Prüfungsfach gewählt werden und DS/Sport können nicht mehr als 3. Prüfungsfach gewählt werden (param: nurPf3_4 in Fach.kt)" />
-    <MESSAGE value="ich fügte anbei, einen Kommentar und löschte ein `println()`" />
     <MESSAGE value="Zahlendreher geändert" />
     <MESSAGE value="Ungenutzte Methoden entfernt" />
     <MESSAGE value="Ungenutzte Methoden/Parameter entfernt" />
@@ -678,7 +671,12 @@
     <MESSAGE value="Dependency für Date-Parsing hinzugefügt" />
     <MESSAGE value="Möglichkeit hinzugefügt, Fächer unwählbar zu machen&#10;&#10;Zusatzkurse können nun auch nur in bestimmten Semestern gewählt werden&#10;&#10;Die Nutzerdaten können nun eingegeben werden und werden auch vom CsvGenerator verarbeitet" />
     <MESSAGE value="Formatänderung" />
-    <option name="LAST_COMMIT_MESSAGE" value="Formatänderung" />
+    <MESSAGE value="`bools` Parameter hinzugefügt, um nicht jedes Mal die `[true, true, true, false]`-Listen erstellen zu müssen und Feststellung der Wahlmöglichkeit in die Klasse verschoben" />
+    <MESSAGE value="Labels werden nun Rot, wenn die Zeile ungültig ist" />
+    <MESSAGE value="Extra Padding hinzugefügt, um Lesbarkeit zu verbessern" />
+    <MESSAGE value="IntelliJ Changes" />
+    <MESSAGE value="App Icon hinzugefügt und Layout verschönert" />
+    <option name="LAST_COMMIT_MESSAGE" value="App Icon hinzugefügt und Layout verschönert" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
