@@ -12,8 +12,8 @@ import java.awt.Graphics2D
 import java.awt.Shape
 import java.awt.geom.AffineTransform
 
-class PolyIcon(poly: Shape, defaultEnabled: Boolean, clickEvent: () -> Unit) :
-    ClickableDestionation(defaultEnabled,  clickEvent = clickEvent) {
+class PolyIcon(poly: Shape, defaultSelected: Boolean, clickEvent: () -> Unit) :
+    ClickableDestionation(defaultSelected,  clickEvent = clickEvent) {
     companion object {
         val transform1 = AffineTransform(1.0, 0.0, 0.0, 1.0, -12.0, -12.0)
         val transform2 = (SIDEBAR_SIZE / 36.0).let { AffineTransform(it, 0.0, 0.0, it, 0.0, 0.0) }
