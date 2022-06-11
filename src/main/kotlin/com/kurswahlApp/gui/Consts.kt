@@ -2,10 +2,7 @@
 
 package com.kurswahlApp.gui
 
-import java.awt.Color
-import java.awt.Font
-import java.awt.Polygon
-import java.awt.RenderingHints
+import java.awt.*
 import java.awt.geom.*
 import javax.swing.JLabel
 
@@ -42,6 +39,16 @@ object Consts {
         intArrayOf(4, 11, 11, 19, 19, 13, 13, 19, 19, 11, 11),
         11
     )
+
+    val PERSON_ICON: Shape = GeneralPath().apply {
+        append(Ellipse2D.Double(12.5, 4.0, 11.5, 11.5), false)
+        moveTo(6.05, 32.0)
+        lineTo(29.95, 32.0)
+        curveTo(29.95, 27.9, 26.2, 23.6, 21.5, 23.6)
+        lineTo(14.5, 23.6)
+        curveTo(9.8, 23.6, 6.05, 27.9, 6.05, 32.0)
+        closePath()
+    }.createTransformedShape(AffineTransform(20/36.0, .0, .0, 20/36.0, 2.0, 2.0))
 
     val IMPORT_ICON = GeneralPath().apply {
         moveTo(8.25, .0)
