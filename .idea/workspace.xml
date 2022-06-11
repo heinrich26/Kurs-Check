@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="ANALYZE_TEST_SOURCES" value="false" />
+  </component>
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
       <artifact name="kurswahlApp.main:jar" />
@@ -9,10 +12,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Weitere Attribute werden nun von `lock()` beeinflusst">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/csvGenerator/Main.kt" afterDir="false" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Formatänderung">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Utils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Utils.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/data/Wahlmoeglichkeit.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/data/Wahlmoeglichkeit.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/GrundkursWahl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/GrundkursWahl.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,8 +60,8 @@
         <option value="Class" />
         <option value="JUnit5 Test Class" />
         <option value="Kotlin Object" />
-        <option value="Kotlin Class" />
         <option value="Kotlin File" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -79,14 +83,14 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/main/kotlin/ExclusiveComboBoxModel.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/kotlin/Main.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/kotlin/TestData.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/kotlin/data/KurswahlData.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/kotlin/data/WahlzeileLinientyp.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/kotlin/gui/ClickableDestionation.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/kotlin/gui/GrundkursWahl.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/ExclusiveComboBoxModel.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/data/TestData.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/ClickableDestionation.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/GrundkursWahl.kt" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/resources/dataStruct.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/data/WahlzeileLinientyp.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/GuiMain.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/data/KurswahlData.kt" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="KotlinCodeInsightWorkspaceSettings">
     <option name="optimizeImportsOnTheFly" value="true" />
@@ -96,9 +100,6 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
-  </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
@@ -111,12 +112,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "WebServerToolWindowFactoryState": "false",
-    "jdk.selected.JAVA_MODULE": "corretto-16"
-  }
-}]]></component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/libs/jcalendar-1.4.jar" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
+  </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="javax.swing.text.html" />
@@ -127,14 +131,19 @@
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\libs" />
+    </key>
     <key name="CreateKotlinClassDialog.RecentsKey">
       <recent name="data" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.kurswahlApp.gui" />
       <recent name="gui" />
       <recent name="data" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.kurswahlApp" />
       <recent name="" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
@@ -201,21 +210,21 @@
       <method v="2" />
     </configuration>
     <configuration name="Fremdsprachen" type="JetRunConfigurationType" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="gui.Fremdsprachen" />
+      <option name="MAIN_CLASS_NAME" value="com.kurswahlApp.gui.Fremdsprachen" />
       <module name="kurswahlApp.main" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration name="GrundkursWahl" type="JetRunConfigurationType" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="gui.GrundkursWahl" />
+      <option name="MAIN_CLASS_NAME" value="com.kurswahlApp.gui.GrundkursWahl" />
       <module name="kurswahlApp.main" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration name="Main w. testData" type="JetRunConfigurationType">
-      <option name="MAIN_CLASS_NAME" value="Main" />
+      <option name="MAIN_CLASS_NAME" value="com.kurswahlApp.gui.GuiMain" />
       <module name="kurswahlApp.main" />
       <option name="PROGRAM_PARAMETERS" value="--useTestData" />
       <shortenClasspath name="NONE" />
@@ -224,24 +233,10 @@
       </method>
     </configuration>
     <configuration name="Main" type="JetRunConfigurationType">
-      <option name="MAIN_CLASS_NAME" value="Main" />
+      <option name="MAIN_CLASS_NAME" value="com.kurswahlApp.gui.GuiMain" />
       <module name="kurswahlApp.main" />
       <shortenClasspath name="NONE" />
       <option name="VM_PARAMETERS" value="-Dsun.java2d.dpiaware=false -Dsun.java2d.uiScale=1.25" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Pear" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="gui.Pear" />
-      <module name="kurswahlApp.main" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="VerticalLabel" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="gui.VerticalLabel" />
-      <module name="kurswahlApp.main" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -254,34 +249,16 @@
       <item itemvalue="Kotlin.GrundkursWahl" />
       <item itemvalue="Kotlin.Main w. testData" />
       <item itemvalue="Kotlin.Main" />
-      <item itemvalue="Kotlin.Pear" />
-      <item itemvalue="Kotlin.VerticalLabel" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Kotlin.VerticalLabel" />
         <item itemvalue="Gradle.kurswahlApp [shadowJar]" />
-        <item itemvalue="Kotlin.Pear" />
         <item itemvalue="JAR Application.Output JAR Test" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task id="LOCAL-00001" summary="anfang mit visualizer für kurswahl">
-      <created>1652365660687</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1652365660687</updated>
-    </task>
-    <task id="LOCAL-00002" summary="anfang mit visualizer für kurswahl">
-      <created>1652365849041</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1652365849041</updated>
-    </task>
     <task active="true" id="Default" summary="Default task">
       <changelist id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="anfang mit visualizer für kurswahl" />
       <created>1652443574971</created>
@@ -311,76 +288,7 @@
       <workItem from="1654707102130" duration="19725000" />
       <workItem from="1654780978926" duration="11785000" />
       <workItem from="1654852576487" duration="9000000" />
-    </task>
-    <task id="LOCAL-00003" summary="reimpl. der fremdsprachen wahl">
-      <created>1652452601911</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1652452601911</updated>
-    </task>
-    <task id="LOCAL-00004" summary="gitignore update">
-      <created>1652452695243</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1652452695243</updated>
-    </task>
-    <task id="LOCAL-00005" summary="visualizer fertiggestellt">
-      <created>1652456375035</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1652456375035</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Fremdsprachen / Wahlpflicht soweit fertig">
-      <created>1653059985870</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1653059985870</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Arbeit am Hauptfenster">
-      <created>1653215112241</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1653215112241</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Arbeit am Hauptfenster">
-      <created>1653235504055</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1653235504055</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Arbeit am Hauptfenster">
-      <created>1653243799007</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1653243799007</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Arbeit am GK-Wahl-Fenster (Checkboxfärbung etc.)">
-      <created>1653290498633</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1653290498633</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Json deserialisierung umgesetzt">
-      <created>1653313572790</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1653313572790</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Wahlzeilenmatching implementiert und JSON Struktur geändert! Ausführen sollte bissn kaputt sein">
-      <created>1653415438772</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1653415438772</updated>
+      <workItem from="1654971763714" duration="3008000" />
     </task>
     <task id="LOCAL-00013" summary="Wahlzeilenmatching weitergeführt">
       <created>1653485210774</created>
@@ -641,7 +549,91 @@
       <option name="project" value="LOCAL" />
       <updated>1654861506180</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="Refactoring">
+      <created>1654863186668</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1654863186668</updated>
+    </task>
+    <task id="LOCAL-00051" summary="Refactoring">
+      <created>1654863220876</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1654863220876</updated>
+    </task>
+    <task id="LOCAL-00052" summary="Gradle-Wrapper hinzugefügt, um GitHub Actions zu erlauben und evtl. die Probleme an den SchulPCs zu lösen">
+      <created>1654863759419</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1654863759419</updated>
+    </task>
+    <task id="LOCAL-00053" summary="Packages neu angeordnet">
+      <created>1654868411994</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1654868411994</updated>
+    </task>
+    <task id="LOCAL-00054" summary="Arguments Parsing umgesetzt, GUI version wird standardmäßig ausgeführt, mit `--merge` wird der `csvGenerator` verwendet">
+      <created>1654869646585</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1654869646585</updated>
+    </task>
+    <task id="LOCAL-00055" summary="Tabs die noch ungesetzte Daten voraussetzen, können nicht mehr angeklickt werden und das ComboBoxModel für Fremdsprachen.kt wurde überarbeitet">
+      <created>1654877731271</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1654877731272</updated>
+    </task>
+    <task id="LOCAL-00056" summary="GridBagLayout ist nun standardmäßig das Layout von KurswahlPanel.kt">
+      <created>1654941701573</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1654941701573</updated>
+    </task>
+    <task id="LOCAL-00057" summary="Icon für den Nutzerdaten-Tab">
+      <created>1654946905774</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1654946905774</updated>
+    </task>
+    <task id="LOCAL-00058" summary="Constructor gefixt (hat enabled anstelle von selected gesetzt)">
+      <created>1654947160241</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1654947160241</updated>
+    </task>
+    <task id="LOCAL-00059" summary="Dependency für Date-Parsing hinzugefügt">
+      <created>1654947182249</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1654947182249</updated>
+    </task>
+    <task id="LOCAL-00060" summary="Möglichkeit hinzugefügt, Fächer unwählbar zu machen&#10;&#10;Zusatzkurse können nun auch nur in bestimmten Semestern gewählt werden&#10;&#10;Die Nutzerdaten können nun eingegeben werden und werden auch vom CsvGenerator verarbeitet">
+      <created>1654968701333</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1654968701333</updated>
+    </task>
+    <task id="LOCAL-00061" summary="Formatänderung">
+      <created>1654970714245</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1654970714245</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -657,21 +649,10 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Arbeit an Leistungskurse.kt, zeigt jetzt nur die möglichen LKs an!&#10;&#10;Ein Paar TODOs für Konrad in GrundkursWahl.kt&#10;&#10;Umstieg von GSON auf jackson-module-kotlin, weil GSON Kotlin nicht mag" />
-    <MESSAGE value="ich habe keinen Bock mehr" />
-    <MESSAGE value="readme.md angepasst" />
-    <MESSAGE value="keine|durchgezogen Linientyp hinzugefügt und Wahlzeilen angepasst (siehe Wahlzeilen 34-45)." />
-    <MESSAGE value="Formatting Änderungen" />
-    <MESSAGE value="Prüfungsfachwahl kann jz 3. &amp; 4.&#10;&#10;TestDaten können nun beim Ausführen verwendet werden, wenn auch seeehr Buggy" />
-    <MESSAGE value="Rendering Hints in Consts.kt vordefiniert" />
-    <MESSAGE value="Komplettes Datei-Laden und -Speichern" />
-    <MESSAGE value="Alignmentproblem behoben" />
-    <MESSAGE value="Visibility-Änderung" />
-    <MESSAGE value="Es funktioniert, fragt mich aber nicht wie" />
-    <MESSAGE value="Es funktioniert, fragt mich aber nicht wieso" />
     <MESSAGE value="Nachfolgende Fächer werden geändert, wenn Fremdsprachen wegfallen usw." />
     <MESSAGE value="Renderer hinzugefügt um in Comboboxen angezeigt zu werden" />
     <MESSAGE value="Wahlzeile wird nun ermittelt und in der KurswahlData.kt gespeichert" />
@@ -685,7 +666,19 @@
     <MESSAGE value="Wechsel von Propertyänderung zu Constructor-Arguments" />
     <MESSAGE value="Testdaten werden nun aus `test_wahl.kurswahl` gelesen" />
     <MESSAGE value="Weitere Attribute werden nun von `lock()` beeinflusst" />
-    <option name="LAST_COMMIT_MESSAGE" value="Weitere Attribute werden nun von `lock()` beeinflusst" />
+    <MESSAGE value="Refactoring" />
+    <MESSAGE value="Gradle-Wrapper hinzugefügt, um GitHub Actions zu erlauben und evtl. die Probleme an den SchulPCs zu lösen" />
+    <MESSAGE value="Packages neu angeordnet" />
+    <MESSAGE value="Arguments Parsing umgesetzt, GUI version wird standardmäßig ausgeführt, mit `--merge` wird der `csvGenerator` verwendet" />
+    <MESSAGE value="Tabs die noch ungesetzte Daten voraussetzen, können nicht mehr angeklickt werden und das ComboboxModel in Fremdsprachen.kt wurde überarbeitet" />
+    <MESSAGE value="Tabs die noch ungesetzte Daten voraussetzen, können nicht mehr angeklickt werden und das ComboBoxModel für Fremdsprachen.kt wurde überarbeitet" />
+    <MESSAGE value="GridBagLayout ist nun standardmäßig das Layout von KurswahlPanel.kt" />
+    <MESSAGE value="Icon für den Nutzerdaten-Tab" />
+    <MESSAGE value="Constructor gefixt (hat enabled anstelle von selected gesetzt)" />
+    <MESSAGE value="Dependency für Date-Parsing hinzugefügt" />
+    <MESSAGE value="Möglichkeit hinzugefügt, Fächer unwählbar zu machen&#10;&#10;Zusatzkurse können nun auch nur in bestimmten Semestern gewählt werden&#10;&#10;Die Nutzerdaten können nun eingegeben werden und werden auch vom CsvGenerator verarbeitet" />
+    <MESSAGE value="Formatänderung" />
+    <option name="LAST_COMMIT_MESSAGE" value="Formatänderung" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
