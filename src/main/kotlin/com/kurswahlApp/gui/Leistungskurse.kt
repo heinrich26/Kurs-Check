@@ -47,16 +47,16 @@ class Leistungskurse(wahlData: KurswahlData, fachData: FachData, notifier: (Bool
 
         // Eine Fremdsprache, die erst in der Jahrgangsstufe 10 oder in der Einführungsphase begonnen wurde,
         // darf nur als 3. oder 4. Prüfungsfach oder als Referenzfach der 5. PK gewählt werden.
-        val fs = wahlData.fremdsprachen.mapNotNull { (fach, jahr) -> if (jahr >= 10) null else fach }
+        val fs = wahlData.fremdsprachen.mapNotNull { (fach, jahr) -> if (jahr >= 10 ) null else fach }
 
-        val model1 = FachComboBoxModel(fachData.lk1Moeglichkeiten.filter { !it.fremdsprache || it in fs })
+        val model1 = FachComboBoxModel(fachData.lk1Moeglichkeiten.filter { !it.isFremdsprache || it in fs })
         lk1 = FachComboBox(model1)
 
 
         val wpfs = wahlData.wpfs
         val moeglichkeiten = fachData.lk2Moeglichkeiten.filter {
             /* Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1 */
-            if (it.fremdsprache) it in fs
+            if (it.isFremdsprache) it in fs
             /* Hat keine WPF or Fach ist weder 1./2. WPF */
             else (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second)))
         }

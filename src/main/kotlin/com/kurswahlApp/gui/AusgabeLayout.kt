@@ -10,6 +10,7 @@ import com.kurswahlApp.wrapTags
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.Insets
+import java.time.format.DateTimeFormatter
 import java.util.*
 import javax.swing.Box
 import javax.swing.BoxLayout
@@ -52,7 +53,7 @@ class AusgabeLayout(private val fachData: FachData, wahlData: KurswahlData) : JP
             }
             // if A: B else true == !A or B
             val cond: Boolean =
-                if (fach.fremdsprache) fach in fs
+                if (fach.isFremdsprache) fach in fs
                 else (!fach.brauchtWPF || (wpfs != null && (fach == wpfs.first || fach == wpfs.second)))
             // cond == true -> wählbar, sonst versteckt
 
@@ -151,6 +152,34 @@ class AusgabeLayout(private val fachData: FachData, wahlData: KurswahlData) : JP
             anchor = GridBagConstraints.LINE_START
         )
 
+        feldPanel.add(
+            JLabel("Vorname: <b>${wahlData.vorname}</b>".wrapHtml()),
+            row = 2,
+            column = 0,
+            anchor = GridBagConstraints.LINE_START
+        )
+
+        feldPanel.add(
+            JLabel("Nachname: <b>${wahlData.nachname}</b>".wrapHtml()),
+            row = 3,
+            column = 0,
+            anchor = GridBagConstraints.LINE_START
+        )
+
+        feldPanel.add(
+            JLabel("geboren: <b>${wahlData.geburtsdatum!!.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))}</b> in <b>${wahlData.geburtsort}</b>".wrapHtml()),
+            row = 4,
+            column = 0,
+            anchor = GridBagConstraints.LINE_START
+        )
+
+        feldPanel.add(
+            JLabel("Staatsangehörigkeit: <b>${wahlData.staatsangehoerigkeit}</b>".wrapHtml()),
+            row = 5,
+            column = 0,
+            anchor = GridBagConstraints.LINE_START
+        )
+
 
         val infoPanel = JPanel()
         infoPanel.layout = BoxLayout(infoPanel, BoxLayout.Y_AXIS)
@@ -167,7 +196,7 @@ class AusgabeLayout(private val fachData: FachData, wahlData: KurswahlData) : JP
             feldPanel.add(JLabel("Q${i + 1}", JLabel.LEFT), row = i, column = 1, anchor = GridBagConstraints.WEST)
             feldPanel.add(JLabel("$n".wrapHtml("b", "font-size: 10px").wrapHtml()), row = i, column = 2)
         }
-        feldPanel.add(JLabel("gesammt ", JLabel.LEFT), row = 4, column = 1, anchor = GridBagConstraints.WEST)
+        feldPanel.add(JLabel("gesammt   ", JLabel.LEFT), row = 4, column = 1, anchor = GridBagConstraints.WEST)
         feldPanel.add(JLabel("${anzahlen.sum()}".wrapHtml("b", "font-size: 10px").wrapHtml()), row = 4, column = 2)
 
         infoPanel.add(feldPanel)

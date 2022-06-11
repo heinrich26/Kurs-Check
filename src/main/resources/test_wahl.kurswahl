@@ -23,5 +23,10 @@
 		"first": "Inf",
 		"second": null
 	},
-	"wahlzeile": 29
+	"wahlzeile": 29,
+	"vorname": "Hendrik Sven",
+	"nachname": "Horstmann",
+	"geburtsdatum": "27.09.2005",
+	"geburtsort": "Berlin",
+	"staatsangehoerigkeit": "DE"
 }

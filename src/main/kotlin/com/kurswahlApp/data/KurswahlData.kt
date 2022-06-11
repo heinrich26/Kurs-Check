@@ -1,32 +1,25 @@
 package com.kurswahlApp.data
 
-import com.fasterxml.jackson.annotation.JacksonInject
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIncludeProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.*
 import com.fasterxml.jackson.databind.annotation.JsonAppend
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer
+import java.time.LocalDate
 
 /**
  * Beinhaltet die Daten der Kurswahl
  *
- * Sollte niemals vor [FachData] ohne [KurswahlData.readJsonVersion] erstellt werden
+ * Sollte niemals vor [FachData] ohne [readJsonVersion] erstellt werden.
+ *
+ * @property readJsonVersion Version der bei der Erstellung verwendeten [FachData], um einen Mix von Formaten vorzubeugen.
  */
 @Suppress("PropertyName", "PrivatePropertyName")
 @JsonAppend(attrs = [JsonAppend.Attr(value = "jsonVersion")], prepend = true)
 @JsonIncludeProperties(
-    "jsonVersion",
-    "lk1",
-    "lk2",
-    "pf3",
-    "pf4",
-    "pf5",
-    "pf5_typ",
-    "gks",
-    "fremdsprachen",
-    "wpfs",
-    "wahlzeile"
+    "jsonVersion", "lk1", "lk2", "pf3", "pf4", "pf5", "pf5_typ", "gks", "fremdsprachen",
+    "wpfs", "wahlzeile", "vorname", "nachname", "geburtsdatum", "geburtsort", "staatsangehoerigkeit",
 )
 data class KurswahlData(
     var lk1: Fach? = null,
@@ -39,9 +32,17 @@ data class KurswahlData(
     @get:JsonSerialize(using = ListOfPairSerializer::class) var fremdsprachen: List<Pair<Fach, Int>> = emptyList(),
     var wpfs: Pair<Fach, Fach?>? = null,
     var wahlzeile: Int = -1,
-    /**
-     * Version der bei der Erstellung verwendeten [FachData], um einen Mix von Formaten vorzubeugen
-     */
+    val pflichtfaecher: Map<Fach, Wahlmoeglichkeit>,
+
+    // Persönliche Daten
+    var vorname: String? = null,
+    var nachname: String? = null,
+    @get:JsonSerialize(using = LocalDateSerializer::class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
+    var geburtsdatum: LocalDate? = null,
+    var geburtsort: String? = null,
+    var staatsangehoerigkeit: String = "DE",
+
     val readJsonVersion: Pair<Int, Int> = FachData.jsonVersion
 ) {
 
@@ -50,28 +51,44 @@ data class KurswahlData(
         @JsonCreator
         fun fromJson(
             @JsonProperty @JsonDeserialize(using = VersionDeserializer::class) jsonVersion: Pair<Int, Int>,
-            @JsonProperty lk1: String?,
-            @JsonProperty lk2: String?,
-            @JsonProperty pf3: String?,
-            @JsonProperty pf4: String?,
-            @JsonProperty pf5: String?,
+            @JsonProperty lk1: String,
+            @JsonProperty lk2: String,
+            @JsonProperty pf3: String,
+            @JsonProperty pf4: String,
+            @JsonProperty pf5: String,
             @JsonProperty pf5_typ: Pf5Typ,
             @JsonProperty gks: Map<String, Wahlmoeglichkeit>,
             @JsonProperty fremdsprachen: Map<String, Int>,
-            @JsonProperty wpfs: Pair<String, String?>?,
+            @JsonProperty wpfs: Pair<String, String?>,
             @JsonProperty wahlzeile: Int,
+            @JsonProperty vorname: String,
+            @JsonProperty nachname: String,
+            @JsonProperty
+            @JsonDeserialize(using = LocalDateDeserializer::class)
+            @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
+            geburtsdatum: LocalDate,
+            @JsonProperty geburtsort: String,
+            @JsonProperty staatsangehoerigkeit: String,
             @JacksonInject fachData: FachData
         ): KurswahlData = KurswahlData(
-            lk1 = fachData.faecherMap[lk1].let { if (it != null && it.lk) it else null },
-            lk2 = fachData.faecherMap[lk2].let { if (it != null && it.lk) it else null },
+            lk1 = fachData.faecherMap[lk1].let { if (it != null && it.isLk) it else null },
+            lk2 = fachData.faecherMap[lk2].let { if (it != null && it.isLk) it else null },
             pf3 = fachData.faecherMap[pf3],
             pf4 = fachData.faecherMap[pf4],
             pf5 = fachData.faecherMap[pf5],
             pf5_typ = pf5_typ,
             gks = gks.mapKeys { fachData.faecherMap[it.key]!! },
             fremdsprachen = fremdsprachen.map { fachData.faecherMap[it.key]!! to it.value },
-            wpfs = if (wpfs == null || wpfs.first !in fachData.faecherMap.keys) null else fachData.faecherMap[wpfs.first]!! to fachData.faecherMap[wpfs.second],
+            wpfs = if (wpfs.first !in fachData.faecherMap.keys) null else fachData.faecherMap[wpfs.first]!! to fachData.faecherMap[wpfs.second],
             wahlzeile = wahlzeile,
+            pflichtfaecher = fachData.pflichtfaecher,
+
+            vorname = vorname,
+            nachname = nachname,
+            geburtsdatum = geburtsdatum,
+            geburtsort = geburtsort,
+            staatsangehoerigkeit = staatsangehoerigkeit,
+
             readJsonVersion = jsonVersion
         )
     }
@@ -176,10 +193,25 @@ data class KurswahlData(
     }
 
     /**
-     * Überprüft ob alle Felder gefüllt sind
+     * Überprüft ob die Wahl exportiert werden kann und wenn nicht,
+     * wird eine Nachricht mit noch zu erledigenden Aktionen zurückgegeben
      */
-    val isComplete: Boolean
-        get() = fremdsprachen.size >= 2 && (wpfs?.first != null) && gks.isNotEmpty() && lk1 != null && lk2 != null && pf3 != null && pf4 != null && pf5 != null
+    fun check(): String? {
+        var errorMsg = ""
+
+        if (fremdsprachen.isEmpty())
+            errorMsg = "Deine 2 oder mehr Fremdsprachen angeben!\n"
+        if (wpfs?.first == null)
+            errorMsg += "Dein Wahlpflichtfach angeben!\n"
+        if (lk1 == null || lk2 == null)
+            errorMsg += "Leistungskurse wählen!\n"
+        if (pf3 == null || pf4 == null || pf5 == null)
+            errorMsg += "Deine weiteren Prüfungsfächer wählen!\n"
+        if (vorname == null /* wenn eins null ist, sind alle null || nachname == null || geburtsdatum == null || geburtsort == null*/)
+            errorMsg += "Deine persönlichen Daten eintragen!"
+
+        return "Bevor du deine Kurswahl exportieren kannst, musst du noch folgendes erledigen:\n" + errorMsg.ifEmpty { return null }
+    }
 
     /**
      * Entfernt LKs aus den PFs und GKs
@@ -198,6 +230,8 @@ data class KurswahlData(
                 this.pf5 = null
                 this.wahlzeile = -1
             }
+
+            updatePflichtfaecher()
         }
 
     /**
@@ -211,7 +245,9 @@ data class KurswahlData(
             gks = gks.filterKeys { it != pf3 && it != pf4 && it != pf5 },
             pf5_typ = pf5_typ,
             wahlzeile = wahlzeile
-        )
+        ).apply {
+            updatePflichtfaecher()
+        }
 
     /**
      * Entfernt Fremdsprachen und WPFs, die der Schüler nicht mehr hat aus den Kursen
@@ -246,7 +282,17 @@ data class KurswahlData(
                 if (pf5 in fachDif) {
                     this.pf5 = null
                 }
+                updatePflichtfaecher()
             }
+    }
 
+
+    /**
+     * Fügt wenn nötig die Pflichtfächer in die Grundkurse ein
+     */
+    fun updatePflichtfaecher() {
+        lock()
+        gks + pflichtfaecher.filter { (key, value) -> key !in _pfs!! && gks[key].let { it == null || it in value}  }
+        unlock()
     }
 }

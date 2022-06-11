@@ -42,10 +42,12 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
     private val userWpfs = wahlData.wpfs
     private val filteredZeilen = fachData.filterWahlzeilen(wahlData.lk1, wahlData.lk2)
     private val filteredFaecher = fachData.faecherMap.filterValues {
+        // ist als Kurs wählbar
+        it.isKurs &&
         // ist kein Zusatzkurs & ...
         it.aufgabenfeld != -1 &&
                 /* Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1 */
-                (it != wahlData.lk1 && it != wahlData.lk2 && if (it.fremdsprache) it in userFs
+                (it != wahlData.lk1 && it != wahlData.lk2 && if (it.isFremdsprache) it in userFs
                 /* Hat keine WPF or Fach ist weder 1./2. WPF */
                 else (!it.brauchtWPF || (userWpfs != null && (it == userWpfs.first || it == userWpfs.second))))
     }

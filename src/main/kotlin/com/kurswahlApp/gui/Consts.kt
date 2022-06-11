@@ -165,4 +165,9 @@ object Consts {
 
     const val FILETYPE_EXTENSION = "kurswahl"
     const val TEST_FILE_NAME = "test_wahl.kurswahl"
+
+    /** Höchstalter um für die Gymnasiale Oberstufe zugelassen zu werden */
+    const val MAX_ALTER = 22
+    /** Mindestalter um für die Gymnasiale Oberstufe zugelassen zu werden */
+    const val MIN_ALTER = 12
 }

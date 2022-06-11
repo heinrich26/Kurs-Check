@@ -8,41 +8,41 @@
 			"name": "Deutsch",
 			"kuerzel": "De",
 			"aufgabenfeld": 1,
-			"lk": true
+			"isLk": true
 		},
 		{
 			"name": "Englisch",
 			"kuerzel": "En",
 			"aufgabenfeld": 1,
-			"lk": true,
-			"fremdsprache": true
+			"isLk": true,
+			"isFremdsprache": true
 		},
 		{
 			"name": "Spanisch",
 			"kuerzel": "Spa",
 			"aufgabenfeld": 1,
-			"lk": true,
-			"fremdsprache": true
+			"isLk": true,
+			"isFremdsprache": true
 		},
 		{
 			"name": "Französisch",
 			"kuerzel": "Fr",
 			"aufgabenfeld": 1,
-			"fremdsprache": true,
+			"isFremdsprache": true,
 			"brauchtWPF": true
 		},
 		{
 			"name": "Latein",
 			"kuerzel": "Lat",
 			"aufgabenfeld": 1,
-			"fremdsprache": true,
+			"isFremdsprache": true,
 			"brauchtWPF": true
 		},
 		{
 			"name": "Kunst",
 			"kuerzel": "Ku",
 			"aufgabenfeld": 1,
-			"lk": true
+			"isLk": true
 		},
 		{
 			"name": "Musik",
@@ -60,70 +60,74 @@
 			"name": "Geschichte",
 			"kuerzel": "Ge",
 			"aufgabenfeld": 2,
-			"lk": true
+			"isLk": true
 		},
 		{
 			"name": "Politikwissenschaft",
 			"kuerzel": "PW",
 			"aufgabenfeld": 2,
-			"lk": true
+			"isLk": true
 		},
 		{
 			"name": "Geografie",
 			"kuerzel": "Geo",
 			"aufgabenfeld": 2,
-			"lk": true
+			"isLk": true
 		},
 		{
 			"name": "Mathematik",
 			"kuerzel": "Ma",
 			"aufgabenfeld": 3,
-			"lk": true
+			"isLk": true
 		},
 		{
 			"name": "Physik",
 			"kuerzel": "Phy",
 			"aufgabenfeld": 3,
-			"lk": true
+			"isLk": true
 		},
 		{
 			"name": "Chemie",
 			"kuerzel": "Che",
 			"aufgabenfeld": 3,
-			"lk": true
+			"isLk": true
 		},
 		{
 			"name": "Biologie",
 			"kuerzel": "Bio",
 			"aufgabenfeld": 3,
-			"lk": true
+			"isLk": true
 		},
 		{
 			"name": "Informatik",
 			"kuerzel": "Inf",
 			"aufgabenfeld": 3,
-			"lk": true,
+			"isLk": true,
 			"brauchtWPF": true
 		},
 		{
 			"name": "Studium und Beruf",
 			"kuerzel": "SuB",
-			"aufgabenfeld": -1
+			"aufgabenfeld": -1,
+			"nurIn": "1-2"
 		},
 		{
 			"name": "Englisch Debating",
 			"kuerzel": "ED",
-			"aufgabenfeld": -1
+			"aufgabenfeld": -1,
+			"nurIn": "1-2"
 		},
 		{
 			"name": "Psychologie",
 			"kuerzel": "Psy",
-			"aufgabenfeld": -1
+			"aufgabenfeld": -1,
+			"nurIn": "1-2"
 		},
 		{
 			"name": "Medizin",
 			"kuerzel": "Med",
-			"aufgabenfeld": -1
+			"aufgabenfeld": -1,
+			"nurIn": "1-2"
 		},
 		{
 			"name": "Sport",
@@ -134,7 +138,16 @@
 		{
 			"name": "Sport Theorie",
 			"kuerzel": "SpT",
-			"aufgabenfeld": -1 // Auf -1, damit es nicht als Prüfungsfach gewählt werden kann!
+			"aufgabenfeld": -1, // Auf -1, damit es nicht als Prüfungsfach gewählt werden kann!
+			"nurIn": "3-4"
+		},
+
+		// Fächer, die nur als Fremdsprache/Wahlpflichtfach angezeigt werden sollen
+		{
+			"name": "Italienisch",
+			"kuerzel": "It",
+			"aufgabenfeld": 1,
+			"isKurs": false
 		}
 	],
 	"pflichtfaecher": {
@@ -645,9 +658,11 @@
 		"$FS": ["Fr", "Spa", "Lat", "En"],
 		"$NW": ["Che", "Phy", "Bio"],
 		"$Mu/Ku": ["Mu", "Ku"],
+
+		// Andere Wildcards (z.B. f. Regeln)
 		"$KF": ["Mu", "Ku", "DS"]
 	},
-	"wzWildcards": ["$AF2", "$FS", "$NW", "$Mu/Ku"],
+	"wzWildcards": ["$AF2", "$FS", "$NW", "$Mu/Ku"], // Wildcards, die in den Wahlzeilen vorkommen
 	"minKurse": 40, // Grundkurse und Leistungskurse zusammen
 	"maxKurse": 44, // Grundkurse und Leistungskurse zusammen
 	"pf3_4AusschlussFaecher": ["Mu", "Ku", "DS", "Sp"] // Fächer, von denen nur 1 gewählt werden darf (§ 23,6 VO-GO)

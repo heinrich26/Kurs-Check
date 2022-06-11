@@ -109,11 +109,11 @@ fun main(file: String?) {
             }
 
             csvPrinter.printRecord(
-                "Hendrik Sven", // vorname
-                "Horstmann", // nachname
-                "27.09.2005", // geburtsdatum
-                "Berlin", // geburtsort
-                "Deutsch", // staatsangehoerigkeit
+                vorname, // vorname
+                nachname, // nachname
+                geburtsdatum, // geburtsdatum
+                geburtsort, // geburtsort
+                staatsangehoerigkeit, // staatsangehoerigkeit
                 wahlzeile, // wahlzeile
                 *mappedSprachen, // fs1 - fs4
                 wpfs!!.first.kuerzel, // wpf1

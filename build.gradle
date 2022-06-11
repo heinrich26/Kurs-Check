@@ -41,11 +41,6 @@ application {
     applicationDefaultJvmArgs = [/*'-Dsun.java2d.uiScale=1.25'*/]
 }
 
-// compile bytecode to java 16 (default is java 8)
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
-    kotlinOptions.jvmTarget = "16"
-}
-
 runShadow {
     args '-Dsun.java2d.dpiaware=false -Dsun.java2d.uiScale=2.0'
 }

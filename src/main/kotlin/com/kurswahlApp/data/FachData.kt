@@ -35,11 +35,11 @@ data class FachData(
     val wzWildcards: Map<String, List<String>>,
     val minKurse: Int,
     val maxKurse: Int,
-    val pf3_4AusschlussFaecher: Set<String>
+    val pf3_4AusschlussFaecher: Set<String>,
 ) {
     val faecher: List<Fach> = faecherMap.values.toList()
+    val fremdsprachen: List<Fach> = faecher.filter { it.isFremdsprache }
 
-    val fremdsprachen = faecher.filter { it.fremdsprache }
     val lk1Moeglichkeiten = LinkedHashSet<String>().apply {
         for (wz in wahlzeilen.values) {
             if (wz.lk1.startsWith("$"))
@@ -66,7 +66,7 @@ data class FachData(
      * Gibt die die LKs zurück
      */
     val lks: List<Fach>
-        get() = faecher.filter { it.lk }
+        get() = faecher.filter { it.isLk }
 
     private val wildcardMapping =
         faecher.associateWith { wildcards.filter { wCard -> it in wCard.value }.keys + it.kuerzel }
@@ -146,7 +146,8 @@ data class FachData(
             FachData.jsonVersion = jsonVersion
 
             // Fächer zusätzlich sortieren um auf Aufgabenfelder aufzuteilen
-            val faecherMap: Map<String, Fach> = faecher.sortedBy { if (it.aufgabenfeld > 0) it.aufgabenfeld else 4 }.associateBy { it.kuerzel }
+            val faecherMap: Map<String, Fach> =
+                faecher.sortedBy { if (it.aufgabenfeld > 0) it.aufgabenfeld else 4 }.associateBy { it.kuerzel }
             return FachData(
                 faecherMap = faecherMap,
                 pflichtfaecher = pflichtfaecher.mapKeys { (key: String) -> faecherMap[key]!! },

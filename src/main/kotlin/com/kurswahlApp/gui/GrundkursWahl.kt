@@ -156,7 +156,8 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         for ((i, fach) in fachData.faecher.withIndex()) {
             // if A: B else true == !A or B
             val cond: Boolean =
-                if (fach.fremdsprache) fach in fs
+                fach.isKurs &&
+                if (fach.isFremdsprache) fach in fs
                 else (!fach.brauchtWPF || (wpfs != null && (fach == wpfs.first || fach == wpfs.second)))
             // cond == true -> wählbar, sonst versteckt
 
@@ -203,6 +204,18 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
 
                 checkboxArray.add(box)
                 panel.add(box, row = i, column = j, fill = GridBagConstraints.HORIZONTAL)
+            }
+
+            when (fach.nurIn) {
+                ERSTES_ZWEITES -> {
+                    checkboxArray[checkboxArray.size-2].isEnabled = false
+                    checkboxArray.last().isEnabled = false
+                }
+                DRITTES_VIERTES -> {
+                    checkboxArray[checkboxArray.size-4].isEnabled = false
+                    checkboxArray[checkboxArray.size-3].isEnabled = false
+                }
+                else -> {}
             }
         }
     }

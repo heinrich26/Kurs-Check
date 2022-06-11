@@ -8,6 +8,7 @@ import com.kurswahlApp.data.KurswahlData
 import com.kurswahlApp.gui.Consts.FILETYPE_EXTENSION
 import com.kurswahlApp.gui.Consts.HOME_POLY
 import com.kurswahlApp.gui.Consts.IMPORT_ICON
+import com.kurswahlApp.gui.Consts.PERSON_ICON
 import com.kurswahlApp.gui.Consts.SAVE_ICON
 import com.kurswahlApp.gui.Consts.SIDEBAR_SIZE
 import com.kurswahlApp.gui.Consts.TEST_FILE_NAME
@@ -18,6 +19,7 @@ import kotlinx.cli.optional
 import java.awt.Dimension
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
+import java.awt.Insets
 import java.io.File
 import javax.imageio.ImageIO
 import javax.swing.*
@@ -27,8 +29,8 @@ import kotlin.reflect.KClass
 class GuiMain(file: File? = null) : JPanel() {
     private val fachData: FachData = readDataStruct()
     private var wahlData: KurswahlData =
-        file?.let { loadKurswahlFile(it)?.apply { this.gks += fachData.pflichtfaecher.filter { (fach, _) -> fach !in this.pfs } } }
-            ?: KurswahlData(gks = fachData.pflichtfaecher)
+        file?.let { loadKurswahlFile(it)?.apply { updatePflichtfaecher() } }
+            ?: KurswahlData(gks = fachData.pflichtfaecher, pflichtfaecher = fachData.pflichtfaecher)
 
 
     companion object {
@@ -88,24 +90,25 @@ class GuiMain(file: File? = null) : JPanel() {
     }
 
     private val sidebarBtns = arrayOf(
-        FsWpfIcon { navTo(Fremdsprachen::class, 0) },
-        SidebarLabel("LKs") { navTo(Leistungskurse::class, 1) },
-        SidebarLabel("PKs") { navTo(Pruefungsfaecher::class, 2) },
-        SidebarLabel("GKs") { navTo(GrundkursWahl::class, 3) },
-        PolyIcon(HOME_POLY, true) { navTo(Overview::class, 4) }
+        PolyIcon(PERSON_ICON, false) { navTo(Nutzerdaten::class, 0) },
+        FsWpfIcon { navTo(Fremdsprachen::class, 1) },
+        SidebarLabel("LKs") { navTo(Leistungskurse::class, 2) },
+        SidebarLabel("PKs") { navTo(Pruefungsfaecher::class, 3) },
+        SidebarLabel("GKs") { navTo(GrundkursWahl::class, 4) },
+        PolyIcon(HOME_POLY, true) { navTo(Overview::class, 5) }
     ).apply {
         this.forEachIndexed { i, dest ->
             dest.let {
-                sidebar.add(it, row = i, anchor = GridBagConstraints.SOUTH, weighty = if (i == 4) 1.0 else 0.0)
+                sidebar.add(it, row = i, anchor = GridBagConstraints.SOUTH, weighty = if (i == 5) 1.0 else 0.0)
             }
         }
     }
 
-    private fun <T : KurswahlPanel> navTo(panel: KClass<T>, index: Int) {
+    private fun navTo(panel: KClass<out KurswahlPanel>, index: Int) {
         if (!curPanel.isDataValid()) {
             val choice = JOptionPane.showConfirmDialog(
                 this,
-                "Deine Daten sind ungültig und gehen verloren, wenn du jetzt weitergehst!",
+                "Deine Änderungen sind ungültig und gehen verloren, wenn du jetzt weitergehst!",
                 "Ungültige Daten",
                 JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.WARNING_MESSAGE
@@ -115,10 +118,24 @@ class GuiMain(file: File? = null) : JPanel() {
 
         disableDestinations()
 
+        swapPanel(panel, index)
+
+        // Sidebar Knöpfe updaten
+        for ((i, dest) in sidebarBtns.withIndex()) dest.isSelected = i == index
+    }
+
+    /**
+     * Tauscht das Aktuelle Panel durch das gegebene [panel] aus!
+     */
+    private fun swapPanel(panel: KClass<out KurswahlPanel> = curPanel::class, index: Int = -1) {
         remove(curPanel)
 
         val callback: (Boolean) -> Unit =
-            if (index < 3) { it -> for (i in (index + 1)..3) sidebarBtns[i].isEnabled = it } else { _ -> }
+            when (index) {
+                -1 -> curPanel.notifier
+                in 1..4 -> { it -> for (i in (index + 1)..4) sidebarBtns[i].isEnabled = it }
+                else -> { _ -> }
+            }
 
         curPanel = panel.constructors.first().call(wahlData, fachData, callback)
         add(curPanel, row = 1, column = 2, fill = GridBagConstraints.BOTH, weightx = 1.0)
@@ -126,10 +143,6 @@ class GuiMain(file: File? = null) : JPanel() {
         toolbar.text = curPanel.windowName
 
         validate()
-
-        // Sidebar Knöpfe updaten
-//        disableDestinations(selectedIndex + 2)
-        for ((i, dest) in sidebarBtns.withIndex()) dest.isSelected = i == index
     }
 
     init {
@@ -170,25 +183,30 @@ class GuiMain(file: File? = null) : JPanel() {
                             JOptionPane.WARNING_MESSAGE
                         )
                 }
-                this.wahlData = data
+                wahlData = data
 
                 // Das GUI updaten
-                remove(curPanel)
-
-                curPanel = curPanel::class.constructors.first().call(this.wahlData, fachData)
-                add(curPanel, row = 1, column = 2, fill = GridBagConstraints.BOTH, weightx = 1.0)
-
-                validate()
+                swapPanel()
             }
         }
 
-        toolbar.addActionItem(SAVE_ICON, "save-action") {
-            this.wahlData.lock()
+        (layout as GridBagLayout).rowWeights = doubleArrayOf(0.0, 1.0, .0)
 
-            if (this.wahlData.isComplete &&
-                this.wahlData.countCourses().sum() in fachData.minKurse..fachData.maxKurse &&
-                fachData.regeln.all { it.match(this.wahlData) }
-            ) {
+        toolbar.addActionItem(SAVE_ICON, "save-action") {
+
+            this.wahlData.lock()
+            val todos = this.wahlData.check()
+
+            if (todos != null) {
+                JOptionPane.showMessageDialog(this, todos, "Ungültige Wahl", JOptionPane.ERROR_MESSAGE)
+            } else if (this.wahlData.countCourses().sum() !in fachData.minKurse..fachData.maxKurse) {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Du hast noch nicht genügend Grundkurse! Es tut uns leid, aber du musst deine Wahl vervollständigen, bevor du sie exportieren kannst",
+                    "Ungültige Wahl",
+                    JOptionPane.ERROR_MESSAGE
+                )
+            } else if (fachData.regeln.all { it.match(this.wahlData) }) {
                 val chooser = JFileChooser()
                 chooser.fileFilter = KurswahlFileFilter
 
@@ -211,16 +229,18 @@ class GuiMain(file: File? = null) : JPanel() {
                     }
                 }
 
-                // TODO speichern des Bilds der Kurswahl
+                // speichern des Bilds der Kurswahl
+                if (chooser.selectedFile != null)
+                    chooser.selectedFile =
+                        File(chooser.currentDirectory, chooser.selectedFile.nameWithoutExtension + ".png")
                 chooser.resetChoosableFileFilters()
                 chooser.fileFilter = PngFileFilter
+
 
                 if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
                     val f =
                         File("${chooser.selectedFile.parent}${File.separatorChar}${chooser.selectedFile.nameWithoutExtension}.png")
                     try {
-                        // TODO bild speichern
-
                         val img = ScreenImage.createImage(AusgabeLayout(fachData, this.wahlData))
                         ImageIO.write(img, "png", f)
                     } catch (exception: SecurityException) {
@@ -235,22 +255,40 @@ class GuiMain(file: File? = null) : JPanel() {
 
             } else JOptionPane.showMessageDialog(
                 this,
-                "Deine Datei ist ungültig oder unvollständig... Es tut uns leid, aber du musst deine Wahl vervollständigen bevor du sie exportieren kannst!",
+                "Deine Wahl erfüllt nicht alle Regeln... Es tut uns leid, aber du musst deine Wahl vervollständigen, bevor du sie exportieren kannst!",
                 "Ungültige Wahl", JOptionPane.ERROR_MESSAGE
             )
+
             this.wahlData.unlock()
         }
 
         disableDestinations()
 
         add(
-            JSeparator(JSeparator.VERTICAL), row = 0, column = 1, rowspan = 2,
-            fill = GridBagConstraints.VERTICAL, weighty = 1.0
+            JSeparator(JSeparator.VERTICAL), row = 0, column = 1, rowspan = 3,
+            fill = GridBagConstraints.VERTICAL
         )
 
         add(curPanel, row = 1, column = 2, fill = GridBagConstraints.BOTH, weightx = 1.0)
 
-        add(sidebar, row = 1, column = 0, fill = GridBagConstraints.VERTICAL, weighty = 1.0)
+        add(sidebar, row = 1, column = 0, fill = GridBagConstraints.VERTICAL, rowspan = 2)
+
+        val resetButton = JButton("Zurücksetzen")
+        resetButton.isFocusable = false
+        resetButton.addActionListener {
+            if (JOptionPane.showConfirmDialog(
+                    this,
+                    "Möchtest du deine komplette Wahl zurücksetzen? Alle ungespeicherten Eingaben gehen dadurch verloren!",
+                    "Zurücksetzen?",
+                    JOptionPane.YES_NO_OPTION
+                ) == JOptionPane.YES_OPTION
+            ) {
+                wahlData = KurswahlData(gks = fachData.pflichtfaecher, pflichtfaecher = fachData.pflichtfaecher)
+                swapPanel()
+            }
+        }
+
+        add(resetButton, row = 2, column = 2, anchor = GridBagConstraints.EAST, margin = Insets(4, 4, 4, 4))
     }
 
     /**
@@ -282,13 +320,13 @@ class GuiMain(file: File? = null) : JPanel() {
      */
     private fun disableDestinations() {
         if (wahlData.fremdsprachen.isEmpty())
-            for (i in 1..3) sidebarBtns[i].isEnabled = false
+            for (i in 2..4) sidebarBtns[i].isEnabled = false
         else if (wahlData.lk1 == null || wahlData.lk2 == null) {
-            sidebarBtns[2].isEnabled = false
             sidebarBtns[3].isEnabled = false
+            sidebarBtns[4].isEnabled = false
         } else if (wahlData.pf3 == null || wahlData.pf4 == null || wahlData.pf5 == null)
-            sidebarBtns[3].isEnabled = false
-        else for (i in 1..3) sidebarBtns[i].isEnabled = true
+            sidebarBtns[4].isEnabled = false
+        else for (i in 2..4) sidebarBtns[i].isEnabled = true
     }
 }
 
