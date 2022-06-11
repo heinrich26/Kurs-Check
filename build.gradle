@@ -20,8 +20,10 @@ repositories {
 
 dependencies {
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.3'
     implementation 'org.apache.commons:commons-csv:1.9.0'
-    implementation("org.jetbrains.kotlinx:kotlinx-cli:0.3.4")
+    implementation 'org.jetbrains.kotlinx:kotlinx-cli:0.3.4'
+    implementation 'com.github.lgooddatepicker:LGoodDatePicker:11.2.1'
 
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.21'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
