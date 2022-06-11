@@ -7,6 +7,7 @@ import com.kurswahlApp.data.KurswahlData
 import com.kurswahlApp.data.Wahlmoeglichkeit
 import com.kurswahlApp.wrapHtml
 import com.kurswahlApp.wrapTags
+import java.awt.Dimension
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.Insets
@@ -24,6 +25,8 @@ class AusgabeLayout(private val fachData: FachData, wahlData: KurswahlData) : JP
     private fun fachPos(fach: Fach) = fachData.faecher.indexOf(fach)
 
     init {
+        preferredSize = Dimension(614, 874)
+        minimumSize = preferredSize
         add(JLabel("Übersichtsplan".wrapTags("html", "h2")), row = 0, column = 0, columnspan = 2)
 
 
@@ -201,6 +204,6 @@ class AusgabeLayout(private val fachData: FachData, wahlData: KurswahlData) : JP
 
         infoPanel.add(feldPanel)
 
-        add(infoPanel, row = 1, column = 2, anchor = GridBagConstraints.NORTH)
+        add(infoPanel, row = 1, column = 2, anchor = GridBagConstraints.NORTH, margin = Insets(4, 0, 0, 0))
     }
 }

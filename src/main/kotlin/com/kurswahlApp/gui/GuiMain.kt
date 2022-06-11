@@ -5,6 +5,8 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.kurswahlApp.*
 import com.kurswahlApp.data.FachData
 import com.kurswahlApp.data.KurswahlData
+import com.kurswahlApp.gui.Consts.APP_ICONS
+import com.kurswahlApp.gui.Consts.APP_NAME
 import com.kurswahlApp.gui.Consts.FILETYPE_EXTENSION
 import com.kurswahlApp.gui.Consts.HOME_POLY
 import com.kurswahlApp.gui.Consts.IMPORT_ICON
@@ -52,10 +54,23 @@ class GuiMain(file: File? = null) : JPanel() {
         }
 
         fun run(file: String?, useTestData: Boolean) {
-            // Windows UI verwenden
+            // System UI verwenden
             try {
-                UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel")
-            } catch (ex: Exception) {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
+
+                // Font Hack
+                /*for ((key, value) in UIManager.getLookAndFeelDefaults()) {
+                    if (key is String && key.endsWith(".font")) {
+                        // Hack für WindowsLookAndFeel
+                        if (value is UIDefaults.ActiveValue) {
+                            val val2 = value.createValue(UIManager.getDefaults())
+                            if (val2 is FontUIResource)
+                                UIManager.put(key, FontUIResource(FONT_NAME, val2.style, val2.size))
+                        } else if (value is FontUIResource) // Hack für den Standard LookAndFeel
+                            UIManager.put(key, FontUIResource(FONT_NAME, value.style, value.size))
+                    }
+                }*/
+        } catch (ex: Exception) {
                 ex.printStackTrace()
             }
 
@@ -63,17 +78,19 @@ class GuiMain(file: File? = null) : JPanel() {
         }
 
         private fun createAndShowGUI(file: String?, useTestData: Boolean) {
-            val frame = JFrame("kurswahlApp")
+            val frame = JFrame(APP_NAME)
             frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-            // Set up the content pane
-            // eventuell Testdatei/gesetzte Datei laden
+            frame.iconImages = APP_ICONS.map { ImageIO.read(getResourceURL(it)) }
+
+            // contentPane setzen
+            // wenn vorhanden, Testdatei/gesetzte Datei laden
             frame.contentPane =
                 if (useTestData) GuiMain(File(getResourceURL(TEST_FILE_NAME)!!.toURI()))
                 else if (file != null) GuiMain(File(file))
                 else GuiMain()
 
             frame.minimumSize = Dimension(640, 560)
-            // Display the window.
+            // Anzeigen.
             frame.pack()
             frame.setLocation(500, 200)
             frame.isVisible = true

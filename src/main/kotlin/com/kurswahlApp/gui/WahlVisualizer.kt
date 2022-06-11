@@ -9,20 +9,12 @@ import java.awt.Insets
 import javax.swing.JLabel
 import javax.swing.JPanel
 import javax.swing.JSeparator
+import javax.swing.border.TitledBorder
 
 class WahlVisualizer(val data: KurswahlData) : JPanel() {
     init {
         layout = GridBagLayout()
-        border = RoundedBorder(16)
-        add(JLabel("Übersicht"), row = 0, column = 0, columnspan = 2, anchor = GridBagConstraints.WEST)
-        add(
-            JSeparator(),
-            column = 0,
-            row = 1,
-            columnspan = 3,
-            fill = GridBagConstraints.BOTH,
-            margin = Insets(6, 0, 0, 0)
-        )
+        border = TitledBorder(RoundedBorder(16), "Übersicht").apply { titleFont = titleFont.deriveFont(Font.BOLD, 13f) }
 
         if (data.lk1 != null) {
             add(JLabel("LK 1"), row = 2, column = 0, anchor = GridBagConstraints.WEST, margin = Insets(6, 0, 0, 0))
@@ -144,7 +136,7 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
         )
 
         add(
-            JLabel("<html>Wochenstunden<br>p. Schuljahr</html>"),
+            JLabel("<html>Wochenstunden<br>pro Schuljahr</html>"),
             row = i,
             rowspan = 2,
             anchor = GridBagConstraints.WEST,

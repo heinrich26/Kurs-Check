@@ -156,6 +156,9 @@ object Consts {
         }
     }
 
+    const val APP_NAME = "Kurs-Check"
+    val APP_ICONS = arrayOf("icons/app_icon_12.png", "icons/app_icon_16.png", "icons/app_icon_24.png", "icons/app_icon_32.png", "icons/app_icon_48.png", "icons/app_icon_64.png")
+
 
     val RENDERING_HINTS = mapOf(
         RenderingHints.KEY_ANTIALIASING to RenderingHints.VALUE_ANTIALIAS_ON,

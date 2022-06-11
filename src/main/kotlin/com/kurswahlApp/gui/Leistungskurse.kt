@@ -2,10 +2,15 @@ package com.kurswahlApp.gui
 
 import com.kurswahlApp.add
 import com.kurswahlApp.data.*
+import com.kurswahlApp.wrapTags
 import java.awt.GridBagConstraints
+import java.awt.GridBagLayout
 import java.awt.Insets
 import java.awt.event.ItemEvent
 import javax.swing.Box
+import javax.swing.JLabel
+import javax.swing.JPanel
+import javax.swing.border.TitledBorder
 
 
 class Leistungskurse(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean) -> Unit = {}) :
@@ -78,10 +83,18 @@ class Leistungskurse(wahlData: KurswahlData, fachData: FachData, notifier: (Bool
 
         // Anzeigen
         // Margin hinzufügen
+
+        val container = JPanel(GridBagLayout())
+        container.border = TitledBorder(RoundedBorder(12), "Leistungskurse".wrapTags("html", "b"))
+
+        container.add(JLabel("1. "), row = 0, column = 0)
+        container.add(JLabel("2. "), row = 1, column = 0)
         Insets(1, 0, 1, 0).let {
-            add(lk1, row = 1, column = 1, fill = GridBagConstraints.BOTH, margin = it)
-            add(lk2, row = 2, column = 1, fill = GridBagConstraints.BOTH, margin = it)
+            container.add(lk1, row = 0, column = 1, fill = GridBagConstraints.BOTH, margin = it)
+            container.add(lk2, row = 1, column = 1, fill = GridBagConstraints.BOTH, margin = it)
         }
+
+        add(container)
     }
 
 
