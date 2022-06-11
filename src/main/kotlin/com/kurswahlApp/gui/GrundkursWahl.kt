@@ -4,10 +4,7 @@ import com.kurswahlApp.add
 import com.kurswahlApp.data.*
 import com.kurswahlApp.data.Wahlmoeglichkeit.*
 import com.kurswahlApp.wrapHtml
-import java.awt.Dimension
-import java.awt.GridBagConstraints
-import java.awt.GridBagLayout
-import java.awt.Insets
+import java.awt.*
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 import javax.swing.*
@@ -21,16 +18,9 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         val pfs = wahlData.pfs
         for ((i, fach) in fachData.faecher.withIndex()) {
             if (fach in pfs) continue
-            //Übergabe der gewählten Grundkurse und dessen Semester
-            val value = when (checkboxArray.subList(i * 4, i * 4 + 4).map { it.isSelected }) {
-                listOf(true, true, false, false) -> ERSTES_ZWEITES
-                listOf(true, true, true, false) -> ERSTES_DRITTES
-                listOf(false, true, true, true) -> ZWEITES_VIERTES
-                listOf(false, false, true, true) -> DRITTES_VIERTES
-                listOf(true, true, true, true) -> DURCHGEHEND
-                else -> continue
-            }
-            gks[fach] = value
+            // Speichern der gewählten Grundkurse und dessen Semester
+            gks[fach] =
+                Wahlmoeglichkeit.fromBools(checkboxArray.subList(i * 4, i * 4 + 4).map { it.isSelected }) ?: continue
         }
 
         return wahlData.copy(gks = gks.toMap())
@@ -38,17 +28,22 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
 
     override fun isDataValid(): Boolean {
         val pfs = wahlData.pfs
+        var counter = 0
         for ((i, fach) in fachData.faecher.withIndex()) {
-            if (fach in pfs) continue
+            if (fach in pfs) {
+                counter += 4
+                continue
+            }
             // Übergabe der gewählten Grundkurse und dessen Semester
-            when (checkboxArray.subList(i * 4, i * 4 + 4).map { it.isSelected }) {
-                listOf(true, true, false, false), listOf(true, true, true, false),
-                listOf(false, true, true, true), listOf(false, false, true, true),
-                listOf(true, true, true, true), listOf(false, false, false, false) -> continue
+            counter += when (checkboxArray.subList(i * 4, i * 4 + 4).map { it.isSelected }) {
+                ERSTES_ZWEITES.bools, DRITTES_VIERTES.bools -> 2
+                ERSTES_DRITTES.bools, ZWEITES_VIERTES.bools -> 3
+                DURCHGEHEND.bools -> 4
+                Wahlmoeglichkeit.UNGEWAEHLT_BOOLS -> continue
                 else -> return false
             }
         }
-        return true
+        return counter in fachData.minKurse..fachData.maxKurse
     }
 
     companion object {
@@ -68,7 +63,8 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         }.all { it }
     }
 
-    private val checkboxArray = ArrayList<JToggleButton>()
+    private val checkboxArray = ArrayList<JToggleButton>(fachData.faecher.size * 4)
+    private val labelArray = arrayOfNulls<JLabel>(fachData.faecher.size)
 
     private val regelLabelArray = fachData.regeln.map { RegelLabel(it) }.toTypedArray()
 
@@ -78,8 +74,14 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
             anzahlLabel.text = "$anzahl Kurse"
 
             anzahlInfoLabel.text = when {
-                value < fachData.minKurse -> "Bitte wähle mindestens ${fachData.minKurse} Kurse".wrapHtml("p", "color:#F92F60").wrapHtml()
-                value > fachData.maxKurse -> "Bitte wähle maximal ${fachData.maxKurse} Kurse".wrapHtml("p", "color:#F92F60").wrapHtml()
+                value < fachData.minKurse -> "Bitte wähle mindestens ${fachData.minKurse} Kurse".wrapHtml(
+                    "p",
+                    "color:#F92F60"
+                ).wrapHtml()
+                value > fachData.maxKurse -> "Bitte wähle maximal ${fachData.maxKurse} Kurse".wrapHtml(
+                    "p",
+                    "color:#F92F60"
+                ).wrapHtml()
                 else -> "Es wurden genug Kurse gewählt".wrapHtml("p", "color:#00D26A").wrapHtml()
             }
         }
@@ -110,13 +112,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         // Grundkurse (Daten) eintragen
         for ((gk, choice) in wahlData.gks) {
             val pos = fachPos(gk)
-            val acti = when (choice) {
-                ERSTES_ZWEITES -> listOf(true, true, false, false)
-                ERSTES_DRITTES -> listOf(true, true, true, false)
-                ZWEITES_VIERTES -> listOf(false, true, true, true)
-                DRITTES_VIERTES -> listOf(false, false, true, true)
-                DURCHGEHEND -> listOf(true, true, true, true)
-            }
+            val acti = choice.bools
             for (k in 0..3) {
                 if (acti[k]) {
                     checkboxArray[k + (pos * 4)].isSelected = true
@@ -167,6 +163,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                 // Wenn man das Label anklickt wird die ganze Zeile ausgewählt
                 label.addMouseListener(object : MouseAdapter() {
                     override fun mousePressed(e: MouseEvent) {
+                        label.foreground = Color.BLACK
                         // Checkboxen der Zeile holen
                         val zeile = checkboxArray.subList(i * 4, i * 4 + 4)
 
@@ -189,6 +186,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                         }
                     }
                 })
+                labelArray[i] = label
                 checkboxPanel.add(label, row = i, column = 0, fill = GridBagConstraints.HORIZONTAL)
             }
 
@@ -198,7 +196,15 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
 
                 if (cond) {
                     box.isOpaque = false
-                    box.addActionListener { if ((it.source as JToggleButton).isSelected) anzahl++ else anzahl-- }
+                    box.addActionListener { _ ->
+                        if (box.isSelected) anzahl++ else anzahl--
+                        // Das Label Rot färben, wenn die Reihe ungültig ist
+                        labelArray[i]!!.foreground =
+                            if (Wahlmoeglichkeit.fromBools(
+                                    checkboxArray.subList(i * 4, i * 4 + 4).map { it.isSelected }) != null
+                            ) Color.BLACK
+                            else Consts.COLOR_ERROR
+                    }
                 } else box.isVisible = false
 
                 checkboxArray.add(box)
