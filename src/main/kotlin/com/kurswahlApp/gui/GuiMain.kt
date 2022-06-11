@@ -171,8 +171,9 @@ class GuiMain(file: File? = null) : JPanel() {
         toolbar.addActionItem(IMPORT_ICON, "open-action") {
             val chooser = JFileChooser()
             chooser.fileFilter = KurswahlFileFilter
-            val ans = chooser.showOpenDialog(this)
-            if (ans == JFileChooser.APPROVE_OPTION) {
+            chooser.dialogTitle = "Kurswahl-Datei öffnen"
+
+            if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
                 val data: KurswahlData = loadKurswahlFile(chooser.selectedFile) ?: return@addActionItem
 
                 when {
@@ -228,6 +229,7 @@ class GuiMain(file: File? = null) : JPanel() {
             } else if (fachData.regeln.all { it.match(this.wahlData) }) {
                 val chooser = JFileChooser()
                 chooser.fileFilter = KurswahlFileFilter
+                chooser.dialogTitle = "Datei für den Oberstufenkoordinator speichern"
 
                 if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
                     val f =
@@ -254,6 +256,7 @@ class GuiMain(file: File? = null) : JPanel() {
                         File(chooser.currentDirectory, chooser.selectedFile.nameWithoutExtension + ".png")
                 chooser.resetChoosableFileFilters()
                 chooser.fileFilter = PngFileFilter
+                chooser.dialogTitle = "Bild für dich speichern"
 
 
                 if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
