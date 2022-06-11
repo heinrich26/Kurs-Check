@@ -3,7 +3,6 @@ package com.kurswahlApp.gui
 import com.kurswahlApp.add
 import com.kurswahlApp.data.*
 import java.awt.GridBagConstraints
-import java.awt.GridBagLayout
 import java.awt.Insets
 import java.awt.event.ActionEvent
 import javax.swing.*
@@ -32,8 +31,6 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
     private val wpf2: FachComboBox
 
     init {
-        this.layout = GridBagLayout()
-
         add(
             JLabel("Fremdsprachen:"),
             column = 0,

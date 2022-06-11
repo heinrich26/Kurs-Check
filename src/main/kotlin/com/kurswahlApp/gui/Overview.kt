@@ -2,7 +2,6 @@ package com.kurswahlApp.gui
 
 import com.kurswahlApp.data.FachData
 import com.kurswahlApp.data.KurswahlData
-import java.awt.GridBagLayout
 
 class Overview(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean) -> Unit = {}) :
     KurswahlPanel(wahlData, fachData, notifier) {
@@ -15,8 +14,6 @@ class Overview(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean) -
         get() = "Deine Kurswahl"
 
     init {
-        this.layout = GridBagLayout()
-
         add(WahlVisualizer(wahlData))
     }
 

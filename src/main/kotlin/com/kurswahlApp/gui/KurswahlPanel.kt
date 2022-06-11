@@ -5,6 +5,7 @@ import com.kurswahlApp.data.KurswahlData
 import com.kurswahlApp.gui.Consts.PANEL_HEIGHT
 import com.kurswahlApp.gui.Consts.PANEL_WIDTH
 import java.awt.Dimension
+import java.awt.GridBagLayout
 import javax.swing.JFrame
 import javax.swing.JPanel
 import javax.swing.UIManager
@@ -16,7 +17,7 @@ import javax.swing.UIManager
  * @property fachData FachData der Session
  * @property notifier Callback, das meldet ob die Daten im KurswahlPanel gültig sind
  */
-abstract class KurswahlPanel(val wahlData: KurswahlData, val fachData: FachData, protected val notifier: (isValid: Boolean) -> Unit) : JPanel() {
+abstract class KurswahlPanel(val wahlData: KurswahlData, val fachData: FachData, protected val notifier: (isValid: Boolean) -> Unit) : JPanel(GridBagLayout()) {
     abstract fun close() : KurswahlData
 
     abstract fun isDataValid(): Boolean

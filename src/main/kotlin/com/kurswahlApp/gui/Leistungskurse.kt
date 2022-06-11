@@ -3,7 +3,6 @@ package com.kurswahlApp.gui
 import com.kurswahlApp.add
 import com.kurswahlApp.data.*
 import java.awt.GridBagConstraints
-import java.awt.GridBagLayout
 import java.awt.Insets
 import java.awt.event.ItemEvent
 import javax.swing.Box
@@ -43,9 +42,6 @@ class Leistungskurse(wahlData: KurswahlData, fachData: FachData, notifier: (Bool
     private val lk2: FachComboBox
 
     init {
-        layout = GridBagLayout()
-
-
         add(Box.createHorizontalStrut(50), column = 2)
 
 

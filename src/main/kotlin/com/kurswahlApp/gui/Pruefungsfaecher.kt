@@ -4,7 +4,6 @@ import com.kurswahlApp.add
 import com.kurswahlApp.data.*
 import com.kurswahlApp.data.WahlzeileLinientyp.*
 import java.awt.GridBagConstraints
-import java.awt.GridBagLayout
 import java.awt.Insets
 import javax.swing.JComboBox
 import javax.swing.JLabel
@@ -53,8 +52,6 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
     private val zeilenFuerFuenfte: MutableSet<Pair<Int, Wahlzeile>> = mutableSetOf()
 
     init {
-        this.layout = GridBagLayout()
-
         val pf3faecher = faecherAusWahlzeilen(3)
 
         // geht schon

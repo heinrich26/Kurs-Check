@@ -90,7 +90,6 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
     private val checkButton = JButton("Überprüfen")
 
     init {
-        layout = GridBagLayout()
         add(anzahlLabel, row = 1)
         add(anzahlInfoLabel, row = 1)
         checkButton.addActionListener { checkData() }
