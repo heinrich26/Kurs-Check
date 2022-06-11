@@ -3,9 +3,11 @@ package com.kurswahlApp.gui
 import com.kurswahlApp.add
 import com.kurswahlApp.data.*
 import com.kurswahlApp.data.Wahlmoeglichkeit.*
+import com.kurswahlApp.wrapHtml
 import java.awt.Dimension
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
+import java.awt.Insets
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 import javax.swing.*
@@ -76,31 +78,32 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
             anzahlLabel.text = "$anzahl Kurse"
 
             anzahlInfoLabel.text = when {
-                value < fachData.minKurse -> "Bitte wähle mindestens ${fachData.minKurse} Kurse"
-                value > fachData.maxKurse -> "Bitte wähle maximal ${fachData.maxKurse} Kurse"
-                else -> "Es wurden genug Kurse gewählt"
+                value < fachData.minKurse -> "Bitte wähle mindestens ${fachData.minKurse} Kurse".wrapHtml("p", "color:#F92F60").wrapHtml()
+                value > fachData.maxKurse -> "Bitte wähle maximal ${fachData.maxKurse} Kurse".wrapHtml("p", "color:#F92F60").wrapHtml()
+                else -> "Es wurden genug Kurse gewählt".wrapHtml("p", "color:#00D26A").wrapHtml()
             }
         }
 
     private val anzahlLabel = JLabel("$anzahl Kurse")
-    private val anzahlInfoLabel = JLabel()
+    private val anzahlInfoLabel = JLabel("")
 
-    private val panel = JPanel(GridBagLayout())
+    private val checkboxPanel = JPanel(GridBagLayout())
 
     private val checkButton = JButton("Überprüfen")
 
     init {
         add(anzahlLabel, row = 1)
         add(anzahlInfoLabel, row = 1)
+
         checkButton.addActionListener { checkData() }
-        add(checkButton, row = 1)
+        add(checkButton, row = 1, column = 2)
 
         buildCheckboxes()
 
         val scrollPane =
-            JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER)
+            JScrollPane(checkboxPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER)
         scrollPane.preferredSize = Dimension(250, 350)
-        add(scrollPane)
+        add(scrollPane, row = 0, column = 0, columnspan = 2, margin = Insets(0, 0, 6, 0))
 
         faecherBlocken()
 
@@ -123,10 +126,6 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
 
 
         // Kurse zählen
-        /*for (box in checkboxArray) {
-            if (box.isVisible && box.isSelected) anzahl++
-        }
-        Equivalent zu: */
         anzahl = checkboxArray.count { it.isVisible && it.isSelected }
 
 
@@ -141,7 +140,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
 
         checkData()
 
-        add(scrollPane2)
+        add(scrollPane2, row = 0, column = 2, margin = Insets(0, 8, 6, 0))
     }
 
 
@@ -157,8 +156,8 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
             // if A: B else true == !A or B
             val cond: Boolean =
                 fach.isKurs &&
-                if (fach.isFremdsprache) fach in fs
-                else (!fach.brauchtWPF || (wpfs != null && (fach == wpfs.first || fach == wpfs.second)))
+                        if (fach.isFremdsprache) fach in fs
+                        else (!fach.brauchtWPF || (wpfs != null && (fach == wpfs.first || fach == wpfs.second)))
             // cond == true -> wählbar, sonst versteckt
 
 
@@ -190,7 +189,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                         }
                     }
                 })
-                panel.add(label, row = i, column = 0, fill = GridBagConstraints.HORIZONTAL)
+                checkboxPanel.add(label, row = i, column = 0, fill = GridBagConstraints.HORIZONTAL)
             }
 
             // Checkbox bauen und hinzufügen
@@ -203,17 +202,17 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                 } else box.isVisible = false
 
                 checkboxArray.add(box)
-                panel.add(box, row = i, column = j, fill = GridBagConstraints.HORIZONTAL)
+                checkboxPanel.add(box, row = i, column = j, fill = GridBagConstraints.HORIZONTAL)
             }
 
             when (fach.nurIn) {
                 ERSTES_ZWEITES -> {
-                    checkboxArray[checkboxArray.size-2].isEnabled = false
+                    checkboxArray[checkboxArray.size - 2].isEnabled = false
                     checkboxArray.last().isEnabled = false
                 }
                 DRITTES_VIERTES -> {
-                    checkboxArray[checkboxArray.size-4].isEnabled = false
-                    checkboxArray[checkboxArray.size-3].isEnabled = false
+                    checkboxArray[checkboxArray.size - 4].isEnabled = false
+                    checkboxArray[checkboxArray.size - 3].isEnabled = false
                 }
                 else -> {}
             }

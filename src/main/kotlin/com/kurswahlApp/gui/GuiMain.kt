@@ -187,6 +187,8 @@ class GuiMain(file: File? = null) : JPanel() {
 
                 // Das GUI updaten
                 swapPanel()
+
+                disableDestinations()
             }
         }
 
