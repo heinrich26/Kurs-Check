@@ -1,7 +1,7 @@
 package com.kurswahlApp.gui
 
-import com.kurswahlApp.data.Regel
 import com.kurswahlApp.createImageIcon
+import com.kurswahlApp.data.Regel
 import com.kurswahlApp.wrappable
 import javax.swing.JLabel
 import javax.swing.border.EmptyBorder
@@ -12,7 +12,7 @@ class RegelLabel(regel: Regel) : JLabel(regel.desc!!.wrappable(), validIcon, LEA
 
 
     init {
-        border = EmptyBorder(0, 4, 0, 0)
+        border = EmptyBorder(2, 4, 2, 0)
         text = validText
         foreground = Consts.COLOR_VALID
     }
