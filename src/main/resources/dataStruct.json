@@ -168,15 +168,13 @@
 			"name": "Bio/Phy/Chemie",
 			"kuerzel": "BPC",
 			"aufgabenfeld": 3,
-			"isKurs": false,
-			"isFremdsprache": false
+			"isKurs": false
 		},
 		{
 			"name": "Geschichte/Geografie/PB",
 			"kuerzel": "GGP",
 			"aufgabenfeld": 2,
-			"isKurs": false,
-			"isFremdsprache": false
+			"isKurs": false
 		}
 	],
 	"pflichtfaecher": {
