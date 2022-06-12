@@ -163,6 +163,20 @@
 			"aufgabenfeld": 1,
 			"isKurs": false,
 			"isFremdsprache": true
+		},
+		{
+			"name": "Bio/Phy/Chemie",
+			"kuerzel": "BPC",
+			"aufgabenfeld": 3,
+			"isKurs": false,
+			"isFremdsprache": false
+		},
+		{
+			"name": "Geschichte/Geografie/PB",
+			"kuerzel": "GGP",
+			"aufgabenfeld": 2,
+			"isKurs": false,
+			"isFremdsprache": false
 		}
 	],
 	"pflichtfaecher": {
@@ -170,7 +184,7 @@
 		"De": "1-4",
 		"Sp": "1-4"
 	},
-	"wpfs": ["Inf", "Lat", "Fr", "DS"],
+	"wpfs": ["Inf", "Lat", "Fr", "DS", "GGP", "BPC"],
 	"regeln": [
 		{
 			"type": "WildcardRegel",
