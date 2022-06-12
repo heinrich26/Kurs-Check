@@ -147,19 +147,22 @@
 			"name": "Italienisch",
 			"kuerzel": "It",
 			"aufgabenfeld": 1,
-			"isKurs": false
+			"isKurs": false,
+			"isFremdsprache": true
 		},
 		{
 			"name": "Altgriechisch",
 			"kuerzel": "AGr",
 			"aufgabenfeld": 1,
-			"isKurs": false
+			"isKurs": false,
+			"isFremdsprache": true
 		},
 		{
 			"name": "Griechisch",
 			"kuerzel": "Gr",
 			"aufgabenfeld": 1,
-			"isKurs": false
+			"isKurs": false,
+			"isFremdsprache": true
 		}
 	],
 	"pflichtfaecher": {
