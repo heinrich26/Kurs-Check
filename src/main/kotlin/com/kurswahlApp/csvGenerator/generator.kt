@@ -69,8 +69,9 @@ fun main(directory: String?, output: String?) {
     val writer = outputFile.bufferedWriter(Charset.forName("UTF-8"))
 
 
+    val filteredFaecher = fachData.faecher.filter { it.isKurs }
     val headerMixin =
-        fachData.faecher.flatMap { listOf("${it.kuerzel}_1", "${it.kuerzel}_2", "${it.kuerzel}_3", "${it.kuerzel}_4") }
+        filteredFaecher.flatMap { listOf("${it.kuerzel}_1", "${it.kuerzel}_2", "${it.kuerzel}_3", "${it.kuerzel}_4") }
             .toTypedArray()
 
     val csvPrinter =
@@ -85,7 +86,7 @@ fun main(directory: String?, output: String?) {
 
         with(record) {
             var skipped = 0
-            val row = fachData.faecher.flatMap {
+            val row = filteredFaecher.flatMap {
                 when (gks[it]) {
                     ERSTES_ZWEITES -> listOf(GK, GK, null, null)
                     ERSTES_DRITTES -> listOf(GK, GK, GK, null)
