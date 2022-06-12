@@ -210,26 +210,39 @@ class GuiMain(file: File? = null) : JPanel() {
             }
         }
 
-        (layout as GridBagLayout).rowWeights = doubleArrayOf(0.0, 1.0, .0)
-
         toolbar.addActionItem(SAVE_ICON, "save-action") {
+            if (!curPanel.isDataValid()) {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Dein Wahl ist noch unvollständig oder ungültig! Vervollständige deine Wahl, bevor du sie exportieren kannst",
+                    "Ungültige Wahl",
+                    JOptionPane.ERROR_MESSAGE
+                )
+                return@addActionItem
+            }
 
-            this.wahlData.lock()
-            val todos = this.wahlData.check()
+            val data = curPanel.close()
+            data.lock()
+
+            val todos = data.check()
 
             if (todos != null) {
                 JOptionPane.showMessageDialog(this, todos, "Ungültige Wahl", JOptionPane.ERROR_MESSAGE)
-            } else if (this.wahlData.countCourses().sum() !in fachData.minKurse..fachData.maxKurse) {
+            } else if (data.countCourses().sum() !in fachData.minKurse..fachData.maxKurse) {
                 JOptionPane.showMessageDialog(
                     this,
                     "Du hast noch nicht genügend Grundkurse! Es tut uns leid, aber du musst deine Wahl vervollständigen, bevor du sie exportieren kannst",
                     "Ungültige Wahl",
                     JOptionPane.ERROR_MESSAGE
                 )
-            } else if (fachData.regeln.all { it.match(this.wahlData) }) {
+            } else if (fachData.regeln.all { it.match(data) }) {
                 val chooser = JFileChooser()
                 chooser.fileFilter = KurswahlFileFilter
                 chooser.dialogTitle = "Datei für den Oberstufenkoordinator speichern"
+                chooser.selectedFile =
+                    File("${wahlData.vorname!!.split(' ')[0]}_${wahlData.nachname}"
+                        .replace(Regex("[\\\\/:*?\"<>|.&$]"), "")
+                        .replace(' ', '_') + ".$FILETYPE_EXTENSION")
 
                 if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
                     val f =
@@ -240,7 +253,7 @@ class GuiMain(file: File? = null) : JPanel() {
 
                         jacksonObjectMapper().writer()
                             .withAttribute("jsonVersion", FachData.jsonVersion.let { "${it.first}.${it.second}" })
-                            .writeValue(f, this.wahlData)
+                            .writeValue(f, data)
                     } catch (exception: SecurityException) {
                         JOptionPane.showMessageDialog(
                             this,
@@ -263,7 +276,7 @@ class GuiMain(file: File? = null) : JPanel() {
                     val f =
                         File("${chooser.selectedFile.parent}${File.separatorChar}${chooser.selectedFile.nameWithoutExtension}.png")
                     try {
-                        val img = ScreenImage.createImage(AusgabeLayout(fachData, this.wahlData))
+                        val img = ScreenImage.createImage(AusgabeLayout(fachData, data))
                         ImageIO.write(img, "png", f)
                     } catch (exception: SecurityException) {
                         JOptionPane.showMessageDialog(
@@ -281,8 +294,10 @@ class GuiMain(file: File? = null) : JPanel() {
                 "Ungültige Wahl", JOptionPane.ERROR_MESSAGE
             )
 
-            this.wahlData.unlock()
+            data.unlock()
         }
+
+        (layout as GridBagLayout).rowWeights = doubleArrayOf(0.0, 1.0, .0)
 
         disableDestinations()
 

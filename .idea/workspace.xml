@@ -12,7 +12,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Carlos Bug gefixt, dass PW benötigt wird, wenn man Geschichte einfach so 4 Semester wählt. Außerdem 2 weitere Sprachen hinzugefügt.&#10;&#10;Icon durch das Neue ersetzt&#10;&#10;Arbeitsdateien entfern" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Die extra Fremdsprachen können nun auch gewählt werden">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/GuiMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/GuiMain.kt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -289,14 +292,7 @@
       <workItem from="1654982480359" duration="309000" />
       <workItem from="1654998795729" duration="210000" />
       <workItem from="1655037447382" duration="903000" />
-      <workItem from="1655040907043" duration="2352000" />
-    </task>
-    <task id="LOCAL-00022" summary="Arbeit an den Regeln, Einbindung in FachData.kt">
-      <created>1653649413222</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1653649413222</updated>
+      <workItem from="1655040907043" duration="5157000" />
     </task>
     <task id="LOCAL-00023" summary="Arbeit an den Regeln, Einbindung in FachData.kt">
       <created>1653665742145</created>
@@ -634,7 +630,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655043266539</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="Die extra Fremdsprachen können nun auch gewählt werden">
+      <created>1655043477113</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1655043477113</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -654,7 +657,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="CommandLineArgument-Parsing Library hinzugefügt" />
     <MESSAGE value="Wechsel von Propertyänderung zu Constructor-Arguments" />
     <MESSAGE value="Testdaten werden nun aus `test_wahl.kurswahl` gelesen" />
     <MESSAGE value="Weitere Attribute werden nun von `lock()` beeinflusst" />
@@ -679,7 +681,8 @@
     <MESSAGE value="Dialog-Titel bei den Open/Save Dialogen hinzugefügt." />
     <MESSAGE value="Fächer, welche kein Kurs sind, werden im CSV-Generator ausgelassen" />
     <MESSAGE value="Carlos Bug gefixt, dass PW benötigt wird, wenn man Geschichte einfach so 4 Semester wählt. Außerdem 2 weitere Sprachen hinzugefügt.&#10;&#10;Icon durch das Neue ersetzt&#10;&#10;Arbeitsdateien entfern" />
-    <option name="LAST_COMMIT_MESSAGE" value="Carlos Bug gefixt, dass PW benötigt wird, wenn man Geschichte einfach so 4 Semester wählt. Außerdem 2 weitere Sprachen hinzugefügt.&#10;&#10;Icon durch das Neue ersetzt&#10;&#10;Arbeitsdateien entfern" />
+    <MESSAGE value="Die extra Fremdsprachen können nun auch gewählt werden" />
+    <option name="LAST_COMMIT_MESSAGE" value="Die extra Fremdsprachen können nun auch gewählt werden" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
