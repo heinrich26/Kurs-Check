@@ -1,7 +1,7 @@
 {
 	// Hauptversion ändern, wenn Fächer (als LK, PF, etc.) wegfallen oder regeln strenger werden
 	// ansonsten Subversion ändern, wenn Fächer (als LK, PF, etc.) hinzukommen oder Texte (außer Kürzel) geändert werden
-	"jsonVersion": "1.1", // Hauptversion.Subversion
+	"jsonVersion": "1.2", // Hauptversion.Subversion
 	// "aufgabenfeld" -> 0, wenn kein Aufgabenfeld gg. ist (Sport), Zusatzkurse -> -1
 	"faecher": [
 		{
@@ -148,6 +148,18 @@
 			"kuerzel": "It",
 			"aufgabenfeld": 1,
 			"isKurs": false
+		},
+		{
+			"name": "Altgriechisch",
+			"kuerzel": "AGr",
+			"aufgabenfeld": 1,
+			"isKurs": false
+		},
+		{
+			"name": "Griechisch",
+			"kuerzel": "Gr",
+			"aufgabenfeld": 1,
+			"isKurs": false
 		}
 	],
 	"pflichtfaecher": {
@@ -155,7 +167,7 @@
 		"De": "1-4",
 		"Sp": "1-4"
 	},
-	"wpfs": ["Inf", "Lat", "Fr"],
+	"wpfs": ["Inf", "Lat", "Fr", "DS"],
 	"regeln": [
 		{
 			"type": "WildcardRegel",
@@ -194,28 +206,45 @@
 			"desc": "Bio 4 Semester -> zusätzliche Naturwissenschaft min. 2 Semester",
 			"errorMsg": "Wähle eine 2. Naturwissenschaft für min. 2 Semester!"
 		},
+		// (§ 25 Abs. 3, § 26 Abs. 2 Nr. 3 VO-GO):
 		{
 			"type": "IfThenRegel",
 			"regel1": {
 				"type": "KuerzelRegel",
 				"kuerzel": "Ge",
-				"anzahl": 4
+				"anzahl": 4,
+				"scope": "1-5"
 			},
 			"regel2": {
-				"type": "KuerzelRegel",
-				"kuerzel": "PW",
-				"anzahl": 2,
-				"wann": "3-4"
+				"type": "OrRegel",
+				"regel1": {
+					// PW in Q3/Q4
+					"type": "KuerzelRegel",
+					"kuerzel": "PW",
+					"anzahl": 2,
+					"wann": "3-4"
+				},
+				"regel2": {
+					// ein anderes Fach aus AF2 für 4 Semester
+					/* es gibt nur ein weiteres Fach aus AF2: Erdkunde, deshalb kann die Wildcard Regel durch die KürzelRegel ersetzt werden
+					"type": "WildcardRegel",
+					"wildcard": "$AF2ohneGE",*/
+					"type": "KuerzelRegel",
+					"kuerzel": "Geo",
+					"anzahl": 4
+				}
 			},
-			"desc": "Geschichte 4 Semester -> zusätzlich PW min. in Q3 & Q4",
-			"errorMsg": "Wähle PW in Q3 & Q4!"
+			"desc": "Geschichte 4 Semester -> zusätzlich PW min. in Q3 & Q4 oder Geografie durchgängig",
+			"errorMsg": "Wähle PW in Q3 & Q4 oder Geografie durchgängig!" // es wird nur Erdkunde angeboten, ansonsten wäre es: ein weiteres Fach aus AF2 durchgängig
 		},
 		{
 			"type": "IfThenRegel",
 			"regel1": {
-				"type": "KuerzelRegel",
-				"kuerzel": "PW",
-				"anzahl": 4
+				// Fach aus AF2 außer Geschichte
+				"type": "WildcardRegel",
+				"wildcard": "$AF2ohneGE",
+				"anzahl": 4,
+				"scope": "1-5"
 			},
 			"regel2": {
 				"type": "KuerzelRegel",
@@ -223,24 +252,8 @@
 				"anzahl": 2,
 				"wann": "3-4"
 			},
-			"desc": "PW 4 Semester -> zusätzlich Ge min. in Q3 & Q4",
-			"errorMsg": "Wähle Ge in Q3 & Q4!"
-		},
-		{
-			"type": "IfThenRegel",
-			"regel1": {
-				"type": "KuerzelRegel",
-				"kuerzel": "Geo",
-				"anzahl": 4
-			},
-			"regel2": {
-				"type": "KuerzelRegel",
-				"kuerzel": "Ge",
-				"anzahl": 2,
-				"wann": "3-4"
-			},
-			"desc": "Geographie 4 Semester -> zusätzlich Ge min. in Q3 & Q4",
-			"errorMsg": "Wähle Ge in Q3 & Q4!"
+			"desc": "Geographie oder PW als Prüfungsfach/5. PK -> zusätzlich Ge min. in Q3 & Q4",
+			"errorMsg": "Wähle Geschichte in Q3 & Q4!"
 		},
 		{
 			"type": "WildcardRegel",
@@ -660,7 +673,8 @@
 		"$Mu/Ku": ["Mu", "Ku"],
 
 		// Andere Wildcards (z.B. f. Regeln)
-		"$KF": ["Mu", "Ku", "DS"]
+		"$KF": ["Mu", "Ku", "DS"],
+		"$AF2ohneGE": ["PW", "Geo"] // alle fächer aus AF2, außer Geschichte
 	},
 	"wzWildcards": ["$AF2", "$FS", "$NW", "$Mu/Ku"], // Wildcards, die in den Wahlzeilen vorkommen
 	"minKurse": 40, // Grundkurse und Leistungskurse zusammen

@@ -12,9 +12,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="App Icon hinzugefügt und Layout verschönert">
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Fächer, welche kein Kurs sind, werden im CSV-Generator ausgelassen">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/csvGenerator/generator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/csvGenerator/generator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/dataStruct.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dataStruct.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/test_wahl.kurswahl" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/test_wahl.kurswahl" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +113,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/libs/jcalendar-1.4.jar" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -159,7 +160,7 @@
       <command value="gradle shadowJar" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.kurswahlApp [shadowJar]">
+  <component name="RunManager" selected="Kotlin.Main">
     <configuration name="kurswahlApp [runShadow]" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -286,28 +287,11 @@
       <workItem from="1654707102130" duration="19725000" />
       <workItem from="1654780978926" duration="11785000" />
       <workItem from="1654852576487" duration="9000000" />
-      <workItem from="1654971763714" duration="9440000" />
-    </task>
-    <task id="LOCAL-00018" summary="Irgendwer hat weirden Stuff bei KurswahlData.kt hinzugefügt...">
-      <created>1653489552831</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1653489552831</updated>
-    </task>
-    <task id="LOCAL-00019" summary="Irgendwer hat weirden Stuff bei KurswahlData.kt hinzugefügt...">
-      <created>1653489693230</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1653489693230</updated>
-    </task>
-    <task id="LOCAL-00020" summary="Refractoring und Typenänderungen">
-      <created>1653490634145</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1653490634145</updated>
+      <workItem from="1654971763714" duration="10449000" />
+      <workItem from="1654982480359" duration="309000" />
+      <workItem from="1654998795729" duration="210000" />
+      <workItem from="1655037447382" duration="903000" />
+      <workItem from="1655040907043" duration="1862000" />
     </task>
     <task id="LOCAL-00021" summary="Arbeit an den Regeln">
       <created>1653583719724</created>
@@ -631,7 +615,28 @@
       <option name="project" value="LOCAL" />
       <updated>1654980443830</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="Generator Bugs gefixt; Datumsformat ist nun yyyy-MM-dd!">
+      <created>1654982295599</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1654982295599</updated>
+    </task>
+    <task id="LOCAL-00068" summary="Dialog-Titel bei den Open/Save Dialogen hinzugefügt.">
+      <created>1654982710880</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1654982710880</updated>
+    </task>
+    <task id="LOCAL-00069" summary="Fächer, welche kein Kurs sind, werden im CSV-Generator ausgelassen">
+      <created>1654998996647</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1654998996647</updated>
+    </task>
+    <option name="localTasksCounter" value="70" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -651,9 +656,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Zahlendreher geändert" />
-    <MESSAGE value="Ungenutzte Methoden entfernt" />
-    <MESSAGE value="Ungenutzte Methoden/Parameter entfernt" />
     <MESSAGE value="KDocs Änderung" />
     <MESSAGE value="CommandLineArgument-Parsing Library hinzugefügt" />
     <MESSAGE value="Wechsel von Propertyänderung zu Constructor-Arguments" />
@@ -676,7 +678,10 @@
     <MESSAGE value="Extra Padding hinzugefügt, um Lesbarkeit zu verbessern" />
     <MESSAGE value="IntelliJ Changes" />
     <MESSAGE value="App Icon hinzugefügt und Layout verschönert" />
-    <option name="LAST_COMMIT_MESSAGE" value="App Icon hinzugefügt und Layout verschönert" />
+    <MESSAGE value="Generator Bugs gefixt; Datumsformat ist nun yyyy-MM-dd!" />
+    <MESSAGE value="Dialog-Titel bei den Open/Save Dialogen hinzugefügt." />
+    <MESSAGE value="Fächer, welche kein Kurs sind, werden im CSV-Generator ausgelassen" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fächer, welche kein Kurs sind, werden im CSV-Generator ausgelassen" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
