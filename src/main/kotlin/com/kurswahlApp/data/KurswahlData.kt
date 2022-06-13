@@ -65,7 +65,7 @@ data class KurswahlData(
             @JsonProperty nachname: String,
             @JsonProperty
             @JsonDeserialize(using = LocalDateDeserializer::class)
-            @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyy-MM-dd")
+            @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
             geburtsdatum: LocalDate,
             @JsonProperty geburtsort: String,
             @JsonProperty staatsangehoerigkeit: String,
