@@ -35,7 +35,7 @@ class RegelLabel(regel: Regel) : JLabel(regel.desc!!.wrappable(), validIcon, LEA
     }
 
     companion object {
-        private val validIcon = createImageIcon("check.png")
-        private val errorIcon = createImageIcon("cross.png")
+        private val validIcon = createImageIcon("icons/check.png")
+        private val errorIcon = createImageIcon("icons/cross.png")
     }
 }
