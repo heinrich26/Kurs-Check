@@ -28,6 +28,7 @@ class Nutzerdaten(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean
             setFormatForDatesCommonEra("dd.MM.yy")
             setFormatForDatesBeforeCommonEra("dd.MM.uu")
             LocalDate.now().let {
+                geburtsdatumPicker.date = LocalDate.of(it.year - 15, 1, 1)
                 it.year.let { year -> if (it.isBefore(LocalDate.of(year, 7, 1))) year else year + 1 }
             }.let {
                 setDateRangeLimits(LocalDate.of(it - MAX_ALTER, 7, 1), LocalDate.of(it - MIN_ALTER, 6, 30))
