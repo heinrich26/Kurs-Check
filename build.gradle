@@ -12,7 +12,7 @@ apply plugin: 'com.github.johnrengelman.shadow'
 mainClassName = 'com.kurswahlApp.MainKt'
 
 group 'com.kurswahlApp'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 repositories {
     mavenCentral()
@@ -38,9 +38,9 @@ test {
 
 application {
     mainClass = mainClassName
-    applicationDefaultJvmArgs = [/*'-Dsun.java2d.uiScale=1.25'*/]
+    //applicationDefaultJvmArgs = ['-Dsun.java2d.uiScale=1.25']
 }
 
 runShadow {
-    args ['-Dsun.java2d.dpiaware=false', '-Dsun.java2d.uiScale=2.0']
+    args('-Dsun.java2d.dpiaware=false', '-Dsun.java2d.uiScale=2.0')
 }

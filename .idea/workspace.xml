@@ -12,15 +12,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Export nutzt nun noch ungespeicherte Daten aus dem aktuellen Panel und schlägt einen Dateinamen vor">
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Java-Version auf 1.8 gesetzt, um größere Kompatibilität zu ermöglichen&#10;&#10;Benötigte eine Neuimplementierung des `FachComboBoxModel`s, denn addAll(...) gibt es in Java 1.8s ComboBox Implementation noch nicht">
       <change afterPath="$PROJECT_DIR$/src/main/resources/schema.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/FachComboBoxModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/FachComboBoxModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/GuiMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/GuiMain.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/Leistungskurse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/Leistungskurse.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/Toolbar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/Toolbar.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/GrundkursWahl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/GrundkursWahl.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +88,7 @@
     <setting file="file://$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/ExclusiveComboBoxModel.kt" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/data/TestData.kt" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/ClickableDestionation.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/resources/icon.SVG" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/resources/icons/icon.svg" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/GrundkursWahl.kt" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/resources/dataStruct.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/data/WahlzeileLinientyp.kt" root0="FORCE_HIGHLIGHTING" />
@@ -140,6 +138,7 @@
       <recent name="" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\src\main\resources\icons" />
       <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\src\main\resources" />
       <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\libs" />
     </key>
@@ -213,28 +212,25 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="Output JAR Test" type="JarApplication" temporary="true">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/build/libs/kurswahlApp-1.0-SNAPSHOT-all.jar" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method v="2" />
-    </configuration>
     <configuration name="Fremdsprachen" type="JetRunConfigurationType" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.kurswahlApp.gui.Fremdsprachen" />
-      <module name="kurswahlApp.main" />
+      <module name="Kurs-Check.main" />
+      <shortenClasspath name="NONE" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration name="GrundkursWahl" type="JetRunConfigurationType" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.kurswahlApp.gui.GrundkursWahl" />
-      <module name="kurswahlApp.main" />
+      <module name="Kurs-Check.main" />
+      <shortenClasspath name="NONE" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration name="Main w. testData" type="JetRunConfigurationType">
       <option name="MAIN_CLASS_NAME" value="com.kurswahlApp.gui.GuiMain" />
-      <module name="kurswahlApp.main" />
+      <module name="Kurs-Check.main" />
       <option name="PROGRAM_PARAMETERS" value="--useTestData" />
       <shortenClasspath name="NONE" />
       <method v="2">
@@ -243,7 +239,7 @@
     </configuration>
     <configuration name="Main" type="JetRunConfigurationType">
       <option name="MAIN_CLASS_NAME" value="com.kurswahlApp.gui.GuiMain" />
-      <module name="kurswahlApp.main" />
+      <module name="Kurs-Check.main" />
       <shortenClasspath name="NONE" />
       <option name="VM_PARAMETERS" value="-Dsun.java2d.dpiaware=false -Dsun.java2d.uiScale=1.25" />
       <method v="2">
@@ -253,7 +249,6 @@
     <list>
       <item itemvalue="Gradle.kurswahlApp [runShadow]" />
       <item itemvalue="Gradle.kurswahlApp [shadowJar]" />
-      <item itemvalue="JAR Application.Output JAR Test" />
       <item itemvalue="Kotlin.Fremdsprachen" />
       <item itemvalue="Kotlin.GrundkursWahl" />
       <item itemvalue="Kotlin.Main w. testData" />
@@ -262,7 +257,6 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.kurswahlApp [shadowJar]" />
-        <item itemvalue="JAR Application.Output JAR Test" />
       </list>
     </recent_temporary>
   </component>
@@ -303,21 +297,7 @@
       <workItem from="1655037447382" duration="903000" />
       <workItem from="1655040907043" duration="5259000" />
       <workItem from="1655054798602" duration="3469000" />
-      <workItem from="1655114011732" duration="3788000" />
-    </task>
-    <task id="LOCAL-00024" summary="Arbeit an den Regeln, Einbindung in GrundkursWahl.kt">
-      <created>1653667551425</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1653667551425</updated>
-    </task>
-    <task id="LOCAL-00025" summary="Arbeit an Leistungskurse.kt, zeigt jetzt nur die möglichen LKs an!&#10;&#10;Ein Paar TODOs für Konrad in GrundkursWahl.kt&#10;&#10;Umstieg von GSON auf jackson-module-kotlin, weil GSON Kotlin nicht mag">
-      <created>1653830522088</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1653830522088</updated>
+      <workItem from="1655114011732" duration="8708000" />
     </task>
     <task id="LOCAL-00026" summary="ich habe keinen Bock mehr">
       <created>1653832869992</created>
@@ -648,7 +628,21 @@
       <option name="project" value="LOCAL" />
       <updated>1655046200183</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="Navigation gefixt">
+      <created>1655118198644</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1655118198645</updated>
+    </task>
+    <task id="LOCAL-00074" summary="Java-Version auf 1.8 gesetzt, um größere Kompatibilität zu ermöglichen&#10;&#10;Benötigte eine Neuimplementierung des `FachComboBoxModel`s, denn addAll(...) gibt es in Java 1.8s ComboBox Implementation noch nicht">
+      <created>1655118406040</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1655118406040</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -668,8 +662,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Testdaten werden nun aus `test_wahl.kurswahl` gelesen" />
-    <MESSAGE value="Weitere Attribute werden nun von `lock()` beeinflusst" />
     <MESSAGE value="Refactoring" />
     <MESSAGE value="Gradle-Wrapper hinzugefügt, um GitHub Actions zu erlauben und evtl. die Probleme an den SchulPCs zu lösen" />
     <MESSAGE value="Packages neu angeordnet" />
@@ -693,7 +685,9 @@
     <MESSAGE value="Carlos Bug gefixt, dass PW benötigt wird, wenn man Geschichte einfach so 4 Semester wählt. Außerdem 2 weitere Sprachen hinzugefügt.&#10;&#10;Icon durch das Neue ersetzt&#10;&#10;Arbeitsdateien entfern" />
     <MESSAGE value="Die extra Fremdsprachen können nun auch gewählt werden" />
     <MESSAGE value="Export nutzt nun noch ungespeicherte Daten aus dem aktuellen Panel und schlägt einen Dateinamen vor" />
-    <option name="LAST_COMMIT_MESSAGE" value="Export nutzt nun noch ungespeicherte Daten aus dem aktuellen Panel und schlägt einen Dateinamen vor" />
+    <MESSAGE value="Navigation gefixt" />
+    <MESSAGE value="Java-Version auf 1.8 gesetzt, um größere Kompatibilität zu ermöglichen&#10;&#10;Benötigte eine Neuimplementierung des `FachComboBoxModel`s, denn addAll(...) gibt es in Java 1.8s ComboBox Implementation noch nicht" />
+    <option name="LAST_COMMIT_MESSAGE" value="Java-Version auf 1.8 gesetzt, um größere Kompatibilität zu ermöglichen&#10;&#10;Benötigte eine Neuimplementierung des `FachComboBoxModel`s, denn addAll(...) gibt es in Java 1.8s ComboBox Implementation noch nicht" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
