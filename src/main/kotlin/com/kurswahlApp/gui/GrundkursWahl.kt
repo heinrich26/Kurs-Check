@@ -158,7 +158,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
 
 
             if (cond) {
-                val label = JLabel(fach.name)
+                val label = JLabel(fach.nameFormatted())
 
                 // Wenn man das Label anklickt wird die ganze Zeile ausgewählt
                 label.addMouseListener(object : MouseAdapter() {
