@@ -8,7 +8,7 @@ import kotlinx.cli.optional
 
 
 fun main(args: Array<String>) {
-    val parser = ArgParser("kurswahlApp")
+    val parser = ArgParser("Kurs-Check")
 
     val input by parser.argument(
         ArgType.String, "input",
