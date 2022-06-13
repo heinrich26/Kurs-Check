@@ -70,7 +70,7 @@ class GuiMain(file: File? = null) : JPanel() {
                             UIManager.put(key, FontUIResource(FONT_NAME, value.style, value.size))
                     }
                 }*/
-        } catch (ex: Exception) {
+            } catch (ex: Exception) {
                 ex.printStackTrace()
             }
 
@@ -150,7 +150,13 @@ class GuiMain(file: File? = null) : JPanel() {
         val callback: (Boolean) -> Unit =
             when (index) {
                 -1 -> curPanel.notifier
-                in 1..4 -> { it -> for (i in (index + 1)..4) sidebarBtns[i].isEnabled = it }
+                in 1..3 -> { it ->
+                    if (it)
+                        sidebarBtns[index + 1].isEnabled = it
+                    else
+                        for (i in (index + 1)..4)
+                            sidebarBtns[i].isEnabled = false
+                }
                 else -> { _ -> }
             }
 
@@ -240,9 +246,11 @@ class GuiMain(file: File? = null) : JPanel() {
                 chooser.fileFilter = KurswahlFileFilter
                 chooser.dialogTitle = "Datei für den Oberstufenkoordinator speichern"
                 chooser.selectedFile =
-                    File("${wahlData.vorname!!.split(' ')[0]}_${wahlData.nachname}"
-                        .replace(Regex("[\\\\/:*?\"<>|.&$]"), "")
-                        .replace(' ', '_') + ".$FILETYPE_EXTENSION")
+                    File(
+                        "${wahlData.vorname!!.split(' ')[0]}_${wahlData.nachname}"
+                            .replace(Regex("[\\\\/:*?\"<>|.&$]"), "")
+                            .replace(' ', '_') + ".$FILETYPE_EXTENSION"
+                    )
 
                 if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
                     val f =
