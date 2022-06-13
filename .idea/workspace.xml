@@ -12,9 +12,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Die extra Fremdsprachen können nun auch gewählt werden">
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Export nutzt nun noch ungespeicherte Daten aus dem aktuellen Panel und schlägt einen Dateinamen vor">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/schema.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/FachComboBoxModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/FachComboBoxModel.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/GuiMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/GuiMain.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/Leistungskurse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/Leistungskurse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/Toolbar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp/gui/Toolbar.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,8 +64,8 @@
         <option value="Class" />
         <option value="JUnit5 Test Class" />
         <option value="Kotlin Object" />
-        <option value="Kotlin File" />
         <option value="Kotlin Class" />
+        <option value="Kotlin File" />
       </list>
     </option>
   </component>
@@ -100,6 +106,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="2" />
+  </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
   </component>
@@ -114,7 +123,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/kotlin/com/kurswahlApp" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
@@ -292,14 +301,9 @@
       <workItem from="1654982480359" duration="309000" />
       <workItem from="1654998795729" duration="210000" />
       <workItem from="1655037447382" duration="903000" />
-      <workItem from="1655040907043" duration="5157000" />
-    </task>
-    <task id="LOCAL-00023" summary="Arbeit an den Regeln, Einbindung in FachData.kt">
-      <created>1653665742145</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1653665742145</updated>
+      <workItem from="1655040907043" duration="5259000" />
+      <workItem from="1655054798602" duration="3469000" />
+      <workItem from="1655114011732" duration="3788000" />
     </task>
     <task id="LOCAL-00024" summary="Arbeit an den Regeln, Einbindung in GrundkursWahl.kt">
       <created>1653667551425</created>
@@ -637,7 +641,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655043477113</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="Export nutzt nun noch ungespeicherte Daten aus dem aktuellen Panel und schlägt einen Dateinamen vor">
+      <created>1655046200183</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1655046200183</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -657,7 +668,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Wechsel von Propertyänderung zu Constructor-Arguments" />
     <MESSAGE value="Testdaten werden nun aus `test_wahl.kurswahl` gelesen" />
     <MESSAGE value="Weitere Attribute werden nun von `lock()` beeinflusst" />
     <MESSAGE value="Refactoring" />
@@ -682,7 +692,8 @@
     <MESSAGE value="Fächer, welche kein Kurs sind, werden im CSV-Generator ausgelassen" />
     <MESSAGE value="Carlos Bug gefixt, dass PW benötigt wird, wenn man Geschichte einfach so 4 Semester wählt. Außerdem 2 weitere Sprachen hinzugefügt.&#10;&#10;Icon durch das Neue ersetzt&#10;&#10;Arbeitsdateien entfern" />
     <MESSAGE value="Die extra Fremdsprachen können nun auch gewählt werden" />
-    <option name="LAST_COMMIT_MESSAGE" value="Die extra Fremdsprachen können nun auch gewählt werden" />
+    <MESSAGE value="Export nutzt nun noch ungespeicherte Daten aus dem aktuellen Panel und schlägt einen Dateinamen vor" />
+    <option name="LAST_COMMIT_MESSAGE" value="Export nutzt nun noch ungespeicherte Daten aus dem aktuellen Panel und schlägt einen Dateinamen vor" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -20,6 +20,7 @@ import javax.swing.border.EmptyBorder
 /**
  * Aims to Implement a Material Toolbar with a Drop Shadow
  */
+@Suppress("unused")
 class Toolbar(text: String, private val shadowSize: Int = 8) : JPanel(GridBagLayout()) {
     var text: String
         get() = label.text

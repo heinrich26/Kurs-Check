@@ -1,5 +1,5 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.6.21'
+    id 'org.jetbrains.kotlin.jvm' version '1.7.0'
     id 'java'
     id 'application'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
@@ -25,10 +25,10 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-cli:0.3.4'
     implementation 'com.github.lgooddatepicker:LGoodDatePicker:11.2.1'
 
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.21'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.7.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-    implementation "org.jetbrains.kotlin:kotlin-reflect:1.6.21"
+    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.7.0'
 }
 
 test {
@@ -42,5 +42,5 @@ application {
 }
 
 runShadow {
-    args '-Dsun.java2d.dpiaware=false -Dsun.java2d.uiScale=2.0'
+    args ['-Dsun.java2d.dpiaware=false', '-Dsun.java2d.uiScale=2.0']
 }

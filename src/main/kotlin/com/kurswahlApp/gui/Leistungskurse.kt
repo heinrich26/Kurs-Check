@@ -22,7 +22,7 @@ class Leistungskurse(wahlData: KurswahlData, fachData: FachData, notifier: (Bool
             runTest { Leistungskurse(testKurswahl, testFachdata) }
         }
 
-        class LKComboBoxModel(data: Collection<Fach>, other: FachComboBox) : FachComboBoxModel(data = data) {
+        class LKComboBoxModel(data: Collection<Fach>, other: FachComboBox) : FachComboBoxModel(data) {
             private var excludedItem: Pair<Fach, Int>? = null
 
             init {
