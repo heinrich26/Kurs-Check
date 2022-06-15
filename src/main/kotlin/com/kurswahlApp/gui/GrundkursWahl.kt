@@ -238,7 +238,6 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                 }
         }
         // Blockt Pflichtfächer
-        // TODO zurzeit sind 1-4 gesperrt, aber es könnte auch Fächer geben, wo nur bestimmte gesperrt sind
         for ((pf, _) in fachData.pflichtfaecher) {
             val pos = fachPos(pf)
             for (k in pos * 4..pos * 4 + 3)
