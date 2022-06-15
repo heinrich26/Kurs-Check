@@ -30,7 +30,6 @@ class WildcardRegel(
     private lateinit var wCardScope: List<Fach>
 
     override fun match(data: KurswahlData): Boolean {
-//        val scope = fachData.wildcards[wildcard]!!
         for ((fach, wmoegl) in dataScope.invoke(data)) {
             // Checken ob die Wahlmoeglichkeit passt
             if (!predicate(wmoegl)) continue
@@ -38,10 +37,6 @@ class WildcardRegel(
             // Gucken ob der Kurs passt
             if (fach in wCardScope) return true
         }
-
-        // TODO Alternative Implementierung vergleichen
-//        val kurse = data.kurse
-//        scope.mapNotNull { data.kurse[it] }.forEach { if (predicate(it)) return true }
 
         return false
     }
