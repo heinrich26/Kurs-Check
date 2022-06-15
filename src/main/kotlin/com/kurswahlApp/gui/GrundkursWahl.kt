@@ -210,7 +210,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                 checkboxArray.add(box)
                 checkboxPanel.add(box, row = i, column = j, fill = GridBagConstraints.HORIZONTAL)
             }
-
+            //Lockt Checkboxen für Fächer die nur in bestimmten Semestern gewählt werden können
             when (fach.nurIn) {
                 ERSTES_ZWEITES -> {
                     checkboxArray[checkboxArray.size - 2].isEnabled = false
