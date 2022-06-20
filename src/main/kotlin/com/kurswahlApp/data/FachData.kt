@@ -3,6 +3,7 @@ package com.kurswahlApp.data
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIncludeProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.core.exc.StreamReadException
 import com.fasterxml.jackson.databind.DatabindException
 import com.fasterxml.jackson.databind.InjectableValues
@@ -95,6 +96,7 @@ data class FachData(
     @Throws(IOException::class, StreamReadException::class, DatabindException::class)
     fun loadKurswahl(file: File): KurswahlData {
         val mapper = jacksonObjectMapper()
+        mapper.factory.enable(JsonParser.Feature.ALLOW_COMMENTS)
         val injectables = InjectableValues.Std()
         injectables.addValue(FachData::class.java, this)
         mapper.injectableValues = injectables
