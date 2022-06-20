@@ -121,12 +121,12 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
                 if (wz.pf4.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf4]!!)
                 else kuerzel.add(wz.pf4)
 
-                /*if (wz.linien == KEINE) {*/
-                if (wz.pf5 == "*") return beliebig()
+                if (wz.linien != KEINE_DURCHGEZOGEN) {
+                    if (wz.pf5 == "*") return beliebig()
 
-                if (wz.pf5.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf5]!!)
-                else kuerzel.add(wz.pf5)
-                /*}*/
+                    if (wz.pf5.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf5]!!)
+                    else kuerzel.add(wz.pf5)
+                }
             }
         }
 
