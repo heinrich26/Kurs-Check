@@ -4,6 +4,7 @@ import com.kurswahlApp.data.Fach
 import java.io.Serializable
 import java.util.*
 import javax.swing.AbstractListModel
+import javax.swing.DefaultComboBoxModel
 import javax.swing.MutableComboBoxModel
 
 /**
@@ -98,18 +99,19 @@ open class FachComboBoxModel : AbstractListModel<Fach?>, MutableComboBoxModel<Fa
         }
     }
 
+
     /**
      * Fügt alle [items] in das ComboBoxModell ein.
+     *
+     * Kopiert aus Corretto-16 [DefaultComboBoxModel.addAll] für 1.8 Kompatibilität
      */
     fun addAll(items: Collection<Fach>) {
         if (items.isEmpty()) return
 
-        val oldSize = objects.size
+        val startIndex = size
+
         objects.addAll(items)
-        fireIntervalAdded(this, oldSize, oldSize + items.size - 1)
-        if (oldSize == 0 && selectedObject == null) {
-            selectedItem = objects[0]
-        }
+        fireIntervalAdded(this, startIndex, size - 1)
     }
 
     // implements javax.swing.MutableComboBoxModel
