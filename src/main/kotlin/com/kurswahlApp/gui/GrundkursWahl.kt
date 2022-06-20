@@ -210,7 +210,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                 checkboxArray.add(box)
                 checkboxPanel.add(box, row = i, column = j, fill = GridBagConstraints.HORIZONTAL)
             }
-
+            //Lockt Checkboxen für Fächer die nur in bestimmten Semestern gewählt werden können
             when (fach.nurIn) {
                 ERSTES_ZWEITES -> {
                     checkboxArray[checkboxArray.size - 2].isEnabled = false
@@ -238,7 +238,6 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                 }
         }
         // Blockt Pflichtfächer
-        // TODO zurzeit sind 1-4 gesperrt, aber es könnte auch Fächer geben, wo nur bestimmte gesperrt sind
         for ((pf, _) in fachData.pflichtfaecher) {
             val pos = fachPos(pf)
             for (k in pos * 4..pos * 4 + 3)
