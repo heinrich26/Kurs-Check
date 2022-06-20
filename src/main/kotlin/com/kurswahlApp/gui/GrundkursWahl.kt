@@ -168,7 +168,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                         val zeile = checkboxArray.subList(i * 4, i * 4 + 4)
 
                         // An- und Abwählen
-                        when (zeile.count { it.isSelected }) {
+                        when (zeile.count { !it.isEnabled || it.isSelected }) {
                             0, 2, 3 -> {
                                 for (box in zeile)
                                     if (box.isEnabled && !box.isSelected) {
