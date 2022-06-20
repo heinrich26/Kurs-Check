@@ -200,9 +200,10 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                         if (box.isSelected) anzahl++ else anzahl--
                         // Das Label Rot färben, wenn die Reihe ungültig ist
                         labelArray[i]!!.foreground =
-                            if (Wahlmoeglichkeit.fromBools(
-                                    checkboxArray.subList(i * 4, i * 4 + 4).map { it.isSelected }) != null
-                            ) Color.BLACK
+                            if (checkboxArray.subList(i * 4, i * 4 + 4).map { it.isSelected }.let {
+                                    it == listOf(false, false, false, false) ||
+                                    Wahlmoeglichkeit.fromBools(it) != null
+                                 }) Color.BLACK
                             else Consts.COLOR_ERROR
                     }
                 } else box.isVisible = false
