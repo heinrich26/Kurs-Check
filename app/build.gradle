@@ -17,11 +17,11 @@ dependencies {
 }
 
 
-createExe { // Baut die GUI exe
+launch4j { // Baut die GUI exe
     icon = "${rootProject.projectDir}/icons/app_icon.ico"
     splashWaitForWindows = false
     copyConfigurable = []
-    mainClassName = "${group}.gui.MainKt"
+    mainClassName = "gui.GuiMain"
     fileDescription = "digitale Anwendung zur Erleichterung der Kurswahl"
     jarTask = project.tasks.shadowJar
     outfile = "${rootProject.name}.exe"
