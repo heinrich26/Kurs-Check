@@ -1,8 +1,10 @@
 /out/
 /build/
 /buildSrc/build/
+/buildSrc/.gradle/
+/app/build/
+/lib/build/
+/merger/build/
 /.gradle/
 ~$*.docx
 out.pdf
-
-.gradle/*
