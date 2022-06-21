@@ -1,5 +1,8 @@
 /out/
 /build/
+/buildSrc/build/
 /.gradle/
 ~$*.docx
 out.pdf
+
+.gradle/*

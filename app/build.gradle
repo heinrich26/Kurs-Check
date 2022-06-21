@@ -1,0 +1,28 @@
+plugins {
+    id 'myproject.java-conventions'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'edu.sc.seis.launch4j' version '2.5.3'
+}
+
+apply plugin: 'com.github.johnrengelman.shadow'
+
+
+dependencies {
+    implementation project(':lib')
+
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-cli:0.3.4'
+    implementation 'com.github.lgooddatepicker:LGoodDatePicker:11.2.1'
+}
+
+
+createExe { // Baut die GUI exe
+    icon = "${rootProject.projectDir}/icons/app_icon.ico"
+    splashWaitForWindows = false
+    copyConfigurable = []
+    mainClassName = "${group}.gui.MainKt"
+    fileDescription = "digitale Anwendung zur Erleichterung der Kurswahl"
+    jarTask = project.tasks.shadowJar
+    outfile = "${rootProject.name}.exe"
+}

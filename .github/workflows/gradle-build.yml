@@ -17,10 +17,18 @@ jobs:
       with:
         gradle-version: 7.4
       
-    - name: Run shadowJar
-      run: gradle shadowJar
+    - name: Build Application with launch4j
+      run: gradle :app:createExe
     - name: Upload build reports
       uses: actions/upload-artifact@v3
       with:
         name: application
-        path: build/libs/
+        path: app/build/launch4j/
+
+    - name: Build Commandline-Merger with launch4j
+      run: gradle :merger:createExe
+    - name: Upload build reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: application
+        path: merger/build/launch4j/

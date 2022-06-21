@@ -1,0 +1,24 @@
+plugins {
+    id 'myproject.java-conventions'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'edu.sc.seis.launch4j' version '2.5.3'
+}
+
+apply plugin: 'com.github.johnrengelman.shadow'
+
+dependencies {
+    implementation project(':lib')
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-cli:0.3.4'
+    implementation 'org.apache.commons:commons-csv:1.9.0'
+}
+
+launch4j { // Baut die GUI exe
+    icon = "${rootProject.projectDir}/icons/app_icon.ico"
+    copyConfigurable = []
+    mainClassName = "${group}.GeneratorKt"
+    jarTask = project.tasks.shadowJar
+    headerType = "console"
+    outfile = "Wahl-Merger.exe"
+    fileDescription = "Kommandozeilen-Anwendung zum Zusammenführen der .kurswahl Dateien! Siehe: ${outfile} --help"
+}
