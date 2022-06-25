@@ -4,6 +4,7 @@ import com.kurswahlApp.data.Consts
 import com.kurswahlApp.data.Wahlmoeglichkeit.*
 import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
+import kotlinx.cli.default
 import kotlinx.cli.optional
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVPrinter
@@ -43,9 +44,8 @@ val CSV_HEADER = arrayOf(
 fun main(args: Array<String>) {
     val parser = ArgParser(Consts.APP_NAME)
 
-    val input by parser.argument(
-        ArgType.String, "input", "Für die CSV-Generierung verwendeter Ordner"
-    ).optional()
+    val input by parser.argument(ArgType.String, "input", "Für die CSV-Generierung verwendeter Ordner")
+        .optional().default(System.getProperty("user.dir"))
     val output by parser.argument(ArgType.String, "output", "Speicherort der generierten .csv-Datei")
         .optional()
 
@@ -54,20 +54,19 @@ fun main(args: Array<String>) {
     run(input, output) // CLI merger starten
 }
 
-private fun run(directory: String?, output: String?) {
+private fun run(directory: String, output: String?) {
     val fachData = readDataStruct()
 
 
-    val dirFile =
-        if (directory == null) File(System.getProperty("user.dir"))
-        else File(directory).let {
-            if (it.isDirectory) it
-            else throw RuntimeException("Der angegebene Pfad ist kein Ordner!")
-        }
+    val dirFile = File(directory)
+    if (!dirFile.isDirectory) {
+        throw RuntimeException("Der angegebene Pfad ist kein Ordner!")
+    }
 
 
     val files = dirFile.listFiles { f -> f.extension == Consts.FILETYPE_EXTENSION }
         ?: throw RuntimeException("Ungültiger Pfad")
+
     if (files.isEmpty()) throw RuntimeException("Der Ordner war leer, keine Datei konnte erstellt werden!")
 
     val wahlDataList = files.map { fachData.loadKurswahl(it) }
@@ -75,7 +74,7 @@ private fun run(directory: String?, output: String?) {
     val outputFile = if (output != null) {
         File(output).let {
             if (it.isFile && it.exists() && it.extension.equals("csv", true)) it else {
-                println("Ungültiger Pfad für die Output-Datei, nutze Default im Ordner ${dirFile}!")
+                println("Ungültiger Pfad für die Output-Datei, nutze Default: $FILE_NAME im Ordner $dirFile!")
                 File(dirFile, FILE_NAME)
             }
         }
