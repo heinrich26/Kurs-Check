@@ -212,6 +212,8 @@ class GuiMain(file: File? = null) : JPanel() {
                 }
                 wahlData = data
 
+                println(wahlData)
+
                 // Das GUI updaten
                 swapPanel()
 

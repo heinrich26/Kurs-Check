@@ -85,7 +85,7 @@ Weitere Beispiele können sie in der richtigen dataStruct.json finden
 		regel1=OrRegel(regel1=KuerzelRegel(...), regel2=WildcardRegel(...))
 		regel2=KuerzelRegel(...),
 		desc= ...
-		)  (die Notation ist abstrakt und nur zur Veranschaulichung!)
+	)  (die Notation ist abstrakt und nur zur Veranschaulichung!)
 	*/
 	"regeln": [
 		{

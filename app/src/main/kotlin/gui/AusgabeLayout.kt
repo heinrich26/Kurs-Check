@@ -37,6 +37,8 @@ class AusgabeLayout(private val fachData: FachData, wahlData: KurswahlData) : JP
         var feldPanel: JPanel? = null
         var feld = Int.MAX_VALUE
         for ((i, fach) in fachData.faecher.withIndex()) {
+            if (!fach.isKurs) continue
+
             if (feld > 0 && feld != fach.aufgabenfeld) {
                 if (feldPanel != null)
                     checkboxPanel.add(

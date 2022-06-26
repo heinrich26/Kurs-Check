@@ -4,7 +4,10 @@ on: [push, workflow_dispatch]
 
 jobs:   
   gradle:
-    runs-on: windows-latest
+    strategy:
+      matrix:
+        os: [ macos-latest, windows-latest ]
+    runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout project sources
       uses: actions/checkout@v3

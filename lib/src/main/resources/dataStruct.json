@@ -47,7 +47,8 @@
 		{
 			"name": "Musik",
 			"kuerzel": "Mu",
-			"aufgabenfeld": 1
+			"aufgabenfeld": 1,
+			"isLk": true
 		},
 		{
 			"name": "Darstellendes Spiel",
@@ -167,13 +168,13 @@
 		{
 			"name": "Bio/Phy/Chemie",
 			"kuerzel": "BPC",
-			"aufgabenfeld": 3,
+			"aufgabenfeld": 3, // irrelevant, da kein Kurs
 			"isKurs": false
 		},
 		{
 			"name": "Geschichte/Geografie/PB",
 			"kuerzel": "GGP",
-			"aufgabenfeld": 2,
+			"aufgabenfeld": 2, // irrelevant, da kein Kurs
 			"isKurs": false
 		}
 	],
