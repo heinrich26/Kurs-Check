@@ -40,7 +40,7 @@ tasks.getByName('jpackageImage').dependsOn copyInstallerResources
 
 runtime {
     jpackage {
-        installerOutputDir = file("$rootDir/out/executable")
+        installerOutputDir = file("$rootDir/out/executable/full")
         imageName = rootProject.name
         installerName = rootProject.name + '-full'
         imageOptions = ['--add-launcher', "wahl-merger=res/§${(Os.isFamily(Os.FAMILY_WINDOWS)) ? 'win' : 'mac'}-merger.properties"]
