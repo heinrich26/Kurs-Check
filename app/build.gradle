@@ -1,3 +1,5 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
 plugins {
     id 'myproject.java-conventions'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
@@ -38,12 +40,16 @@ runtime {
         installerOutputDir = file("$rootDir/out/executable")
         imageName = rootProject.name
         installerName = rootProject.name
-//        installerType = 'msi'
-        installerOptions = ['--win-menu', '--win-shortcut', '--win-per-user-install', '--win-dir-chooser',
-                            '--mac-package-identifier', rootProject.name, '--mac-package-name', rootProject.name,
-                            '--file-associations', "$buildDir/$resDirName/kurswahl.properties",
+
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+            installerType = 'msi'
+        }
+
+        installerOptions = ['--file-associations', "$buildDir/$resDirName/kurswahl.properties",
                             '--vendor', '"Willi-Graf-Gymnasium"', '--description', "\"$description\"",
-                            '--copyright', '"Copyright 2020, All rights reserved"']
+                            '--copyright', '"Copyright 2020, All rights reserved"',
+                            '--about-url', 'https://github.com/heinrich26/kurswahlApp',
+                            (Os.isFamily(Os.FAMILY_WINDOWS)) ? '@res/win-opts.txt' : '@res/mac-opts.txt']
         resourceDir = file("$buildDir/$resDirName")
     }
 

@@ -12,16 +12,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="icon als vektorgrafik hinzugefügt">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/gradle-build.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/gradle-build.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="debug println() entfernt">
+      <change afterPath="$PROJECT_DIR$/app/res/mac-opts.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/res/win-opts.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merger/res/mac-merger.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merger/res/mac-opts.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merger/res/win-opts.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/AusgabeLayout.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/AusgabeLayout.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/resources/dataStruct.json" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/resources/dataStruct.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/resources/schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/resources/schema.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/merger/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/merger/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/merger/res/merger.properties" beforeDir="false" afterPath="$PROJECT_DIR$/merger/res/win-merger.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +103,7 @@
     <setting file="file://$PROJECT_DIR$/lib/src/main/resources/dataStruct.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/merger/build.gradle" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/merger/res/main.wxs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/merger/res/merger.properties" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/merger/res/win-merger.properties" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/merger/settings.gradle" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="KotlinCodeInsightWorkspaceSettings">
@@ -129,19 +129,11 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/merger/build/temp/config/main.wxs" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="SDKs" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
-    <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/merger/build/temp/config/main.wxs" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="javax.swing.text.html" />
@@ -155,11 +147,11 @@
       <recent name="" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\hendrik\IdeaProjects\kurswahlApp\app\res" />
+      <recent name="C:\Users\hendrik\IdeaProjects\kurswahlApp\merger\res" />
+      <recent name="C:\Users\hendrik\IdeaProjects\kurswahlApp\merger" />
       <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\merger\res" />
       <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\icons" />
-      <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\app\build" />
-      <recent name="C:\Users\hendrik\IdeaProjects\kurswahlApp\app\src\main\resources" />
-      <recent name="C:\Users\hendrik\IdeaProjects\kurswahlApp\lib\src\main\resources" />
     </key>
     <key name="CreateKotlinClassDialog.RecentsKey">
       <recent name="data" />
@@ -193,7 +185,7 @@
       <command value="gradle clean" />
     </option>
   </component>
-  <component name="RunManager" selected="Kotlin.Main">
+  <component name="RunManager" selected="Gradle.merger [JPackage]">
     <configuration name="app  [createExe]" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -410,20 +402,7 @@
       <workItem from="1656255036878" duration="3055000" />
       <workItem from="1656258220079" duration="279000" />
       <workItem from="1656258518140" duration="4727000" />
-    </task>
-    <task id="LOCAL-00030" summary="Prüfungsfachwahl kann jz 3. &amp; 4.&#10;&#10;TestDaten können nun beim Ausführen verwendet werden, wenn auch seeehr Buggy">
-      <created>1654270763392</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1654270763392</updated>
-    </task>
-    <task id="LOCAL-00031" summary="Prüfungsfachwahl kann jz 3. &amp; 4.&#10;&#10;TestDaten können nun beim Ausführen verwendet werden, wenn auch seeehr Buggy">
-      <created>1654335403537</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1654335403537</updated>
+      <workItem from="1656284178397" duration="1883000" />
     </task>
     <task id="LOCAL-00032" summary="Rendering Hints in Consts.kt vordefiniert">
       <created>1654373959314</created>
@@ -754,7 +733,21 @@
       <option name="project" value="LOCAL" />
       <updated>1656254711193</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="MacOS compatibility">
+      <created>1656283920720</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1656283920721</updated>
+    </task>
+    <task id="LOCAL-00080" summary="debug println() entfernt">
+      <created>1656283998400</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1656283998400</updated>
+    </task>
+    <option name="localTasksCounter" value="81" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -773,8 +766,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Tabs die noch ungesetzte Daten voraussetzen, können nicht mehr angeklickt werden und das ComboboxModel in Fremdsprachen.kt wurde überarbeitet" />
-    <MESSAGE value="Tabs die noch ungesetzte Daten voraussetzen, können nicht mehr angeklickt werden und das ComboBoxModel für Fremdsprachen.kt wurde überarbeitet" />
     <MESSAGE value="GridBagLayout ist nun standardmäßig das Layout von KurswahlPanel.kt" />
     <MESSAGE value="Icon für den Nutzerdaten-Tab" />
     <MESSAGE value="Constructor gefixt (hat enabled anstelle von selected gesetzt)" />
@@ -798,7 +789,9 @@
     <MESSAGE value="Logging des working-directorys entfernt" />
     <MESSAGE value="Building als Installer umgesetzt" />
     <MESSAGE value="icon als vektorgrafik hinzugefügt" />
-    <option name="LAST_COMMIT_MESSAGE" value="icon als vektorgrafik hinzugefügt" />
+    <MESSAGE value="MacOS compatibility" />
+    <MESSAGE value="debug println() entfernt" />
+    <option name="LAST_COMMIT_MESSAGE" value="debug println() entfernt" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
