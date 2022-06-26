@@ -37,7 +37,7 @@ tasks.getByName('jpackageImage').dependsOn copyInstallerResources
 
 runtime {
     jpackage {
-        installerOutputDir = file("$rootDir/out/executable")
+        installerOutputDir = file("$rootDir/out/executable/basic")
         imageName = rootProject.name
         installerName = rootProject.name
 
