@@ -29,3 +29,22 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+project.extensions.add(TypeOf.typeOf(String), "resDirName", "installerResources")
+
+tasks.register('copyInstallerResources', Copy) {
+    it.from "${rootProject.projectDir}/icons/app_icon.ico", layout.projectDirectory.dir("res")
+    it.rename { String fname ->
+        if (fname == "app_icon.ico")
+            return "${rootProject.name}.ico"
+        else return fname
+    }
+    it.into layout.buildDirectory.dir((String) project.resDirName)
+}
+
+// verwendete Java Version für Kotlin Kompilation setzen
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "16"
+    }
+}

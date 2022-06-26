@@ -4,7 +4,7 @@ on: [push, workflow_dispatch]
 
 jobs:   
   gradle:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
     - name: Checkout project sources
       uses: actions/checkout@v3
@@ -17,18 +17,18 @@ jobs:
       with:
         gradle-version: 7.4
       
-    - name: Build Application with launch4j
-      run: gradle :app:createExe
+    - name: Build Application with JPackage
+      run: gradle :app:jpackage
     - name: Upload build reports
       uses: actions/upload-artifact@v3
       with:
         name: application
-        path: app/build/launch4j/
+        path: app/build/executeable/
 
-    - name: Build Commandline-Merger with launch4j
-      run: gradle :merger:createExe
+    - name: Build Commandline-Merger with JPackage
+      run: gradle :merger:jpackage
     - name: Upload build reports
       uses: actions/upload-artifact@v3
       with:
         name: application
-        path: merger/build/launch4j/
+        path: merger/build/executeable/

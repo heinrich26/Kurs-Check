@@ -2,6 +2,7 @@ plugins {
     id 'myproject.java-conventions'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'edu.sc.seis.launch4j' version '2.5.3'
+    id 'org.beryx.runtime' version '1.12.7'
 }
 
 apply plugin: 'com.github.johnrengelman.shadow'
@@ -16,13 +17,31 @@ dependencies {
     implementation 'com.github.lgooddatepicker:LGoodDatePicker:11.2.1'
 }
 
+application {
+    mainClass = 'gui.GuiMain'
+}
+
 
 launch4j { // Baut die GUI exe
     icon = "${rootProject.projectDir}/icons/app_icon.ico"
     splashWaitForWindows = false
     copyConfigurable = []
-    mainClassName = "gui.GuiMain"
     fileDescription = "digitale Anwendung zur Erleichterung der Kurswahl"
     jarTask = project.tasks.shadowJar
     outfile = "${rootProject.name}.exe"
+}
+
+tasks.getByName('jpackageImage').dependsOn copyInstallerResources
+
+runtime {
+    jpackage {
+        installerOutputDir = file("$buildDir/executable")
+        imageName = rootProject.name
+        installerName = rootProject.name
+        installerType = 'msi'
+        installerOptions = ['--win-menu', '--win-shortcut', '--win-per-user-install', '--win-dir-chooser', '--file-associations', "$buildDir/$resDirName/kurswahl.properties"]
+        resourceDir = file("$buildDir/$resDirName")
+    }
+
+    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
 }

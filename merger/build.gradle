@@ -2,9 +2,15 @@ plugins {
     id 'myproject.java-conventions'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'edu.sc.seis.launch4j' version '2.5.3'
+    id 'org.beryx.runtime' version '1.12.7'
 }
 
 apply plugin: 'com.github.johnrengelman.shadow'
+
+application {
+    mainClass = "${group}.GeneratorKt"
+}
+def artifactName = 'wahl-merger'
 
 dependencies {
     implementation project(':lib')
@@ -16,9 +22,24 @@ dependencies {
 launch4j { // Baut die GUI exe
     icon = "${rootProject.projectDir}/icons/app_icon.ico"
     copyConfigurable = []
-    mainClassName = "${group}.GeneratorKt"
     jarTask = project.tasks.shadowJar
     headerType = "console"
-    outfile = "Wahl-Merger.exe"
+    outfile = "${artifactName}.exe"
     fileDescription = "Kommandozeilen-Anwendung zum Zusammenführen der .kurswahl Dateien! Siehe: ${outfile} --help"
+}
+
+tasks.getByName('jpackageImage').dependsOn copyInstallerResources
+
+runtime {
+    jpackage {
+        installerOutputDir = file("$buildDir/executable")
+        imageName = artifactName
+        installerName = artifactName
+        imageOptions = ['--win-console']
+        installerType = 'msi'
+        installerOptions = ['--win-dir-chooser']
+        resourceDir = file("$buildDir/$resDirName")
+    }
+
+    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
 }
