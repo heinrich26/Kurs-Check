@@ -12,19 +12,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Bug gefixt, dass das Label rot bleibt wenn man 0 Kurse in der Zeile wählt.&#10;Label anklicken geht nun auch mit tw. deaktivierten Kursen">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/res/kurswahl.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/merger/res/main.wxs" afterDir="false" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="icon als vektorgrafik hinzugefügt">
+      <change afterPath="$PROJECT_DIR$/merger/res/merger.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merger/settings.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/workflows/gradle-build.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/gradle-build.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/Kurs-Check.test.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_06_2022_10_33__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_06_2022_10_33__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buildSrc/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/merger/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/merger/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/merger/src/main/kotlin/Generator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/merger/src/main/kotlin/Generator.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,6 +67,7 @@
         <option value="Kotlin Object" />
         <option value="Kotlin Class" />
         <option value="Kotlin File" />
+        <option value="module-info" />
       </list>
     </option>
   </component>
@@ -95,13 +93,17 @@
     <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/ClickableDestionation.kt" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/lib/src/main/kotlin/data/KurswahlData.kt" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/ExclusiveComboBoxModel.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/merger/settings.gradle" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/lib/src/main/kotlin/data/WahlzeileLinientyp.kt" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/merger/res/main.wxs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/lib/src/main/resources/dataStruct.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/.github/workflows/gradle-build.yml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/resources/icons/icon.svg" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/merger/res/merger.properties" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/icons/app_icon.svg" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/app/build.gradle" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/merger/build.gradle" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="KotlinCodeInsightWorkspaceSettings">
@@ -128,14 +130,17 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/res" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/merger/build/temp/config/main.wxs" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="File.Encoding" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
+    <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/merger/build/temp/config/main.wxs" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
@@ -151,10 +156,10 @@
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\merger\res" />
+      <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\icons" />
       <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\app\build" />
       <recent name="C:\Users\hendrik\IdeaProjects\kurswahlApp\app\src\main\resources" />
       <recent name="C:\Users\hendrik\IdeaProjects\kurswahlApp\lib\src\main\resources" />
-      <recent name="C:\Users\hendrik\IdeaProjects\kurswahlApp\merger\src\main\kotlin" />
     </key>
     <key name="CreateKotlinClassDialog.RecentsKey">
       <recent name="data" />
@@ -185,9 +190,10 @@
       <command value="gradle shadowJar" />
       <command value="gradle :app:createExe" />
       <command value="gradle :merger:shadowJar" />
+      <command value="gradle clean" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.merger [JPackage]">
+  <component name="RunManager" selected="Gradle.app [JPackage]">
     <configuration name="app  [createExe]" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -222,6 +228,27 @@
           <list />
         </option>
         <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="kurswahlApp [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" value="" />
       </ExternalSystemSettings>
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
@@ -329,11 +356,17 @@
       <item itemvalue="Gradle.app  [createExe]" />
       <item itemvalue="Gradle.merger [createExe]" />
       <item itemvalue="Gradle.merger [JPackage]" />
+      <item itemvalue="Gradle.kurswahlApp [clean]" />
       <item itemvalue="Kotlin.Fremdsprachen" />
       <item itemvalue="Kotlin.GrundkursWahl" />
       <item itemvalue="Kotlin.Main w. testData" />
       <item itemvalue="Kotlin.Main" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.kurswahlApp [clean]" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -373,35 +406,10 @@
       <workItem from="1655040907043" duration="5259000" />
       <workItem from="1655054798602" duration="3469000" />
       <workItem from="1655114011732" duration="8708000" />
-      <workItem from="1655991335322" duration="8138000" />
-    </task>
-    <task id="LOCAL-00026" summary="ich habe keinen Bock mehr">
-      <created>1653832869992</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1653832869992</updated>
-    </task>
-    <task id="LOCAL-00027" summary="readme.md angepasst">
-      <created>1654207261041</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1654207261041</updated>
-    </task>
-    <task id="LOCAL-00028" summary="keine|durchgezogen Linientyp hinzugefügt und Wahlzeilen angepasst (siehe Wahlzeilen 34-45).">
-      <created>1654245693586</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1654245693586</updated>
-    </task>
-    <task id="LOCAL-00029" summary="Formatting Änderungen">
-      <created>1654248252170</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1654248252170</updated>
+      <workItem from="1655991335322" duration="12636000" />
+      <workItem from="1656255036878" duration="3055000" />
+      <workItem from="1656258220079" duration="279000" />
+      <workItem from="1656258518140" duration="4727000" />
     </task>
     <task id="LOCAL-00030" summary="Prüfungsfachwahl kann jz 3. &amp; 4.&#10;&#10;TestDaten können nun beim Ausführen verwendet werden, wenn auch seeehr Buggy">
       <created>1654270763392</created>
@@ -718,7 +726,35 @@
       <option name="project" value="LOCAL" />
       <updated>1655118406040</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="Logging des working-directorys entfernt">
+      <created>1656164086858</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1656164086858</updated>
+    </task>
+    <task id="LOCAL-00076" summary="Logging des working-directorys entfernt">
+      <created>1656164094367</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1656164094367</updated>
+    </task>
+    <task id="LOCAL-00077" summary="Building als Installer umgesetzt">
+      <created>1656250867670</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1656250867670</updated>
+    </task>
+    <task id="LOCAL-00078" summary="icon als vektorgrafik hinzugefügt">
+      <created>1656254711192</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1656254711193</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -738,10 +774,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Refactoring" />
-    <MESSAGE value="Gradle-Wrapper hinzugefügt, um GitHub Actions zu erlauben und evtl. die Probleme an den SchulPCs zu lösen" />
-    <MESSAGE value="Packages neu angeordnet" />
-    <MESSAGE value="Arguments Parsing umgesetzt, GUI version wird standardmäßig ausgeführt, mit `--merge` wird der `csvGenerator` verwendet" />
     <MESSAGE value="Tabs die noch ungesetzte Daten voraussetzen, können nicht mehr angeklickt werden und das ComboboxModel in Fremdsprachen.kt wurde überarbeitet" />
     <MESSAGE value="Tabs die noch ungesetzte Daten voraussetzen, können nicht mehr angeklickt werden und das ComboBoxModel für Fremdsprachen.kt wurde überarbeitet" />
     <MESSAGE value="GridBagLayout ist nun standardmäßig das Layout von KurswahlPanel.kt" />
@@ -763,7 +795,11 @@
     <MESSAGE value="Export nutzt nun noch ungespeicherte Daten aus dem aktuellen Panel und schlägt einen Dateinamen vor" />
     <MESSAGE value="Navigation gefixt" />
     <MESSAGE value="Java-Version auf 1.8 gesetzt, um größere Kompatibilität zu ermöglichen&#10;&#10;Benötigte eine Neuimplementierung des `FachComboBoxModel`s, denn addAll(...) gibt es in Java 1.8s ComboBox Implementation noch nicht" />
-    <option name="LAST_COMMIT_MESSAGE" value="Java-Version auf 1.8 gesetzt, um größere Kompatibilität zu ermöglichen&#10;&#10;Benötigte eine Neuimplementierung des `FachComboBoxModel`s, denn addAll(...) gibt es in Java 1.8s ComboBox Implementation noch nicht" />
+    <MESSAGE value="Logging des working-directories entfernt" />
+    <MESSAGE value="Logging des working-directorys entfernt" />
+    <MESSAGE value="Building als Installer umgesetzt" />
+    <MESSAGE value="icon als vektorgrafik hinzugefügt" />
+    <option name="LAST_COMMIT_MESSAGE" value="icon als vektorgrafik hinzugefügt" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

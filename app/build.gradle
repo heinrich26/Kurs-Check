@@ -35,11 +35,14 @@ tasks.getByName('jpackageImage').dependsOn copyInstallerResources
 
 runtime {
     jpackage {
-        installerOutputDir = file("$buildDir/executable")
+        installerOutputDir = file("$rootDir/out/executable")
         imageName = rootProject.name
         installerName = rootProject.name
         installerType = 'msi'
-        installerOptions = ['--win-menu', '--win-shortcut', '--win-per-user-install', '--win-dir-chooser', '--file-associations', "$buildDir/$resDirName/kurswahl.properties"]
+        installerOptions = ['--win-menu', '--win-shortcut', '--win-per-user-install', '--win-dir-chooser',
+                            '--file-associations', "$buildDir/$resDirName/kurswahl.properties",
+                            '--vendor', '"Willi-Graf-Gymnasium"', '--description', "\"$description\"",
+                            '--copyright', '"Copyright 2020, All rights reserved"']
         resourceDir = file("$buildDir/$resDirName")
     }
 

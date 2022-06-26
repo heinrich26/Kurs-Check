@@ -11,7 +11,7 @@ jobs:
     - uses: actions/setup-java@v3
       with:
         distribution: corretto
-        java-version: 16
+        java-version: 18
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
       with:
@@ -19,16 +19,12 @@ jobs:
       
     - name: Build Application with JPackage
       run: gradle :app:jpackage
-    - name: Upload build reports
-      uses: actions/upload-artifact@v3
-      with:
-        name: application
-        path: app/build/executeable/
 
     - name: Build Commandline-Merger with JPackage
       run: gradle :merger:jpackage
+
     - name: Upload build reports
       uses: actions/upload-artifact@v3
       with:
         name: application
-        path: merger/build/executeable/
+        path: out/executeable/

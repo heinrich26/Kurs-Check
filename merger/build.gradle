@@ -8,12 +8,14 @@ plugins {
 apply plugin: 'com.github.johnrengelman.shadow'
 
 application {
-    mainClass = "${group}.GeneratorKt"
+//    mainClass = "${group}.GeneratorKt"
+    mainClass = 'gui.GuiMain'
 }
 def artifactName = 'wahl-merger'
 
 dependencies {
     implementation project(':lib')
+    implementation project(':app')
 
     implementation 'org.jetbrains.kotlinx:kotlinx-cli:0.3.4'
     implementation 'org.apache.commons:commons-csv:1.9.0'
@@ -28,16 +30,23 @@ launch4j { // Baut die GUI exe
     fileDescription = "Kommandozeilen-Anwendung zum Zusammenführen der .kurswahl Dateien! Siehe: ${outfile} --help"
 }
 
+tasks.register('prepInstallerRes', Delete) {
+    delete layout.buildDirectory.dir(resDirName), layout.buildDirectory.dir('temp')
+}
+copyInstallerResources.dependsOn prepInstallerRes
 tasks.getByName('jpackageImage').dependsOn copyInstallerResources
 
 runtime {
     jpackage {
-        installerOutputDir = file("$buildDir/executable")
-        imageName = artifactName
-        installerName = artifactName
-        imageOptions = ['--win-console']
+        installerOutputDir = file("$rootDir/out/executable")
+        imageName = rootProject.name
+        installerName = rootProject.name + '-full'
+        imageOptions = ['--add-launcher', "wahl-merger=$buildDir/$resDirName/merger.properties"]
         installerType = 'msi'
-        installerOptions = ['--win-dir-chooser']
+        installerOptions = [ '--win-menu', '--win-per-user-install', '--win-dir-chooser',
+                            '--file-associations', "${rootProject.projectDir}/app/res/kurswahl.properties",
+                            '--vendor', '"Willi-Graf-Gymnasium"', '--description', "\"$description\"",
+                            '--copyright', '"Copyright 2020, All rights reserved"']
         resourceDir = file("$buildDir/$resDirName")
     }
 
