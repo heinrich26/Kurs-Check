@@ -49,7 +49,7 @@ runtime {
 
         installerOptions = ['--file-associations', "${rootProject.projectDir}/app/res/kurswahl.properties",
                             '--vendor', '"Willi-Graf-Gymnasium"', '--description', "\"$description\"",
-                            '--copyright', '"Copyright 2020, All rights reserved"',
+                            '--copyright', '"Copyright 2022, All rights reserved"',
                             '--about-url', 'https://github.com/heinrich26/kurswahlApp',
                             (Os.isFamily(Os.FAMILY_WINDOWS)) ? '@res/win-opts.txt' : '@res/mac-opts.txt']
         resourceDir = file("$buildDir/$resDirName")
