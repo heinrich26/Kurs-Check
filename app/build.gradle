@@ -41,9 +41,7 @@ runtime {
         imageName = rootProject.name
         installerName = rootProject.name
 
-        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-            installerType = 'msi'
-        }
+        installerType = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'msi' : 'pkg'
 
         installerOptions = ['--file-associations', "$buildDir/$resDirName/kurswahl.properties",
                             '--vendor', '"Willi-Graf-Gymnasium"', '--description', "\"$description\"",
