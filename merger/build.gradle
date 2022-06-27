@@ -43,7 +43,7 @@ runtime {
         installerOutputDir = file("$rootDir/out/executable/full")
         imageName = rootProject.name
         installerName = rootProject.name + '-full'
-        imageOptions = ['--add-launcher', "wahl-merger=res/§${(Os.isFamily(Os.FAMILY_WINDOWS)) ? 'win' : 'mac'}-merger.properties"]
+        imageOptions = ['--add-launcher', "wahl-merger=res/${(Os.isFamily(Os.FAMILY_WINDOWS)) ? 'win' : 'mac'}-merger.properties"]
 
         installerType = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'msi' : 'pkg'
 
