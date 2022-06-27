@@ -10,7 +10,6 @@ plugins {
 apply plugin: 'com.github.johnrengelman.shadow'
 
 application {
-//    mainClass = "${group}.GeneratorKt"
     mainClass = 'gui.GuiMain'
 }
 def artifactName = 'wahl-merger'

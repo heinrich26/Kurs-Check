@@ -12,16 +12,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="debug println() entfernt">
-      <change afterPath="$PROJECT_DIR$/app/res/mac-opts.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/res/win-opts.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/merger/res/mac-merger.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/merger/res/mac-opts.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/merger/res/win-opts.txt" afterDir="false" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Auswählen des Installationsordners und ob eine Verknüpfung erstellt werden soll, kann nun auch beim Merger entschieden werden">
+      <change afterPath="$PROJECT_DIR$/.idea/copyright/Copyright.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/COPYRIGHT" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/merger/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/merger/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/merger/res/merger.properties" beforeDir="false" afterPath="$PROJECT_DIR$/merger/res/win-merger.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/AusgabeCheckBox.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/AusgabeCheckBox.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,22 +85,21 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/.github/workflows/gradle-build.yml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/app/build.gradle" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/ClickableDestionation.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/ExclusiveComboBoxModel.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/icons/app_icon.svg" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/lib/src/main/kotlin/data/KurswahlData.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/lib/src/main/kotlin/data/TestData.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/lib/src/main/kotlin/data/WahlzeileLinientyp.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/lib/src/main/resources/dataStruct.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/merger/build.gradle" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/merger/res/main.wxs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/merger/res/win-merger.properties" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lib/src/main/kotlin/data/TestData.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/ClickableDestionation.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lib/src/main/kotlin/data/KurswahlData.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/ExclusiveComboBoxModel.kt" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/merger/settings.gradle" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lib/src/main/kotlin/data/WahlzeileLinientyp.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lib/src/main/resources/dataStruct.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/.github/workflows/gradle-build.yml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/icons/app_icon.svg" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/app/build.gradle" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/merger/build.gradle" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="KotlinCodeInsightWorkspaceSettings">
     <option name="optimizeImportsOnTheFly" value="true" />
@@ -129,11 +124,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "WebServerToolWindowFactoryState": "false"
-  }
-}]]></component>
+  <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="copyright" />
+  </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="javax.swing.text.html" />
@@ -403,34 +400,6 @@
       <workItem from="1656258220079" duration="279000" />
       <workItem from="1656258518140" duration="4727000" />
       <workItem from="1656284178397" duration="1883000" />
-    </task>
-    <task id="LOCAL-00032" summary="Rendering Hints in Consts.kt vordefiniert">
-      <created>1654373959314</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1654373959314</updated>
-    </task>
-    <task id="LOCAL-00033" summary="Komplettes Datei-Laden und -Speichern">
-      <created>1654624323056</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1654624323056</updated>
-    </task>
-    <task id="LOCAL-00034" summary="Alignmentproblem behoben">
-      <created>1654702017191</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1654702017191</updated>
-    </task>
-    <task id="LOCAL-00035" summary="Visibility-Änderung">
-      <created>1654702104085</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1654702104085</updated>
     </task>
     <task id="LOCAL-00036" summary="Es funktioniert, fragt mich aber nicht wieso">
       <created>1654704171710</created>
@@ -747,7 +716,35 @@
       <option name="project" value="LOCAL" />
       <updated>1656283998400</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="Auswählen des Installationsordners und ob eine Verknüpfung erstellt werden soll, kann nun auch beim Merger entschieden werden">
+      <created>1656324145864</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1656324145865</updated>
+    </task>
+    <task id="LOCAL-00082" summary="Auswählen des Installationsordners und ob eine Verknüpfung erstellt werden soll, kann nun auch beim Merger entschieden werden">
+      <created>1656324667467</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1656324667467</updated>
+    </task>
+    <task id="LOCAL-00083" summary="Auswählen des Installationsordners und ob eine Verknüpfung erstellt werden soll, kann nun auch beim Merger entschieden werden">
+      <created>1656324679078</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1656324679078</updated>
+    </task>
+    <task id="LOCAL-00084" summary="Auswählen des Installationsordners und ob eine Verknüpfung erstellt werden soll, kann nun auch beim Merger entschieden werden">
+      <created>1656324702452</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1656324702452</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -763,10 +760,10 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="GridBagLayout ist nun standardmäßig das Layout von KurswahlPanel.kt" />
     <MESSAGE value="Icon für den Nutzerdaten-Tab" />
     <MESSAGE value="Constructor gefixt (hat enabled anstelle von selected gesetzt)" />
     <MESSAGE value="Dependency für Date-Parsing hinzugefügt" />
@@ -791,7 +788,8 @@
     <MESSAGE value="icon als vektorgrafik hinzugefügt" />
     <MESSAGE value="MacOS compatibility" />
     <MESSAGE value="debug println() entfernt" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug println() entfernt" />
+    <MESSAGE value="Auswählen des Installationsordners und ob eine Verknüpfung erstellt werden soll, kann nun auch beim Merger entschieden werden" />
+    <option name="LAST_COMMIT_MESSAGE" value="Auswählen des Installationsordners und ob eine Verknüpfung erstellt werden soll, kann nun auch beim Merger entschieden werden" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
