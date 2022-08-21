@@ -1,0 +1,10 @@
+[
+	{
+		"name": "Willi-Graf-Gymnasium",
+		"adresse": "Ostpreußendamm 166",
+		"x": 52.43468,
+		"y": 13.32097,
+		"config": "wgg.json",
+		"version": "1.2"
+	}
+]
