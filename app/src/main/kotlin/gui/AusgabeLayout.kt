@@ -34,13 +34,14 @@ import javax.swing.JLabel
 import javax.swing.JPanel
 import javax.swing.border.TitledBorder
 
-class AusgabeLayout(private val fachData: FachData, wahlData: KurswahlData) : JPanel(GridBagLayout()) {
-    private val checkboxArray = ArrayList<AusgabeCheckBox>()
-
-    private fun fachPos(fach: Fach) = fachData.faecher.indexOf(fach)
+class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBagLayout()) {
+    /* TODO Ausgabe sicher machen, sodass es keinen Overflow gibt!
+    class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) :
+        JPanel(VerticalLayout(alignment = VerticalLayout.LEFT)) {*/
+    private val checkboxMap = mutableMapOf<Fach, Array<AusgabeCheckBox>>()
 
     init {
-        preferredSize = Dimension(614, 874)
+        preferredSize = Dimension(614, 874) // Din A4
         minimumSize = preferredSize
         add(JLabel("Übersichtsplan".wrapTags("html", "h2")), row = 0, column = 0, columnspan = 2)
 
@@ -81,26 +82,20 @@ class AusgabeLayout(private val fachData: FachData, wahlData: KurswahlData) : JP
             if (cond) {
                 val label = JLabel(fach.name)
 
-                // Wenn man das Label anklickt wird die ganze Zeile ausgewählt
                 feldPanel!!.add(label, row = i, column = 0, fill = GridBagConstraints.HORIZONTAL, weightx = 1.0)
-            }
 
-            // Checkbox bauen und hinzufügen
-            for (j in 1..4) {
-                val box = AusgabeCheckBox()
-
-                if (cond) {
-                    box.isOpaque = false // checkboxen haben hässlichen hintergrund, wenn ungesetzt
-                } else box.isVisible = false
-
-                checkboxArray.add(box)
-                feldPanel!!.add(box, row = i, column = j, margin = Insets(4, 4, 4, 4))
+                // Checkboxen bauen und hinzufügen
+                checkboxMap[fach] =
+                    arrayOf(AusgabeCheckBox(), AusgabeCheckBox(), AusgabeCheckBox(), AusgabeCheckBox()).apply {
+                        val insets = Insets(4, 4, 4, 4)
+                        forEachIndexed { j, box -> feldPanel!!.add(box, row = i, column = j + 1, margin = insets) }
+                    }
             }
         }
         checkboxPanel.add(feldPanel!!, row = 5, column = 0, fill = GridBagConstraints.BOTH, weightx = 1.0)
 
         for ((gk, choice) in wahlData.gks) { // auch für wahlData.pfs
-            val pos = fachPos(gk)
+            val row = checkboxMap[gk]!!
             val acti = when (choice) {
                 Wahlmoeglichkeit.ERSTES_ZWEITES -> listOf(true, true, false, false)
                 Wahlmoeglichkeit.ERSTES_DRITTES -> listOf(true, true, true, false)
@@ -110,29 +105,26 @@ class AusgabeLayout(private val fachData: FachData, wahlData: KurswahlData) : JP
             }
             for (k in 0..3) {
                 if (acti[k]) {
-                    checkboxArray[k + (pos * 4)].style = AusgabeCheckBox.STYLE.NORMAL
+                    row[k].style = AusgabeCheckBox.STYLE.NORMAL
                 }
             }
         }
 
-        for (pos in wahlData.lks.filterNotNull().map { fachPos(it) }) {
-            for (k in pos * 4..pos * 4 + 3)
-                checkboxArray[k].style = AusgabeCheckBox.STYLE.LK
+        for (lk in wahlData.lks.filterNotNull()) {
+            for (box in checkboxMap[lk]!!)
+                box.style = AusgabeCheckBox.STYLE.LK
         }
 
-        fachPos(wahlData.pf3!!).let {
-            for (k in it * 4..it * 4 + 3)
-                checkboxArray[k].style = AusgabeCheckBox.STYLE.PF3
+        for (box in checkboxMap[wahlData.pf3!!]!!) {
+            box.style = AusgabeCheckBox.STYLE.PF3
         }
 
-        fachPos(wahlData.pf4!!).let {
-            for (k in it * 4..it * 4 + 3)
-                checkboxArray[k].style = AusgabeCheckBox.STYLE.PF4
+        for (box in checkboxMap[wahlData.pf4!!]!!) {
+            box.style = AusgabeCheckBox.STYLE.PF4
         }
 
-        fachPos(wahlData.pf5!!).let {
-            for (k in it * 4..it * 4 + 3)
-                checkboxArray[k].style = AusgabeCheckBox.STYLE.PF5
+        for (box in checkboxMap[wahlData.pf5!!]!!) {
+            box.style = AusgabeCheckBox.STYLE.PF5
         }
 
         add(checkboxPanel, row = 1, column = 1, margin = Insets(4, 4, 4, 4))
