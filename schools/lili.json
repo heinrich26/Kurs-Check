@@ -20,21 +20,21 @@
 			"name": "Französisch",
 			"kuerzel": "Fr",
 			"aufgabenfeld": 1,
-      "isLk": true,
+			"isLk": true,
 			"isFremdsprache": true
 		},
 		{
 			"name": "Latein",
 			"kuerzel": "Lat",
 			"aufgabenfeld": 1,
-      "isLk": true,
+			"isLk": true,
 			"isFremdsprache": true
 		},
-    {
+		{
 			"name": "Italienisch",
 			"kuerzel": "I",
 			"aufgabenfeld": 1,
-      "brauchtWPF": true,
+			"brauchtWPF": true,
 			"isFremdsprache": true
 		},
 		{
@@ -68,12 +68,12 @@
 			"aufgabenfeld": 2,
 			"isLk": true
 		},
-    {
+		{
 			"name": "Philosophie",
 			"kuerzel": "Pl",
 			"aufgabenfeld": 2,
 			"isLk": true,
-			"brauchtWPF": true,
+			"brauchtWPF": true
 		},
 		{
 			"name": "Geografie",
@@ -166,19 +166,19 @@
 	},
 	"wpfs": [
 		"Inf",
-    "I",
+		"I",
 		"Lat",
 		"Fr",
 		"DS",
-    "Bio",
-    "Ph",
-    "Ch",
-    "Pw",
-    "Pl",
-    "Geo",
-    "Mu",
-    "Ku",
-    "MaCAS"
+		"Bio",
+		"Ph",
+		"Ch",
+		"Pw",
+		"Pl",
+		"Geo",
+		"Mu",
+		"Ku",
+		"MaCAS"
 	],
 	"regeln": [
 		{
@@ -237,16 +237,14 @@
 					"wann": "3-4"
 				},
 				"regel2": {
-              // ein anderes Fach aus AF2 für 4 Semester
-              "type": "WildcardRegel",
-              "wildcard": "$AF2ohneGE"
-              "anzahl": 4
-          }
-        }
+					// ein anderes Fach aus AF2 für 4 Semester
+					"type": "WildcardRegel",
+					"wildcard": "$AF2ohneGE",
+					"anzahl": 4
+				}
 			},
 			"desc": "Geschichte 4 Semester -> zusätzlich PW min. in Q3 & Q4 oder ein weiteres Fach aus AF2 durchgängig",
 			"errorMsg": "Wähle PW in Q3 & Q4 oder Geografie bzw. Philosophie durchgängig!"
-			// es wird nur Erdkunde angeboten, ansonsten wäre es: ein weiteres Fach aus AF2 durchgängig
 		},
 		{
 			"type": "IfThenRegel",
@@ -682,14 +680,14 @@
 			"Ge",
 			"Pw",
 			"Geo",
-      "Pl"
+			"Pl"
 		],
 		// Kurse aus dem Aufgabenfeld 2
 		"$FS": [
 			"Fr",
 			"Lat",
 			"En",
-      "I"
+			"I"
 		],
 		"$NW": [
 			"Ch",
@@ -709,7 +707,7 @@
 		"$AF2ohneGE": [
 			"Pw",
 			"Geo",
-      "Pl"
+			"Pl"
 		]
 		// alle fächer aus AF2, außer Geschichte
 	},
