@@ -12,15 +12,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="GNU GPLv3 Copyright hinzugefügt">
-      <change afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/VerticalLayout.kt" afterDir="false" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="AusgabeLayout repariert, es wird nun wieder ein Bild ausgegeben!">
+      <change afterPath="$PROJECT_DIR$/app/bin/main/github_status/GithubStatus.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/School.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/SchoolChooser.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/SchoolConfig.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/SchoolRenderer.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/bin/main/schools-data/per-school-settings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/kotlin/github_status/GithubStatus.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/School.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/SchoolChooser.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/SchoolConfig.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/SchoolRenderer.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/resources/schools-data/per-school-settings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/bin/main/data/FachDataMirror.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachDataMirror.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_06_2022_10_33_[Changes]/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_06_2022_10_33__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_06_2022_11_49_[Changes]/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_06_2022_11_49__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/AusgabeLayout.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/AusgabeLayout.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/KurswahlData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/KurswahlData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/TestData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/TestData.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,13 +93,13 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin Interface" />
-        <option value="Kotlin Data Class" />
         <option value="Kotlin Enum" />
         <option value="Class" />
         <option value="JUnit5 Test Class" />
         <option value="Kotlin Object" />
-        <option value="Kotlin File" />
         <option value="module-info" />
+        <option value="Kotlin Data Class" />
+        <option value="Kotlin File" />
         <option value="Kotlin Class" />
       </list>
     </option>
@@ -129,9 +147,6 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedIndex" value="2" />
-  </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
   </component>
@@ -147,6 +162,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File" value="kotlin" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Problems" />
     <property name="project.structure.proportion" value="0.0" />
@@ -166,11 +182,11 @@
       <recent name="" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\app\src\main\resources\schools-data\" />
       <recent name="C:\Users\hendrik\IdeaProjects\kurswahlApp\app\res" />
       <recent name="C:\Users\hendrik\IdeaProjects\kurswahlApp\merger\res" />
       <recent name="C:\Users\hendrik\IdeaProjects\kurswahlApp\merger" />
       <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\merger\res" />
-      <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\icons" />
     </key>
     <key name="CreateKotlinClassDialog.RecentsKey">
       <recent name="data" />
@@ -203,6 +219,7 @@
       <command value="gradle :merger:shadowJar" />
       <command value="gradle clean" />
       <command value="gradle app:run" />
+      <command value="gradle app:run clean" />
     </option>
   </component>
   <component name="RunManager" selected="Gradle.kurswahlApp [app:run]">
@@ -240,6 +257,28 @@
           <list />
         </option>
         <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="kurswahlApp [app:run clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="app:run" />
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" value="" />
       </ExternalSystemSettings>
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
@@ -371,7 +410,13 @@
       <item itemvalue="Kotlin.GrundkursWahl" />
       <item itemvalue="Kotlin.Main w. testData" />
       <item itemvalue="Kotlin.Main" />
+      <item itemvalue="Gradle.kurswahlApp [app:run clean]" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.kurswahlApp [app:run clean]" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -419,28 +464,11 @@
       <workItem from="1661353549913" duration="2855000" />
       <workItem from="1661356463797" duration="193000" />
       <workItem from="1661356674170" duration="215000" />
-      <workItem from="1661356905738" duration="3517000" />
-    </task>
-    <task id="LOCAL-00037" summary="Es funktioniert, fragt mich aber nicht wieso">
-      <created>1654704181999</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1654704181999</updated>
-    </task>
-    <task id="LOCAL-00038" summary="Nachfolgende Fächer werden geändert, wenn Fremdsprachen wegfallen usw.">
-      <created>1654706775945</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1654706775945</updated>
-    </task>
-    <task id="LOCAL-00039" summary="Renderer hinzugefügt um in Comboboxen angezeigt zu werden">
-      <created>1654706834845</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1654706834845</updated>
+      <workItem from="1661356905738" duration="4611000" />
+      <workItem from="1661528621346" duration="145000" />
+      <workItem from="1661529401014" duration="524000" />
+      <workItem from="1661611350394" duration="11949000" />
+      <workItem from="1661680975719" duration="28356000" />
     </task>
     <task id="LOCAL-00040" summary="Wahlzeile wird nun ermittelt und in der KurswahlData.kt gespeichert">
       <created>1654706857595</created>
@@ -764,7 +792,28 @@
       <option name="project" value="LOCAL" />
       <updated>1656326385976</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="Layout hinzugefügt, um im AusgabeLayout Overflow zu verhindern (TODO)">
+      <created>1661360753913</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1661360753913</updated>
+    </task>
+    <task id="LOCAL-00087" summary="AusgabeLayout repariert, es wird nun wieder ein Bild ausgegeben!">
+      <created>1661360829451</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1661360829451</updated>
+    </task>
+    <task id="LOCAL-00088" summary="AusgabeLayout repariert, es wird nun wieder ein Bild ausgegeben!">
+      <created>1661360839859</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1661360839859</updated>
+    </task>
+    <option name="localTasksCounter" value="89" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -784,8 +833,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Constructor gefixt (hat enabled anstelle von selected gesetzt)" />
-    <MESSAGE value="Dependency für Date-Parsing hinzugefügt" />
     <MESSAGE value="Möglichkeit hinzugefügt, Fächer unwählbar zu machen&#10;&#10;Zusatzkurse können nun auch nur in bestimmten Semestern gewählt werden&#10;&#10;Die Nutzerdaten können nun eingegeben werden und werden auch vom CsvGenerator verarbeitet" />
     <MESSAGE value="Formatänderung" />
     <MESSAGE value="`bools` Parameter hinzugefügt, um nicht jedes Mal die `[true, true, true, false]`-Listen erstellen zu müssen und Feststellung der Wahlmöglichkeit in die Klasse verschoben" />
@@ -809,7 +856,9 @@
     <MESSAGE value="debug println() entfernt" />
     <MESSAGE value="Auswählen des Installationsordners und ob eine Verknüpfung erstellt werden soll, kann nun auch beim Merger entschieden werden" />
     <MESSAGE value="GNU GPLv3 Copyright hinzugefügt" />
-    <option name="LAST_COMMIT_MESSAGE" value="GNU GPLv3 Copyright hinzugefügt" />
+    <MESSAGE value="Layout hinzugefügt, um im AusgabeLayout Overflow zu verhindern (TODO)" />
+    <MESSAGE value="AusgabeLayout repariert, es wird nun wieder ein Bild ausgegeben!" />
+    <option name="LAST_COMMIT_MESSAGE" value="AusgabeLayout repariert, es wird nun wieder ein Bild ausgegeben!" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

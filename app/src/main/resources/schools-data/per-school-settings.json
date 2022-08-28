@@ -1,0 +1,18 @@
+[
+	{
+		"name": "Willi-Graf-Gymnasium",
+		"adresse": "Ostpreußendamm 166",
+		"x": 52.43468,
+		"y": 13.32097,
+		"config": "wgg.json",
+		"version": "1.2"
+	},
+	{
+		"name": "Lilienthal-Gymnasium",
+		"adresse": "Ringstraße 2-3",
+		"x": 52.43578, 
+		"y": 13.31204,
+		"config": "lili.json",
+		"version": "1.0"
+	}
+]

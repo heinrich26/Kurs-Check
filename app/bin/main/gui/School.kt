@@ -15,10 +15,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.kurswahlApp.data
+package gui
 
-import com.kurswahlApp.readDataStruct
+import com.fasterxml.jackson.annotation.JsonAlias
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.kurswahlApp.data.VersionDeserializer
 
-val testFachdata = readDataStruct()
-
-val testKurswahl = testFachdata.createKurswahl("wili.json")
+data class School(
+    val name: String,
+    val adresse: String,
+    @JsonAlias("config")
+    val schulId: String,
+    val x: Double,
+    val y: Double,
+    @JsonDeserialize(using = VersionDeserializer::class) val version: Pair<Int, Int>
+)

@@ -20,23 +20,18 @@ package com.kurswahlApp.data
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIncludeProperties
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.core.JsonParser
-import com.fasterxml.jackson.core.exc.StreamReadException
-import com.fasterxml.jackson.databind.DatabindException
-import com.fasterxml.jackson.databind.InjectableValues
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import java.io.File
-import java.io.IOException
 
 /**
  * Hält alle statischen Daten für die Kurswahl
  *
- * Daten werden aus der `dataStruct.json` gezogen
+ * Daten werden aus der `dataStruct.json` gezogen oder vom Webserver geladen
  *
  * Neue Felder müssen den selben Namen wie in der `dataStruct.json` haben,
- * mit dem Finalen Typen im Primary Constructor hinzugefügt und mit dem Eingelesenen Typ
- * (so wies in der JSON steht) im Secondary Constructor deklariert (u. ggf. umgeformt) werden.
+ * mit dem Finalen Typen im Primary Constructor hinzugefügt und mit dem eingelesenen Typ
+ * (so wies in der JSON steht) in der JSON-Factory deklariert (u. ggf. umgeformt) werden.
+ *
+ * @property jsonVersion (major-, sub-) Version der FachData-JSON
  */
 @Suppress("unused")
 @JsonIncludeProperties(
@@ -44,6 +39,7 @@ import java.io.IOException
     "wzWildcards", "minKurse", "maxKurse", "pf3_4AusschlussFaecher", "jsonVersion"
 )
 data class FachData(
+    var jsonVersion: Pair<Int, Int>,
     val faecherMap: Map<String, Fach>,
     val pflichtfaecher: Map<Fach, Wahlmoeglichkeit>,
     val wpfs: List<Fach>,
@@ -107,18 +103,14 @@ data class FachData(
     }
 
 
-    /**
-     * Läd eine Kurswahl-Datei als [KurswahlData]
-     */
-    @Throws(IOException::class, StreamReadException::class, DatabindException::class)
-    fun loadKurswahl(file: File): KurswahlData {
-        val mapper = jacksonObjectMapper()
-        mapper.factory.enable(JsonParser.Feature.ALLOW_COMMENTS)
-        val injectables = InjectableValues.Std()
-        injectables.addValue(FachData::class.java, this)
-        mapper.injectableValues = injectables
-        return mapper.readValue(file, KurswahlData::class.java)
-    }
+    /** Erstellt eine leere Kurswahl mit Standardwerten gesetzt! */
+    fun createKurswahl(schulId: String): KurswahlData =
+        KurswahlData(
+            gks = this.pflichtfaecher,
+            pflichtfaecher = this.pflichtfaecher,
+            readJsonVersion = jsonVersion,
+            schulId = schulId
+        )
 
     override fun toString(): String =
         arrayOf(
@@ -142,9 +134,9 @@ data class FachData(
 
     companion object {
         /**
-         * (major-, sub-) Version der aktuell verwendeten JSON
+         * Helferklasse um Version einer FachData-JSON zu bestimmen, ohne sie komplett laden zu müssen
          */
-        var jsonVersion: Pair<Int, Int> = 0 to 0
+        class FachDataInfo(@JsonDeserialize(using = VersionDeserializer::class) @JsonProperty val jsonVersion: Pair<Int, Int>)
 
         @JvmStatic
         @JsonCreator
@@ -161,19 +153,21 @@ data class FachData(
             @JsonProperty maxKurse: Int,
             @JsonProperty pf3_4AusschlussFaecher: Set<String>
         ): FachData {
-            // jsonVersion global setzen
-            FachData.jsonVersion = jsonVersion
-
             // Fächer zusätzlich sortieren um auf Aufgabenfelder aufzuteilen
             val faecherMap: Map<String, Fach> =
                 faecher.sortedBy { if (it.aufgabenfeld > 0) it.aufgabenfeld else 4 }.associateBy { it.kuerzel }
             return FachData(
+                jsonVersion = jsonVersion,
                 faecherMap = faecherMap,
                 pflichtfaecher = pflichtfaecher.mapKeys { (key: String) -> faecherMap[key]!! },
                 wpfs = wpfs.map { faecherMap[it]!! },
                 regeln = regeln,
                 wahlzeilen = wahlzeilen,
-                wildcards = wildcards.mapValues { it.value.map { key -> faecherMap[key]!! } },
+                wildcards = wildcards.mapValues {
+                    it.value.map { key ->
+                        faecherMap[key] ?: run { println(key); throw RuntimeException() }
+                    }
+                },
                 wzWildcards = wzWildcards.associateWith { wildcards[it]!! },
                 minKurse = minKurse,
                 maxKurse = maxKurse,

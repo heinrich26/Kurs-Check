@@ -17,10 +17,13 @@
 
 package gui
 
+import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DatabindException
+import com.fasterxml.jackson.databind.InjectableValues
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.kurswahlApp.KurswahlFileFilter
 import com.kurswahlApp.PngFileFilter
+import com.kurswahlApp.data.Consts
 import com.kurswahlApp.data.Consts.APP_ICONS
 import com.kurswahlApp.data.Consts.APP_NAME
 import com.kurswahlApp.data.Consts.FILETYPE_EXTENSION
@@ -31,9 +34,11 @@ import com.kurswahlApp.data.Consts.SAVE_ICON
 import com.kurswahlApp.data.Consts.SIDEBAR_SIZE
 import com.kurswahlApp.data.Consts.TEST_FILE_NAME
 import com.kurswahlApp.data.FachData
+import com.kurswahlApp.data.FachDataMirror
 import com.kurswahlApp.data.KurswahlData
 import com.kurswahlApp.getResourceURL
 import com.kurswahlApp.readDataStruct
+import github_status.GithubStatus
 import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
 import kotlinx.cli.default
@@ -42,18 +47,66 @@ import java.awt.Dimension
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.Insets
+import java.awt.event.MouseEvent
+import java.awt.event.MouseListener
 import java.io.File
 import javax.imageio.ImageIO
 import javax.swing.*
 import kotlin.reflect.KClass
+import kotlin.system.exitProcess
 
 
 class GuiMain(file: File? = null) : JPanel() {
-    private val fachData: FachData = readDataStruct()
-    private var wahlData: KurswahlData =
-        file?.let { loadKurswahlFile(it)?.apply { updatePflichtfaecher() } }
-            ?: KurswahlData(gks = fachData.pflichtfaecher, pflichtfaecher = fachData.pflichtfaecher)
+    private var fachData: FachData = readDataStruct()
+    private lateinit var wahlData: KurswahlData
+    private var currentSchool: School? = null
 
+    private fun showSchoolChooser(initial: Boolean = true) {
+        chooseSchool(currentSchool, this)?.let {
+            if (it != currentSchool) {
+                val data = SchoolConfig.getSchool(it.schulId)
+                if (data != null) {
+                    currentSchool = it
+                    fachData = data
+                    wahlData = data.createKurswahl(it.schulId)
+                    if (!initial) swapPanel()
+                } else {
+                    showLoadingError()
+                    exitProcess(0)
+                }
+            } // die Auswahl hat sich nicht geändert
+        } // der Nutzer hat die Auswahl abgebrochen
+    }
+
+    init {
+        SchoolConfig.updateConfig()
+
+
+        if (file == null) {
+            val lastSchool = SchoolConfig.loadLastSchool()
+            if (lastSchool != null) {
+                val data = SchoolConfig.getSchool(lastSchool)
+                if (data != null) {
+                    currentSchool = SchoolConfig.schools.find { it.schulId == lastSchool }
+                    fachData = data
+                    wahlData = data.createKurswahl(lastSchool)
+                    swapPanel()
+                } else {
+                    showLoadingError()
+                    showSchoolChooser()
+                }
+            } else showSchoolChooser()
+        } else {
+            loadKurswahlFile(file)?.apply {
+                updatePflichtfaecher()
+                wahlData = this
+            } ?: run {
+                showLoadingError()
+                showSchoolChooser()
+            }
+        }
+
+    }
 
     companion object {
         @JvmStatic
@@ -203,7 +256,7 @@ class GuiMain(file: File? = null) : JPanel() {
                 val data: KurswahlData = loadKurswahlFile(chooser.selectedFile) ?: return@addActionItem
 
                 when {
-                    data.readJsonVersion.first != FachData.jsonVersion.first -> {
+                    data.readJsonVersion.first != fachData.jsonVersion.first -> {
                         JOptionPane.showMessageDialog(
                             this,
                             "Die Version deiner Datei ist inkompatibel! Es tut uns leid, aber du musst deine Wahl erneut eingeben!",
@@ -212,14 +265,14 @@ class GuiMain(file: File? = null) : JPanel() {
                         )
                         return@addActionItem
                     }
-                    data.readJsonVersion.second > FachData.jsonVersion.second ->
+                    data.readJsonVersion.second > fachData.jsonVersion.second ->
                         JOptionPane.showMessageDialog(
                             this,
                             "Die Version deiner Datei ist neuer als die, des Programms! Unter umständen gehen ein paar Daten verloren!",
                             "Versionsunterschiede",
                             JOptionPane.WARNING_MESSAGE
                         )
-                    data.readJsonVersion.second < FachData.jsonVersion.second ->
+                    data.readJsonVersion.second < fachData.jsonVersion.second ->
                         JOptionPane.showMessageDialog(
                             this,
                             "Die Version deiner Datei ist älter als die Programmversion! Unter umständen müssen ein paar Daten neu eingetragen werden!",
@@ -280,7 +333,7 @@ class GuiMain(file: File? = null) : JPanel() {
                         f.createNewFile()
 
                         jacksonObjectMapper().writer()
-                            .withAttribute("jsonVersion", FachData.jsonVersion.let { "${it.first}.${it.second}" })
+                            .withAttribute("jsonVersion", fachData.jsonVersion.let { "${it.first}.${it.second}" })
                             .writeValue(f, data)
                     } catch (exception: SecurityException) {
                         JOptionPane.showMessageDialog(
@@ -348,12 +401,44 @@ class GuiMain(file: File? = null) : JPanel() {
                     JOptionPane.YES_NO_OPTION
                 ) == JOptionPane.YES_OPTION
             ) {
-                wahlData = KurswahlData(gks = fachData.pflichtfaecher, pflichtfaecher = fachData.pflichtfaecher)
+                wahlData = fachData.createKurswahl(currentSchool!!.schulId)
                 swapPanel()
             }
         }
 
         add(resetButton, row = 2, column = 2, anchor = GridBagConstraints.EAST, margin = Insets(4, 4, 4, 4))
+
+        val chooseSchoolButton = JButton(currentSchool!!.name)
+        chooseSchoolButton.addMouseListener(object : MouseListener {
+            override fun mouseClicked(e: MouseEvent?) {}
+
+            override fun mousePressed(e: MouseEvent?) {}
+
+            override fun mouseReleased(e: MouseEvent?) {}
+
+            override fun mouseEntered(e: MouseEvent?) {
+                chooseSchoolButton.text = "\u2190 Schule wechseln"
+            }
+
+            override fun mouseExited(e: MouseEvent?) {
+                chooseSchoolButton.text = currentSchool!!.name
+            }
+
+        })
+        chooseSchoolButton.isFocusable = false
+        chooseSchoolButton.foreground = Consts.COLOR_PRIMARY
+
+        add(chooseSchoolButton, row = 2, column = 2, anchor = GridBagConstraints.WEST, margin = Insets(4, 4, 4, 4))
+
+        chooseSchoolButton.addActionListener {
+            if (JOptionPane.showConfirmDialog(
+                    this,
+                    "Möchtest du die Schule wirklich wechseln? Alle ungespeicherten Eingaben gehen dadurch verloren!",
+                    "Fortfahren?",
+                    JOptionPane.YES_NO_OPTION
+                ) == JOptionPane.YES_OPTION
+            ) showSchoolChooser(false)
+        }
     }
 
     /**
@@ -363,8 +448,17 @@ class GuiMain(file: File? = null) : JPanel() {
         if (file.extension != FILETYPE_EXTENSION) return null
 
         if (file.exists() && file.canRead()) {
+            val mirror = FachDataMirror(currentSchool?.schulId, fachData) { schulId ->
+                SchoolConfig.getSchool(schulId)
+                    ?: throw RuntimeException("Abbruch, FachData konnte nicht gefunden werden!")
+            }
+
+            val mapper = jacksonObjectMapper()
+            mapper.factory.enable(JsonParser.Feature.ALLOW_COMMENTS)
+            mapper.injectableValues = InjectableValues.Std().also { it.addValue(FachDataMirror::class.java, mirror) }
+
             try {
-                return fachData.loadKurswahl(file)
+                return mapper.readValue(file, KurswahlData::class.java)
             } catch (e: DatabindException) {
                 JOptionPane.showMessageDialog(
                     this,
@@ -373,10 +467,32 @@ class GuiMain(file: File? = null) : JPanel() {
                     JOptionPane.ERROR_MESSAGE
                 )
                 e.printStackTrace()
+                //TODO gui updaten
+            } catch (e: RuntimeException) {
+                showLoadingError()
             }
         }
 
         return null
+    }
+
+    /**
+     * Benachrichtigt den Nutzer über einen Fehler beim Laden der Schul-Daten von GitHub
+     */
+    private fun showLoadingError() {
+        val githubStatus = GithubStatus.get()
+        val msg =
+            if (githubStatus == null) "Stelle sicher das du eine Internet-Verbindung hast und versuche es erneut!"
+            else if (githubStatus.indicator == GithubStatus.Companion.Status.NONE) "Scheint als sei ein Fehler beim Laden aufgetreten! Versuche es erneut!"
+            else "GitHub's Server sind nicht erreichbar, da lässt sich nicht viel machen! Siehe: githubstatus.com"
+
+        JOptionPane.showMessageDialog(
+            this,
+            "Die Daten für deine Schule konnten nicht geladen werden! " +
+                    msg,
+            "Fehler beim Laden der Datei!",
+            JOptionPane.ERROR_MESSAGE
+        )
     }
 
     /**

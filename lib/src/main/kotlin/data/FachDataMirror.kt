@@ -17,8 +17,4 @@
 
 package com.kurswahlApp.data
 
-import com.kurswahlApp.readDataStruct
-
-val testFachdata = readDataStruct()
-
-val testKurswahl = testFachdata.createKurswahl("wili.json")
+class FachDataMirror(var schulId: String?, var fachData: FachData?, val supplier: (String) -> FachData)

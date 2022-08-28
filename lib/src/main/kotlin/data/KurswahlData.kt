@@ -35,8 +35,8 @@ import java.time.LocalDate
 @Suppress("PropertyName", "PrivatePropertyName")
 @JsonAppend(attrs = [JsonAppend.Attr(value = "jsonVersion")], prepend = true)
 @JsonIncludeProperties(
-    "jsonVersion", "lk1", "lk2", "pf3", "pf4", "pf5", "pf5_typ", "gks", "fremdsprachen",
-    "wpfs", "wahlzeile", "vorname", "nachname", "geburtsdatum", "geburtsort", "staatsangehoerigkeit",
+    "jsonVersion", "lk1", "lk2", "pf3", "pf4", "pf5", "pf5_typ", "gks", "fremdsprachen", "wpfs",
+    "wahlzeile", "vorname", "nachname", "geburtsdatum", "geburtsort", "staatsangehoerigkeit", "schulId"
 )
 data class KurswahlData(
     var lk1: Fach? = null,
@@ -60,7 +60,8 @@ data class KurswahlData(
     var geburtsort: String? = null,
     var staatsangehoerigkeit: String = "DE",
 
-    val readJsonVersion: Pair<Int, Int> = FachData.jsonVersion
+    val readJsonVersion: Pair<Int, Int>,
+    val schulId: String
 ) {
 
     companion object {
@@ -86,28 +87,37 @@ data class KurswahlData(
             geburtsdatum: LocalDate,
             @JsonProperty geburtsort: String,
             @JsonProperty staatsangehoerigkeit: String,
-            @JacksonInject fachData: FachData
-        ): KurswahlData = KurswahlData(
-            lk1 = fachData.faecherMap[lk1].let { if (it != null && it.isLk) it else null },
-            lk2 = fachData.faecherMap[lk2].let { if (it != null && it.isLk) it else null },
-            pf3 = fachData.faecherMap[pf3],
-            pf4 = fachData.faecherMap[pf4],
-            pf5 = fachData.faecherMap[pf5],
-            pf5_typ = pf5_typ,
-            gks = gks.mapKeys { fachData.faecherMap[it.key]!! },
-            fremdsprachen = fremdsprachen.map { fachData.faecherMap[it.key]!! to it.value },
-            wpfs = if (wpfs.first !in fachData.faecherMap.keys) null else fachData.faecherMap[wpfs.first]!! to fachData.faecherMap[wpfs.second],
-            wahlzeile = wahlzeile,
-            pflichtfaecher = fachData.pflichtfaecher,
+            @JsonProperty schulId: String,
+            @JacksonInject fachDataMirror: FachDataMirror
+        ): KurswahlData {
+            val fachData: FachData =
+                if (fachDataMirror.schulId == schulId)
+                    fachDataMirror.fachData!!
+                else fachDataMirror.supplier(schulId)
 
-            vorname = vorname,
-            nachname = nachname,
-            geburtsdatum = geburtsdatum,
-            geburtsort = geburtsort,
-            staatsangehoerigkeit = staatsangehoerigkeit,
+            return KurswahlData(
+                lk1 = fachData.faecherMap[lk1].let { if (it != null && it.isLk) it else null },
+                lk2 = fachData.faecherMap[lk2].let { if (it != null && it.isLk) it else null },
+                pf3 = fachData.faecherMap[pf3],
+                pf4 = fachData.faecherMap[pf4],
+                pf5 = fachData.faecherMap[pf5],
+                pf5_typ = pf5_typ,
+                gks = gks.mapKeys { fachData.faecherMap[it.key]!! },
+                fremdsprachen = fremdsprachen.map { fachData.faecherMap[it.key]!! to it.value },
+                wpfs = if (wpfs.first !in fachData.faecherMap.keys) null else fachData.faecherMap[wpfs.first]!! to fachData.faecherMap[wpfs.second],
+                wahlzeile = wahlzeile,
+                pflichtfaecher = fachData.pflichtfaecher,
 
-            readJsonVersion = jsonVersion
-        )
+                vorname = vorname,
+                nachname = nachname,
+                geburtsdatum = geburtsdatum,
+                geburtsort = geburtsort,
+                staatsangehoerigkeit = staatsangehoerigkeit,
+
+                readJsonVersion = jsonVersion,
+                schulId = schulId
+            )
+        }
     }
 
     /**
@@ -309,7 +319,7 @@ data class KurswahlData(
      */
     fun updatePflichtfaecher() {
         lock()
-        gks + pflichtfaecher.filter { (key, value) -> key !in _pfs!! && gks[key].let { it == null || it in value}  }
+        gks + pflichtfaecher.filter { (key, value) -> key !in _pfs!! && gks[key].let { it == null || it in value } }
         unlock()
     }
 }
