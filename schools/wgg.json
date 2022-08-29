@@ -1,4 +1,5 @@
 {
+	"schulId": "wgg.json",
 	// Hauptversion.Subversion
 	"jsonVersion": "1.2",
 	// "aufgabenfeld" -> 0, wenn kein Aufgabenfeld gg. ist (Sport), Zusatzkurse -> -1
