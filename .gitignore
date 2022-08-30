@@ -8,3 +8,6 @@
 /.gradle/
 ~$*.docx
 out.pdf
+/app/bin/
+/lib/bin/
+/merger/bin/
