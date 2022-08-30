@@ -43,8 +43,6 @@ import java.awt.Dimension
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.Insets
-import java.awt.event.MouseEvent
-import java.awt.event.MouseListener
 import java.io.File
 import javax.imageio.ImageIO
 import javax.swing.*
@@ -406,22 +404,11 @@ class GuiMain(file: File? = null) : JPanel() {
         add(resetButton, row = 2, column = 2, anchor = GridBagConstraints.EAST, margin = Insets(4, 4, 4, 4))
 
         val chooseSchoolButton = JButton(currentSchool!!.name)
-        chooseSchoolButton.addMouseListener(object : MouseListener {
-            override fun mouseClicked(e: MouseEvent?) {}
+        chooseSchoolButton.addMouseListener(
+            onEnter = { chooseSchoolButton.text = "\u2190 Schule wechseln" },
+            onExit = {chooseSchoolButton.text = currentSchool!!.name}
+        )
 
-            override fun mousePressed(e: MouseEvent?) {}
-
-            override fun mouseReleased(e: MouseEvent?) {}
-
-            override fun mouseEntered(e: MouseEvent?) {
-                chooseSchoolButton.text = "\u2190 Schule wechseln"
-            }
-
-            override fun mouseExited(e: MouseEvent?) {
-                chooseSchoolButton.text = currentSchool!!.name
-            }
-
-        })
         chooseSchoolButton.isFocusable = false
         chooseSchoolButton.foreground = Consts.COLOR_PRIMARY
 

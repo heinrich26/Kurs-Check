@@ -19,12 +19,14 @@ package gui
 
 import com.kurswahlApp.data.Consts
 import java.awt.Dimension
-import java.awt.event.MouseEvent
-import java.awt.event.MouseListener
 import javax.swing.JComponent
 
 @Suppress("unused", "unused", "unused")
-open class ClickableDestionation(defaultSelected: Boolean = false, defaultEnabled: Boolean = true, clickEvent: () -> Unit) : JComponent() {
+open class ClickableDestionation(
+    defaultSelected: Boolean = false,
+    defaultEnabled: Boolean = true,
+    clickEvent: () -> Unit
+) : JComponent() {
     var hasFocus = false
         set(value) {
             field = value
@@ -45,22 +47,10 @@ open class ClickableDestionation(defaultSelected: Boolean = false, defaultEnable
 
         isEnabled = defaultEnabled
 
-        this.addMouseListener(object : MouseListener {
-            override fun mouseClicked(e: MouseEvent?) {
-                if (isEnabled && !isSelected) clickEvent()
-            }
-
-            override fun mousePressed(e: MouseEvent?) {}
-
-            override fun mouseReleased(e: MouseEvent?) {}
-
-            override fun mouseEntered(e: MouseEvent?) {
-                hasFocus = isEnabled
-            }
-
-            override fun mouseExited(e: MouseEvent?) {
-                hasFocus = false
-            }
-        })
+        this.addMouseListener(
+            onClick = { if (isEnabled && !isSelected) clickEvent() },
+            onEnter = { hasFocus = isEnabled },
+            onExit = { hasFocus = false }
+        )
     }
 }

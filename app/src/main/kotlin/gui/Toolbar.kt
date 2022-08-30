@@ -23,8 +23,6 @@ import com.kurswahlApp.data.Consts.COLOR_PRIMARY
 import com.kurswahlApp.data.Consts.RENDERING_HINTS
 import com.kurswahlApp.data.Consts.TOOLBAR_ICON_SIZE
 import java.awt.*
-import java.awt.event.MouseEvent
-import java.awt.event.MouseListener
 import java.awt.geom.AffineTransform
 import javax.swing.JComponent
 import javax.swing.JLabel
@@ -117,23 +115,7 @@ class Toolbar(text: String, private val shadowSize: Int = 8) : JPanel(GridBagLay
                 preferredSize = Dimension(TOOLBAR_ICON_SIZE, TOOLBAR_ICON_SIZE)
                 minimumSize = preferredSize
 
-                addMouseListener(object : MouseListener {
-                    override fun mouseClicked(e: MouseEvent?) {
-                        action()
-                    }
-
-                    override fun mousePressed(e: MouseEvent?) {}
-
-                    override fun mouseReleased(e: MouseEvent?) {}
-
-                    override fun mouseEntered(e: MouseEvent?) {
-                        hasFocus = true
-                    }
-
-                    override fun mouseExited(e: MouseEvent?) {
-                        hasFocus = false
-                    }
-                })
+                addMouseListener(onClick = { action() }, onEnter = { hasFocus = true }, onExit = { hasFocus = false })
             }
 
             override fun paintComponent(g: Graphics) {
@@ -142,7 +124,7 @@ class Toolbar(text: String, private val shadowSize: Int = 8) : JPanel(GridBagLay
                 g2D.setRenderingHints(RENDERING_HINTS)
 
                 g2D.color = if (hasFocus) COLOR_ON_PRIMARY_FOCUS else COLOR_ON_PRIMARY
-//                g2D.drawRect(0, 0, width, height) // DEBUG
+                // g2D.drawRect(0, 0, width, height) // DEBUG
                 g2D.fill(shape)
             }
         }

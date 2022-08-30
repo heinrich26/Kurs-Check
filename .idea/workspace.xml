@@ -12,79 +12,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Deprecation-Warnung bei Test-Daten aufgehoben">
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/AusgabeCheckBox.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/AusgabeLayout.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/ClickableDestionation.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/ExclusiveComboBoxModel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/Extensions.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/FachComboBox.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/FachComboBoxModel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/FachRenderer.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/Fremdsprachen.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/FsWpfIcon.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/GrundkursWahl.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/GuiMain.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/HintTextField.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/KurswahlPanel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/Leistungskurse.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/Nutzerdaten.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/Overview.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/PolyIcon.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/Pruefungsfaecher.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/RegelLabel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/RoundedBorder.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/ScreenImage.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/ScrollablePanel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/SidebarLabel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/Toolbar.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/VerticalLayout.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/WahlVisualizer.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/icons/app_icon_12.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/icons/app_icon_16.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/icons/app_icon_24.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/icons/app_icon_32.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/icons/app_icon_48.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/icons/app_icon_64.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/icons/check.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/icons/cross.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/Utils.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/data/Consts.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/data/Fach.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/data/FachData.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/data/FachKeySerializer.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/data/FachSerializer.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/data/IfThenRegel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/data/KuerzelRegel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/data/KurswahlData.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/data/ListOfPairSerializer.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/data/OrRegel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/data/Pf5Typ.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/data/Regel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/data/RegelScope.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/data/School.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/data/SchoolConfig.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/data/TestData.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/data/VersionDeserializer.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/data/Wahlmoeglichkeit.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/data/Wahlzeile.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/data/WahlzeileLinientyp.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/data/WildcardRegel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/dataStruct.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/schema.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/test_wahl.kurswahl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/merger/bin/main/Generator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/bin/main/gui/School.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/bin/main/gui/SchoolChooser.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/bin/main/gui/SchoolChooser.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/bin/main/gui/SchoolConfig.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/bin/main/gui/SchoolRenderer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/bin/main/gui/SchoolRenderer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Fremdsprachen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Fremdsprachen.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/bin/main/data/FachDataMirror.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bin/main/data/FachDataMirror.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/SchoolConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/SchoolConfig.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/resources/schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/resources/schema.json" afterDir="false" />
-    </list>
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Internetproblem behoben" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -515,21 +443,7 @@
       <workItem from="1661611350394" duration="11949000" />
       <workItem from="1661680975719" duration="28678000" />
       <workItem from="1661785272103" duration="14146000" />
-      <workItem from="1661877283049" duration="3118000" />
-    </task>
-    <task id="LOCAL-00045" summary="KDocs Änderung">
-      <created>1654817868896</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1654817868896</updated>
-    </task>
-    <task id="LOCAL-00046" summary="KDocs Änderung">
-      <created>1654818650012</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1654818650012</updated>
+      <workItem from="1661877283049" duration="3461000" />
     </task>
     <task id="LOCAL-00047" summary="CommandLineArgument-Parsing Library hinzugefügt">
       <created>1654861015121</created>
@@ -860,7 +774,21 @@
       <option name="project" value="LOCAL" />
       <updated>1661877663978</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="gitignore Update">
+      <created>1661880828128</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1661880828128</updated>
+    </task>
+    <task id="LOCAL-00095" summary="Internetproblem behoben">
+      <created>1661880920178</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1661880920178</updated>
+    </task>
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -880,8 +808,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="IntelliJ Changes" />
-    <MESSAGE value="App Icon hinzugefügt und Layout verschönert" />
     <MESSAGE value="Generator Bugs gefixt; Datumsformat ist nun yyyy-MM-dd!" />
     <MESSAGE value="Dialog-Titel bei den Open/Save Dialogen hinzugefügt." />
     <MESSAGE value="Fächer, welche kein Kurs sind, werden im CSV-Generator ausgelassen" />
@@ -905,7 +831,9 @@
     <MESSAGE value="Aktualisierung der mitgelieferten JSON Dateien!" />
     <MESSAGE value="Gradle-Version in die gradle.properties verschoben" />
     <MESSAGE value="Deprecation-Warnung bei Test-Daten aufgehoben" />
-    <option name="LAST_COMMIT_MESSAGE" value="Deprecation-Warnung bei Test-Daten aufgehoben" />
+    <MESSAGE value="gitignore Update" />
+    <MESSAGE value="Internetproblem behoben" />
+    <option name="LAST_COMMIT_MESSAGE" value="Internetproblem behoben" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

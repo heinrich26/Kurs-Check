@@ -20,8 +20,6 @@ package gui
 import com.kurswahlApp.data.*
 import com.kurswahlApp.data.Wahlmoeglichkeit.*
 import java.awt.*
-import java.awt.event.MouseAdapter
-import java.awt.event.MouseEvent
 import javax.swing.*
 
 
@@ -176,31 +174,30 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                 val label = JLabel(fach.nameFormatted())
 
                 // Wenn man das Label anklickt wird die ganze Zeile ausgewählt
-                label.addMouseListener(object : MouseAdapter() {
-                    override fun mousePressed(e: MouseEvent) {
-                        label.foreground = Color.BLACK
-                        // Checkboxen der Zeile holen
-                        val zeile = checkboxArray.subList(i * 4, i * 4 + 4)
+                label.addMouseListener(onClick = {
+                    label.foreground = Color.BLACK
+                    // Checkboxen der Zeile holen
+                    val zeile = checkboxArray.subList(i * 4, i * 4 + 4)
 
-                        // An- und Abwählen
-                        when (zeile.count { !it.isEnabled || it.isSelected }) {
-                            0, 2, 3 -> {
-                                for (box in zeile)
-                                    if (box.isEnabled && !box.isSelected) {
-                                        box.isSelected = true
-                                        anzahl++
-                                    }
-                            }
-                            else /* 1, 4 */ -> {
-                                for (box in zeile)
-                                    if (box.isEnabled && box.isSelected) {
-                                        box.isSelected = false
-                                        anzahl--
-                                    }
-                            }
+                    // An- und Abwählen
+                    when (zeile.count { !it.isEnabled || it.isSelected }) {
+                        0, 2, 3 -> {
+                            for (box in zeile)
+                                if (box.isEnabled && !box.isSelected) {
+                                    box.isSelected = true
+                                    anzahl++
+                                }
+                        }
+                        else /* 1, 4 */ -> {
+                            for (box in zeile)
+                                if (box.isEnabled && box.isSelected) {
+                                    box.isSelected = false
+                                    anzahl--
+                                }
                         }
                     }
-                })
+                }
+                )
                 labelArray[i] = label
                 checkboxPanel.add(label, row = i, column = 0, fill = GridBagConstraints.HORIZONTAL)
             }
@@ -217,8 +214,8 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                         labelArray[i]!!.foreground =
                             if (checkboxArray.subList(i * 4, i * 4 + 4).map { it.isSelected }.let {
                                     it == listOf(false, false, false, false) ||
-                                    Wahlmoeglichkeit.fromBools(it) != null
-                                 }) Color.BLACK
+                                            Wahlmoeglichkeit.fromBools(it) != null
+                                }) Color.BLACK
                             else Consts.COLOR_ERROR
                     }
                 } else box.isVisible = false

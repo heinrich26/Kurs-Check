@@ -18,6 +18,9 @@
 package gui
 
 import java.awt.*
+import java.awt.event.MouseAdapter
+import java.awt.event.MouseEvent
+import javax.swing.JComponent
 
 /**
  * Fügt den [Component] zu dem [Container] mit [GridBagLayout] hinzu
@@ -72,3 +75,15 @@ fun String.wrapTags(vararg tags: String): String =
     if (tags.isEmpty()) this
     else if (tags.size == 1) this.wrapHtml(tags[0])
     else this.wrapTags(*tags.takeLast(tags.size - 1).toTypedArray()).wrapHtml(tags[0])
+
+fun JComponent.addMouseListener(onClick: (e: MouseEvent) -> Unit = {}, onPress: (e: MouseEvent) -> Unit = {}, onRelease: (e: MouseEvent) -> Unit = {}, onEnter: (e: MouseEvent) -> Unit = {}, onExit: (e: MouseEvent) -> Unit = {}) {
+    this.addMouseListener(object : MouseAdapter() {
+        override fun mouseClicked(e: MouseEvent) = onClick(e)
+        override fun mousePressed(e: MouseEvent) = onPress(e)
+        override fun mouseReleased(e: MouseEvent) = onRelease(e)
+        override fun mouseEntered(e: MouseEvent) = onEnter(e)
+        override fun mouseExited(e: MouseEvent) = onExit(e)
+
+        // Hier könnten noch weitere Methoden von [MouseAdapter] stehen
+    })
+}
