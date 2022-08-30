@@ -17,8 +17,8 @@
 
 package com.kurswahlApp.data
 
-import com.kurswahlApp.readDataStruct
+val testFachdata: FachData
+    get() = SchoolConfig.getSchool("wgg.json")!!
 
-val testFachdata = readDataStruct()
-
-val testKurswahl = testFachdata.createKurswahl("wili.json")
+val testKurswahl: KurswahlData
+    get() = testFachdata.createKurswahl("wgg.json")
