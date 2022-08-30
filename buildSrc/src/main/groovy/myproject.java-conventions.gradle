@@ -4,7 +4,6 @@ plugins {
 }
 
 group 'com.kurswahlApp'
-version '1.0'
 
 tasks.withType(JavaCompile) {
     targetCompatibility = JavaVersion.VERSION_16

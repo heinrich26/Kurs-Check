@@ -12,8 +12,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Umstellung auf Online-Daten - Sollte nun mehr oder weniger funktionieren">
-      <change beforePath="$PROJECT_DIR$/lib/src/main/resources/test_wahl.kurswahl" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/resources/test_wahl.kurswahl" afterDir="false" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Aktualisierung der mitgelieferten JSON Dateien!">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -444,14 +446,7 @@
       <workItem from="1661529401014" duration="524000" />
       <workItem from="1661611350394" duration="11949000" />
       <workItem from="1661680975719" duration="28678000" />
-      <workItem from="1661785272103" duration="13381000" />
-    </task>
-    <task id="LOCAL-00042" summary="ich fügte anbei, einen Kommentar und löschte ein `println()`">
-      <created>1654710298055</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1654710298055</updated>
+      <workItem from="1661785272103" duration="13863000" />
     </task>
     <task id="LOCAL-00043" summary="Zahlendreher geändert">
       <created>1654778442517</created>
@@ -789,7 +784,14 @@
       <option name="project" value="LOCAL" />
       <updated>1661876148763</updated>
     </task>
-    <option name="localTasksCounter" value="91" />
+    <task id="LOCAL-00091" summary="Aktualisierung der mitgelieferten JSON Dateien!">
+      <created>1661876627537</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1661876627537</updated>
+    </task>
+    <option name="localTasksCounter" value="92" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -809,7 +811,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="`bools` Parameter hinzugefügt, um nicht jedes Mal die `[true, true, true, false]`-Listen erstellen zu müssen und Feststellung der Wahlmöglichkeit in die Klasse verschoben" />
     <MESSAGE value="Labels werden nun Rot, wenn die Zeile ungültig ist" />
     <MESSAGE value="Extra Padding hinzugefügt, um Lesbarkeit zu verbessern" />
     <MESSAGE value="IntelliJ Changes" />
@@ -834,7 +835,8 @@
     <MESSAGE value="AusgabeLayout repariert, es wird nun wieder ein Bild ausgegeben!" />
     <MESSAGE value="Umstellung auf Online-Daten (W.I.P)" />
     <MESSAGE value="Umstellung auf Online-Daten - Sollte nun mehr oder weniger funktionieren" />
-    <option name="LAST_COMMIT_MESSAGE" value="Umstellung auf Online-Daten - Sollte nun mehr oder weniger funktionieren" />
+    <MESSAGE value="Aktualisierung der mitgelieferten JSON Dateien!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Aktualisierung der mitgelieferten JSON Dateien!" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
