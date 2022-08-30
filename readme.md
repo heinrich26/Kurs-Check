@@ -1,3 +1,5 @@
+[![Gradle Package](https://github.com/heinrich26/Kurs-Check/actions/workflows/gradle-build.yml/badge.svg)](https://github.com/heinrich26/Kurs-Check/actions/workflows/gradle-build.yml)
+
 # Kurs-Check
 > Von Schülern für Schüler
 
