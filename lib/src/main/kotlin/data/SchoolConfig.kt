@@ -22,7 +22,6 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.kurswahlApp.getResource
 import java.io.FileInputStream
-import java.io.FileWriter
 import java.io.IOException
 import java.io.StringWriter
 import java.net.URL
@@ -129,7 +128,8 @@ object SchoolConfig {
         return try {
             fetchSchool(schulId) ?: loadSchool(schulId)
         } catch (e: IOException) {
-            println("failed")
+            println("failed cuz:")
+            e.printStackTrace()
             loadSchool(schulId)
         }?.let { mapper.readValue(it, FachData::class.java) }
     }
@@ -170,7 +170,6 @@ object SchoolConfig {
             setProperty(LAST_KEY, schoolKey)
             val data = StringWriter()
             store(data, null)
-            store(FileWriter(LOCAL_LAST_SCHOOL_PROPS), null)
 
             AsynchronousFileChannel.open(Path(LOCAL_LAST_SCHOOL_PROPS), StandardOpenOption.WRITE).use { asyncChannel ->
                 // Datei schreiben

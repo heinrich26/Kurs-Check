@@ -159,7 +159,6 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
 
         val wpfModel2 = ExclusiveComboBoxModel(fachData.wpfs)
         wpf2 = FachComboBox(wpfModel2)
-        wpf2.isEnabled = false
 
         val wpfModel1 = ExclusiveComboBoxModel(fachData.wpfs, wpf2)
         wpf1 = FachComboBox(wpfModel1)
@@ -169,6 +168,8 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
 
 
         if (!fachData.zweiWPFs) {
+            wpf2.isEnabled = false
+
             val checker = JCheckBox()
             wahlData.wpfs?.let {
                 if (it.second != null) {

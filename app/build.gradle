@@ -52,5 +52,5 @@ runtime {
         resourceDir = file("$buildDir/$resDirName")
     }
 
-    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages', '--add-modules', 'jdk.crypto.cryptoki']
 }
