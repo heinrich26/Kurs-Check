@@ -18,6 +18,7 @@
 package gui
 
 import com.kurswahlApp.data.Consts.COLOR_ON_BACKGROUND
+import com.kurswahlApp.data.School
 import java.awt.Component
 import javax.swing.BorderFactory
 import javax.swing.JLabel

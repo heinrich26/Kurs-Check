@@ -23,7 +23,7 @@ import com.fasterxml.jackson.databind.InjectableValues
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.kurswahlApp.KurswahlFileFilter
 import com.kurswahlApp.PngFileFilter
-import com.kurswahlApp.data.Consts
+import com.kurswahlApp.data.*
 import com.kurswahlApp.data.Consts.APP_ICONS
 import com.kurswahlApp.data.Consts.APP_NAME
 import com.kurswahlApp.data.Consts.FILETYPE_EXTENSION
@@ -33,11 +33,7 @@ import com.kurswahlApp.data.Consts.PERSON_ICON
 import com.kurswahlApp.data.Consts.SAVE_ICON
 import com.kurswahlApp.data.Consts.SIDEBAR_SIZE
 import com.kurswahlApp.data.Consts.TEST_FILE_NAME
-import com.kurswahlApp.data.FachData
-import com.kurswahlApp.data.FachDataMirror
-import com.kurswahlApp.data.KurswahlData
 import com.kurswahlApp.getResourceURL
-import com.kurswahlApp.readDataStruct
 import github_status.GithubStatus
 import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
@@ -57,30 +53,12 @@ import kotlin.system.exitProcess
 
 
 class GuiMain(file: File? = null) : JPanel() {
-    private var fachData: FachData = readDataStruct()
+    private lateinit var fachData: FachData
     private lateinit var wahlData: KurswahlData
     private var currentSchool: School? = null
 
-    private fun showSchoolChooser(initial: Boolean = true) {
-        chooseSchool(currentSchool, this)?.let {
-            if (it != currentSchool) {
-                val data = SchoolConfig.getSchool(it.schulId)
-                if (data != null) {
-                    currentSchool = it
-                    fachData = data
-                    wahlData = data.createKurswahl(it.schulId)
-                    if (!initial) swapPanel()
-                } else {
-                    showLoadingError()
-                    exitProcess(0)
-                }
-            } // die Auswahl hat sich nicht geändert
-        } // der Nutzer hat die Auswahl abgebrochen
-    }
-
     init {
         SchoolConfig.updateConfig()
-
 
         if (file == null) {
             val lastSchool = SchoolConfig.loadLastSchool()
@@ -90,7 +68,7 @@ class GuiMain(file: File? = null) : JPanel() {
                     currentSchool = SchoolConfig.schools.find { it.schulId == lastSchool }
                     fachData = data
                     wahlData = data.createKurswahl(lastSchool)
-                    swapPanel()
+                    SchoolConfig.writeLastSchool(data.schulId)
                 } else {
                     showLoadingError()
                     showSchoolChooser()
@@ -108,7 +86,30 @@ class GuiMain(file: File? = null) : JPanel() {
 
     }
 
+    /**
+     * Fordert den Nutzer auf eine Schule zu wählen
+     */
+    private fun showSchoolChooser(initial: Boolean = true) {
+        chooseSchool(currentSchool)?.let {
+            if (it != currentSchool) {
+                val data = SchoolConfig.getSchool(it.schulId)
+                if (data != null) {
+                    currentSchool = it
+                    fachData = data
+                    wahlData = data.createKurswahl(it.schulId)
+                    SchoolConfig.writeLastSchool(data.schulId)
+                    if (!initial) swapPanel()
+                } else {
+                    showLoadingError()
+                    exitProcess(0)
+                }
+            } // die Auswahl hat sich nicht geändert
+        } // der Nutzer hat die Auswahl abgebrochen
+    }
+
     companion object {
+        val MappedIcons = APP_ICONS.map { ImageIO.read(getResourceURL(it)) }
+
         @JvmStatic
         fun main(args: Array<String>) {
             val parser = ArgParser(APP_NAME)
@@ -123,10 +124,6 @@ class GuiMain(file: File? = null) : JPanel() {
 
             parser.parse(args)
 
-            run(input, useTestData)
-        }
-
-        private fun run(file: String?, useTestData: Boolean) {
             // System UI verwenden
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
@@ -143,17 +140,17 @@ class GuiMain(file: File? = null) : JPanel() {
                             UIManager.put(key, FontUIResource(FONT_NAME, value.style, value.size))
                     }
                 }*/
-            } catch (ex: Exception) {
-                ex.printStackTrace()
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
 
-            SwingUtilities.invokeLater { createAndShowGUI(file, useTestData) }
+            SwingUtilities.invokeLater { createAndShowGUI(input, useTestData) }
         }
 
         private fun createAndShowGUI(file: String?, useTestData: Boolean) {
             val frame = JFrame(APP_NAME)
             frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-            frame.iconImages = APP_ICONS.map { ImageIO.read(getResourceURL(it)) }
+            frame.iconImages = MappedIcons
 
             // contentPane setzen
             // wenn vorhanden, Testdatei/gesetzte Datei laden
@@ -448,14 +445,16 @@ class GuiMain(file: File? = null) : JPanel() {
         if (file.extension != FILETYPE_EXTENSION) return null
 
         if (file.exists() && file.canRead()) {
-            val mirror = FachDataMirror(currentSchool?.schulId, fachData) { schulId ->
+            val mirror = FachDataMirror(fachData) { schulId ->
                 SchoolConfig.getSchool(schulId)
                     ?: throw RuntimeException("Abbruch, FachData konnte nicht gefunden werden!")
             }
 
             val mapper = jacksonObjectMapper()
             mapper.factory.enable(JsonParser.Feature.ALLOW_COMMENTS)
-            mapper.injectableValues = InjectableValues.Std().also { it.addValue(FachDataMirror::class.java, mirror) }
+            val injectables = InjectableValues.Std()
+            injectables.addValue(FachDataMirror::class.java, mirror)
+            mapper.injectableValues = injectables
 
             try {
                 return mapper.readValue(file, KurswahlData::class.java)

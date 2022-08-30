@@ -18,6 +18,7 @@
 package com.kurswahlApp
 
 import com.kurswahlApp.data.Consts
+import com.kurswahlApp.data.SchoolConfig
 import com.kurswahlApp.data.Wahlmoeglichkeit.*
 import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
@@ -37,6 +38,9 @@ const val GK = "gk"
 
 const val FILE_NAME = "kurswahlen.csv"
 
+/**
+ * Beschreibt das Ausgabeformat der erstellten Tabelle
+ */
 val CSV_HEADER = arrayOf(
     "vorname",
     "nachname",
@@ -58,8 +62,18 @@ val CSV_HEADER = arrayOf(
     // ...faecher
 )
 
+/**
+ * Runnable, die KursWahl-Dateien in eine große CSV-Tabelle zusammenfasst.
+ * @see CSV_HEADER
+ */
 fun main(args: Array<String>) {
     val parser = ArgParser(Consts.APP_NAME)
+
+    val schulId by parser.argument(
+        ArgType.String,
+        "schulId",
+        "ID der Schule für die Dateien zusammengefasst werden (Dateiname der Konfiguration für ihre Schule)"
+    )
 
     val input by parser.argument(ArgType.String, "input", "Für die CSV-Generierung verwendeter Ordner")
         .optional().default(System.getProperty("user.dir"))
@@ -68,11 +82,12 @@ fun main(args: Array<String>) {
 
     parser.parse(args)
 
-    run(input, output) // CLI merger starten
+    run(schulId, input, output) // CLI merger starten
 }
 
-private fun run(directory: String, output: String?) {
-    val fachData = readDataStruct()
+private fun run(schulId: String, directory: String, output: String?) {
+    val fachData = SchoolConfig.getSchool(schulId)
+        ?: throw RuntimeException("Die gegebene 'schulId' existiert nicht! Bitte versuchen sie es erneut!")
 
 
     val dirFile = File(directory)
@@ -86,7 +101,15 @@ private fun run(directory: String, output: String?) {
 
     if (files.isEmpty()) throw RuntimeException("Der Ordner war leer, keine Datei konnte erstellt werden!")
 
-    val wahlDataList = files.map { fachData.loadKurswahl(it) }
+    // Dateien laden, ungültige aussortieren
+    val wahlDataList = files.mapNotNull {
+        try {
+            fachData.loadKurswahl(it)
+        } catch (e: IllegalArgumentException) {
+            println("Fehler $it: Die Datei wurde für eine andere Schule erstellt oder ist ungültig, der/die Schüler*in muss seine/ihre Wahl wiederholen")
+            null
+        }
+    }
 
     val outputFile = if (output != null) {
         File(output).let {

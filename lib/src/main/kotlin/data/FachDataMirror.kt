@@ -17,4 +17,4 @@
 
 package com.kurswahlApp.data
 
-class FachDataMirror(var schulId: String?, var fachData: FachData?, val supplier: (String) -> FachData)
+class FachDataMirror(val fachData: FachData?, val supplier: ((String) -> FachData?)? = null)

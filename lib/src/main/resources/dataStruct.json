@@ -1,4 +1,6 @@
 {
+	// Identifikator dieser FachDaten! Dies ist gleichzeitig der Dateiname dieser Datei!!!
+	"schulId": "wgg.json",
 	// Hauptversion ändern, wenn Fächer (als LK, PF, etc.) wegfallen oder regeln strenger werden
 	// ansonsten Subversion ändern, wenn Fächer (als LK, PF, etc.) hinzukommen oder Texte (außer Kürzel) geändert werden
 	"jsonVersion": "1.2", // Hauptversion.Subversion
@@ -184,6 +186,7 @@
 		"Sp": "1-4"
 	},
 	"wpfs": ["Inf", "Lat", "Fr", "DS", "GGP", "BPC"],
+	"zweiWPFs": false,
 	"regeln": [
 		{
 			"type": "WildcardRegel",

@@ -67,6 +67,7 @@ data class KurswahlData(
     companion object {
         @JvmStatic
         @JsonCreator
+        @Throws(IllegalArgumentException::class)
         fun fromJson(
             @JsonProperty @JsonDeserialize(using = VersionDeserializer::class) jsonVersion: Pair<Int, Int>,
             @JsonProperty lk1: String,
@@ -91,9 +92,11 @@ data class KurswahlData(
             @JacksonInject fachDataMirror: FachDataMirror
         ): KurswahlData {
             val fachData: FachData =
-                if (fachDataMirror.schulId == schulId)
-                    fachDataMirror.fachData!!
-                else fachDataMirror.supplier(schulId)
+                if (fachDataMirror.fachData != null && fachDataMirror.fachData.schulId == schulId)
+                    fachDataMirror.fachData
+                else fachDataMirror.supplier?.invoke(schulId)
+                    ?: throw IllegalArgumentException("Die Schule der Nutzerdaten passt nicht zu den Fach-Daten!")
+
 
             return KurswahlData(
                 lk1 = fachData.faecherMap[lk1].let { if (it != null && it.isLk) it else null },

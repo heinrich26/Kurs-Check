@@ -12,33 +12,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="AusgabeLayout repariert, es wird nun wieder ein Bild ausgegeben!">
-      <change afterPath="$PROJECT_DIR$/app/bin/main/github_status/GithubStatus.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/School.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/SchoolChooser.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/SchoolConfig.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/gui/SchoolRenderer.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bin/main/schools-data/per-school-settings.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/kotlin/github_status/GithubStatus.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/School.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/SchoolChooser.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/SchoolConfig.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/SchoolRenderer.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/resources/schools-data/per-school-settings.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bin/main/data/FachDataMirror.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachDataMirror.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_06_2022_10_33_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_06_2022_10_33__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_06_2022_11_49_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_06_2022_11_49__Changes_.xml" beforeDir="false" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Umstellung auf Online-Daten (W.I.P)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Fremdsprachen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Fremdsprachen.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/School.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/School.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/SchoolChooser.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/SchoolChooser.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/SchoolConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/SchoolConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/SchoolRenderer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/SchoolRenderer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/Utils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/Utils.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachDataMirror.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachDataMirror.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/KurswahlData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/KurswahlData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/TestData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/TestData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/resources/dataStruct.json" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/resources/dataStruct.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/merger/src/main/kotlin/Generator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/merger/src/main/kotlin/Generator.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,10 +179,10 @@
       <recent name="data" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="data" />
       <recent name="com.kurswahlApp.data" />
       <recent name="com.kurswahlApp.gui" />
       <recent name="gui" />
-      <recent name="data" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.kurswahlApp" />
@@ -406,11 +393,11 @@
       <item itemvalue="Gradle.merger [createExe]" />
       <item itemvalue="Gradle.merger [JPackage]" />
       <item itemvalue="Gradle.kurswahlApp [app:run]" />
+      <item itemvalue="Gradle.kurswahlApp [app:run clean]" />
       <item itemvalue="Kotlin.Fremdsprachen" />
       <item itemvalue="Kotlin.GrundkursWahl" />
       <item itemvalue="Kotlin.Main w. testData" />
       <item itemvalue="Kotlin.Main" />
-      <item itemvalue="Gradle.kurswahlApp [app:run clean]" />
     </list>
     <recent_temporary>
       <list>
@@ -468,14 +455,8 @@
       <workItem from="1661528621346" duration="145000" />
       <workItem from="1661529401014" duration="524000" />
       <workItem from="1661611350394" duration="11949000" />
-      <workItem from="1661680975719" duration="28356000" />
-    </task>
-    <task id="LOCAL-00040" summary="Wahlzeile wird nun ermittelt und in der KurswahlData.kt gespeichert">
-      <created>1654706857595</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1654706857595</updated>
+      <workItem from="1661680975719" duration="28678000" />
+      <workItem from="1661785272103" duration="12983000" />
     </task>
     <task id="LOCAL-00041" summary="Zusatzfächer können nicht mehr als Prüfungsfach gewählt werden und DS/Sport können nicht mehr als 3. Prüfungsfach gewählt werden (param: nurPf3_4 in Fach.kt)">
       <created>1654709539088</created>
@@ -813,7 +794,14 @@
       <option name="project" value="LOCAL" />
       <updated>1661360839859</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL-00089" summary="Umstellung auf Online-Daten (W.I.P)">
+      <created>1661709891352</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1661709891353</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -833,7 +821,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Möglichkeit hinzugefügt, Fächer unwählbar zu machen&#10;&#10;Zusatzkurse können nun auch nur in bestimmten Semestern gewählt werden&#10;&#10;Die Nutzerdaten können nun eingegeben werden und werden auch vom CsvGenerator verarbeitet" />
     <MESSAGE value="Formatänderung" />
     <MESSAGE value="`bools` Parameter hinzugefügt, um nicht jedes Mal die `[true, true, true, false]`-Listen erstellen zu müssen und Feststellung der Wahlmöglichkeit in die Klasse verschoben" />
     <MESSAGE value="Labels werden nun Rot, wenn die Zeile ungültig ist" />
@@ -858,7 +845,8 @@
     <MESSAGE value="GNU GPLv3 Copyright hinzugefügt" />
     <MESSAGE value="Layout hinzugefügt, um im AusgabeLayout Overflow zu verhindern (TODO)" />
     <MESSAGE value="AusgabeLayout repariert, es wird nun wieder ein Bild ausgegeben!" />
-    <option name="LAST_COMMIT_MESSAGE" value="AusgabeLayout repariert, es wird nun wieder ein Bild ausgegeben!" />
+    <MESSAGE value="Umstellung auf Online-Daten (W.I.P)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Umstellung auf Online-Daten (W.I.P)" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -20,7 +20,13 @@ package com.kurswahlApp.data
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIncludeProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.core.exc.StreamReadException
+import com.fasterxml.jackson.databind.DatabindException
+import com.fasterxml.jackson.databind.InjectableValues
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import java.io.File
+import java.io.IOException
 
 /**
  * Hält alle statischen Daten für die Kurswahl
@@ -35,11 +41,12 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize
  */
 @Suppress("unused")
 @JsonIncludeProperties(
-    "faecher", "pflichtfaecher", "wpfs", "regeln", "wahlzeilen", "wildcards",
-    "wzWildcards", "minKurse", "maxKurse", "pf3_4AusschlussFaecher", "jsonVersion"
+    "faecher", "pflichtfaecher", "wpfs", "regeln", "wahlzeilen", "wildcards", "zweiWPFs",
+    "wzWildcards", "minKurse", "maxKurse", "pf3_4AusschlussFaecher", "jsonVersion", "schulId"
 )
 data class FachData(
-    var jsonVersion: Pair<Int, Int>,
+    val schulId: String,
+    val jsonVersion: Pair<Int, Int>,
     val faecherMap: Map<String, Fach>,
     val pflichtfaecher: Map<Fach, Wahlmoeglichkeit>,
     val wpfs: List<Fach>,
@@ -50,6 +57,7 @@ data class FachData(
     val minKurse: Int,
     val maxKurse: Int,
     val pf3_4AusschlussFaecher: Set<String>,
+    val zweiWPFs: Boolean
 ) {
     val faecher: List<Fach> = faecherMap.values.toList()
     val fremdsprachen: List<Fach> = faecher.filter { it.isFremdsprache }
@@ -102,6 +110,19 @@ data class FachData(
         }
     }
 
+    /**
+     * Läd eine Kurswahl-Datei als [KurswahlData]
+     * Die kompatibilität beider Dateiein kann nicht garantiert werden,
+     * bei unübereinstimmung der [schulId] wird eine [IllegalArgumentException] ausgegeben!
+     */
+    @Throws(IOException::class, StreamReadException::class, DatabindException::class, IllegalArgumentException::class)
+    fun loadKurswahl(file: File): KurswahlData {
+        val mapper = jacksonObjectMapper()
+        val injectables = InjectableValues.Std()
+        injectables.addValue(FachDataMirror::class.java, FachDataMirror(this))
+        mapper.injectableValues = injectables
+        return mapper.readValue(file, KurswahlData::class.java)
+    }
 
     /** Erstellt eine leere Kurswahl mit Standardwerten gesetzt! */
     fun createKurswahl(schulId: String): KurswahlData =
@@ -124,10 +145,11 @@ data class FachData(
             "wzWildcards=$wzWildcards",
             "minKurse=$minKurse",
             "maxKurse=$maxKurse",
-            "pf3_4AusschlussFaecher=$pf3_4AusschlussFaecher"
+            "pf3_4AusschlussFaecher=$pf3_4AusschlussFaecher",
+            "zweiWPFs=$zweiWPFs"
         ).joinToString(
             ",\n\t",
-            "FachData[version ${jsonVersion.first}.${jsonVersion.second}](\n\t",
+            "FachData[schulID: $schulId - version ${jsonVersion.first}.${jsonVersion.second}](\n\t",
             "\n)"
         )
 
@@ -142,6 +164,7 @@ data class FachData(
         @JsonCreator
         fun fromJson(
             @JsonDeserialize(using = VersionDeserializer::class) @JsonProperty jsonVersion: Pair<Int, Int>,
+            @JsonProperty schulId: String,
             @JsonProperty faecher: List<Fach>,
             @JsonProperty pflichtfaecher: Map<String, Wahlmoeglichkeit>,
             @JsonProperty wpfs: List<String>,
@@ -151,12 +174,14 @@ data class FachData(
             @JsonProperty wzWildcards: List<String>,
             @JsonProperty minKurse: Int,
             @JsonProperty maxKurse: Int,
-            @JsonProperty pf3_4AusschlussFaecher: Set<String>
+            @JsonProperty pf3_4AusschlussFaecher: Set<String>,
+            @JsonProperty zweiWPFs: Boolean
         ): FachData {
             // Fächer zusätzlich sortieren um auf Aufgabenfelder aufzuteilen
             val faecherMap: Map<String, Fach> =
                 faecher.sortedBy { if (it.aufgabenfeld > 0) it.aufgabenfeld else 4 }.associateBy { it.kuerzel }
             return FachData(
+                schulId = schulId,
                 jsonVersion = jsonVersion,
                 faecherMap = faecherMap,
                 pflichtfaecher = pflichtfaecher.mapKeys { (key: String) -> faecherMap[key]!! },
@@ -171,7 +196,8 @@ data class FachData(
                 wzWildcards = wzWildcards.associateWith { wildcards[it]!! },
                 minKurse = minKurse,
                 maxKurse = maxKurse,
-                pf3_4AusschlussFaecher = pf3_4AusschlussFaecher
+                pf3_4AusschlussFaecher = pf3_4AusschlussFaecher,
+                zweiWPFs = zweiWPFs
             )
         }
     }

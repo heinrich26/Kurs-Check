@@ -43,6 +43,7 @@ fun getResourceURL(fileName: String): URL? = {}.javaClass.classLoader.getResourc
 /**
  * Ließt die `dataStruct.json` als [FachData] Objekt ein
  */
+@Deprecated("Läd die gehardcodedte FachData und keine Schulspezifischen Daten, TESTING ONLY")
 fun readDataStruct(): FachData {
     val mapper = jacksonObjectMapper()
     mapper.factory.enable(JsonParser.Feature.ALLOW_COMMENTS)

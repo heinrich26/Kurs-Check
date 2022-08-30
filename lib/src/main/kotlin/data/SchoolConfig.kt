@@ -15,21 +15,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package gui
+package com.kurswahlApp.data
 
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.kurswahlApp.data.FachData
 import com.kurswahlApp.getResource
 import java.io.FileInputStream
 import java.io.FileWriter
 import java.io.IOException
+import java.io.StringWriter
 import java.net.URL
+import java.nio.ByteBuffer
+import java.nio.channels.AsynchronousFileChannel
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.nio.file.StandardOpenOption
 import java.util.*
+import kotlin.io.path.Path
 import kotlin.io.path.exists
 
 
@@ -114,6 +118,10 @@ object SchoolConfig {
         }
     }
 
+    /**
+     * Läd die Schule mit der gebenen [schulId] entweder aus dem Cache oder vom Server
+     * @return Die angeforderte [School] oder `null`
+     */
     fun getSchool(schulId: String): FachData? {
         val mapper = jacksonObjectMapper()
         mapper.factory.enable(JsonParser.Feature.ALLOW_COMMENTS)
@@ -158,15 +166,33 @@ object SchoolConfig {
      * @param schoolKey ID der Schule
      */
     fun writeLastSchool(schoolKey: String) {
+        with(Properties()) {
+            setProperty(LAST_KEY, schoolKey)
+            val data = StringWriter()
+            store(data, null)
+            store(FileWriter(LOCAL_LAST_SCHOOL_PROPS), null)
+
+            AsynchronousFileChannel.open(Path(LOCAL_LAST_SCHOOL_PROPS), StandardOpenOption.WRITE).use { asyncChannel ->
+                // Datei schreiben
+                asyncChannel.write(ByteBuffer.wrap(data.toString().encodeToByteArray()), 0)
+            }
+
+        }
+        /*
+        alter versuch mit suspend, der nicht funktioniert...
         suspend {
             with(Properties()) {
                 setProperty(LAST_KEY, schoolKey)
                 runCatching {
-                    store(FileWriter(LOCAL_LAST_SCHOOL_PROPS), null)
+                    try {
+                        store(FileWriter(LOCAL_LAST_SCHOOL_PROPS), null)
+                    } catch (e: Exception) {
+                        JOptionPane.showConfirmDialog(null, "dummmi")
+                    }
                 }
 
             }
-        }
+        }*/
     }
 
 }

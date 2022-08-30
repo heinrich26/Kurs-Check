@@ -168,12 +168,22 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         wpf2.renderer = FachRenderer
 
 
-        val checker = JCheckBox()
-        checker.addActionListener {
-            if (!checker.isSelected) {
-                wpf2.isEnabled = false
-                wpf2.selectedIndex = 0
-            } else wpf2.isEnabled = true
+        if (!fachData.zweiWPFs) {
+            val checker = JCheckBox()
+            wahlData.wpfs?.let {
+                if (it.second != null) {
+                    checker.isSelected = true
+                    wpf2.isEnabled = true
+                }
+            }
+
+            checker.addActionListener {
+                if (!checker.isSelected) {
+                    wpf2.isEnabled = false
+                    wpf2.selectedIndex = 0
+                } else wpf2.isEnabled = true
+            }
+            add(checker, row = 7, column = 0, anchor = GridBagConstraints.EAST)
         }
 
         // Daten einsetzen
@@ -203,7 +213,7 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
             add(wpf1, row = 6, column = 1, fill = GridBagConstraints.BOTH, margin = it)
             add(wpf2, row = 7, column = 1, fill = GridBagConstraints.BOTH, margin = it)
         }
-        add(checker, row = 7, column = 0, anchor = GridBagConstraints.EAST)
+
     }
 
 
@@ -224,7 +234,7 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
     }
 
     override fun isDataValid(): Boolean {
-        return (fs1.selectedItem != null && fs2.selectedItem != null && wpf1.selectedItem != null)
+        return (fs1.selectedItem != null && fs2.selectedItem != null && wpf1.selectedItem != null && (!fachData.zweiWPFs || wpf2.selectedItem != null))
     }
 
     override val windowName: String
