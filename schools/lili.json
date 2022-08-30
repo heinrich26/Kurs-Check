@@ -166,6 +166,7 @@
 		"De": "1-4",
 		"Sp": "1-4"
 	},
+    "zweiWPFs": true,
 	"wpfs": [
 		"Inf",
 		"I",
