@@ -70,6 +70,9 @@ Weitere Beispiele können sie in der richtigen dataStruct.json finden
 		// Beispiel:
 		"Sp": "1-4"
 	},
+	// Bestimmt ob die Schüler*innen 2 oder nur 1 WPF wählen müssen
+	// (Die Option 2 zu wählen bleibt, damit Wechselnde bestimmte Fächer wählen können!)
+	"zweiWPFs": true|false,
 	// Fächer die der Schüler als Wahlpflichtfach auswählen kann (auch Fächer die nicht relevant sind)
 	"wpfs": ["<Kürzel>", "<Kürzel>", /* Beispiel: */ "Inf", "Lat", "Fr"],
 	/* Regeln

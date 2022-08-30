@@ -1,5 +1,6 @@
 // Beispiel einer Kurswahl-Datei
 {
+	"schulId": "wgg.json",
 	"jsonVersion": "1.2",
 	"lk1": "Ma",
 	"lk2": "Inf",
