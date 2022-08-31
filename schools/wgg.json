@@ -110,13 +110,15 @@
 			"name": "Studium und Beruf",
 			"kuerzel": "SuB",
 			"aufgabenfeld": -1,
-			"nurIn": "1-2"
+			"nurIn": "1-2",
+			"isExtra": true
 		},
 		{
 			"name": "Englisch Debating",
 			"kuerzel": "ED",
 			"aufgabenfeld": -1,
-			"nurIn": "1-2"
+			"nurIn": "1-2",
+			"isExtra": true
 		},
 		{
 			"name": "Psychologie",
