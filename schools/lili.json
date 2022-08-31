@@ -714,12 +714,6 @@
 		]
 		// alle fächer aus AF2, außer Geschichte
 	},
-	"wzWildcards": [
-		"$AF2",
-		"$FS",
-		"$NW",
-		"$Mu/Ku"
-	],
 	// Wildcards, die in den Wahlzeilen vorkommen
 	"minKurse": 40,
 	// Grundkurse und Leistungskurse zusammen
