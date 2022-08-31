@@ -730,6 +730,9 @@
 		"Ku",
 		"DS",
 		"Sp"
-	]
+	],
 	// Fächer, von denen nur 1 gewählt werden darf (§ 23,6 VO-GO)
+	"semesterkurse": [11, 11, 11, 11]
+	// Limitiert die Anzahl Kurse die in einem Semester belegt werden können!
+	
 }
