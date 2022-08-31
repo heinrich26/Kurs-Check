@@ -21,8 +21,16 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
 
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
-sealed class Regel(val desc: String?, val errorMsg: String?) {
+sealed class Regel(var desc: String?, var errorMsg: String?) {
+    /**
+     * Stellt fest, ob die Regel erfüllt wird.
+     * `true` steht für erfüllt
+     */
     abstract fun match(data: KurswahlData): Boolean
 
+    /**
+     * Wird bei der Erstellung der Regel aufgerufen damit alle Regeln die benötigten Daten aus der FachData
+     * erhalten können.
+     */
     open fun fillData(data: FachData) {}
 }

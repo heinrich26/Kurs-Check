@@ -103,9 +103,16 @@ object SchoolConfig {
 
             return if (scanner.hasNext())
                 scanner.next().also {
-                    suspend {
+                    try {
+                        AsynchronousFileChannel.open(Paths.get(LOCAL_SCHOOLS_DIR + schoolKey), StandardOpenOption.CREATE, StandardOpenOption.WRITE).use { asyncChannel ->
+                            // Datei schreiben
+                            asyncChannel.write(ByteBuffer.wrap(it.encodeToByteArray()), 0)
+                        }
+                    } catch (e: IOException) {}
+
+                    /*suspend {
                         runCatching { Files.writeString(Paths.get(LOCAL_SCHOOLS_DIR + schoolKey), it) }
-                    }
+                    }*/
                 }
             else null
         }
@@ -169,7 +176,7 @@ object SchoolConfig {
             val data = StringWriter()
             store(data, null)
 
-            AsynchronousFileChannel.open(Path(LOCAL_LAST_SCHOOL_PROPS), StandardOpenOption.WRITE).use { asyncChannel ->
+            AsynchronousFileChannel.open(Path(LOCAL_LAST_SCHOOL_PROPS), StandardOpenOption.CREATE, StandardOpenOption.WRITE).use { asyncChannel ->
                 // Datei schreiben
                 asyncChannel.write(ByteBuffer.wrap(data.toString().encodeToByteArray()), 0)
             }

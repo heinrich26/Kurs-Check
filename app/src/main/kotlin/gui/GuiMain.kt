@@ -96,7 +96,9 @@ class GuiMain(file: File? = null) : JPanel() {
                     fachData = data
                     wahlData = data.createKurswahl(it.schulId)
                     SchoolConfig.writeLastSchool(data.schulId)
-                    if (!initial) swapPanel()
+                    if (!initial) {
+                        reloadToStart()
+                    }
                 } else {
                     showLoadingError()
                     exitProcess(0)
@@ -210,6 +212,18 @@ class GuiMain(file: File? = null) : JPanel() {
     }
 
     /**
+     * Geht zum Startbildschirm zurück und handled die Änderungen an der Toolbar
+     */
+    private fun reloadToStart() {
+        disableDestinations()
+
+        swapPanel(Overview::class, 5)
+
+        // Sidebar Knöpfe updaten
+        for ((i, dest) in sidebarBtns.withIndex()) dest.isSelected = i == 5
+    }
+
+    /**
      * Tauscht das Aktuelle Panel durch das gegebene [panel] aus!
      */
     private fun swapPanel(panel: KClass<out KurswahlPanel> = curPanel::class, index: Int = -1) {
@@ -278,9 +292,7 @@ class GuiMain(file: File? = null) : JPanel() {
                 wahlData = data
 
                 // Das GUI updaten
-                swapPanel()
-
-                disableDestinations()
+                reloadToStart()
             }
         }
 
@@ -397,7 +409,7 @@ class GuiMain(file: File? = null) : JPanel() {
                 ) == JOptionPane.YES_OPTION
             ) {
                 wahlData = fachData.createKurswahl(currentSchool!!.schulId)
-                swapPanel()
+                reloadToStart()
             }
         }
 

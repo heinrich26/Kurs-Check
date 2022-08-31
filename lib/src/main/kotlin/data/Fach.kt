@@ -33,6 +33,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize
  * @property brauchtWPF ob SuS das [Fach] as WPF belegt haben müssen
  * @property nurPf4_5 ob das [Fach] nur als 4./5. PF gewählt werden kann
  * @property nurIn beschränkt, in welchen Semestern das Fach gewählt werden kann
+ * @property isExtra [Fach] zählt nicht zum maximalen Kurse-pro-Semester Zähler
  */
 @JsonSerialize(using = FachSerializer::class, keyUsing = FachKeySerializer::class)
 data class Fach(
@@ -44,7 +45,8 @@ data class Fach(
     val isKurs: Boolean = true,
     val brauchtWPF: Boolean = false,
     val nurPf4_5: Boolean = false,
-    val nurIn: Wahlmoeglichkeit = Wahlmoeglichkeit.DURCHGEHEND
+    val nurIn: Wahlmoeglichkeit = Wahlmoeglichkeit.DURCHGEHEND,
+    val isExtra: Boolean = false
 ) {
     /**
      * Gibt den Namen des [Fach]s mit, wenn vorhanden, dem Aufgabenfeld zurück

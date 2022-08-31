@@ -19,13 +19,30 @@ package gui
 
 import com.kurswahlApp.createImageIcon
 import com.kurswahlApp.data.Consts
+import com.kurswahlApp.data.KurswahlData
 import com.kurswahlApp.data.Regel
 import javax.swing.JLabel
 import javax.swing.border.EmptyBorder
 
-class RegelLabel(regel: Regel) : JLabel(regel.desc!!.wrappable(), validIcon, LEADING) {
-    private val validText: String = regel.desc!!.wrappable()
-    private val invalidText: String = regel.errorMsg!!.wrappable()
+class RegelLabel(private val regel: Regel) : JLabel(regel.desc?.wrappable() ?: "", validIcon, LEADING) {
+    private var validText: String = regel.desc?.wrappable() ?: ""
+    private var invalidText: String = regel.errorMsg?.wrappable() ?: ""
+
+    /**
+     * Aktualisiert den Text, falls sich die Texte der Regel geändert haben
+     */
+    private fun updateText() {
+        validText = regel.desc?.wrappable() ?: ""
+        invalidText = regel.errorMsg?.wrappable() ?: ""
+    }
+
+    /**
+     * Überprüft die Regel, ändert ggf. das Aussehen das Labels und gibt das Ergebnis zurück
+     */
+    fun match(data: KurswahlData, textUpdate: Boolean = false): Boolean = regel.match(data).also {
+        if (textUpdate) updateText()
+        setAppearance(it)
+    }
 
 
     init {

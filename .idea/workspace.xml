@@ -12,7 +12,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Internetproblem behoben" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Maximalzahl Kurse/Semester hinzugefügt, Bugs beim Speichern behoben und Kurse, die nicht zusammen gewählt werden können in der KurswahlData.kt implementiert - TODO: Visualisierung">
+      <change afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/KonfliktRegel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/KursAnzahlRegel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Extensions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Extensions.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/RegelLabel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/RegelLabel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/Fach.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/Fach.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/KurswahlData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/KurswahlData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/OrRegel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/OrRegel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/Regel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/Regel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/SchoolConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/SchoolConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/Wahlmoeglichkeit.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/Wahlmoeglichkeit.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/resources/schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/resources/schema.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -69,11 +85,11 @@
         <option value="Kotlin Enum" />
         <option value="Class" />
         <option value="JUnit5 Test Class" />
-        <option value="Kotlin Object" />
         <option value="module-info" />
         <option value="Kotlin Data Class" />
         <option value="Kotlin File" />
         <option value="Kotlin Class" />
+        <option value="Kotlin Object" />
       </list>
     </option>
   </component>
@@ -137,10 +153,10 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File" value="kotlin" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Problems" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.52528733" />
-    <property name="settings.editor.selected.configurable" value="copyright" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
@@ -195,7 +211,7 @@
       <command value="gradle app:run clean" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.app [JPackage]">
+  <component name="RunManager" selected="Gradle.kurswahlApp [app:run]">
     <configuration name="app  [createExe]" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -443,21 +459,8 @@
       <workItem from="1661611350394" duration="11949000" />
       <workItem from="1661680975719" duration="28678000" />
       <workItem from="1661785272103" duration="14146000" />
-      <workItem from="1661877283049" duration="3461000" />
-    </task>
-    <task id="LOCAL-00047" summary="CommandLineArgument-Parsing Library hinzugefügt">
-      <created>1654861015121</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1654861015121</updated>
-    </task>
-    <task id="LOCAL-00048" summary="Testdaten werden nun aus `test_wahl.kurswahl` gelesen">
-      <created>1654861451247</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1654861451247</updated>
+      <workItem from="1661877283049" duration="4589000" />
+      <workItem from="1661954978397" duration="18296000" />
     </task>
     <task id="LOCAL-00049" summary="Weitere Attribute werden nun von `lock()` beeinflusst">
       <created>1654861506180</created>
@@ -788,7 +791,21 @@
       <option name="project" value="LOCAL" />
       <updated>1661880920178</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="Zu Internetproblem behoben: debugging Prints entfernt">
+      <created>1661881134695</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1661881134695</updated>
+    </task>
+    <task id="LOCAL-00097" summary="Code-Cleanup bei den MouseListenern">
+      <created>1661882095825</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1661882095825</updated>
+    </task>
+    <option name="localTasksCounter" value="98" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -808,9 +825,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Generator Bugs gefixt; Datumsformat ist nun yyyy-MM-dd!" />
-    <MESSAGE value="Dialog-Titel bei den Open/Save Dialogen hinzugefügt." />
-    <MESSAGE value="Fächer, welche kein Kurs sind, werden im CSV-Generator ausgelassen" />
     <MESSAGE value="Carlos Bug gefixt, dass PW benötigt wird, wenn man Geschichte einfach so 4 Semester wählt. Außerdem 2 weitere Sprachen hinzugefügt.&#10;&#10;Icon durch das Neue ersetzt&#10;&#10;Arbeitsdateien entfern" />
     <MESSAGE value="Die extra Fremdsprachen können nun auch gewählt werden" />
     <MESSAGE value="Export nutzt nun noch ungespeicherte Daten aus dem aktuellen Panel und schlägt einen Dateinamen vor" />
@@ -833,7 +847,10 @@
     <MESSAGE value="Deprecation-Warnung bei Test-Daten aufgehoben" />
     <MESSAGE value="gitignore Update" />
     <MESSAGE value="Internetproblem behoben" />
-    <option name="LAST_COMMIT_MESSAGE" value="Internetproblem behoben" />
+    <MESSAGE value="Zu Internetproblem behoben: debugging Prints entfernt" />
+    <MESSAGE value="Code-Cleanup bei den MouseListenern" />
+    <MESSAGE value="Maximalzahl Kurse/Semester hinzugefügt, Bugs beim Speichern behoben und Kurse, die nicht zusammen gewählt werden können in der KurswahlData.kt implementiert - TODO: Visualisierung" />
+    <option name="LAST_COMMIT_MESSAGE" value="Maximalzahl Kurse/Semester hinzugefügt, Bugs beim Speichern behoben und Kurse, die nicht zusammen gewählt werden können in der KurswahlData.kt implementiert - TODO: Visualisierung" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

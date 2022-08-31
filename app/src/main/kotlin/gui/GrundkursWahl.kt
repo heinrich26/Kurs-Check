@@ -56,6 +56,10 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                 else -> return false
             }
         }
+
+        // Überprüfen, dass pro Semester die maximale Kurszahl nicht überschritten wird
+        if (!wahlData.countCourses(true).zip(fachData.semesterkurse).all { it.first <= it.second }) return false
+
         return counter in fachData.minKurse..fachData.maxKurse
     }
 
@@ -69,11 +73,8 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
     private fun checkData(): Boolean {
         val data = close()
         data.lock()
-        return fachData.regeln.mapIndexed { i, it ->
-            val result = it.match(data)
-            regelLabelArray[i].setAppearance(result)
-            result
-        }.all { it }
+        return regelLabelArray.map { it.match(data)
+        }.all { it } and anzahlProSemesterLabel.match(data, true)
     }
 
     private val checkboxArray = ArrayList<JToggleButton>(fachData.faecher.size * 4)
@@ -101,6 +102,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
 
     private val anzahlLabel = JLabel("$anzahl Kurse")
     private val anzahlInfoLabel = JLabel("")
+    private val anzahlProSemesterLabel = RegelLabel(KursAnzahlRegel(fachData.semesterkurse))
 
     private val checkboxPanel = JPanel(GridBagLayout())
 
@@ -144,12 +146,17 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         regelPanel.setScrollableWidth(ScrollablePanel.ScrollableSizeHint.FIT)
         regelLabelArray.forEach { regelPanel.add(it) }
 
+        // Label für die maximale Kurszahl/Semester
+        regelPanel.add(anzahlProSemesterLabel)
+
         val scrollPane2 = JScrollPane(regelPanel)
         scrollPane2.preferredSize = Dimension(200, 350)
 
         checkData()
 
         add(scrollPane2, row = 0, column = 2, margin = Insets(0, 8, 6, 0))
+
+        // TODO Conflicting Courses & Gruppierung der Checkboxen Implementieren
     }
 
 

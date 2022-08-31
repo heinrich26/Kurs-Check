@@ -1,6 +1,6 @@
 // Diese Datei ist keine gültige JSON und sollte nur als Referenz verwendet werden
 
-// Schema für die dataStruct.json
+// Schema für die eine <FachData (SchulId)>.json
 // verwendet um das Verhalten der Wahl zu ändern!
 
 /* Datentypen
@@ -15,10 +15,13 @@ Wildcard: Platzhalter für mehrere Kürzel, werden in "wildcards": {...: [...],.
 		  und MÜSSEN mit $ beginnen! Wildcards die in den Wahlzeilen verwendet werden,
 		  MÜSSEN zusätzlich in der "wzWildcards"-Liste aufgeführt werden!
 
-Weitere Beispiele können sie in der richtigen dataStruct.json finden
+Weitere Beispiele können sie in der richtigen dataStruct.json oder unter
+https://github.com/heinrich26/Kurs-Check/blob/data/schools/ finden
 */
 
 {
+	// Eindeutiger Identifikator für diese Schule; Entspricht dem Dateinamen mit der Dateinamenerweiterung .json!
+	"schulId": "<Dateiname>",
 	// Hauptversion ändern, wenn Fächer (als LK, PF, etc.) wegfallen oder regeln strenger werden
 	// ansonsten Subversion ändern, wenn Fächer (als LK, PF, etc.) hinzukommen oder Texte (außer Kürzel) geändert werden
 	"jsonVersion": "1.2", // Hauptversion.Subversion
@@ -47,7 +50,9 @@ Weitere Beispiele können sie in der richtigen dataStruct.json finden
 			// Limitiert, in welchen Semestern dieses Fach gewählt werden kann
 			"nurIn": "<Wahlmöglichkeit>", // default: "1-4"
 			// Ob das Fach nicht als 3. PF gewählt werden kann
-			"nurPf4_5": true // default: false
+			"nurPf4_5": true, // default: false
+			// Ob das Fach zu der maximalen Kurszahl pro Semester zählt oder auf einer anderen Schiene, z.B. Nachmittags läuft
+			"isExtra": true // default: false
 		},
 
 		// Beispiel:
@@ -61,6 +66,7 @@ Weitere Beispiele können sie in der richtigen dataStruct.json finden
 			// "isKurs": true,
 			// "nurIn": "1-4",
 			// "nurPf4_5": false
+			// "isExtra": false
 		}
 	],
 	// Fächer die der Schüler wählen muss (werden automatisch angekreuzt)
@@ -70,10 +76,10 @@ Weitere Beispiele können sie in der richtigen dataStruct.json finden
 		// Beispiel:
 		"Sp": "1-4"
 	},
-	// Bestimmt ob die Schüler*innen 2 oder nur 1 WPF wählen tmüssen
+	// Bestimmt ob die Schüler*innen 2 oder nur 1 WPF wählen müssen
 	// (Die Option 2 zu wählen bleibt, damit Wechselnde bestimmte Fächer wählen können!)
-	"zweiWPFs": true|false,
-	// Fächer die der Schüler als Wahlpflichtfach auswählen kann (auch Fächer die nicht relevant sind)
+	"zweiWPFs": true, // or false
+	// Fächer die der/die Schüler*in als Wahlpflichtfach auswählen kann (auch Fächer die nicht relevant sind)
 	"wpfs": ["<Kürzel>", "<Kürzel>", /* Beispiel: */ "Inf", "Lat", "Fr"],
 	/* Regeln
 
@@ -187,12 +193,10 @@ Weitere Beispiele können sie in der richtigen dataStruct.json finden
 		// Beispiel:
 		"$AF2": ["Ge", "PW", "Geo"] // Wildcard für Kurse aus dem Aufgabenfeld 2
 	},
-	// Alle Wildcards, die in den Wahlzeilen vorkommen müssen hier nochmal aufgeführt werden
-	"wzWildcards": ["$<WildcardName1>", "$<WildcardName2>", /* Beispiel: */ "$AF2"],
-	// Mindestanzahl an Grund- und Leistungskursen, die der Schüler wählen muss
+	// Mindestanzahl an Grund- und Leistungskursen, die der/die Schüler*in wählen muss
 	"minKurse": 40,
 	// Höchstzahl    ----------------------------""----------------------------
 	"maxKurse": 44,
-	// Fächer, von denen nur 1 gewählt werden darf (§ 23,6 VO-GO)
+	// Fächer, von denen nur 1 as PF 3/4 gewählt werden darf (§ 23,6 VO-GO)
 	"pf3_4AusschlussFaecher": ["<Kürzel1>", "Kürzel2" /*...*/]
 }

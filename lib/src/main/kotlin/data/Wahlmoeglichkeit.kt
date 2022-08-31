@@ -42,6 +42,19 @@ enum class Wahlmoeglichkeit(val n: Int, val bools: List<Boolean>) {
         }
     }
 
+    /**
+     * Gibt an ob sich die Semester der beiden [Wahlmoeglichkeit]en überschneiden
+     */
+    fun intersects(other: Wahlmoeglichkeit): Boolean {
+        return when (this) {
+            ERSTES_ZWEITES -> other != DRITTES_VIERTES
+            ERSTES_DRITTES -> true
+            ZWEITES_VIERTES -> other != ERSTES_ZWEITES
+            DRITTES_VIERTES -> true
+            DURCHGEHEND -> true
+        }
+    }
+
     companion object {
         /**
          * Gibt die [Wahlmoeglichkeit], welche der gegebenen Liste aus 4 Bools entspricht zurück
@@ -54,6 +67,7 @@ enum class Wahlmoeglichkeit(val n: Int, val bools: List<Boolean>) {
             DURCHGEHEND.bools -> DURCHGEHEND
             else -> null
         }
+
 
         val UNGEWAEHLT_BOOLS = listOf(false, false, false, false)
     }

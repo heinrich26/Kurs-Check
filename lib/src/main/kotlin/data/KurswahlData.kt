@@ -126,9 +126,12 @@ data class KurswahlData(
     /**
      * Zählt die gewählten Kurse pro Semester
      */
-    fun countCourses(): Array<Int> {
-        val courseCounts = arrayOf(0, 0, 0, 0)
-        for ((_, moegl) in kurse) {
+    fun countCourses(excludeExtras: Boolean = false): IntArray {
+        val courseCounts = intArrayOf(0, 0, 0, 0)
+        for ((fach, moegl) in kurse) {
+            // Fächer überspringen die nicht zur maximalen Kurszahl/Semester zählen, da sie auf anderen Schienen liegen!
+            if (fach.isExtra && excludeExtras) continue
+
             when (moegl) {
                 Wahlmoeglichkeit.ERSTES_ZWEITES -> {
                     courseCounts[0]++

@@ -18,6 +18,9 @@
 package com.kurswahlApp.data
 
 @Suppress("unused")
+/**
+ * Regel, die erfüllt wird wenn mindestens eine der beiden assoziierten Regeln erfüllt wird.
+ */
 class OrRegel(private val regel1: Regel, private val regel2: Regel, desc: String? = null, errorMsg: String? = null) : Regel(desc, errorMsg) {
     override fun match(data: KurswahlData): Boolean = regel1.match(data) || regel2.match(data)
 

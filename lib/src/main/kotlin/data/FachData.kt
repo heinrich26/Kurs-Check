@@ -33,18 +33,32 @@ import java.io.IOException
  *
  * Daten werden aus der `dataStruct.json` gezogen oder vom Webserver geladen
  *
- * Neue Felder müssen den selben Namen wie in der `dataStruct.json` haben,
+ * Neue Felder müssen den selben Namen wie in der `JSON` haben,
  * mit dem Finalen Typen im Primary Constructor hinzugefügt und mit dem eingelesenen Typ
  * (so wies in der JSON steht) in der JSON-Factory deklariert (u. ggf. umgeformt) werden.
  *
+ * @property schulId Eindeutiger Identifikator der Schule für diese JSON
  * @property jsonVersion (major-, sub-) Version der FachData-JSON
+ * @property faecherMap Ein Mapping der Kürzel zu den dazugehörigen Fächern
+ * @property pflichtfaecher Alle Fächer die gewählt werden müssen -
+ * werden standardmäßig gesetzt und können nicht abgewählt werden
+ * @property wpfs Alle angebotenen Wahlpflichtfächer
+ * @property regeln Bestimmen welche weiteren Fächer der/die Schüler*in wählen muss
+ * @property wahlzeilen Stellen die möglichen Kombinationen von Prüfungsfächern dar
+ * @property wildcards Zusammenfassungen einzelner Kurse unter einem Kürzel
+ * @property minKurse Mindestanzahl an Kursen die der/die Schüler*in wählen muss
+ * @property maxKurse Maximalanzahl an Kursen die der/die Schüler*in wählen kann
+ * @property pf3_4AusschlussFaecher Fächer, von denen nur 1 as PF 3/4 gewählt werden darf (§ 23,6 VO-GO)
+ * @property zweiWPFs  Bestimmt ob die Schüler*innen 2 oder nur 1 WPF wählen müssen
+ * (Die Option 2 zu wählen bleibt, damit Wechselnde bestimmte Fächer wählen können!)
+ * @property semesterkurse Legt fest, wie viele Kurse je Semester maximal belegt werden dürfen (4 Semester => 4 Zahlen)
  */
 @Suppress("unused")
 @JsonIncludeProperties(
-    "faecher", "pflichtfaecher", "wpfs", "regeln", "wahlzeilen", "wildcards", "zweiWPFs",
-    "wzWildcards", "minKurse", "maxKurse", "pf3_4AusschlussFaecher", "jsonVersion", "schulId"
+    "schulId", "jsonVersion", "faecher", "pflichtfaecher", "wpfs", "regeln", "wahlzeilen",
+    "wildcards", "minKurse", "maxKurse", "pf3_4AusschlussFaecher", "zweiWPFs", "semesterkurse"
 )
-data class FachData(
+class FachData(
     val schulId: String,
     val jsonVersion: Pair<Int, Int>,
     val faecherMap: Map<String, Fach>,
@@ -57,7 +71,8 @@ data class FachData(
     val minKurse: Int,
     val maxKurse: Int,
     val pf3_4AusschlussFaecher: Set<String>,
-    val zweiWPFs: Boolean
+    val zweiWPFs: Boolean,
+    val semesterkurse: Array<Int>, // fixe Länge von 4
 ) {
     val faecher: List<Fach> = faecherMap.values.toList()
     val fremdsprachen: List<Fach> = faecher.filter { it.isFremdsprache }
@@ -146,7 +161,8 @@ data class FachData(
             "minKurse=$minKurse",
             "maxKurse=$maxKurse",
             "pf3_4AusschlussFaecher=$pf3_4AusschlussFaecher",
-            "zweiWPFs=$zweiWPFs"
+            "zweiWPFs=$zweiWPFs",
+            "semesterkurse=$semesterkurse",
         ).joinToString(
             ",\n\t",
             "FachData[schulID: $schulId - version ${jsonVersion.first}.${jsonVersion.second}](\n\t",
@@ -171,12 +187,21 @@ data class FachData(
             @JsonProperty regeln: List<Regel>,
             @JsonProperty wahlzeilen: Map<Int, Wahlzeile>,
             @JsonProperty wildcards: Map<String, List<String>>,
-            @JsonProperty wzWildcards: List<String>,
+//            @JsonProperty wzWildcards: List<String>,
             @JsonProperty minKurse: Int,
             @JsonProperty maxKurse: Int,
             @JsonProperty pf3_4AusschlussFaecher: Set<String>,
-            @JsonProperty zweiWPFs: Boolean
+            @JsonProperty zweiWPFs: Boolean,
+            @JsonProperty semesterkurse: Array<Int>
         ): FachData {
+            if (semesterkurse.size != 4) {
+                throw IllegalArgumentException("Die Länge von 'semesterkurse' muss exakt 4 sein")
+            }
+
+            val wzWildcards = wahlzeilen.flatMap { (_, value) ->
+                listOf(value.lk1, value.lk2, value.pf3, value.pf4, value.pf5).filter { it.startsWith('$') }
+            }.toSet().associateWith { wildcards[it]!! }
+
             // Fächer zusätzlich sortieren um auf Aufgabenfelder aufzuteilen
             val faecherMap: Map<String, Fach> =
                 faecher.sortedBy { if (it.aufgabenfeld > 0) it.aufgabenfeld else 4 }.associateBy { it.kuerzel }
@@ -188,16 +213,13 @@ data class FachData(
                 wpfs = wpfs.map { faecherMap[it]!! },
                 regeln = regeln,
                 wahlzeilen = wahlzeilen,
-                wildcards = wildcards.mapValues {
-                    it.value.map { key ->
-                        faecherMap[key] ?: run { println(key); throw RuntimeException() }
-                    }
-                },
-                wzWildcards = wzWildcards.associateWith { wildcards[it]!! },
+                wildcards = wildcards.mapValues { it.value.map { key -> faecherMap[key]!! } },
+                wzWildcards = wzWildcards,
                 minKurse = minKurse,
                 maxKurse = maxKurse,
                 pf3_4AusschlussFaecher = pf3_4AusschlussFaecher,
-                zweiWPFs = zweiWPFs
+                zweiWPFs = zweiWPFs,
+                semesterkurse = semesterkurse,
             )
         }
     }

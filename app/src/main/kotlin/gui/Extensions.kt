@@ -87,3 +87,9 @@ fun JComponent.addMouseListener(onClick: (e: MouseEvent) -> Unit = {}, onPress: 
         // Hier könnten noch weitere Methoden von [MouseAdapter] stehen
     })
 }
+
+fun List<Boolean>.intersects(other: List<Boolean>): Boolean {
+    for ((a, b) in this.zip(other))
+        if (a && b) return true
+    return false
+}
