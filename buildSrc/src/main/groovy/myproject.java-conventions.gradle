@@ -29,13 +29,19 @@ test {
 project.extensions.add(TypeOf.typeOf(String), "resDirName", "installerResources")
 
 tasks.register('copyInstallerResources', Copy) {
-    it.from "${rootProject.projectDir}/icons/app_icon.ico", layout.projectDirectory.dir("res")
+    it.from "${rootProject.projectDir}/res/icons/app_icon.ico", layout.projectDirectory.dir("res")
     it.rename { String fname ->
         if (fname == "app_icon.ico")
             return "${rootProject.name}.ico"
         else return fname
     }
     it.into layout.buildDirectory.dir((String) project.resDirName)
+}
+
+// Kopiert die java.security File in einen Ordner in dem sie hoffentlich auch im Installer landet!
+tasks.register('addJavaSecurity', Copy) {
+    it.from "${rootProject.projectDir}/res/java.security"
+    it.into layout.buildDirectory.get().dir('jpackage').dir(rootProject.name).dir('app')
 }
 
 // verwendete Java Version für Kotlin Kompilation setzen

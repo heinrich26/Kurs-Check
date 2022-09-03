@@ -13,21 +13,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Maximalzahl Kurse/Semester hinzugefügt, Bugs beim Speichern behoben und Kurse, die nicht zusammen gewählt werden können in der KurswahlData.kt implementiert - TODO: Visualisierung">
-      <change afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/KonfliktRegel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/KursAnzahlRegel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/java.security" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/gradle-build.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/gradle-build.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Extensions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Extensions.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/RegelLabel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/RegelLabel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/Fach.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/Fach.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/KurswahlData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/KurswahlData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/OrRegel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/OrRegel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/Regel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/Regel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/app_icon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/res/icons/app_icon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/app_icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/res/icons/app_icon.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/app_icon.xcf" beforeDir="false" afterPath="$PROJECT_DIR$/res/icons/app_icon.xcf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/SchoolConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/SchoolConfig.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/Wahlmoeglichkeit.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/Wahlmoeglichkeit.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/resources/schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/resources/schema.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/merger/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/merger/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,27 +110,26 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/merger/res/win-merger.properties" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/lib/src/main/kotlin/data/TestData.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/ClickableDestionation.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/lib/src/main/kotlin/data/KurswahlData.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/ExclusiveComboBoxModel.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/merger/settings.gradle" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/lib/src/main/kotlin/data/WahlzeileLinientyp.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/lib/src/main/resources/dataStruct.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/.github/workflows/gradle-build.yml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/icons/app_icon.svg" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/app/build.gradle" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/app/res/kurswahl.properties" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/ClickableDestionation.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/ExclusiveComboBoxModel.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lib/src/main/kotlin/data/KurswahlData.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lib/src/main/kotlin/data/TestData.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lib/src/main/kotlin/data/WahlzeileLinientyp.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lib/src/main/resources/dataStruct.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/merger/build.gradle" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/merger/res/main.wxs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/merger/res/win-merger.properties" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/merger/settings.gradle" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/res/icons/app_icon.svg" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="KotlinCodeInsightWorkspaceSettings">
     <option name="optimizeImportsOnTheFly" value="true" />
-  </component>
-  <component name="KotlinMultiplatform">
-    <allAvailableExecutables />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -147,17 +145,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File" value="kotlin" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.52528733" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Project.color": "0f3259",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="javax.swing.text.html" />
@@ -171,11 +170,11 @@
       <recent name="" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\res" />
+      <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\app\res" />
       <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\app\src\main\resources\schools-data\" />
       <recent name="C:\Users\hendrik\IdeaProjects\kurswahlApp\app\res" />
       <recent name="C:\Users\hendrik\IdeaProjects\kurswahlApp\merger\res" />
-      <recent name="C:\Users\hendrik\IdeaProjects\kurswahlApp\merger" />
-      <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\merger\res" />
     </key>
     <key name="CreateKotlinClassDialog.RecentsKey">
       <recent name="data" />
@@ -209,6 +208,9 @@
       <command value="gradle clean" />
       <command value="gradle app:run" />
       <command value="gradle app:run clean" />
+      <command value="gradle merger:jpackageImage" />
+      <command value="gradle merger:jpackage :merger:clean" />
+      <command value="gradle merger:jpackage" />
     </option>
   </component>
   <component name="RunManager" selected="Gradle.kurswahlApp [app:run]">
@@ -252,7 +254,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="kurswahlApp [app:run clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="kurswahlApp [app:run]" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -263,28 +265,8 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="app:run" />
-            <option value="clean" />
+            <option value=":app:run" />
           </list>
-        </option>
-        <option name="vmOptions" value="" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="kurswahlApp [app:run]" type="GradleRunConfiguration" factoryName="Gradle">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value=":app:run" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list />
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
@@ -395,17 +377,11 @@
       <item itemvalue="Gradle.merger [createExe]" />
       <item itemvalue="Gradle.merger [JPackage]" />
       <item itemvalue="Gradle.kurswahlApp [app:run]" />
-      <item itemvalue="Gradle.kurswahlApp [app:run clean]" />
       <item itemvalue="Kotlin.Fremdsprachen" />
       <item itemvalue="Kotlin.GrundkursWahl" />
       <item itemvalue="Kotlin.Main w. testData" />
       <item itemvalue="Kotlin.Main" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Gradle.kurswahlApp [app:run clean]" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -460,14 +436,10 @@
       <workItem from="1661680975719" duration="28678000" />
       <workItem from="1661785272103" duration="14146000" />
       <workItem from="1661877283049" duration="4589000" />
-      <workItem from="1661954978397" duration="18296000" />
-    </task>
-    <task id="LOCAL-00049" summary="Weitere Attribute werden nun von `lock()` beeinflusst">
-      <created>1654861506180</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1654861506180</updated>
+      <workItem from="1661954978397" duration="18436000" />
+      <workItem from="1662201230254" duration="433000" />
+      <workItem from="1662201858805" duration="47000" />
+      <workItem from="1662201921559" duration="14801000" />
     </task>
     <task id="LOCAL-00050" summary="Refactoring">
       <created>1654863186668</created>
@@ -805,11 +777,21 @@
       <option name="project" value="LOCAL" />
       <updated>1661882095825</updated>
     </task>
-    <option name="localTasksCounter" value="98" />
+    <task id="LOCAL-00098" summary="Maximalzahl Kurse/Semester hinzugefügt, Bugs beim Speichern behoben und Kurse, die nicht zusammen gewählt werden können in der KurswahlData.kt implementiert - TODO: Visualisierung">
+      <created>1661975989254</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1661975989255</updated>
+    </task>
+    <option name="localTasksCounter" value="99" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.wxs" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -821,7 +803,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />

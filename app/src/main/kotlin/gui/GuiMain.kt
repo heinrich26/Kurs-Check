@@ -124,6 +124,9 @@ class GuiMain(file: File? = null) : JPanel() {
 
             parser.parse(args)
 
+            // Unsicheres TLSv1 erlauben um in Schulnetzwerken zu funktionieren (W.I.P)
+            //  System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2,TLSv1.3")
+
             // System UI verwenden
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
@@ -239,6 +242,7 @@ class GuiMain(file: File? = null) : JPanel() {
                         for (i in (index + 1)..4)
                             sidebarBtns[i].isEnabled = false
                 }
+
                 else -> { _ -> }
             }
 
@@ -274,6 +278,7 @@ class GuiMain(file: File? = null) : JPanel() {
                         )
                         return@addActionItem
                     }
+
                     data.readJsonVersion.second > fachData.jsonVersion.second ->
                         JOptionPane.showMessageDialog(
                             this,
@@ -281,6 +286,7 @@ class GuiMain(file: File? = null) : JPanel() {
                             "Versionsunterschiede",
                             JOptionPane.WARNING_MESSAGE
                         )
+
                     data.readJsonVersion.second < fachData.jsonVersion.second ->
                         JOptionPane.showMessageDialog(
                             this,
@@ -418,7 +424,7 @@ class GuiMain(file: File? = null) : JPanel() {
         val chooseSchoolButton = JButton(currentSchool!!.name)
         chooseSchoolButton.addMouseListener(
             onEnter = { chooseSchoolButton.text = "\u2190 Schule wechseln" },
-            onExit = {chooseSchoolButton.text = currentSchool!!.name}
+            onExit = { chooseSchoolButton.text = currentSchool!!.name }
         )
 
         chooseSchoolButton.isFocusable = false

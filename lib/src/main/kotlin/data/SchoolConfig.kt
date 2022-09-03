@@ -135,6 +135,7 @@ object SchoolConfig {
         return try {
             fetchSchool(schulId) ?: loadSchool(schulId)
         } catch (e: IOException) {
+            e.printStackTrace()
             loadSchool(schulId)
         }?.let { mapper.readValue(it, FachData::class.java) }
     }

@@ -12,6 +12,7 @@ apply plugin: 'com.github.johnrengelman.shadow'
 application {
     mainClass = 'gui.GuiMain'
 }
+
 def artifactName = 'wahl-merger'
 
 dependencies {
@@ -23,7 +24,7 @@ dependencies {
 }
 
 launch4j { // Baut die GUI exe
-    icon = "${rootProject.projectDir}/icons/app_icon.ico"
+    icon = "${rootProject.projectDir}/res/icons/app_icon.ico"
     copyConfigurable = []
     jarTask = project.tasks.shadowJar
     headerType = "console"
@@ -34,11 +35,15 @@ launch4j { // Baut die GUI exe
 tasks.register('prepInstallerRes', Delete) {
     delete layout.buildDirectory.dir(resDirName), layout.buildDirectory.dir('temp')
 }
+
 copyInstallerResources.dependsOn prepInstallerRes
-tasks.getByName('jpackageImage').dependsOn copyInstallerResources
+jpackageImage.dependsOn copyInstallerResources/*, addJavaSecurity*/
+
 
 runtime {
     jpackage {
+        println imageDir.toString()
+        println 'hello'
         installerOutputDir = file("$rootDir/out/executable/full")
         imageName = rootProject.name
         installerName = rootProject.name + '-full'
@@ -47,7 +52,8 @@ runtime {
         installerType = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'msi' : 'pkg'
 
         installerOptions = ['--file-associations', "${rootProject.projectDir}/app/res/kurswahl.properties",
-                            '--vendor', '"Willi-Graf-Gymnasium"', '--description', "\"$description\"",
+                            '--vendor', '"Willi-Graf-Gymnasium"',
+                            '--description', "\"$description\"",
                             '--copyright', '"Copyright 2022, All rights reserved"',
                             '--about-url', 'https://github.com/heinrich26/kurswahlApp',
                             (Os.isFamily(Os.FAMILY_WINDOWS)) ? '@res/win-opts.txt' : '@res/mac-opts.txt',
