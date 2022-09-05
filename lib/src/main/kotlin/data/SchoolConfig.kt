@@ -43,14 +43,13 @@ import kotlin.io.path.exists
 
 
 object SchoolConfig {
-    private val client = HttpClient.newBuilder().proxy(ProxySelector.of(new InetSocketAddress("proxy", 8080))).build();
+    private val client = HttpClient.newBuilder().proxy(ProxySelector.of(InetSocketAddress("proxy", 8080))).build();
 
     private fun doRequest(uri: URI): String {
         val request = HttpRequest.newBuilder()
                 .version(HttpClient.Version.HTTP_2)
                 .uri(uri)
                 .timeout(Duration.ofSeconds(10))
-                .setHeader("User-Agent", "My user-agent")
                 .GET()
                 .build()
 
