@@ -25,6 +25,12 @@ import java.io.FileInputStream
 import java.io.IOException
 import java.io.StringWriter
 import java.net.URL
+import java.net.URI
+import java.net.InetSocketAddress
+import java.net.ProxySelector
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse
 import java.nio.ByteBuffer
 import java.nio.channels.AsynchronousFileChannel
 import java.nio.charset.StandardCharsets
@@ -37,6 +43,25 @@ import kotlin.io.path.exists
 
 
 object SchoolConfig {
+    private val client = HttpClient.newBuilder().proxy(ProxySelector.of(new InetSocketAddress("proxy", 8080))).build();
+
+    private fun doRequest(uri: URI): String {
+        val request = HttpRequest.newBuilder()
+                .version(HttpClient.Version.HTTP_2)
+                .uri(uri)
+                .timeout(Duration.ofSeconds(10))
+                .setHeader("User-Agent", "My user-agent")
+                .GET()
+                .build()
+
+        return client.send(request, HttpResponse.BodyHandlers.ofString()).body()
+    }
+
+    private fun doRequest(url: String): String = doRequest(URI.create(url))
+    
+    private fun doRequest(url: URL): String = doRequest(url.toURI())
+
+
     const val CONFIG_SERVER_URL = "https://raw.githubusercontent.com/heinrich26/Kurs-Check/data/"
     val CONFIG_FILE_URL = URL(CONFIG_SERVER_URL + "per-school-settings.json")
     const val CONFIG_FOLDER_URL = CONFIG_SERVER_URL + "schools/"
@@ -79,43 +104,60 @@ object SchoolConfig {
 
     /** Loads the Config from the Server */
     fun fetchConfig(): String {
-        Scanner(
-            CONFIG_FILE_URL.openStream(),
-            StandardCharsets.UTF_8.toString()
-        ).use { scanner ->
-            scanner.useDelimiter("\\A")
-
-            if (scanner.hasNext())
-                return scanner.next().also {
-                    suspend { runCatching { Files.writeString(Paths.get(LOCAL_MAIN_CONFIG), it) } }
+        return doRequest(CONFIG_FILE_URL).also {
+            try {
+                AsynchronousFileChannel.open(Paths.get(LOCAL_MAIN_CONFIG), StandardOpenOption.CREATE, StandardOpenOption.WRITE).use { asyncChannel ->
+                    // Datei schreiben
+                    asyncChannel.write(ByteBuffer.wrap(it.encodeToByteArray()), 0)
                 }
-            else throw IOException()
+            } catch (e: IOException) {}
         }
+
+        // Scanner(
+        //     CONFIG_FILE_URL.openStream(),
+        //     StandardCharsets.UTF_8.toString()
+        // ).use { scanner ->
+        //     scanner.useDelimiter("\\A")
+
+        //     if (scanner.hasNext())
+        //         return scanner.next().also {
+        //             suspend { runCatching { Files.writeString(Paths.get(LOCAL_MAIN_CONFIG), it) } }
+        //         }
+        //     else throw IOException()
+        // }
     }
 
     /** Versucht die Konfiguration für die angeforderte Schule vom Server zu laden */
     fun fetchSchool(schoolKey: String): String? {
-        Scanner(
-            URL(CONFIG_FOLDER_URL + schoolKey).openStream(),
-            StandardCharsets.UTF_8.toString()
-        ).use { scanner ->
-            scanner.useDelimiter("\\A")
-
-            return if (scanner.hasNext())
-                scanner.next().also {
-                    try {
-                        AsynchronousFileChannel.open(Paths.get(LOCAL_SCHOOLS_DIR + schoolKey), StandardOpenOption.CREATE, StandardOpenOption.WRITE).use { asyncChannel ->
-                            // Datei schreiben
-                            asyncChannel.write(ByteBuffer.wrap(it.encodeToByteArray()), 0)
-                        }
-                    } catch (e: IOException) {}
-
-                    /*suspend {
-                        runCatching { Files.writeString(Paths.get(LOCAL_SCHOOLS_DIR + schoolKey), it) }
-                    }*/
+        return doRequest(CONFIG_FOLDER_URL + schoolKey).also {
+            try {
+                AsynchronousFileChannel.open(Paths.get(LOCAL_SCHOOLS_DIR + schoolKey), StandardOpenOption.CREATE, StandardOpenOption.WRITE).use { asyncChannel ->
+                    // Datei schreiben
+                    asyncChannel.write(ByteBuffer.wrap(it.encodeToByteArray()), 0)
                 }
-            else null
+            } catch (e: IOException) {}
         }
+        // Scanner(
+        //     URL(CONFIG_FOLDER_URL + schoolKey).openStream(),
+        //     StandardCharsets.UTF_8.toString()
+        // ).use { scanner ->
+        //     scanner.useDelimiter("\\A")
+
+        //     return if (scanner.hasNext())
+        //         scanner.next().also {
+        //             try {
+        //                 AsynchronousFileChannel.open(Paths.get(LOCAL_SCHOOLS_DIR + schoolKey), StandardOpenOption.CREATE, StandardOpenOption.WRITE).use { asyncChannel ->
+        //                     // Datei schreiben
+        //                     asyncChannel.write(ByteBuffer.wrap(it.encodeToByteArray()), 0)
+        //                 }
+        //             } catch (e: IOException) {}
+
+        //             /*suspend {
+        //                 runCatching { Files.writeString(Paths.get(LOCAL_SCHOOLS_DIR + schoolKey), it) }
+        //             }*/
+        //         }
+        //     else null
+        // }
     }
 
     fun loadSchool(schoolKey: String): String? {
