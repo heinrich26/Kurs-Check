@@ -18,6 +18,8 @@
 package gui
 
 import com.kurswahlApp.data.*
+import com.kurswahlApp.data.Wahlzeile.Companion.isAny
+import com.kurswahlApp.data.Wahlzeile.Companion.isWildcard
 import com.kurswahlApp.data.WahlzeileLinientyp.*
 import java.awt.GridBagConstraints
 import java.awt.Insets
@@ -52,38 +54,44 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
     private val pf5: FachComboBox
 
     @Suppress("PrivatePropertyName")
-    private val pf5_typ: JComboBox<Pf5Typ>
+    private val pf5_typ = JComboBox(Pf5Typ.values())
 
     private val userFs = wahlData.fremdsprachen.map { it.first }
     private val userWpfs = wahlData.wpfs
     private val filteredZeilen = fachData.filterWahlzeilen(wahlData.lk1, wahlData.lk2)
-    private val filteredFaecher = fachData.faecherMap.filterValues {
+    private val filteredFaecherPf5 = fachData.faecherMap.filterValues {
+        /* Nach VO-GO Berlin - § 23 Wahl der Prüfungsfächer Nr.8 muss das Fach für die 5. PK lediglich 4
+        Semester belegt werden und bei einer Fremdsprache muss diese in Klasse 10/der E-Phase erlernt
+        worden sein. */
         // ist als Kurs wählbar
         it.isKurs &&
-        // ist kein Zusatzkurs & ...
-        it.aufgabenfeld != -1 &&
+                // ist kein Zusatzkurs & ...
+                it.aufgabenfeld != -1 &&
                 /* Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1 */
-                (it != wahlData.lk1 && it != wahlData.lk2 && if (it.isFremdsprache) it in userFs
-                /* Hat keine WPF or Fach ist weder 1./2. WPF */
-                else (!it.brauchtWPF || (userWpfs != null && (it == userWpfs.first || it == userWpfs.second))))
+                (!it.isFremdsprache || it in userFs)
+
     }
+    private val filteredFaecher = filteredFaecherPf5.filterValues {
+        /* Fach ist kein LK */
+        it != wahlData.lk1 && it != wahlData.lk2 &&
+                /* Braucht kein WPF oder Fach ist eins von 1./2. WPF */
+                (!it.brauchtWPF || (userWpfs != null && (it == userWpfs.first || it == userWpfs.second)))
+    }
+
     private val zeilenFuerFuenfte: MutableSet<Pair<Int, Wahlzeile>> = mutableSetOf()
 
     init {
         val pf3faecher = pf3Faecher()
 
-        // geht schon
-        val model1 = FachComboBoxModel(pf3faecher)
-        pf3 = FachComboBox(model1)
 
-        // wip
-        val model2 = AwareFachComboBoxModel(pf3) { pf4Faecher() }
-        pf4 = FachComboBox(model2)
+        val pf3Model = FachComboBoxModel(pf3faecher)
+        pf3 = FachComboBox(pf3Model)
 
-        val model3 = AwareFachComboBoxModel(pf3, pf4) { pf5Faecher() }
-        pf5 = FachComboBox(model3)
+        val pf4Model = AwareFachComboBoxModel(pf3) { pf4Faecher() }
+        pf4 = FachComboBox(pf4Model)
 
-        pf5_typ = JComboBox(Pf5Typ.values())
+        val pf5Model = AwareFachComboBoxModel(pf3, pf4) { pf5Faecher() }
+        pf5 = FachComboBox(pf5Model)
 
 
         pf3.renderer = FachRenderer
@@ -103,6 +111,13 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
         pf5.addActionListener { notifier.invoke(pf5.selectedItem != null) }
         notifier.invoke(pf5.selectedItem != null)
 
+        pf5_typ.addActionListener {
+            notifier.invoke(false)
+            pf5Model.removeAllElements()
+            pf5Model.addAll(pf5Faecher())
+            pf5.selectedItem = null
+        }
+
 
         // Anzeigen
         // Margin hinzufügen
@@ -114,9 +129,9 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
         }
 
         // Beschriftungen hinzufügen
-        for (i in 3..5) {
-            add(JLabel("PF $i."), row = i - 2, column = 0)
-        }
+        add(JLabel("3. PF "), row = 1, column = 0)
+        add(JLabel("4. PF "), row = 2, column = 0)
+        add(JLabel("5. PK "), row = 3, column = 0)
         add(JLabel(" als "), row = 3, column = 2)
     }
 
@@ -126,21 +141,21 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
         val beliebig: () -> List<Fach> = { filteredFaecher.mapNotNull { if (it.value.nurPf4_5) null else it.value } }
 
         for (wz in filteredZeilen.values) {
-            if (wz.pf3 == "*") return beliebig()
+            if (wz.pf3.isAny) return beliebig()
 
-            if (wz.pf3.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf3]!!)
+            if (wz.pf3.isWildcard) kuerzel.addAll(fachData.wzWildcards[wz.pf3]!!)
             else kuerzel.add(wz.pf3)
 
             if (wz.linien != DURCHGEZOGEN) {
-                if (wz.pf4 == "*") return beliebig()
+                if (wz.pf4.isAny) return beliebig()
 
-                if (wz.pf4.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf4]!!)
+                if (wz.pf4.isWildcard) kuerzel.addAll(fachData.wzWildcards[wz.pf4]!!)
                 else kuerzel.add(wz.pf4)
 
                 if (wz.linien != KEINE_DURCHGEZOGEN) {
-                    if (wz.pf5 == "*") return beliebig()
+                    if (wz.pf5.isAny) return beliebig()
 
-                    if (wz.pf5.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf5]!!)
+                    if (wz.pf5.isWildcard) kuerzel.addAll(fachData.wzWildcards[wz.pf5]!!)
                     else kuerzel.add(wz.pf5)
                 }
             }
@@ -165,45 +180,45 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
         val kuerzel = mutableSetOf<String>()
         for (wz in filteredZeilen.values) {
             if (wz.pf3 in pf3Groups) {
-                if (wz.pf4 == "*") return beliebig()
+                if (wz.pf4.isAny) return beliebig()
 
-                if (wz.pf4.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf4]!!)
+                if (wz.pf4.isWildcard) kuerzel.addAll(fachData.wzWildcards[wz.pf4]!!)
                 else kuerzel.add(wz.pf4)
 
                 if (wz.linien == GESTRICHELT || wz.linien == KEINE) {
-                    if (wz.pf5 == "*") return beliebig()
+                    if (wz.pf5.isAny) return beliebig()
 
-                    if (wz.pf5.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf5]!!)
+                    if (wz.pf5.isWildcard) kuerzel.addAll(fachData.wzWildcards[wz.pf5]!!)
                     else kuerzel.add(wz.pf5)
                 }
             }
 
             if (wz.linien != DURCHGEZOGEN) {
                 if (wz.pf4 in pf3Groups) {
-                    if (wz.pf3 == "*") return beliebig()
+                    if (wz.pf3.isAny) return beliebig()
 
-                    if (wz.pf3.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf3]!!)
+                    if (wz.pf3.isWildcard) kuerzel.addAll(fachData.wzWildcards[wz.pf3]!!)
                     else kuerzel.add(wz.pf3)
 
                     if (wz.linien == KEINE) {
-                        if (wz.pf5 == "*") return beliebig()
+                        if (wz.pf5.isWildcard) return beliebig()
 
-                        if (wz.pf5.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf5]!!)
+                        if (wz.pf5.isWildcard) kuerzel.addAll(fachData.wzWildcards[wz.pf5]!!)
                         else kuerzel.add(wz.pf5)
                     }
                 }
 
                 if (wz.pf5 in pf3Groups) {
-                    if (wz.pf3 == "*") return beliebig()
+                    if (wz.pf3.isAny) return beliebig()
 
                     if (wz.linien == KEINE) {
-                        if (wz.pf4 == "*") return beliebig()
+                        if (wz.pf4.isAny) return beliebig()
 
-                        if (wz.pf4.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf4]!!)
+                        if (wz.pf4.isWildcard) kuerzel.addAll(fachData.wzWildcards[wz.pf4]!!)
                         else kuerzel.add(wz.pf4)
                     }
 
-                    if (wz.pf3.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf3]!!)
+                    if (wz.pf3.isWildcard) kuerzel.addAll(fachData.wzWildcards[wz.pf3]!!)
                     else kuerzel.add(wz.pf3)
                 }
             }
@@ -214,6 +229,7 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
         return kuerzel.mapNotNull { filteredFaecher[it] }
     }
 
+    @Suppress("ConvertArgumentToSet")
     private fun pf5Faecher(): List<Fach> {
         val selectedPf3 = pf3.selectedItem ?: return emptyList()
         val pf3Groups = fachData.wzWildcardMapping[selectedPf3]!!
@@ -221,10 +237,14 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
         val selectedPf4 = pf4.selectedItem ?: return emptyList()
         val pf4Groups = fachData.wzWildcardMapping[selectedPf4]!!
 
+
+        // bei Präsentation bereits gewählte entfernen!
         val beliebig: () -> List<Fach> = {
-            if (selectedPf3.kuerzel in fachData.pf3_4AusschlussFaecher || selectedPf4.kuerzel in fachData.pf3_4AusschlussFaecher)
-                filteredFaecher.values.filter { it.kuerzel !in fachData.pf3_4AusschlussFaecher }
-            else filteredFaecher.values.filter { it != selectedPf3 && it != selectedPf4 }
+            if (pf5_typ.selectedItem as Pf5Typ == Pf5Typ.PRAESENTATION)
+                filteredFaecherPf5.values.toMutableList().apply {
+                    removeAll(arrayOf(wahlData.lk1!!, wahlData.lk2!!, selectedPf3, selectedPf4))
+                }.toList()
+            else filteredFaecherPf5.values.toList()
         }
 
         val kuerzel = mutableSetOf<String>()
@@ -232,67 +252,54 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
         zeilenFuerFuenfte.clear()
 
         for (wz in filteredZeilen.values) {
+            // Fall: alle durchgezogen; keine Vertauschung
             if (wz.pf3 in pf3Groups && wz.pf4 in pf4Groups) {
                 zeilenFuerFuenfte.add(5 to wz)
-                if (wz.pf5 == "*") return beliebig()
+                if (wz.pf5.isAny) return beliebig()
 
-                if (wz.pf5.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf5]!!)
+                if (wz.pf5.isWildcard) kuerzel.addAll(fachData.wzWildcards[wz.pf5]!!)
                 else kuerzel.add(wz.pf5)
             }
 
             if (wz.linien != DURCHGEZOGEN) {
+                // Fall: keine|durchgezogen; 3./4. getauscht
                 if (wz.pf4 in pf3Groups && wz.pf3 in pf4Groups) {
                     zeilenFuerFuenfte.add(5 to wz)
-                    if (wz.pf5 == "*") return beliebig()
+                    if (wz.pf5.isAny) return beliebig()
 
-                    if (wz.pf5.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf5]!!)
+                    if (wz.pf5.isWildcard) kuerzel.addAll(fachData.wzWildcards[wz.pf5]!!)
                     else kuerzel.add(wz.pf5)
                 }
-
+                // Fall: gestrichelte Linien oder keine Linien
+                //       3./5. oder 4./5. getauscht
                 if (wz.linien != KEINE_DURCHGEZOGEN) {
                     if ((wz.pf3 in pf3Groups && wz.pf5 in pf4Groups) || (wz.pf3 in pf4Groups && wz.pf5 in pf3Groups)) {
                         zeilenFuerFuenfte.add(4 to wz)
-                        if (wz.pf4 == "*") return beliebig()
+                        if (wz.pf4.isAny) return beliebig()
 
-                        if (wz.pf4.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf4]!!)
+                        if (wz.pf4.isWildcard) kuerzel.addAll(fachData.wzWildcards[wz.pf4]!!)
                         else kuerzel.add(wz.pf4)
                     }
-
                     if ((wz.pf4 in pf3Groups && wz.pf5 in pf4Groups) || (wz.pf4 in pf4Groups && wz.pf5 in pf3Groups)) {
                         zeilenFuerFuenfte.add(3 to wz)
-                        if (wz.pf3 == "*") return beliebig()
+                        if (wz.pf3.isAny) return beliebig()
 
-                        if (wz.pf3.startsWith("$")) kuerzel.addAll(fachData.wzWildcards[wz.pf3]!!)
+                        if (wz.pf3.isWildcard) kuerzel.addAll(fachData.wzWildcards[wz.pf3]!!)
                         else kuerzel.add(wz.pf3)
                     }
                 }
             }
         }
 
-        if (selectedPf3.kuerzel in fachData.pf3_4AusschlussFaecher || selectedPf4.kuerzel in fachData.pf3_4AusschlussFaecher)
-            kuerzel.removeAll(fachData.pf3_4AusschlussFaecher)
-        kuerzel.remove(selectedPf3.kuerzel) // Prüfungsfach 3 nicht 2x wählen
-        kuerzel.remove(selectedPf4.kuerzel) // Prüfungsfach 4 nicht 2x wählen
-        return kuerzel.mapNotNull { filteredFaecher[it] }
-    }
-
-
-    /*LinkedHashSet(wahlzeilen.values.flatMap { wz ->
-        val kuerzel = when (pf) {
-            3 -> wz.pf3
-            4 -> wz.pf4
-            else -> wz.pf5
+        // bei Präsentation bereits gewählte entfernen!
+        if (pf5_typ.selectedItem as Pf5Typ == Pf5Typ.PRAESENTATION) {
+            kuerzel.removeAll(
+                arrayOf(wahlData.lk1!!.kuerzel, wahlData.lk2!!.kuerzel, selectedPf3.kuerzel, selectedPf4.kuerzel)
+            )
         }
 
-        if (kuerzel == "*") fachData.faecher else
-        if (kuerzel.startsWith("$")) fachData.wzWildcards[kuerzel]!!
-        else Collections.singleton(fachData.faecherMap[kuerzel]!!)
-    }).filter {
-        *//* Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1 *//*
-            if (it.fremdsprache) it in fremdsprachen
-            *//* Hat keine WPF or Fach ist weder 1./2. WPF *//*
-            else (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second)))
-        }*/
+        return kuerzel.mapNotNull { filteredFaecher[it] }
+    }
 
     override fun close(): KurswahlData {
         val selectedPf5 = pf5.selectedItem!!
@@ -302,7 +309,7 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
             val fieldVal = when (field) {
                 3 -> wz.pf3
                 4 -> wz.pf4
-                else -> wz.pf5
+                else /* 5 */ -> wz.pf5
             }
             if (fieldVal in pf5Groups) {
                 zeile = filteredZeilen.firstNotNullOf { if (it.value == wz) it.key else null }

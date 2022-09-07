@@ -24,21 +24,18 @@ import com.kurswahlApp.getResource
 import java.io.FileInputStream
 import java.io.IOException
 import java.io.StringWriter
-import java.net.URL
 import java.net.URI
-import java.net.InetSocketAddress
-import java.net.ProxySelector
+import java.net.URL
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 import java.nio.ByteBuffer
 import java.nio.channels.AsynchronousFileChannel
-import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
-import java.util.*
 import java.time.Duration
+import java.util.*
 import kotlin.io.path.Path
 import kotlin.io.path.exists
 
@@ -50,19 +47,22 @@ object SchoolConfig {
 
     private val client = HttpClient.newHttpClient()
 
+    @Throws(IOException::class, InterruptedException::class)
     private fun doRequest(uri: URI): String {
         val request = HttpRequest.newBuilder()
-                .version(HttpClient.Version.HTTP_2)
-                .uri(uri)
-                .timeout(Duration.ofSeconds(10))
-                .GET()
-                .build()
+            .version(HttpClient.Version.HTTP_2)
+            .uri(uri)
+            .timeout(Duration.ofSeconds(10))
+            .GET()
+            .build()
 
         return client.send(request, HttpResponse.BodyHandlers.ofString()).body()
     }
 
+    @Throws(IOException::class, InterruptedException::class)
     private fun doRequest(url: String): String = doRequest(URI.create(url))
-    
+
+    @Throws(IOException::class, InterruptedException::class)
     private fun doRequest(url: URL): String = doRequest(url.toURI())
 
 
@@ -75,12 +75,15 @@ object SchoolConfig {
             "win" in it -> {
                 System.getenv("AppData")
             }
+
             "nix" in it || "nux" in it || "aix" in it -> {
                 System.getProperty("user.home")
             }
+
             "mac" in it -> {
                 System.getProperty("user.home") + "/Library/Preferences"
             }
+
             else -> System.getProperty("user.home")
         }!! + "/.kurs-check"
     }
@@ -110,11 +113,16 @@ object SchoolConfig {
     fun fetchConfig(): String {
         return doRequest(CONFIG_FILE_URL).also {
             try {
-                AsynchronousFileChannel.open(Paths.get(LOCAL_MAIN_CONFIG), StandardOpenOption.CREATE, StandardOpenOption.WRITE).use { asyncChannel ->
+                AsynchronousFileChannel.open(
+                    Paths.get(LOCAL_MAIN_CONFIG),
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.WRITE
+                ).use { asyncChannel ->
                     // Datei schreiben
                     asyncChannel.write(ByteBuffer.wrap(it.encodeToByteArray()), 0)
                 }
-            } catch (e: IOException) {}
+            } catch (_: IOException) {
+            }
         }
 
         // Scanner(
@@ -132,14 +140,19 @@ object SchoolConfig {
     }
 
     /** Versucht die Konfiguration für die angeforderte Schule vom Server zu laden */
-    fun fetchSchool(schoolKey: String): String? {
+    fun fetchSchool(schoolKey: String): String {
         return doRequest(CONFIG_FOLDER_URL + schoolKey).also {
             try {
-                AsynchronousFileChannel.open(Paths.get(LOCAL_SCHOOLS_DIR + schoolKey), StandardOpenOption.CREATE, StandardOpenOption.WRITE).use { asyncChannel ->
+                AsynchronousFileChannel.open(
+                    Paths.get(LOCAL_SCHOOLS_DIR + schoolKey),
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.WRITE
+                ).use { asyncChannel ->
                     // Datei schreiben
                     asyncChannel.write(ByteBuffer.wrap(it.encodeToByteArray()), 0)
                 }
-            } catch (e: IOException) {}
+            } catch (_: IOException) {
+            }
         }
         // Scanner(
         //     URL(CONFIG_FOLDER_URL + schoolKey).openStream(),
@@ -179,7 +192,7 @@ object SchoolConfig {
         mapper.factory.enable(JsonParser.Feature.ALLOW_COMMENTS)
 
         return try {
-            fetchSchool(schulId) ?: loadSchool(schulId)
+            fetchSchool(schulId)
         } catch (e: IOException) {
             e.printStackTrace()
             loadSchool(schulId)
@@ -223,7 +236,11 @@ object SchoolConfig {
             val data = StringWriter()
             store(data, null)
 
-            AsynchronousFileChannel.open(Path(LOCAL_LAST_SCHOOL_PROPS), StandardOpenOption.CREATE, StandardOpenOption.WRITE).use { asyncChannel ->
+            AsynchronousFileChannel.open(
+                Path(LOCAL_LAST_SCHOOL_PROPS),
+                StandardOpenOption.CREATE,
+                StandardOpenOption.WRITE
+            ).use { asyncChannel ->
                 // Datei schreiben
                 asyncChannel.write(ByteBuffer.wrap(data.toString().encodeToByteArray()), 0)
             }

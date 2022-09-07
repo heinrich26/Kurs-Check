@@ -122,6 +122,8 @@ object Consts {
         transform(AffineTransform.getTranslateInstance(1.0, 1.0))
     }
 
+    val HELP_ICON = Area(Ellipse2D.Float())
+
     val CHECKBOX_CHECKED = Area(RoundRectangle2D.Double(.0, .0, 24.0, 24.0, 10.0, 10.0)).apply {
         subtract(Area(GeneralPath().apply {
             moveTo(10.2, 17.4)
@@ -133,7 +135,6 @@ object Consts {
             closePath()
         }))
     }
-
 
     val CHECKBOX_LK: Area
     val CHECKBOX_PF3: Area

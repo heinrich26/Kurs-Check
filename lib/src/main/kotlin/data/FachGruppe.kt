@@ -17,22 +17,20 @@
 
 package com.kurswahlApp.data
 
-@Suppress("unused")
-data class Wahlzeile(
-    val lk1: String,
-    val lk2: String,
-    val pf3: String,
-    val pf4: String,
-    val pf5: String,
-    val linien: WahlzeileLinientyp) {
+import java.awt.Color
 
-    companion object {
-        val String.isWildcard: Boolean
-            get() = this.startsWith('$')
-
-        val String.isAny: Boolean
-            get() = this == "*"
+/**
+ * Gruppe unter welcher Fächer zusammengefasst werden können
+ * um die maximale Anzahl bestimmter Kurse innerhalb eines Semesters
+ * zu limitieren.
+ *
+ * @property name Anzeigename der Gruppe
+ * @property stundenzahl Quadrupel mit den Stundenzahlen für jedes Semester
+ * */
+class FachGruppe(val name: String, val stundenzahl: Array<Int>) {
+    lateinit var color: Color
+    init {
+        if (stundenzahl.size != 4)
+            throw IllegalArgumentException("Die Länge von 'semesterkurse' muss exakt 4 sein")
     }
-
 }
-

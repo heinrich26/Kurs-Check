@@ -1,2 +1,0 @@
-# Erlaubt TLSv1, um in Schulnetzwerken zu funktionieren.
-jdk.tls.disabledAlgorithms=SSLv3, RC4, DES, MD5withRSA, DH keySize < 1024, EC keySize < 224, 3DES_EDE_CBC, anon, NULL

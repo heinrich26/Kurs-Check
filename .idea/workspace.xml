@@ -12,21 +12,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Maximalzahl Kurse/Semester hinzugefügt, Bugs beim Speichern behoben und Kurse, die nicht zusammen gewählt werden können in der KurswahlData.kt implementiert - TODO: Visualisierung">
-      <change afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/java.security" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/gradle-build.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/gradle-build.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Anpassung des 5.PFs an Regeln u. Limitierung von Kursen pro Semester">
+      <change afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachGruppe.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/SolidFiller.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Pruefungsfaecher.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Pruefungsfaecher.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/RegelLabel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/RegelLabel.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/icons/app_icon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/res/icons/app_icon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/icons/app_icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/res/icons/app_icon.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/icons/app_icon.xcf" beforeDir="false" afterPath="$PROJECT_DIR$/res/icons/app_icon.xcf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/Consts.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/Consts.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/KursAnzahlRegel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/KursanzahlInfo.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/SchoolConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/SchoolConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/Wahlzeile.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/Wahlzeile.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/merger/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/merger/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/java.security" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,8 +90,8 @@
         <option value="module-info" />
         <option value="Kotlin Data Class" />
         <option value="Kotlin File" />
-        <option value="Kotlin Class" />
         <option value="Kotlin Object" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -145,18 +148,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Project.color": "0f3259",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "SDKs",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Project.color&quot;: &quot;0f3259&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="javax.swing.text.html" />
@@ -170,11 +173,11 @@
       <recent name="" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\app\src\main\kotlin\gui" />
       <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\res" />
       <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\app\res" />
       <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\app\src\main\resources\schools-data\" />
       <recent name="C:\Users\hendrik\IdeaProjects\kurswahlApp\app\res" />
-      <recent name="C:\Users\hendrik\IdeaProjects\kurswahlApp\merger\res" />
     </key>
     <key name="CreateKotlinClassDialog.RecentsKey">
       <recent name="data" />
@@ -439,14 +442,9 @@
       <workItem from="1661954978397" duration="18436000" />
       <workItem from="1662201230254" duration="433000" />
       <workItem from="1662201858805" duration="47000" />
-      <workItem from="1662201921559" duration="14801000" />
-    </task>
-    <task id="LOCAL-00050" summary="Refactoring">
-      <created>1654863186668</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1654863186668</updated>
+      <workItem from="1662201921559" duration="14855000" />
+      <workItem from="1662470802745" duration="16266000" />
+      <workItem from="1662556026034" duration="13498000" />
     </task>
     <task id="LOCAL-00051" summary="Refactoring">
       <created>1654863220876</created>
@@ -784,7 +782,14 @@
       <option name="project" value="LOCAL" />
       <updated>1661975989255</updated>
     </task>
-    <option name="localTasksCounter" value="99" />
+    <task id="LOCAL-00099" summary="Versuch die Nutzung von TLSv1 zu erlauben, damit die Software im Schulnetzwerk läuft">
+      <created>1662217657645</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1662217657645</updated>
+    </task>
+    <option name="localTasksCounter" value="100" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -806,8 +811,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Carlos Bug gefixt, dass PW benötigt wird, wenn man Geschichte einfach so 4 Semester wählt. Außerdem 2 weitere Sprachen hinzugefügt.&#10;&#10;Icon durch das Neue ersetzt&#10;&#10;Arbeitsdateien entfern" />
-    <MESSAGE value="Die extra Fremdsprachen können nun auch gewählt werden" />
     <MESSAGE value="Export nutzt nun noch ungespeicherte Daten aus dem aktuellen Panel und schlägt einen Dateinamen vor" />
     <MESSAGE value="Navigation gefixt" />
     <MESSAGE value="Java-Version auf 1.8 gesetzt, um größere Kompatibilität zu ermöglichen&#10;&#10;Benötigte eine Neuimplementierung des `FachComboBoxModel`s, denn addAll(...) gibt es in Java 1.8s ComboBox Implementation noch nicht" />
@@ -831,7 +834,9 @@
     <MESSAGE value="Zu Internetproblem behoben: debugging Prints entfernt" />
     <MESSAGE value="Code-Cleanup bei den MouseListenern" />
     <MESSAGE value="Maximalzahl Kurse/Semester hinzugefügt, Bugs beim Speichern behoben und Kurse, die nicht zusammen gewählt werden können in der KurswahlData.kt implementiert - TODO: Visualisierung" />
-    <option name="LAST_COMMIT_MESSAGE" value="Maximalzahl Kurse/Semester hinzugefügt, Bugs beim Speichern behoben und Kurse, die nicht zusammen gewählt werden können in der KurswahlData.kt implementiert - TODO: Visualisierung" />
+    <MESSAGE value="Versuch die Nutzung von TLSv1 zu erlauben, damit die Software im Schulnetzwerk läuft" />
+    <MESSAGE value="Anpassung des 5.PFs an Regeln u. Limitierung von Kursen pro Semester" />
+    <option name="LAST_COMMIT_MESSAGE" value="Anpassung des 5.PFs an Regeln u. Limitierung von Kursen pro Semester" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -48,7 +48,7 @@ import java.io.IOException
  * @property wildcards Zusammenfassungen einzelner Kurse unter einem Kürzel
  * @property minKurse Mindestanzahl an Kursen die der/die Schüler*in wählen muss
  * @property maxKurse Maximalanzahl an Kursen die der/die Schüler*in wählen kann
- * @property pf3_4AusschlussFaecher Fächer, von denen nur 1 as PF 3/4 gewählt werden darf (§ 23,6 VO-GO)
+ * @property pf3_4AusschlussFaecher Fächer, von denen nur 1 als  3./4. PF gewählt werden darf (§ 23,6 VO-GO)
  * @property zweiWPFs  Bestimmt ob die Schüler*innen 2 oder nur 1 WPF wählen müssen
  * (Die Option 2 zu wählen bleibt, damit Wechselnde bestimmte Fächer wählen können!)
  * @property semesterkurse Legt fest, wie viele Kurse je Semester maximal belegt werden dürfen (4 Semester => 4 Zahlen)
@@ -72,7 +72,7 @@ class FachData(
     val maxKurse: Int,
     val pf3_4AusschlussFaecher: Set<String>,
     val zweiWPFs: Boolean,
-    val semesterkurse: Array<Int>, // fixe Länge von 4
+    val semesterkurse: Array<Int>
 ) {
     val faecher: List<Fach> = faecherMap.values.toList()
     val fremdsprachen: List<Fach> = faecher.filter { it.isFremdsprache }
@@ -187,7 +187,6 @@ class FachData(
             @JsonProperty regeln: List<Regel>,
             @JsonProperty wahlzeilen: Map<Int, Wahlzeile>,
             @JsonProperty wildcards: Map<String, List<String>>,
-//            @JsonProperty wzWildcards: List<String>,
             @JsonProperty minKurse: Int,
             @JsonProperty maxKurse: Int,
             @JsonProperty pf3_4AusschlussFaecher: Set<String>,
@@ -204,7 +203,8 @@ class FachData(
 
             // Fächer zusätzlich sortieren um auf Aufgabenfelder aufzuteilen
             val faecherMap: Map<String, Fach> =
-                faecher.sortedBy { if (it.aufgabenfeld > 0) it.aufgabenfeld else 4 }.associateBy { it.kuerzel }
+                faecher.sortedBy { if (it.aufgabenfeld > 0) it.aufgabenfeld else 4 - it.aufgabenfeld }
+                    .associateBy { it.kuerzel }
             return FachData(
                 schulId = schulId,
                 jsonVersion = jsonVersion,
@@ -219,7 +219,7 @@ class FachData(
                 maxKurse = maxKurse,
                 pf3_4AusschlussFaecher = pf3_4AusschlussFaecher,
                 zweiWPFs = zweiWPFs,
-                semesterkurse = semesterkurse,
+                semesterkurse = semesterkurse
             )
         }
     }

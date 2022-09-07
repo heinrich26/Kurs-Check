@@ -38,12 +38,6 @@ tasks.register('copyInstallerResources', Copy) {
     it.into layout.buildDirectory.dir((String) project.resDirName)
 }
 
-// Kopiert die java.security File in einen Ordner in dem sie hoffentlich auch im Installer landet!
-tasks.register('addJavaSecurity', Copy) {
-    it.from "${rootProject.projectDir}/res/java.security"
-    it.into layout.buildDirectory.get().dir('jpackage').dir(rootProject.name).dir('app')
-}
-
 // verwendete Java Version für Kotlin Kompilation setzen
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions {

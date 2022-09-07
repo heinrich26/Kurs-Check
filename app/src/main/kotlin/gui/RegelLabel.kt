@@ -24,26 +24,18 @@ import com.kurswahlApp.data.Regel
 import javax.swing.JLabel
 import javax.swing.border.EmptyBorder
 
-class RegelLabel(private val regel: Regel) : JLabel(regel.desc?.wrappable() ?: "", validIcon, LEADING) {
-    private var validText: String = regel.desc?.wrappable() ?: ""
-    private var invalidText: String = regel.errorMsg?.wrappable() ?: ""
-
-    /**
-     * Aktualisiert den Text, falls sich die Texte der Regel geändert haben
-     */
-    private fun updateText() {
-        validText = regel.desc?.wrappable() ?: ""
-        invalidText = regel.errorMsg?.wrappable() ?: ""
-    }
+class RegelLabel(private val regel: Regel) : JLabel(regel.desc?.wrappable(), validIcon, LEADING) {
+    private var validText: String =
+        (regel.desc ?: "Oh-oh, hier ist was schief gelaufen! (Dieser Regel fehlt eine Beschreibung)").wrappable()
+    private var invalidText: String =
+        (regel.errorMsg ?: "Oh-oh, hier ist was schief gelaufen! (Dieser Regel fehlt eine Fehlermeldung)").wrappable()
 
     /**
      * Überprüft die Regel, ändert ggf. das Aussehen das Labels und gibt das Ergebnis zurück
      */
-    fun match(data: KurswahlData, textUpdate: Boolean = false): Boolean = regel.match(data).also {
-        if (textUpdate) updateText()
+    fun match(data: KurswahlData): Boolean = regel.match(data).also {
         setAppearance(it)
     }
-
 
     init {
         border = EmptyBorder(2, 4, 2, 0)
@@ -53,7 +45,7 @@ class RegelLabel(private val regel: Regel) : JLabel(regel.desc?.wrappable() ?: "
 
     private var apprearance = true
 
-    fun setAppearance(valid: Boolean) {
+    private fun setAppearance(valid: Boolean) {
         if (apprearance != valid) {
             if (valid) {
                 icon = validIcon
@@ -69,7 +61,7 @@ class RegelLabel(private val regel: Regel) : JLabel(regel.desc?.wrappable() ?: "
     }
 
     companion object {
-        private val validIcon = createImageIcon("icons/check.png")
-        private val errorIcon = createImageIcon("icons/cross.png")
+        val validIcon = createImageIcon("icons/check.png")
+        val errorIcon = createImageIcon("icons/cross.png")
     }
 }

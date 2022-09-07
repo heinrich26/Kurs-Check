@@ -124,8 +124,6 @@ class GuiMain(file: File? = null) : JPanel() {
 
             parser.parse(args)
 
-            // Unsicheres TLSv1 erlauben um in Schulnetzwerken zu funktionieren (W.I.P)
-            //  System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2,TLSv1.3")
 
             // System UI verwenden
             try {

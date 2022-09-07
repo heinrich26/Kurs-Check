@@ -22,7 +22,6 @@ dependencies {
 
 application {
     mainClass = 'gui.GuiMain'
-//    applicationDefaultJvmArgs = ['-Djdk.tls.client.protocols=TLSv1', '-Dhttps.protocols=TLSv1']
 }
 
 
@@ -35,7 +34,7 @@ launch4j { // Baut die GUI exe
     outfile = "${rootProject.name}.exe"
 }
 
-jpackageImage.dependsOn copyInstallerResources/*, addJavaSecurity*/
+jpackageImage.dependsOn copyInstallerResources
 
 runtime {
     jpackage {
@@ -55,8 +54,3 @@ runtime {
 
     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages', '--add-modules', 'jdk.crypto.cryptoki']
 }
-
-/*
-run {
-    jvmArgs '-Djava.security.properties=../res/java.security'
-}*/

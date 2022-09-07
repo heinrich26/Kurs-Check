@@ -37,13 +37,11 @@ tasks.register('prepInstallerRes', Delete) {
 }
 
 copyInstallerResources.dependsOn prepInstallerRes
-jpackageImage.dependsOn copyInstallerResources/*, addJavaSecurity*/
+jpackageImage.dependsOn copyInstallerResources
 
 
 runtime {
     jpackage {
-        println imageDir.toString()
-        println 'hello'
         installerOutputDir = file("$rootDir/out/executable/full")
         imageName = rootProject.name
         installerName = rootProject.name + '-full'
