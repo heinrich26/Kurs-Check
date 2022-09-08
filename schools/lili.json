@@ -139,6 +139,19 @@
 			// Auf -1, damit es nicht als Prüfungsfach gewählt werden kann!
 			"nurIn": "3-4"
 		},
+		{
+			// alt für Musik
+			"name": "Musik Ensemble",
+			"kuerzel": "Ens",
+			"aufgabenfeld": 1,
+			"isExtra": true
+		},
+		{
+			// alt für Geschichte
+			"name": "Geschichte Bili",
+			"kuerzel": "GeBi",
+			"aufgabenfeld": 3
+		}
 		// Fächer, die nur als Fremdsprache/Wahlpflichtfach angezeigt werden sollen
 		{
 			"name": "Altgriechisch",
@@ -720,7 +733,7 @@
 	"maxKurse": 44,
 	// Grundkurse und Leistungskurse zusammen
 	"pf3_4AusschlussFaecher": [
-		"Mu",
+		"Mu"
 		"Ku",
 		"DS",
 		"Sp"
