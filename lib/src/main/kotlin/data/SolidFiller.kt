@@ -27,6 +27,7 @@ import javax.swing.JComponent
  *
  * @param color Farbe dieses Hintergrunds
  */
+// TODO Nach 'app' verschieben
 class SolidFiller(color: Color) : JComponent() {
     companion object {
         val minSize = Dimension(0,0)
