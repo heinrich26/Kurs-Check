@@ -698,5 +698,6 @@
 	"wzWildcards": ["$AF2", "$FS", "$NW", "$Mu/Ku"], // Wildcards, die in den Wahlzeilen vorkommen
 	"minKurse": 40, // Grundkurse und Leistungskurse zusammen
 	"maxKurse": 44, // Grundkurse und Leistungskurse zusammen
-	"pf3_4AusschlussFaecher": ["Mu", "Ku", "DS", "Sp"] // Fächer, von denen nur 1 gewählt werden darf (§ 23,6 VO-GO)
+	"pf3_4AusschlussFaecher": ["Mu", "Ku", "DS", "Sp"], // Fächer, von denen nur 1 gewählt werden darf (§ 23,6 VO-GO)
+	"schultyp": "Gymnasium"
 }

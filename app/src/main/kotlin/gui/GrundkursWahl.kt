@@ -385,6 +385,20 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                     it.isEnabled = false
                 }
         }
+
+        // Blockt Fremdsprachen die in Klasse 9+ begonnen wurden
+        for ((sprache, jahr) in wahlData.fremdsprachen) {
+            if (jahr >= 9) {
+                val pos = fachPos(sprache)
+                // TODO bei Klasse 10 Belegungsverpflichtung für Künstlerisches Fach entfernen
+                for (k in pos*4..pos*4 + (if (fachData.schultyp.jahre - 2 == jahr) 3 else 1)) {
+                    checkboxArray[k].let {
+                        it.isSelected = true
+                        it.isEnabled = false
+                    }
+                }
+            }
+        }
     }
 
     private fun fachPos(fach: Fach) = fachData.faecher.indexOf(fach)

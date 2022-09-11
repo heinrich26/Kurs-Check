@@ -28,7 +28,7 @@ class KonfliktRegel(private val wildcard: String, desc: String? = null, errorMsg
             val wmoegl1 = wmoegls.removeFirst()
 
             for (wmoegl2 in wmoegls)
-                if (wmoegl1.intersects(wmoegl2)) return true
+                if (wmoegl1.intersects(wmoegl2)) return false
         }
 
 //        for (fach1 in candidates) for (fach2 in candidates) {
@@ -36,7 +36,7 @@ class KonfliktRegel(private val wildcard: String, desc: String? = null, errorMsg
 //
 //            if (fach1.value.intersects(fach2.value)) return true
 //        }
-        return false
+        return true
     }
 
     private lateinit var wCardScope: List<Fach>

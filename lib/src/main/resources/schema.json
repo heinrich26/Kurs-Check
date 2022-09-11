@@ -198,5 +198,7 @@ https://github.com/heinrich26/Kurs-Check/blob/data/schools/ finden
 	// Höchstzahl    ----------------------------""----------------------------
 	"maxKurse": 44,
 	// Fächer, von denen nur 1 as PF 3/4 gewählt werden darf (§ 23,6 VO-GO)
-	"pf3_4AusschlussFaecher": ["<Kürzel1>", "Kürzel2" /*...*/]
+	"pf3_4AusschlussFaecher": ["<Kürzel1>", "Kürzel2" /*...*/],
+	// Typ der Schule, legt z.B. fest wann die E-Phase stattfindet
+	"schultyp": "Gymnasium|Sekundarschule|Berufsschule"
 }

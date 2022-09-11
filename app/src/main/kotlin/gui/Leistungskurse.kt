@@ -18,6 +18,7 @@
 package gui
 
 import com.kurswahlApp.data.*
+import com.kurswahlApp.data.Wahlzeile.Companion.isWildcard
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.Insets
@@ -51,7 +52,12 @@ class Leistungskurse(wahlData: KurswahlData, fachData: FachData, notifier: (Bool
 
                         if (selectedItem == item)
                             selectedItem = null
-                        excludedItem = item to getIndexOf(item).also { i -> removeElementAt(i) }
+
+                        excludedItem = with(getIndexOf(item)) {
+                            if (this == -1) return@with null
+                            removeElementAt(this)
+                            item to this
+                        }
                     }
                 }
             }
@@ -84,6 +90,22 @@ class Leistungskurse(wahlData: KurswahlData, fachData: FachData, notifier: (Bool
         lk2 = FachComboBox(model2)
         val listener: (Any) -> Unit = { notifier.invoke(lk2.selectedItem != null) }
         lk1.addActionListener(listener)
+        lk1.addActionListener {
+            model2.clear()
+            model2.addAll(LinkedHashSet<String>().apply {
+                for (wz in fachData.wahlzeilen.values) {
+                    if (wz.lk1.isWildcard && lk1.selectedItem != null && lk1.selectedItem!!.kuerzel in fachData.wzWildcards[wz.lk1]!! || wz.lk1 == lk1.selectedItem?.kuerzel)
+                        if (wz.lk2.isWildcard)
+                            this.addAll(fachData.wzWildcards[wz.lk2]!!)
+                        else this.add(wz.lk2)
+                }
+            }.map { fachData.faecherMap[it]!! }.filter {
+                /* Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1 */
+                if (it.isFremdsprache) it in fs
+                /* Hat keine WPF or Fach ist weder 1./2. WPF */
+                else (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second)))
+            })
+        }
         lk2.addActionListener(listener)
         listener.invoke(Any())
 

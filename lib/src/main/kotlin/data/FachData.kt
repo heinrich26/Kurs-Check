@@ -52,11 +52,12 @@ import java.io.IOException
  * @property zweiWPFs  Bestimmt ob die Schüler*innen 2 oder nur 1 WPF wählen müssen
  * (Die Option 2 zu wählen bleibt, damit Wechselnde bestimmte Fächer wählen können!)
  * @property semesterkurse Legt fest, wie viele Kurse je Semester maximal belegt werden dürfen (4 Semester => 4 Zahlen)
+ * @property schultyp Bestimmt welcher Schultyp vorliegt
  */
 @Suppress("unused")
 @JsonIncludeProperties(
-    "schulId", "jsonVersion", "faecher", "pflichtfaecher", "wpfs", "regeln", "wahlzeilen",
-    "wildcards", "minKurse", "maxKurse", "pf3_4AusschlussFaecher", "zweiWPFs", "semesterkurse"
+    "schulId", "jsonVersion", "faecher", "pflichtfaecher", "wpfs", "regeln", "wahlzeilen", "wildcards",
+    "minKurse", "maxKurse", "pf3_4AusschlussFaecher", "zweiWPFs", "semesterkurse", "schultyp"
 )
 class FachData(
     val schulId: String,
@@ -72,7 +73,8 @@ class FachData(
     val maxKurse: Int,
     val pf3_4AusschlussFaecher: Set<String>,
     val zweiWPFs: Boolean,
-    val semesterkurse: Array<Int>
+    val semesterkurse: Array<Int>,
+    val schultyp: Schultyp
 ) {
     val faecher: List<Fach> = faecherMap.values.toList()
     val fremdsprachen: List<Fach> = faecher.filter { it.isFremdsprache }
@@ -191,7 +193,8 @@ class FachData(
             @JsonProperty maxKurse: Int,
             @JsonProperty pf3_4AusschlussFaecher: Set<String>,
             @JsonProperty zweiWPFs: Boolean,
-            @JsonProperty semesterkurse: Array<Int>
+            @JsonProperty semesterkurse: Array<Int>,
+            @JsonProperty schultyp: Schultyp
         ): FachData {
             if (semesterkurse.size != 4) {
                 throw IllegalArgumentException("Die Länge von 'semesterkurse' muss exakt 4 sein")
@@ -219,7 +222,8 @@ class FachData(
                 maxKurse = maxKurse,
                 pf3_4AusschlussFaecher = pf3_4AusschlussFaecher,
                 zweiWPFs = zweiWPFs,
-                semesterkurse = semesterkurse
+                semesterkurse = semesterkurse,
+                schultyp = schultyp
             )
         }
     }

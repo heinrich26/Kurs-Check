@@ -12,9 +12,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Anpassung des 5.PFs an Regeln u. Limitierung von Kursen pro Semester">
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Svg nach Swing-GeneralPath Converter hinzugefügt und Hilfe-Icon erstellt">
+      <change afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/Schultyp.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/Consts.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/Consts.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Leistungskurse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Leistungskurse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/resources/dataStruct.json" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/resources/dataStruct.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/resources/schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/resources/schema.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,18 +139,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Project.color&quot;: &quot;0f3259&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Project.color": "0f3259",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="javax.swing.text.html" />
@@ -165,6 +171,7 @@
       <recent name="C:\Users\hendrik\IdeaProjects\kurswahlApp\app\res" />
     </key>
     <key name="CreateKotlinClassDialog.RecentsKey">
+      <recent name="com.kurswahlApp.data" />
       <recent name="data" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
@@ -430,14 +437,7 @@
       <workItem from="1662201921559" duration="14855000" />
       <workItem from="1662470802745" duration="16266000" />
       <workItem from="1662556026034" duration="13518000" />
-      <workItem from="1662902791139" duration="1879000" />
-    </task>
-    <task id="LOCAL-00052" summary="Gradle-Wrapper hinzugefügt, um GitHub Actions zu erlauben und evtl. die Probleme an den SchulPCs zu lösen">
-      <created>1654863759419</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1654863759419</updated>
+      <workItem from="1662902791139" duration="8600000" />
     </task>
     <task id="LOCAL-00053" summary="Packages neu angeordnet">
       <created>1654868411994</created>
@@ -775,7 +775,14 @@
       <option name="project" value="LOCAL" />
       <updated>1662573942133</updated>
     </task>
-    <option name="localTasksCounter" value="101" />
+    <task id="LOCAL-00101" summary="Svg nach Swing-GeneralPath Converter hinzugefügt und Hilfe-Icon erstellt">
+      <created>1662905377719</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1662905377720</updated>
+    </task>
+    <option name="localTasksCounter" value="102" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -797,7 +804,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Export nutzt nun noch ungespeicherte Daten aus dem aktuellen Panel und schlägt einen Dateinamen vor" />
     <MESSAGE value="Navigation gefixt" />
     <MESSAGE value="Java-Version auf 1.8 gesetzt, um größere Kompatibilität zu ermöglichen&#10;&#10;Benötigte eine Neuimplementierung des `FachComboBoxModel`s, denn addAll(...) gibt es in Java 1.8s ComboBox Implementation noch nicht" />
     <MESSAGE value="Logging des working-directories entfernt" />
@@ -822,7 +828,8 @@
     <MESSAGE value="Maximalzahl Kurse/Semester hinzugefügt, Bugs beim Speichern behoben und Kurse, die nicht zusammen gewählt werden können in der KurswahlData.kt implementiert - TODO: Visualisierung" />
     <MESSAGE value="Versuch die Nutzung von TLSv1 zu erlauben, damit die Software im Schulnetzwerk läuft" />
     <MESSAGE value="Anpassung des 5.PFs an Regeln u. Limitierung von Kursen pro Semester" />
-    <option name="LAST_COMMIT_MESSAGE" value="Anpassung des 5.PFs an Regeln u. Limitierung von Kursen pro Semester" />
+    <MESSAGE value="Svg nach Swing-GeneralPath Converter hinzugefügt und Hilfe-Icon erstellt" />
+    <option name="LAST_COMMIT_MESSAGE" value="Svg nach Swing-GeneralPath Converter hinzugefügt und Hilfe-Icon erstellt" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
