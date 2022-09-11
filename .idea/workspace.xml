@@ -13,23 +13,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Anpassung des 5.PFs an Regeln u. Limitierung von Kursen pro Semester">
-      <change afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachGruppe.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/SolidFiller.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Pruefungsfaecher.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Pruefungsfaecher.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/RegelLabel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/RegelLabel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/Consts.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/Consts.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/KursAnzahlRegel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/KursanzahlInfo.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/SchoolConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/SchoolConfig.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/Wahlzeile.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/Wahlzeile.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/merger/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/merger/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/java.security" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -444,14 +429,8 @@
       <workItem from="1662201858805" duration="47000" />
       <workItem from="1662201921559" duration="14855000" />
       <workItem from="1662470802745" duration="16266000" />
-      <workItem from="1662556026034" duration="13498000" />
-    </task>
-    <task id="LOCAL-00051" summary="Refactoring">
-      <created>1654863220876</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1654863220876</updated>
+      <workItem from="1662556026034" duration="13518000" />
+      <workItem from="1662902791139" duration="1879000" />
     </task>
     <task id="LOCAL-00052" summary="Gradle-Wrapper hinzugefügt, um GitHub Actions zu erlauben und evtl. die Probleme an den SchulPCs zu lösen">
       <created>1654863759419</created>
@@ -789,7 +768,14 @@
       <option name="project" value="LOCAL" />
       <updated>1662217657645</updated>
     </task>
-    <option name="localTasksCounter" value="100" />
+    <task id="LOCAL-00100" summary="Anpassung des 5.PFs an Regeln u. Limitierung von Kursen pro Semester">
+      <created>1662573942133</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1662573942133</updated>
+    </task>
+    <option name="localTasksCounter" value="101" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
