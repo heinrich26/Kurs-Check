@@ -729,18 +729,13 @@
 		]
 		// alle fächer aus AF2, außer Geschichte
 	},
-	// Wildcards, die in den Wahlzeilen vorkommen
+	// Grundkurse und Leistungskurse zusammen
 	"minKurse": 40,
 	// Grundkurse und Leistungskurse zusammen
 	"maxKurse": 44,
-	// Grundkurse und Leistungskurse zusammen
-	"pf3_4AusschlussFaecher": [
-		"Mu",
-		"Ku",
-		"DS",
-		"Sp"
-	],
 	// Fächer, von denen nur 1 gewählt werden darf (§ 23,6 VO-GO)
-	"semesterkurse": [11, 11, 11, 11]
+	"pf3_4AusschlussFaecher": ["Mu", "Ku", "DS", "Sp"],
 	// Limitiert die maximale Anzahl Kurse die in einem Semester gewählt werden kann!
+	"semesterkurse": [11, 11, 11, 11],
+	"schultyp": "Gymnasium"
 }
