@@ -331,7 +331,7 @@ class GuiMain(file: File? = null) : JPanel() {
                 chooser.dialogTitle = "Datei für den Oberstufenkoordinator speichern"
                 chooser.selectedFile =
                     File(
-                        "${wahlData.vorname!!.split(' ')[0]}_${wahlData.nachname}"
+                        "${data.vorname!!.split(' ')[0]}_${data.nachname}"
                             .replace(Regex("[\\\\/:*?\"<>|.&$]"), "")
                             .replace(' ', '_') + ".$FILETYPE_EXTENSION"
                     )
