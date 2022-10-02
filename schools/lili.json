@@ -130,7 +130,8 @@
             "name": "Sport",
             "kuerzel": "Sp",
             "aufgabenfeld": 0,
-            "nurPf4_5": true
+            "nurPf4_5": true,
+	    "isExtra": true,
         },
         {
             "name": "Sport Theorie",
@@ -150,7 +151,8 @@
             // alt für Geschichte
             "name": "Geschichte Bili",
             "kuerzel": "GeBi",
-            "aufgabenfeld": 3
+            "aufgabenfeld": 3,
+	    "nurFuer": ["Bili"]
         },
         // Fächer, die nur als Fremdsprache/Wahlpflichtfach angezeigt werden sollen
         {
@@ -834,7 +836,7 @@
     // Grundkurse und Leistungskurse zusammen
     "minKurse": 40,
     // Grundkurse und Leistungskurse zusammen
-    "maxKurse": 44,
+    "maxKurse": 46,
     // Fächer, von denen nur 1 gewählt werden darf (§ 23,6 VO-GO)
     "pf3_4AusschlussFaecher": [
         "Mu",
@@ -844,10 +846,11 @@
     ],
     // Limitiert die Anzahl Kurse die in einem Semester belegt werden können!
     "semesterkurse": [
-        11,
-        11,
-        11,
-        11
+        10,
+        10,
+        10,
+        10
     ],
+    "klassen": ["Bili"],
     "schultyp": "Gymnasium"
 }
