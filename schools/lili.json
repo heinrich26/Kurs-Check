@@ -240,7 +240,7 @@
             "type": "IfThenRegel",
             "regel1": {
                 "type": "WildcardRegel",
-                "kuerzel": "$GE",
+                "wildcard": "$GE",
                 "anzahl": 4,
                 "scope": "1-5"
             },
