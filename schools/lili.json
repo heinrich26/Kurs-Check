@@ -74,8 +74,7 @@
             "name": "Philosophie",
             "kuerzel": "Pl",
             "aufgabenfeld": 3,
-            "isLk": true,
-            "brauchtWPF": true
+            "isLk": true
         },
         {
             "name": "Geografie",
@@ -804,7 +803,8 @@
             "Ge",
             "Pw",
             "Geo",
-            "Pl"
+            "Pl",
+	    "GeBi"
         ],
         // Kurse aus dem Aufgabenfeld 2
         "$FS": [
