@@ -318,7 +318,6 @@
             "desc": "<i>Mathe</i> oder <i>Mathe CAS</i> müssen 4 Semester belegt werden",
             "errorMsg": "Wähle 4 Semester <i>Mathe</i> oder <i>Mathe CAS</i>!"
         },
-	,
         {
             "type": "KonfliktRegel",
             "wildcard": "$GE",
