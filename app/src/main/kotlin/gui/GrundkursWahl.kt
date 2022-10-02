@@ -298,6 +298,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
             )
         scrollPane.preferredSize = Dimension(250, 350)
+        scrollPane.verticalScrollBar.setUnitIncrement(16)
         add(scrollPane, row = 0, column = 0, columnspan = 2, margin = Insets(0, 0, 6, 0))
 
         faecherBlocken()
