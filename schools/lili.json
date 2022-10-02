@@ -239,8 +239,8 @@
         {
             "type": "IfThenRegel",
             "regel1": {
-                "type": "KuerzelRegel",
-                "kuerzel": "Ge",
+                "type": "WildcardRegel",
+                "kuerzel": "$GE",
                 "anzahl": 4,
                 "scope": "1-5"
             },
@@ -273,8 +273,8 @@
                 "scope": "1-5"
             },
             "regel2": {
-                "type": "KuerzelRegel",
-                "kuerzel": "Ge",
+                "type": "WildcardRegel",
+                "wildcard": "$GE",
                 "anzahl": 2,
                 "wann": "3-4"
             },
@@ -317,6 +317,13 @@
             "anzahl": 4,
             "desc": "<i>Mathe</i> oder <i>Mathe CAS</i> müssen 4 Semester belegt werden",
             "errorMsg": "Wähle 4 Semester <i>Mathe</i> oder <i>Mathe CAS</i>!"
+        },
+	,
+        {
+            "type": "KonfliktRegel",
+            "wildcard": "$GE",
+            "desc": "Wähle Geschichte <b>oder</b> Geschichte Bili",
+            "errorMsg": "Du kannst nur Geschichte <b>oder</b> Geschichte Bili wählen!"
         }
     ],
     "wahlzeilen": {
@@ -826,12 +833,13 @@
             "Ku",
             "DS"
         ],
+	// alle fächer aus AF2, außer Geschichte
         "$AF2ohneGE": [
             "Pw",
             "Geo",
             "Pl"
-        ]
-        // alle fächer aus AF2, außer Geschichte
+        ],
+	"$GE": ["Ge", "GeBi"]
     },
     // Grundkurse und Leistungskurse zusammen
     "minKurse": 40,
