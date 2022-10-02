@@ -33,6 +33,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize
  * @property brauchtWPF ob SuS das [Fach] as WPF belegt haben müssen
  * @property nurPf4_5 ob das [Fach] nur als 4./5. PF gewählt werden kann
  * @property nurIn beschränkt, in welchen Semestern das Fach gewählt werden kann
+ * @property nurFuer bestimmt welche Klassen das Fach wählen können
  * @property isExtra [Fach] zählt nicht zum maximalen Kurse-pro-Semester Zähler
  */
 @JsonSerialize(using = FachSerializer::class, keyUsing = FachKeySerializer::class)
@@ -46,6 +47,7 @@ data class Fach(
     val brauchtWPF: Boolean = false,
     val nurPf4_5: Boolean = false,
     val nurIn: Wahlmoeglichkeit = Wahlmoeglichkeit.DURCHGEHEND,
+    val nurFuer: Set<String>? = null,
     val isExtra: Boolean = false
 ) {
     /**
@@ -58,4 +60,7 @@ data class Fach(
     override fun equals(other: Any?): Boolean = this === other || (other is Fach && this.kuerzel == other.kuerzel)
 
     override fun hashCode(): Int = kuerzel.hashCode() // nimmt an, dass das selbe Kürzel nur 1x vorkommt
+
+    /** Überprüft ob das Fach mit der gegebenen Klasse gewählt werden kann */
+    fun checkKlasse(klasse: String?) = nurFuer?.contains(klasse) != false
 }

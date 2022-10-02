@@ -52,12 +52,13 @@ import java.io.IOException
  * @property zweiWPFs  Bestimmt ob die Schüler*innen 2 oder nur 1 WPF wählen müssen
  * (Die Option 2 zu wählen bleibt, damit Wechselnde bestimmte Fächer wählen können!)
  * @property semesterkurse Legt fest, wie viele Kurse je Semester maximal belegt werden dürfen (4 Semester => 4 Zahlen)
+ * @property klassen Definiert die an der Schule angebotenen Klassen
  * @property schultyp Bestimmt welcher Schultyp vorliegt
  */
 @Suppress("unused")
 @JsonIncludeProperties(
     "schulId", "jsonVersion", "faecher", "pflichtfaecher", "wpfs", "regeln", "wahlzeilen", "wildcards",
-    "minKurse", "maxKurse", "pf3_4AusschlussFaecher", "zweiWPFs", "semesterkurse", "schultyp"
+    "minKurse", "maxKurse", "pf3_4AusschlussFaecher", "zweiWPFs", "semesterkurse", "klassen", "schultyp"
 )
 class FachData(
     val schulId: String,
@@ -74,6 +75,7 @@ class FachData(
     val pf3_4AusschlussFaecher: Set<String>,
     val zweiWPFs: Boolean,
     val semesterkurse: Array<Int>,
+    val klassen: Set<String> = emptySet(),
     val schultyp: Schultyp
 ) {
     val faecher: List<Fach> = faecherMap.values.toList()
@@ -165,6 +167,8 @@ class FachData(
             "pf3_4AusschlussFaecher=$pf3_4AusschlussFaecher",
             "zweiWPFs=$zweiWPFs",
             "semesterkurse=$semesterkurse",
+            "klassen=$klassen",
+            "schultyp=$schultyp"
         ).joinToString(
             ",\n\t",
             "FachData[schulID: $schulId - version ${jsonVersion.first}.${jsonVersion.second}](\n\t",
@@ -194,6 +198,7 @@ class FachData(
             @JsonProperty pf3_4AusschlussFaecher: Set<String>,
             @JsonProperty zweiWPFs: Boolean,
             @JsonProperty semesterkurse: Array<Int>,
+            @JsonProperty klassen: Set<String>,
             @JsonProperty schultyp: Schultyp
         ): FachData {
             if (semesterkurse.size != 4) {
@@ -223,6 +228,7 @@ class FachData(
                 pf3_4AusschlussFaecher = pf3_4AusschlussFaecher,
                 zweiWPFs = zweiWPFs,
                 semesterkurse = semesterkurse,
+                klassen = klassen,
                 schultyp = schultyp
             )
         }

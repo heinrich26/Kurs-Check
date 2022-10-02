@@ -35,7 +35,7 @@ import java.time.LocalDate
 @Suppress("PropertyName", "PrivatePropertyName")
 @JsonAppend(attrs = [JsonAppend.Attr(value = "jsonVersion")], prepend = true)
 @JsonIncludeProperties(
-    "jsonVersion", "lk1", "lk2", "pf3", "pf4", "pf5", "pf5_typ", "gks", "fremdsprachen", "wpfs",
+    "jsonVersion", "lk1", "lk2", "pf3", "pf4", "pf5", "pf5_typ", "gks", "fremdsprachen", "wpfs", "klasse",
     "wahlzeile", "vorname", "nachname", "geburtsdatum", "geburtsort", "staatsangehoerigkeit", "schulId"
 )
 data class KurswahlData(
@@ -49,6 +49,7 @@ data class KurswahlData(
     @get:JsonSerialize(using = ListOfPairSerializer::class) var fremdsprachen: List<Pair<Fach, Int>> = emptyList(),
     var wpfs: Pair<Fach, Fach?>? = null,
     var wahlzeile: Int = -1,
+    val klasse: String? = null,
     val pflichtfaecher: Map<Fach, Wahlmoeglichkeit>,
 
     // Persönliche Daten
@@ -79,6 +80,7 @@ data class KurswahlData(
             @JsonProperty gks: Map<String, Wahlmoeglichkeit>,
             @JsonProperty fremdsprachen: Map<String, Int>,
             @JsonProperty wpfs: Pair<String, String?>,
+            @JsonProperty klasse: String?,
             @JsonProperty wahlzeile: Int,
             @JsonProperty vorname: String,
             @JsonProperty nachname: String,
@@ -109,6 +111,7 @@ data class KurswahlData(
                 fremdsprachen = fremdsprachen.map { fachData.faecherMap[it.key]!! to it.value },
                 wpfs = if (wpfs.first !in fachData.faecherMap.keys) null else fachData.faecherMap[wpfs.first]!! to fachData.faecherMap[wpfs.second],
                 wahlzeile = wahlzeile,
+                klasse = klasse,
                 pflichtfaecher = fachData.pflichtfaecher,
 
                 vorname = vorname,
@@ -137,20 +140,24 @@ data class KurswahlData(
                     courseCounts[0]++
                     courseCounts[1]++
                 }
+
                 Wahlmoeglichkeit.ERSTES_DRITTES -> {
                     courseCounts[0]++
                     courseCounts[1]++
                     courseCounts[2]++
                 }
+
                 Wahlmoeglichkeit.ZWEITES_VIERTES -> {
                     courseCounts[1]++
                     courseCounts[2]++
                     courseCounts[3]++
                 }
+
                 Wahlmoeglichkeit.DRITTES_VIERTES -> {
                     courseCounts[2]++
                     courseCounts[3]++
                 }
+
                 Wahlmoeglichkeit.DURCHGEHEND -> {
                     courseCounts[0]++
                     courseCounts[1]++
@@ -285,7 +292,13 @@ data class KurswahlData(
     /**
      * Entfernt Fremdsprachen und WPFs, die der Schüler nicht mehr hat aus den Kursen
      */
-    fun updateWahlfaecher(fremdsprachenNew: List<Pair<Fach, Int>>, wpfsNew: Pair<Fach, Fach?>?): KurswahlData {
+    fun updateWahlfaecher(
+        fremdsprachenNew: List<Pair<Fach, Int>>,
+        wpfsNew: Pair<Fach, Fach?>?,
+        klasse: String?
+    ): KurswahlData {
+        fun checkKlasse(fach: Fach?) = fach?.nurFuer?.contains(klasse) != false
+
         val fachDif = (fremdsprachen - fremdsprachenNew.toSet()).map { it.first }.toMutableList()
         if (wpfs != null && wpfsNew != null) {
             if (wpfs!!.first != wpfsNew.first) fachDif += wpfs!!.first
@@ -294,25 +307,29 @@ data class KurswahlData(
             if (second != null && second != wpfsNew.second) fachDif += second
         }
 
-        return this.copy(fremdsprachen = fremdsprachenNew, wpfs = wpfsNew, gks = gks.filterKeys { it !in fachDif })
+        return this.copy(
+            fremdsprachen = fremdsprachenNew,
+            wpfs = wpfsNew,
+            klasse = klasse,
+            gks = gks.filterKeys { it !in fachDif && checkKlasse(it) })
             .apply {
-                if (lk1 in fachDif) {
+                if (lk1 in fachDif || !checkKlasse(lk1)) {
                     this.lk1 = null
                     this.wahlzeile = -1
                 }
-                if (lk2 in fachDif) {
+                if (lk2 in fachDif || !checkKlasse(lk2)) {
                     this.lk2 = null
                     this.wahlzeile = -1
                 }
-                if (pf3 in fachDif) {
+                if (pf3 in fachDif || !checkKlasse(pf3)) {
                     this.pf3 = null
                     this.wahlzeile = -1
                 }
-                if (pf4 in fachDif) {
+                if (pf4 in fachDif || !checkKlasse(pf4)) {
                     this.pf4 = null
                     this.wahlzeile = -1
                 }
-                if (pf5 in fachDif) {
+                if (pf5 in fachDif || !checkKlasse(pf5)) {
                     this.pf5 = null
                 }
                 updatePflichtfaecher()
@@ -325,7 +342,8 @@ data class KurswahlData(
      */
     fun updatePflichtfaecher() {
         lock()
-        gks + pflichtfaecher.filter { (key, value) -> key !in _pfs!! && gks[key].let { it == null || it in value } }
+        gks =
+            gks + pflichtfaecher.filter { (key, value) -> key !in _pfs!! && gks[key].let { it == null || it in value } }
         unlock()
     }
 }

@@ -18,6 +18,7 @@
 package gui
 
 import com.kurswahlApp.data.*
+import java.awt.Component
 import java.awt.GridBagConstraints
 import java.awt.Insets
 import java.awt.event.ActionEvent
@@ -46,6 +47,8 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
     private val fs4: FachComboBox
     private val wpf1: FachComboBox
     private val wpf2: FachComboBox
+
+    private val klasse: JComboBox<String?>
 
     init {
         add(
@@ -187,6 +190,22 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
             add(checker, row = 7, column = 0, anchor = GridBagConstraints.EAST)
         }
 
+        add(
+            JLabel("Klasse: "), row = 8, column = 0,
+            columnspan = 2, anchor = GridBagConstraints.WEST,
+            margin = Insets(10, 0, 4, 0)
+        )
+        // Klasse wählen
+        klasse = JComboBox(DefaultComboBoxModel(arrayOf(null, *fachData.klassen.toTypedArray())))
+        klasse.renderer = object : DefaultListCellRenderer() {
+            override fun getListCellRendererComponent(
+                list: JList<*>?, value: Any?, index: Int, isSelected: Boolean, cellHasFocus: Boolean
+            ): Component? = super.getListCellRendererComponent(
+                list, value ?: "Standard", index, isSelected, cellHasFocus
+            )
+        }
+        klasse.selectedItem = wahlData.klasse
+
         // Daten einsetzen
         wahlData.wpfs?.let {
             wpf1.selectedItem = it.first
@@ -213,6 +232,8 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
 
             add(wpf1, row = 6, column = 1, fill = GridBagConstraints.BOTH, margin = it)
             add(wpf2, row = 7, column = 1, fill = GridBagConstraints.BOTH, margin = it)
+
+            add(klasse, row = 9, column = 1, fill = GridBagConstraints.BOTH, margin = it)
         }
 
     }
@@ -230,7 +251,8 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
 
         return wahlData.updateWahlfaecher(
             fremdsprachenNew = sprachen,
-            wpfsNew = wpf1.selectedItem!! to wpf2.selectedItem
+            wpfsNew = wpf1.selectedItem!! to wpf2.selectedItem,
+            klasse = klasse.selectedItem as String?
         )
     }
 

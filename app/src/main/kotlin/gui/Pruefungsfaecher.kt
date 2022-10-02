@@ -65,16 +65,18 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
         worden sein. */
         // ist als Kurs wählbar
         it.isKurs &&
+                // Darf mit der besuchten Klasse gewählt werden
+                it.checkKlasse(wahlData.klasse) &&
                 // ist kein Zusatzkurs & ...
                 it.aufgabenfeld != -1 &&
-                /* Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1 */
+                // Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1
                 (!it.isFremdsprache || it in userFs)
 
     }
     private val filteredFaecher = filteredFaecherPf5.filterValues {
-        /* Fach ist kein LK */
+        // Fach ist kein LK
         it != wahlData.lk1 && it != wahlData.lk2 &&
-                /* Braucht kein WPF oder Fach ist eins von 1./2. WPF */
+                // Braucht kein WPF oder Fach ist eins von 1./2. WPF
                 (!it.brauchtWPF || (userWpfs != null && (it == userWpfs.first || it == userWpfs.second)))
     }
 

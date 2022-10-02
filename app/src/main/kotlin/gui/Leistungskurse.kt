@@ -73,18 +73,22 @@ class Leistungskurse(wahlData: KurswahlData, fachData: FachData, notifier: (Bool
 
         // Eine Fremdsprache, die erst in der Jahrgangsstufe 10 oder in der Einführungsphase begonnen wurde,
         // darf nur als 3. oder 4. Prüfungsfach oder als Referenzfach der 5. PK gewählt werden.
-        val fs = wahlData.fremdsprachen.mapNotNull { (fach, jahr) -> if (jahr >= 10 ) null else fach }
+        val fs = wahlData.fremdsprachen.mapNotNull { (fach, jahr) -> if (jahr >= 10) null else fach }
 
-        val model1 = FachComboBoxModel(fachData.lk1Moeglichkeiten.filter { !it.isFremdsprache || it in fs })
+        val model1 = FachComboBoxModel(fachData.lk1Moeglichkeiten.filter {
+            !it.isFremdsprache || it in fs && it.checkKlasse(wahlData.klasse)
+        })
         lk1 = FachComboBox(model1)
 
 
         val wpfs = wahlData.wpfs
         val moeglichkeiten = fachData.lk2Moeglichkeiten.filter {
+            it != lk1.selectedItem &&
             /* Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1 */
-            if (it.isFremdsprache) it in fs
+            (if (it.isFremdsprache) it in fs
             /* Hat keine WPF or Fach ist weder 1./2. WPF */
-            else (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second)))
+            else (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second))))
+                    && it.checkKlasse(wahlData.klasse)
         }
         val model2 = LKComboBoxModel(moeglichkeiten, lk1)
         lk2 = FachComboBox(model2)
@@ -100,10 +104,12 @@ class Leistungskurse(wahlData: KurswahlData, fachData: FachData, notifier: (Bool
                         else this.add(wz.lk2)
                 }
             }.map { fachData.faecherMap[it]!! }.filter {
+                it != lk1.selectedItem &&
                 /* Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1 */
-                if (it.isFremdsprache) it in fs
+                (if (it.isFremdsprache) it in fs
                 /* Hat keine WPF or Fach ist weder 1./2. WPF */
-                else (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second)))
+                else (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second))))
+                        && it.checkKlasse(wahlData.klasse)
             })
         }
         lk2.addActionListener(listener)
