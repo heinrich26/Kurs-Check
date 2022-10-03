@@ -19,6 +19,13 @@ package gui
 
 import com.kurswahlApp.data.FachData
 import com.kurswahlApp.data.KurswahlData
+import java.awt.Desktop
+import java.awt.GridBagConstraints
+import java.awt.Insets
+import java.net.URL
+import javax.swing.JButton
+import javax.swing.JPanel
+
 
 class Overview(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean) -> Unit = {}) :
     KurswahlPanel(wahlData, fachData, notifier) {
@@ -31,7 +38,30 @@ class Overview(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean) -
         get() = "Deine Kurswahl"
 
     init {
-        add(WahlVisualizer(wahlData))
+        add(JPanel(), weightx = 1.0, weighty = 1.0)
+        add(WahlVisualizer(wahlData), row = 0, column = 0, anchor = GridBagConstraints.CENTER)
+        add(
+            JButton("\u24b8 Hendrik Horstmann").apply {
+                isFocusable = false
+                addActionListener { openWebpage(URL("https://github.com/heinrich26/Kurs-Check")) }
+            }, row = 0, column = 0,
+            anchor = GridBagConstraints.SOUTHEAST,
+            margin = Insets(4, 4, 4, 4)
+        )
     }
 
+    /**
+     * Öffnet eine Webseite im Browser
+     */
+    fun openWebpage(url: URL): Boolean {
+        val desktop = if (Desktop.isDesktopSupported()) Desktop.getDesktop() else null
+        if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+            try {
+                desktop.browse(url.toURI())
+                return true
+            } catch (_: Exception) {
+            }
+        }
+        return false
+    }
 }

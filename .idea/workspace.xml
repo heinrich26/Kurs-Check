@@ -12,10 +12,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Fächeralternativen funktionieren nun Richtig, Klassensystem eingebaut">
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="wahl-merger verbessert, Fehler werden nun richtig kommuniziert">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/merger/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/merger/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/merger/src/main/kotlin/Generator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/merger/src/main/kotlin/Generator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Overview.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Overview.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,7 +210,7 @@
       <command value="gradle merger:jar" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.kurswahlApp [merger:runShadow]">
+  <component name="RunManager" selected="Gradle.kurswahlApp [app:run]">
     <configuration name="app  [createExe]" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -252,27 +251,6 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="kurswahlApp [:merger:shadowJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":merger:shadowJar" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
     <configuration name="kurswahlApp [app:run]" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -285,48 +263,6 @@
         <option name="taskNames">
           <list>
             <option value=":app:run" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="kurswahlApp [merger:application]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="merger:application" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="kurswahlApp [merger:jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="merger:jar" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -383,12 +319,14 @@
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value=":merger:jpackage" />
+        <option name="scriptParameters" value="" />
         <option name="taskDescriptions">
           <list />
         </option>
         <option name="taskNames">
-          <list />
+          <list>
+            <option value=":merger:jpackage" />
+          </list>
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
@@ -467,9 +405,6 @@
       <item itemvalue="Gradle.merger [createExe]" />
       <item itemvalue="Gradle.merger [JPackage]" />
       <item itemvalue="Gradle.kurswahlApp [app:run]" />
-      <item itemvalue="Gradle.kurswahlApp [merger:application]" />
-      <item itemvalue="Gradle.kurswahlApp [merger:jar]" />
-      <item itemvalue="Gradle.kurswahlApp [:merger:shadowJar]" />
       <item itemvalue="Gradle.kurswahlApp [merger:runShadow]" />
       <item itemvalue="Kotlin.Fremdsprachen" />
       <item itemvalue="Kotlin.GrundkursWahl" />
@@ -480,10 +415,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.kurswahlApp [merger:runShadow]" />
-        <item itemvalue="Gradle.kurswahlApp [merger:jar]" />
-        <item itemvalue="Gradle.kurswahlApp [merger:application]" />
         <item itemvalue="Kotlin.GeneratorKt" />
-        <item itemvalue="Gradle.kurswahlApp [:merger:shadowJar]" />
       </list>
     </recent_temporary>
   </component>
@@ -548,14 +480,8 @@
       <workItem from="1662556026034" duration="13518000" />
       <workItem from="1662902791139" duration="8966000" />
       <workItem from="1664615724011" duration="16884000" />
-      <workItem from="1664791759244" duration="2947000" />
-    </task>
-    <task id="LOCAL-00055" summary="Tabs die noch ungesetzte Daten voraussetzen, können nicht mehr angeklickt werden und das ComboBoxModel für Fremdsprachen.kt wurde überarbeitet">
-      <created>1654877731271</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1654877731272</updated>
+      <workItem from="1664791759244" duration="3348000" />
+      <workItem from="1664795985553" duration="1886000" />
     </task>
     <task id="LOCAL-00056" summary="GridBagLayout ist nun standardmäßig das Layout von KurswahlPanel.kt">
       <created>1654941701573</created>
@@ -893,7 +819,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664716207451</updated>
     </task>
-    <option name="localTasksCounter" value="104" />
+    <task id="LOCAL-00104" summary="wahl-merger verbessert, Fehler werden nun richtig kommuniziert">
+      <created>1664795129896</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1664795129897</updated>
+    </task>
+    <option name="localTasksCounter" value="105" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -915,7 +848,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Logging des working-directories entfernt" />
     <MESSAGE value="Logging des working-directorys entfernt" />
     <MESSAGE value="Building als Installer umgesetzt" />
     <MESSAGE value="icon als vektorgrafik hinzugefügt" />
@@ -940,7 +872,8 @@
     <MESSAGE value="Svg nach Swing-GeneralPath Converter hinzugefügt und Hilfe-Icon erstellt" />
     <MESSAGE value="Fächeralternativen sind nun Möglich (z.B. Mathe und Mathe CAS)" />
     <MESSAGE value="Fächeralternativen funktionieren nun Richtig, Klassensystem eingebaut" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fächeralternativen funktionieren nun Richtig, Klassensystem eingebaut" />
+    <MESSAGE value="wahl-merger verbessert, Fehler werden nun richtig kommuniziert" />
+    <option name="LAST_COMMIT_MESSAGE" value="wahl-merger verbessert, Fehler werden nun richtig kommuniziert" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
