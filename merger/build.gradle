@@ -10,7 +10,7 @@ plugins {
 apply plugin: 'com.github.johnrengelman.shadow'
 
 application {
-    mainClass = 'gui.GuiMain'
+    mainClass = 'com.kurswahlApp.GeneratorKt'
 }
 
 def artifactName = 'wahl-merger'
@@ -30,6 +30,12 @@ launch4j { // Baut die GUI exe
     headerType = "console"
     outfile = "${artifactName}.exe"
     fileDescription = "Kommandozeilen-Anwendung zum Zusammenführen der .kurswahl Dateien! Siehe: ${outfile} --help"
+}
+
+
+
+runShadow {
+    mainClassName = 'com.kurswahlApp.GeneratorKt'
 }
 
 tasks.register('prepInstallerRes', Delete) {

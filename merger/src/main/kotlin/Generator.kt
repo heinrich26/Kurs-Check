@@ -72,7 +72,7 @@ fun main(args: Array<String>) {
     val schulId by parser.argument(
         ArgType.String,
         "schulId",
-        "ID der Schule für die Dateien zusammengefasst werden (Dateiname der Konfiguration für ihre Schule)"
+        "ID der Schule für die Dateien zusammengefasst werden (Dateiname der Konfiguration für ihre Schule) z.B.: 'lili.json'",
     )
 
     val input by parser.argument(ArgType.String, "input", "Für die CSV-Generierung verwendeter Ordner")
@@ -90,6 +90,7 @@ private fun run(schulId: String, directory: String, output: String?) {
         ?: throw RuntimeException("Die gegebene 'schulId' existiert nicht! Bitte versuchen sie es erneut!")
 
 
+
     val dirFile = File(directory)
     if (!dirFile.isDirectory) {
         throw RuntimeException("Der angegebene Pfad ist kein Ordner!")
@@ -105,8 +106,8 @@ private fun run(schulId: String, directory: String, output: String?) {
     val wahlDataList = files.mapNotNull {
         try {
             fachData.loadKurswahl(it)
-        } catch (e: IllegalArgumentException) {
-            println("Fehler $it: Die Datei wurde für eine andere Schule erstellt oder ist ungültig, der/die Schüler*in muss seine/ihre Wahl wiederholen")
+        } catch (e: Exception) {
+            println("Fehler ${it.name}: Die Datei wurde für eine andere Schule erstellt oder ist ungültig, der/die Schüler*in muss seine/ihre Wahl wiederholen")
             null
         }
     }
