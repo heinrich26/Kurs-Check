@@ -737,5 +737,6 @@
 	"pf3_4AusschlussFaecher": ["Mu", "Ku", "DS", "Sp"],
 	// Limitiert die maximale Anzahl Kurse die in einem Semester gewählt werden kann!
 	"semesterkurse": [11, 11, 11, 11],
+	"klassen": ["Bili"],
 	"schultyp": "Gymnasium"
 }
