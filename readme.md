@@ -6,3 +6,7 @@
 Eine App um die Kurswahl Berliner Schulen zu erleichtern.
 
 Ein Projekt des Informatik LKs 2021-2023 am Willi Graf Gymnasium
+
+## TODOs
+- Info bei unvollständiger Eingabe
+- Dateiöffnung testen
