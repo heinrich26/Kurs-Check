@@ -4,3 +4,4 @@
 --win-per-user-install
 --win-dir-chooser
 --win-menu-group Kurs-Check
+--win-upgrade-uuid 928348ff-a1f1-4e0d-881c-11256e369b08
