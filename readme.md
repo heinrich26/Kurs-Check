@@ -17,3 +17,7 @@ Ein Projekt des Informatik LKs 2021-2023 am Willi Graf Gymnasium
 - Name von PF5 in PK5 ändern
 - beschreibung für öffnen icon
 - größere Fenstergröße
+
+
+## GUID
+Kurs-Check benutzt die GUID: `928348ff-a1f1-4e0d-881c-11256e369b08`
