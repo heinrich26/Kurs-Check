@@ -1,6 +1,13 @@
 name: Gradle Package
 
-on: [push, workflow_dispatch]
+on:
+  push:
+    branches-ignore:
+    - data
+    paths-ignore:
+    - '*.md'
+    
+  workflow_dispatch:
 
 jobs:   
   gradle:
