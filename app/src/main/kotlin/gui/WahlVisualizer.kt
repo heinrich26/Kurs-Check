@@ -33,7 +33,7 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
         border = TitledBorder(RoundedBorder(16), "Übersicht").apply { titleFont = titleFont.deriveFont(Font.BOLD, 13f) }
 
         if (data.lk1 != null) {
-            add(JLabel("LK 1"), row = 2, column = 0, anchor = GridBagConstraints.WEST, margin = Insets(6, 0, 0, 0))
+            add(JLabel("1. LK"), row = 2, column = 0, anchor = GridBagConstraints.WEST, margin = Insets(6, 0, 0, 0))
             add(
                 JLabel(data.lk1!!.nameFormatted()),
                 row = 2,
@@ -42,7 +42,7 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
                 margin = Insets(6, 0, 0, 0)
             )
             if (data.lk2 != null) {
-                add(JLabel("LK 2"), row = 3, column = 0, anchor = GridBagConstraints.WEST, margin = Insets(2, 0, 0, 0))
+                add(JLabel("2. LK"), row = 3, column = 0, anchor = GridBagConstraints.WEST, margin = Insets(2, 0, 0, 0))
                 add(
                     JLabel(data.lk2!!.nameFormatted()),
                     row = 3,
@@ -53,7 +53,7 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
             }
         }
         if (data.pf3 != null) {
-            add(JLabel("PF 3"), row = 4, column = 0, anchor = GridBagConstraints.WEST, margin = Insets(2, 0, 0, 0))
+            add(JLabel("3. PF"), row = 4, column = 0, anchor = GridBagConstraints.WEST, margin = Insets(2, 0, 0, 0))
             add(
                 JLabel(data.pf3!!.nameFormatted()),
                 row = 4,
@@ -63,7 +63,7 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
             )
             if (data.pf4 != null) {
                 add(
-                    JLabel("PF 4"),
+                    JLabel("4. PF"),
                     row = 5,
                     column = 0,
                     anchor = GridBagConstraints.WEST,
@@ -78,7 +78,7 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
                 )
                 if (data.pf5 != null) {
                     add(
-                        JLabel("PF 5"),
+                        JLabel("5. PK"),
                         row = 6,
                         column = 0,
                         anchor = GridBagConstraints.WEST,
