@@ -33,7 +33,7 @@ import java.nio.charset.Charset
 const val LK = "lk"
 const val PF3 = "pf3"
 const val PF4 = "pf4"
-const val PF5 = "pf5"
+const val PK5 = "pk5"
 const val GK = "gk"
 
 const val FILE_NAME = "kurswahlen.csv"
@@ -58,7 +58,7 @@ val CSV_HEADER = arrayOf(
     "fs4ab",
     "wpf1",
     "wpf2",
-    "pf5_typ"
+    "pk5_typ"
     // ...faecher
 )
 
@@ -152,7 +152,7 @@ private fun run(schulId: String, directory: String, output: String?) {
                         0, 1 -> listOf(LK, LK, LK, LK)
                         2 -> listOf(PF3, PF3, PF3, PF3)
                         3 -> listOf(PF4, PF4, PF4, PF4)
-                        4 -> listOf(PF5, PF5, PF5, PF5)
+                        4 -> listOf(PK5, PK5, PK5, PK5)
                         else -> {
                             skipped += 4
                             listOfNulls(4)
