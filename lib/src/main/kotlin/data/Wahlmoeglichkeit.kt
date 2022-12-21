@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 enum class Wahlmoeglichkeit(val n: Int, val bools: List<Boolean>) {
     @JsonProperty("1-2") ERSTES_ZWEITES(2, listOf(true, true, false, false)),
     @JsonProperty("1-3") ERSTES_DRITTES(3, listOf(true, true, true, false)),
+    @JsonProperty("2-3") ZWEITES_DRITTES(2, listOf(false, true, true, false)),
     @JsonProperty("2-4") ZWEITES_VIERTES(3, listOf(false, true, true, true)),
     @JsonProperty("3-4") DRITTES_VIERTES(2, listOf(false, false, true, true)),
     @JsonProperty("1-4") DURCHGEHEND(4, listOf(true, true, true, true));
@@ -35,8 +36,8 @@ enum class Wahlmoeglichkeit(val n: Int, val bools: List<Boolean>) {
          */
         return when (this) {
             ERSTES_ZWEITES -> wmoegl == ERSTES_ZWEITES
-            ERSTES_DRITTES -> wmoegl == ERSTES_ZWEITES || wmoegl == ERSTES_DRITTES
-            ZWEITES_VIERTES -> wmoegl == DRITTES_VIERTES || wmoegl == ZWEITES_VIERTES
+            ERSTES_DRITTES -> wmoegl == ERSTES_ZWEITES || wmoegl == ZWEITES_DRITTES || wmoegl == ERSTES_DRITTES
+            ZWEITES_VIERTES -> wmoegl == DRITTES_VIERTES || wmoegl == ZWEITES_DRITTES || wmoegl == ZWEITES_VIERTES
             DRITTES_VIERTES -> wmoegl == DRITTES_VIERTES
             else /* DURCHGEGEHND */ -> true
         }
@@ -47,11 +48,9 @@ enum class Wahlmoeglichkeit(val n: Int, val bools: List<Boolean>) {
      */
     fun intersects(other: Wahlmoeglichkeit): Boolean {
         return when (this) {
+            ERSTES_DRITTES, ZWEITES_DRITTES, ZWEITES_VIERTES, DURCHGEHEND -> true
             ERSTES_ZWEITES -> other != DRITTES_VIERTES
-            ERSTES_DRITTES -> true
-            ZWEITES_VIERTES -> other != ERSTES_ZWEITES
-            DRITTES_VIERTES -> true
-            DURCHGEHEND -> true
+            DRITTES_VIERTES -> other != ERSTES_ZWEITES
         }
     }
 
@@ -62,6 +61,7 @@ enum class Wahlmoeglichkeit(val n: Int, val bools: List<Boolean>) {
         fun fromBools(bools: List<Boolean>): Wahlmoeglichkeit? = when (bools) {
             ERSTES_ZWEITES.bools -> ERSTES_ZWEITES
             ERSTES_DRITTES.bools -> ERSTES_DRITTES
+            ZWEITES_DRITTES.bools -> ZWEITES_DRITTES
             ZWEITES_VIERTES.bools -> ZWEITES_VIERTES
             DRITTES_VIERTES.bools -> DRITTES_VIERTES
             DURCHGEHEND.bools -> DURCHGEHEND

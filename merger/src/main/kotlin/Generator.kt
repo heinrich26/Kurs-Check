@@ -145,6 +145,7 @@ private fun run(schulId: String, directory: String, output: String?) {
                 when (gks[it]) {
                     ERSTES_ZWEITES -> listOf(GK, GK, null, null)
                     ERSTES_DRITTES -> listOf(GK, GK, GK, null)
+                    ZWEITES_DRITTES -> listOf(null, GK, GK, null)
                     ZWEITES_VIERTES -> listOf(null, GK, GK, GK)
                     DRITTES_VIERTES -> listOf(null, null, GK, GK)
                     DURCHGEHEND -> listOf(GK, GK, GK, GK)

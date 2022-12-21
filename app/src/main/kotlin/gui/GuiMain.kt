@@ -20,6 +20,7 @@ package gui
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DatabindException
 import com.fasterxml.jackson.databind.InjectableValues
+import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.kurswahlApp.KurswahlFileFilter
 import com.kurswahlApp.PngFileFilter
@@ -469,7 +470,14 @@ class GuiMain(file: File? = null) : JPanel() {
                     JOptionPane.ERROR_MESSAGE
                 )
                 e.printStackTrace()
-                //TODO gui updaten
+            } catch (e: MissingKotlinParameterException) {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Die Datei konnte nicht gelesen werden! Es tut uns leid, aber du musst deine Wahl erneut eingeben!",
+                    "Fehlerhafte Datei",
+                    JOptionPane.ERROR_MESSAGE
+                )
+                e.printStackTrace()
             } catch (e: RuntimeException) {
                 showLoadingError()
             }

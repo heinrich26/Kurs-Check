@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer
+import com.kurswahlApp.data.Wahlmoeglichkeit.*
 import java.time.LocalDate
 
 /**
@@ -136,29 +137,33 @@ data class KurswahlData(
             if (fach.isExtra && excludeExtras) continue
 
             when (moegl) {
-                Wahlmoeglichkeit.ERSTES_ZWEITES -> {
+                ERSTES_ZWEITES -> {
                     courseCounts[0]++
                     courseCounts[1]++
                 }
 
-                Wahlmoeglichkeit.ERSTES_DRITTES -> {
+                ERSTES_DRITTES -> {
                     courseCounts[0]++
                     courseCounts[1]++
                     courseCounts[2]++
                 }
+                ZWEITES_DRITTES -> {
+                    courseCounts[1]++
+                    courseCounts[2]++
+                }
 
-                Wahlmoeglichkeit.ZWEITES_VIERTES -> {
+                ZWEITES_VIERTES -> {
                     courseCounts[1]++
                     courseCounts[2]++
                     courseCounts[3]++
                 }
 
-                Wahlmoeglichkeit.DRITTES_VIERTES -> {
+                DRITTES_VIERTES -> {
                     courseCounts[2]++
                     courseCounts[3]++
                 }
 
-                Wahlmoeglichkeit.DURCHGEHEND -> {
+                DURCHGEHEND -> {
                     courseCounts[0]++
                     courseCounts[1]++
                     courseCounts[2]++
@@ -208,7 +213,7 @@ data class KurswahlData(
      * Alle gewählten Kurse, einschließlich Prüfungsfächern
      */
     val kurse: Map<Fach, Wahlmoeglichkeit>
-        get() = if (locked) _kurse!! else (gks + pfs.filterNotNull().associateWith { Wahlmoeglichkeit.DURCHGEHEND })
+        get() = if (locked) _kurse!! else (gks + pfs.filterNotNull().associateWith { DURCHGEHEND })
 
     private var locked = false
 
@@ -247,7 +252,7 @@ data class KurswahlData(
             errorMsg += "Leistungskurse wählen!\n"
         if (pf3 == null || pf4 == null || pf5 == null)
             errorMsg += "Deine weiteren Prüfungsfächer wählen!\n"
-        if (vorname == null /* wenn eins null ist, sind alle null || nachname == null || geburtsdatum == null || geburtsort == null*/)
+        if (vorname == null) /* wenn eins null ist, sind alle null || nachname == null || geburtsdatum == null || geburtsort == null*/
             errorMsg += "Deine persönlichen Daten eintragen!"
 
         return "Bevor du deine Kurswahl exportieren kannst, musst du noch folgendes erledigen:\n" + errorMsg.ifEmpty { return null }

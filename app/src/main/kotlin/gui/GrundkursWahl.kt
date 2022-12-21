@@ -50,13 +50,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
             }
             val row = checkboxRows[i] ?: continue
             // Übergabe der gewählten Grundkurse und dessen Semester
-            counter += when (row.selection()) {
-                ERSTES_ZWEITES.bools, DRITTES_VIERTES.bools -> 2
-                ERSTES_DRITTES.bools, ZWEITES_VIERTES.bools -> 3
-                DURCHGEHEND.bools -> 4
-                UNGEWAEHLT_BOOLS -> continue
-                else -> return false
-            }
+            counter += row.selection().count { it }
         }
 
         // Überprüfen, dass pro Semester die maximale Kurszahl nicht überschritten wird

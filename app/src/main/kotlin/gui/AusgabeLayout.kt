@@ -21,17 +21,15 @@ package gui
 import com.kurswahlApp.data.Fach
 import com.kurswahlApp.data.FachData
 import com.kurswahlApp.data.KurswahlData
-import com.kurswahlApp.data.Wahlmoeglichkeit
-import java.awt.Dimension
-import java.awt.GridBagConstraints
-import java.awt.GridBagLayout
-import java.awt.Insets
+import java.awt.*
+import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
 import javax.swing.Box
 import javax.swing.BoxLayout
 import javax.swing.JLabel
 import javax.swing.JPanel
+import javax.swing.border.MatteBorder
 import javax.swing.border.TitledBorder
 
 class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBagLayout()) {
@@ -96,15 +94,8 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
 
         for ((gk, choice) in wahlData.gks) { // auch für wahlData.pfs
             val row = checkboxMap[gk]!!
-            val acti = when (choice) {
-                Wahlmoeglichkeit.ERSTES_ZWEITES -> listOf(true, true, false, false)
-                Wahlmoeglichkeit.ERSTES_DRITTES -> listOf(true, true, true, false)
-                Wahlmoeglichkeit.ZWEITES_VIERTES -> listOf(false, true, true, true)
-                Wahlmoeglichkeit.DRITTES_VIERTES -> listOf(false, false, true, true)
-                Wahlmoeglichkeit.DURCHGEHEND -> listOf(true, true, true, true)
-            }
-            for (k in 0..3) {
-                if (acti[k]) {
+            for ((k, isActive) in choice.bools.withIndex()) {
+                if (isActive) {
                     row[k].style = AusgabeCheckBox.STYLE.NORMAL
                 }
             }
@@ -198,8 +189,7 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
         infoPanel.add(feldPanel)
 
         feldPanel = JPanel(GridBagLayout())
-        feldPanel.border =
-            TitledBorder(RoundedBorder(8), "Anzahl Kurse")
+        feldPanel.border = TitledBorder(RoundedBorder(8), "Anzahl Kurse")
 
         // Kursanzahlen
         val anzahlen = wahlData.countCourses()
@@ -208,9 +198,23 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
             feldPanel.add(JLabel("Q${i + 1}", JLabel.LEFT), row = i, column = 1, anchor = GridBagConstraints.WEST)
             feldPanel.add(JLabel("$n".wrapHtml("b", "font-size: 10px").wrapHtml()), row = i, column = 2)
         }
-        feldPanel.add(JLabel("gesammt   ", JLabel.LEFT), row = 4, column = 1, anchor = GridBagConstraints.WEST)
+        feldPanel.add(JLabel("gesamt   ", JLabel.LEFT), row = 4, column = 1, anchor = GridBagConstraints.WEST)
         feldPanel.add(JLabel("${anzahlen.sum()}".wrapHtml("b", "font-size: 10px").wrapHtml()), row = 4, column = 2)
 
+        infoPanel.add(feldPanel)
+
+
+        feldPanel = JPanel(GridBagLayout())
+        feldPanel.border = TitledBorder(RoundedBorder(8), "Unterschrift")
+        feldPanel.add(JLabel(LocalDate.now().format(DateTimeFormatter.ofPattern("d.M.yyyy"))).also {
+            Color(120, 120, 120).let { gray ->
+                it.border = MatteBorder(0, 0, 2, 0, gray)
+                it.foreground = gray
+            }
+            it.font = it.font.deriveFont(12f)
+        }, fill = GridBagConstraints.HORIZONTAL, margin = Insets(8, 0, 0, 0), weightx = 1.0)
+
+        infoPanel.add(Box.createVerticalStrut(24))
         infoPanel.add(feldPanel)
 
         add(infoPanel, row = 1, column = 2, anchor = GridBagConstraints.NORTH, margin = Insets(4, 0, 0, 0))
