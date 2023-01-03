@@ -38,7 +38,7 @@ class Overview(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean) -
         get() = "Deine Kurswahl"
 
     init {
-        add(JPanel(), weightx = 1.0, weighty = 1.0)
+        add(JPanel().apply { isOpaque = false }, weightx = 1.0, weighty = 1.0)
         add(WahlVisualizer(wahlData), row = 0, column = 0, anchor = GridBagConstraints.CENTER)
         add(
             JButton("\u24b8 Hendrik Horstmann").apply {
@@ -53,14 +53,13 @@ class Overview(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean) -
     /**
      * Öffnet eine Webseite im Browser
      */
-    fun openWebpage(url: URL): Boolean {
+    private fun openWebpage(url: URL): Boolean {
         val desktop = if (Desktop.isDesktopSupported()) Desktop.getDesktop() else null
         if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
             try {
                 desktop.browse(url.toURI())
                 return true
-            } catch (_: Exception) {
-            }
+            } catch (_: Exception) {}
         }
         return false
     }

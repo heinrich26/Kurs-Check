@@ -10,7 +10,7 @@ Ein Projekt des Informatik LKs 2021-2023 am Willi-Graf-Gymnasium
 ## TODOs
 - [ ] Echtzeitinfo bei unvollständiger Eingabe
 - [ ] Dateiöffnung bei UNC-Pfaden fixen
-- [ ] volle Ländernamen nach Berliner Standard
+- [x] volle Ländernamen nach Berliner Standard
 - [ ] LFs/PFs & 5. anstelle von PKs/LKs in der Sidebar
 - [x] Wahlmöglichkeit 2./3. erlauben
 - [x] 5\. PK anstelle von 5. PF in der Übersicht

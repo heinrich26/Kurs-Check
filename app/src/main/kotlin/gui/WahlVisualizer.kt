@@ -38,6 +38,7 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
                 JLabel(data.lk1!!.nameFormatted()),
                 row = 2,
                 column = 1,
+                columnspan = 2,
                 anchor = GridBagConstraints.WEST,
                 margin = Insets(6, 0, 0, 0)
             )
@@ -47,6 +48,7 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
                     JLabel(data.lk2!!.nameFormatted()),
                     row = 3,
                     column = 1,
+                    columnspan = 2,
                     anchor = GridBagConstraints.WEST,
                     margin = Insets(2, 0, 0, 0)
                 )
@@ -58,6 +60,7 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
                 JLabel(data.pf3!!.nameFormatted()),
                 row = 4,
                 column = 1,
+                columnspan = 2,
                 anchor = GridBagConstraints.WEST,
                 margin = Insets(2, 0, 0, 0)
             )
@@ -73,6 +76,7 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
                     JLabel(data.pf4!!.nameFormatted()),
                     row = 5,
                     column = 1,
+                    columnspan = 2,
                     anchor = GridBagConstraints.WEST,
                     margin = Insets(2, 0, 0, 0)
                 )
@@ -88,6 +92,7 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
                         JLabel(data.pf5!!.nameFormatted()),
                         row = 6,
                         column = 1,
+                        columnspan = 2,
                         anchor = GridBagConstraints.WEST,
                         margin = Insets(2, 0, 0, 0)
                     )
@@ -95,6 +100,7 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
                         JLabel("(${data.pf5_typ.repr})"),
                         row = 7,
                         column = 1,
+                        columnspan = 2,
                         anchor = GridBagConstraints.WEST,
                         margin = Insets(0, 0, 1, 0)
                     )
@@ -106,12 +112,12 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
         for ((fach, _) in data.gks) {
             add(
                 JLabel(fach.nameFormatted()),
-                row = i,
+                row = i++,
                 column = 1,
+                columnspan = 2,
                 anchor = GridBagConstraints.WEST,
                 margin = Insets(1, 0, 1, 0)
             )
-            i++
         }
 
         add(
@@ -126,7 +132,7 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
         val courseCounts = data.countCourses()
         for ((j, courses) in courseCounts.withIndex()) {
             add(JLabel("Q${j + 1}"), row = i + j, column = 1, anchor = GridBagConstraints.WEST)
-            add(JLabel(courses.toString().padStart(2, ' ')), row = i + j, column = 2, anchor = GridBagConstraints.WEST)
+            add(JLabel(courses.toString()), row = i + j, column = 2, anchor = GridBagConstraints.EAST)
         }
         val bold = Font(font.name, Font.BOLD, font.size)
         add(
@@ -139,7 +145,7 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
             JLabel(courseCounts.sum().toString()).apply { this.font = bold },
             row = i + 4,
             column = 2,
-            anchor = GridBagConstraints.WEST
+            anchor = GridBagConstraints.EAST
         )
 
         i += 5
@@ -158,10 +164,10 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
             anchor = GridBagConstraints.WEST,
             margin = Insets(0, 0, 0, 6)
         )
-        add(JLabel("Q1/Q2"), row = i, column = 1, anchor = GridBagConstraints.WEST)
-        add(JLabel("Q3/Q4"), row = i + 1, column = 1, anchor = GridBagConstraints.WEST)
+        add(JLabel("Q1 & Q2"), row = i, column = 1, anchor = GridBagConstraints.WEST)
+        add(JLabel("Q3 & Q4"), row = i + 1, column = 1, anchor = GridBagConstraints.WEST)
         val wochenstunden = data.weeklyCourses()
-        add(JLabel(wochenstunden.first.toString()), row = i, column = 2, anchor = GridBagConstraints.WEST)
-        add(JLabel(wochenstunden.second.toString()), row = i + 1, column = 2, anchor = GridBagConstraints.WEST)
+        add(JLabel(wochenstunden.first.toString()), row = i, column = 2, anchor = GridBagConstraints.EAST)
+        add(JLabel(wochenstunden.second.toString()), row = i + 1, column = 2, anchor = GridBagConstraints.EAST)
     }
 }

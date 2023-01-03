@@ -56,6 +56,7 @@ data class Fach(
      * Nach dem Schema: `<Fach.name> (<Fach.aufgabenfeld>)`
      */
     fun nameFormatted(): String = if (aufgabenfeld < 1) name else "$name ($aufgabenfeld)"
+//    fun nameFormatted(): String = if (aufgabenfeld < 1) name else "$name ${Char(9311+aufgabenfeld)}"
 
     override fun equals(other: Any?): Boolean = this === other || (other is Fach && this.kuerzel == other.kuerzel)
 

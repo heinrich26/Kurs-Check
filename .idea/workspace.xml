@@ -12,9 +12,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="wahl-merger verbessert, Fehler werden nun richtig kommuniziert">
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Wahlmöglichkeit 2./3. und Feld für Unterschrift in der Ausgabe hinzugefügt">
+      <change afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/AndRegel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/svgToSwingConverter.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Nutzerdaten.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Nutzerdaten.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Overview.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Overview.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/PolyIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/PolyIcon.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/WahlVisualizer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/WahlVisualizer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/Fach.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/Fach.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/resources/schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/resources/schema.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,13 +148,15 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Project.color&quot;: &quot;0f3259&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;Settings.Markdown&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -210,7 +221,7 @@
       <command value="gradle merger:jar" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.kurswahlApp [app:run]">
+  <component name="RunManager" selected="Kotlin.Main">
     <configuration name="app  [createExe]" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -481,35 +492,15 @@
       <workItem from="1662902791139" duration="8966000" />
       <workItem from="1664615724011" duration="16884000" />
       <workItem from="1664791759244" duration="3348000" />
-      <workItem from="1664795985553" duration="1886000" />
-    </task>
-    <task id="LOCAL-00056" summary="GridBagLayout ist nun standardmäßig das Layout von KurswahlPanel.kt">
-      <created>1654941701573</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1654941701573</updated>
-    </task>
-    <task id="LOCAL-00057" summary="Icon für den Nutzerdaten-Tab">
-      <created>1654946905774</created>
-      <option name="number" value="00057" />
-      <option name="presentableId" value="LOCAL-00057" />
-      <option name="project" value="LOCAL" />
-      <updated>1654946905774</updated>
-    </task>
-    <task id="LOCAL-00058" summary="Constructor gefixt (hat enabled anstelle von selected gesetzt)">
-      <created>1654947160241</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1654947160241</updated>
-    </task>
-    <task id="LOCAL-00059" summary="Dependency für Date-Parsing hinzugefügt">
-      <created>1654947182249</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1654947182249</updated>
+      <workItem from="1664795985553" duration="2302000" />
+      <workItem from="1664804359649" duration="1395000" />
+      <workItem from="1666358887990" duration="11000" />
+      <workItem from="1669212752228" duration="237000" />
+      <workItem from="1671542693199" duration="49000" />
+      <workItem from="1671638935503" duration="5345000" />
+      <workItem from="1672322328176" duration="147000" />
+      <workItem from="1672322502592" duration="7051000" />
+      <workItem from="1672576423933" duration="3814000" />
     </task>
     <task id="LOCAL-00060" summary="Möglichkeit hinzugefügt, Fächer unwählbar zu machen&#10;&#10;Zusatzkurse können nun auch nur in bestimmten Semestern gewählt werden&#10;&#10;Die Nutzerdaten können nun eingegeben werden und werden auch vom CsvGenerator verarbeitet">
       <created>1654968701333</created>
@@ -826,7 +817,35 @@
       <option name="project" value="LOCAL" />
       <updated>1664795129897</updated>
     </task>
-    <option name="localTasksCounter" value="105" />
+    <task id="LOCAL-00105" summary="Copyright Notice für die GitHub Page hinzugefügt">
+      <created>1664798244956</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1664798244957</updated>
+    </task>
+    <task id="LOCAL-00106" summary="falsche Hauptklasse gefixt">
+      <created>1664804736490</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1664804736491</updated>
+    </task>
+    <task id="LOCAL-00107" summary="Copyright und Programmversion Hochgesetzt">
+      <created>1664805226488</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1664805226488</updated>
+    </task>
+    <task id="LOCAL-00108" summary="Wahlmöglichkeit 2./3. und Feld für Unterschrift in der Ausgabe hinzugefügt">
+      <created>1671644408950</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1671644408950</updated>
+    </task>
+    <option name="localTasksCounter" value="109" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -848,10 +867,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Logging des working-directorys entfernt" />
-    <MESSAGE value="Building als Installer umgesetzt" />
-    <MESSAGE value="icon als vektorgrafik hinzugefügt" />
-    <MESSAGE value="MacOS compatibility" />
     <MESSAGE value="debug println() entfernt" />
     <MESSAGE value="Auswählen des Installationsordners und ob eine Verknüpfung erstellt werden soll, kann nun auch beim Merger entschieden werden" />
     <MESSAGE value="GNU GPLv3 Copyright hinzugefügt" />
@@ -873,7 +888,11 @@
     <MESSAGE value="Fächeralternativen sind nun Möglich (z.B. Mathe und Mathe CAS)" />
     <MESSAGE value="Fächeralternativen funktionieren nun Richtig, Klassensystem eingebaut" />
     <MESSAGE value="wahl-merger verbessert, Fehler werden nun richtig kommuniziert" />
-    <option name="LAST_COMMIT_MESSAGE" value="wahl-merger verbessert, Fehler werden nun richtig kommuniziert" />
+    <MESSAGE value="Copyright Notice für die GitHub Page hinzugefügt" />
+    <MESSAGE value="falsche Hauptklasse gefixt" />
+    <MESSAGE value="Copyright und Programmversion Hochgesetzt" />
+    <MESSAGE value="Wahlmöglichkeit 2./3. und Feld für Unterschrift in der Ausgabe hinzugefügt" />
+    <option name="LAST_COMMIT_MESSAGE" value="Wahlmöglichkeit 2./3. und Feld für Unterschrift in der Ausgabe hinzugefügt" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

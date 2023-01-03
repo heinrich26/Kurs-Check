@@ -59,5 +59,7 @@ class PolyIcon(poly: Shape, defaultSelected: Boolean, clickEvent: () -> Unit) :
         g2D.stroke = BasicStroke(5.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND)
         g2D.draw(shape)
         g2D.fill(shape)
+
+        g2D.dispose()
     }
 }

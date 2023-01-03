@@ -70,7 +70,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
     }
 
     // Repräsentiert eine Zeile von Checkboxen für ein Fach
-    inner class CheckboxRow(fach: Fach) : JPanel(GridBagLayout()) {
+    private inner class CheckboxRow(fach: Fach) : JPanel(GridBagLayout()) {
         private val label = JLabel(fach.name).also { isOpaque = false }
 
         private val zeile = arrayOf(JCheckBox(), JCheckBox(), JCheckBox(), JCheckBox())
@@ -292,7 +292,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
             )
         scrollPane.preferredSize = Dimension(250, 350)
-        scrollPane.verticalScrollBar.setUnitIncrement(16)
+        scrollPane.verticalScrollBar.unitIncrement = 16
         add(scrollPane, row = 0, column = 0, columnspan = 2, margin = Insets(0, 0, 6, 0))
 
         faecherBlocken()
@@ -369,7 +369,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
             add(Box.createHorizontalStrut(21), row = 0, column = 3)
             add(Box.createHorizontalStrut(21), row = 0, column = 4)
 
-            checkboxPanel.add(this, fill = GridBagConstraints.HORIZONTAL)
+            checkboxPanel.add(this, fill = GridBagConstraints.HORIZONTAL, weightx=1.0)
         }
         var af = Int.MIN_VALUE
         var offset = 1

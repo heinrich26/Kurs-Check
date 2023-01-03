@@ -15,14 +15,12 @@ Wildcard: Platzhalter für mehrere Kürzel, werden in "wildcards": {...: [...],.
 		  und MÜSSEN mit $ beginnen! Wildcards die in den Wahlzeilen verwendet werden,
 		  MÜSSEN zusätzlich in der "wzWildcards"-Liste aufgeführt werden!
 
-Weitere Beispiele können sie in der richtigen dataStruct.json oder unter
-https://github.com/heinrich26/Kurs-Check/blob/data/schools/ finden
-*/
+Weitere Beispiele können sie unter https://github.com/heinrich26/Kurs-Check/blob/data/schools/ finden */
 
 {
 	// Eindeutiger Identifikator für diese Schule; Entspricht dem Dateinamen mit der Dateinamenerweiterung .json!
 	"schulId": "<Dateiname>",
-	// Hauptversion ändern, wenn Fächer (als LK, PF, etc.) wegfallen oder regeln strenger werden
+	// Hauptversion ändern, wenn Fächer (als LK, PF, etc.) wegfallen oder Regeln strenger werden
 	// ansonsten Subversion ändern, wenn Fächer (als LK, PF, etc.) hinzukommen oder Texte (außer Kürzel) geändert werden
 	"jsonVersion": "1.2", // Hauptversion.Subversion
 	// Alle Fächer die irgendwo referenziert werden!
@@ -100,7 +98,7 @@ https://github.com/heinrich26/Kurs-Check/blob/data/schools/ finden
 		{
 			// Art der Regel
 			// Je nach Typ sind andere Attribute möglich
-			"type": "<WildcardRegel|KuerzelRegel|OrRegel|IfThenRegel>",
+			"type": "<WildcardRegel|KuerzelRegel|KonfliktRegel|OrRegel|AndRegel|IfThenRegel>",
 			// Beschreibung der Regel
 			"desc": "<Eine simple Beschreibung der Regel>",
 			// Text, der angezeigt wird, wenn die Regel nicht erfüllt wird (Imperativ)
@@ -119,12 +117,17 @@ https://github.com/heinrich26/Kurs-Check/blob/data/schools/ finden
 			// 1-2 erlaubt auch 1-3 und 1-4 usw.
 			"wann": "<Wahlmöglichkeit>", // default: null
 
-			// IfThenRegel / OrRegel
+			// IfThenRegel / OrRegel / AndRegel
 			"regel1": { /* <weitere Regel> */ },
-			"regel2": { /* <weitere Regel> */ }
+			"regel2": { /* <weitere Regel> */ },
 			// IfThen: ist erfüllt wenn: regel1 nicht erfüllt ist, ODER regel1 & regel2! (aka.: wenn, dann)
 			// OrRegel: mindestens eine der beiden Regeln MUSS erfüllt werden;
 			//          Wird die Erste erfüllt, wird die 2. nicht betrachtet!
+			// AndRegel: beide Regeln MÜSSEN erfüllt werden
+
+			// KonfliktRegel
+			// Schließt aus, dass sich Kurse in der gegebenen Wildcard überschneiden
+			"wildcard": "<$Wildcard-Name>"
 		},
 
 		// Beispiele
