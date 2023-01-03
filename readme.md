@@ -18,6 +18,7 @@ Ein Projekt des Informatik LKs 2021-2023 am Willi-Graf-Gymnasium
 - [ ] Beschreibung fürs/besseres Öffnen-Icon
 - [ ] größere Fenstergröße
 - [x] Feld für Unterschrift & Datum im Output
+- [ ] AndRegel für Mathe/-CAS bei lili.json implementieren
 
 
 ## GUID
