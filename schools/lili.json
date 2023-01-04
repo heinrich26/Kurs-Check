@@ -2,7 +2,7 @@
     // eindeutiger Identifikator dieser FachDaten; Gleichzeitig der Dateiname dieser Datei!
     "schulId": "lili.json",
     // Hauptversion.Subversion
-    "jsonVersion": "1.0",
+    "jsonVersion": "2.0",
     // "aufgabenfeld" -> 0, wenn kein Aufgabenfeld gg. ist (Sport), Zusatzkurse -> -1
     "faecher": [
         {
@@ -305,16 +305,17 @@
             "errorMsg": "Wähle Sport Theorie in Q3 & Q4!"
         },
         {
-            "type": "KonfliktRegel",
-            "wildcard": "$MA",
-            "desc": "Wähle Mathe <b>oder</b> Mathe CAS",
-            "errorMsg": "Du kannst nur Mathe <b>oder</b> Mathe CAS wählen!"
-        },
-        {
-            "type": "WildcardRegel",
-            "wildcard": "$MA",
-            "anzahl": 4,
-            "desc": "<i>Mathe</i> oder <i>Mathe CAS</i> müssen 4 Semester belegt werden",
+            "type": "AndRegel",
+            "regel1": {
+                "type": "KonfliktRegel",
+                "wildcard": "$MA"
+            },
+            "regel2":{
+                "type": "WildcardRegel",
+                "wildcard": "$MA",
+                "anzahl": 4
+            },
+            "desc": "<i>Mathe</i> oder <i>Mathe CAS</i> müssen durchgehend belegt werden",
             "errorMsg": "Wähle 4 Semester <i>Mathe</i> oder <i>Mathe CAS</i>!"
         },
         {
