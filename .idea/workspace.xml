@@ -12,25 +12,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="AndRegel und svgToSwingConverter hinzugefügt.&#10;Fehler gefixt.">
-      <change afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/PfPkIcon.kt" afterDir="false" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Visuelle Bestätigung, ob die Eingabe gültig ist; Beschreibung für die Toolbar Icons; SidebarIcons sagen nun PFs &amp; 5. PK anstelle von PFs.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/ClickableDestionation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/ClickableDestionation.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/FsWpfIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/FsWpfIcon.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/KurswahlPanel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/KurswahlPanel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Leistungskurse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Leistungskurse.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/SchoolChooser.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/ScreenImage.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/ScreenImage.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/ScrollablePanel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/ScrollablePanel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Toolbar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Toolbar.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/VerticalLayout.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/VerticalLayout.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/SchoolConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/SchoolConfig.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/SolidFiller.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/SolidFiller.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/resources/dataStruct.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/resources/test_wahl.kurswahl" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/resources/test_wahl.kurswahl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -409,6 +393,7 @@
     <configuration name="Main" type="JetRunConfigurationType">
       <option name="MAIN_CLASS_NAME" value="gui.GuiMain" />
       <module name="Kurs-Check.app.main" />
+      <option name="PROGRAM_PARAMETERS" value="&quot;E:\Users\Hendrik\Documents\Schule\Sek 2\Informatik\Hendrik_Horstmann.kurswahl&quot;" />
       <shortenClasspath name="NONE" />
       <option name="VM_PARAMETERS" value="-Dsun.java2d.dpiaware=false -Dsun.java2d.uiScale=1.25" />
       <method v="2">
@@ -507,13 +492,6 @@
       <workItem from="1672322328176" duration="147000" />
       <workItem from="1672322502592" duration="7051000" />
       <workItem from="1672576423933" duration="3814000" />
-    </task>
-    <task id="LOCAL-00060" summary="Möglichkeit hinzugefügt, Fächer unwählbar zu machen&#10;&#10;Zusatzkurse können nun auch nur in bestimmten Semestern gewählt werden&#10;&#10;Die Nutzerdaten können nun eingegeben werden und werden auch vom CsvGenerator verarbeitet">
-      <created>1654968701333</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1654968701333</updated>
     </task>
     <task id="LOCAL-00061" summary="Formatänderung">
       <created>1654970714245</created>
@@ -851,7 +829,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671644408950</updated>
     </task>
-    <option name="localTasksCounter" value="109" />
+    <task id="LOCAL-00109" summary="Visuelle Bestätigung, ob die Eingabe gültig ist; Beschreibung für die Toolbar Icons; SidebarIcons sagen nun PFs &amp; 5. PK anstelle von PFs.">
+      <created>1672857558575</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1672857558575</updated>
+    </task>
+    <option name="localTasksCounter" value="110" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -873,7 +858,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="debug println() entfernt" />
     <MESSAGE value="Auswählen des Installationsordners und ob eine Verknüpfung erstellt werden soll, kann nun auch beim Merger entschieden werden" />
     <MESSAGE value="GNU GPLv3 Copyright hinzugefügt" />
     <MESSAGE value="Layout hinzugefügt, um im AusgabeLayout Overflow zu verhindern (TODO)" />
@@ -898,7 +882,8 @@
     <MESSAGE value="falsche Hauptklasse gefixt" />
     <MESSAGE value="Copyright und Programmversion Hochgesetzt" />
     <MESSAGE value="Wahlmöglichkeit 2./3. und Feld für Unterschrift in der Ausgabe hinzugefügt" />
-    <option name="LAST_COMMIT_MESSAGE" value="Wahlmöglichkeit 2./3. und Feld für Unterschrift in der Ausgabe hinzugefügt" />
+    <MESSAGE value="Visuelle Bestätigung, ob die Eingabe gültig ist; Beschreibung für die Toolbar Icons; SidebarIcons sagen nun PFs &amp; 5. PK anstelle von PFs." />
+    <option name="LAST_COMMIT_MESSAGE" value="Visuelle Bestätigung, ob die Eingabe gültig ist; Beschreibung für die Toolbar Icons; SidebarIcons sagen nun PFs &amp; 5. PK anstelle von PFs." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

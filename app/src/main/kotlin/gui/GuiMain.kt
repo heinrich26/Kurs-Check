@@ -114,12 +114,15 @@ class GuiMain(file: File? = null) : JPanel() {
 
         @JvmStatic
         fun main(args: Array<String>) {
+            println(args.contentToString())
             val parser = ArgParser(APP_NAME)
 
             val input by parser.argument(
                 ArgType.String, "input",
                 "Die zum öffnen verwendete Datei"
             ).optional()
+
+
 
             val useTestData by parser.option(ArgType.Boolean, "useTestData", description = "Testdaten verwenden")
                 .default(false)
@@ -331,8 +334,13 @@ class GuiMain(file: File? = null) : JPanel() {
         if (file.extension != FILETYPE_EXTENSION) return null
 
         if (file.exists() && file.canRead()) {
-            val mirror = FachDataMirror(fachData) { schulId ->
-                SchoolConfig.getSchool(schulId)
+            val mirror = FachDataMirror(if (this::fachData.isInitialized) fachData else null) { schulId ->
+                SchoolConfig.getSchool(schulId)?.also { data ->
+                    if (!this::fachData.isInitialized) {
+                        fachData = data
+                        currentSchool = SchoolConfig.schools.find { it.schulId == schulId }
+                    }
+                }
                     ?: throw RuntimeException("Abbruch, FachData konnte nicht gefunden werden!")
             }
 
