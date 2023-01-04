@@ -21,8 +21,10 @@ import com.kurswahlApp.data.Consts.PANEL_HEIGHT
 import com.kurswahlApp.data.Consts.PANEL_WIDTH
 import com.kurswahlApp.data.FachData
 import com.kurswahlApp.data.KurswahlData
+import java.awt.Color
 import java.awt.Dimension
 import java.awt.GridBagLayout
+import javax.swing.BorderFactory
 import javax.swing.JFrame
 import javax.swing.JPanel
 import javax.swing.UIManager

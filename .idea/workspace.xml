@@ -12,17 +12,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Wahlmöglichkeit 2./3. und Feld für Unterschrift in der Ausgabe hinzugefügt">
-      <change afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/AndRegel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/svgToSwingConverter.py" beforeDir="false" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="AndRegel und svgToSwingConverter hinzugefügt.&#10;Fehler gefixt.">
+      <change afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/PfPkIcon.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Nutzerdaten.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Nutzerdaten.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Overview.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Overview.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/PolyIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/PolyIcon.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/WahlVisualizer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/WahlVisualizer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/Fach.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/Fach.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/resources/schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/resources/schema.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/ClickableDestionation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/ClickableDestionation.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/FsWpfIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/FsWpfIcon.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/KurswahlPanel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/KurswahlPanel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Leistungskurse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Leistungskurse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/SchoolChooser.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/ScreenImage.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/ScreenImage.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/ScrollablePanel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/ScrollablePanel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Toolbar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Toolbar.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/VerticalLayout.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/VerticalLayout.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/SchoolConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/SchoolConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/SolidFiller.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/SolidFiller.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/resources/dataStruct.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/resources/test_wahl.kurswahl" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/resources/test_wahl.kurswahl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -121,7 +128,6 @@
     <setting file="file://$PROJECT_DIR$/lib/src/main/kotlin/data/KurswahlData.kt" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/lib/src/main/kotlin/data/TestData.kt" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/lib/src/main/kotlin/data/WahlzeileLinientyp.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/lib/src/main/resources/dataStruct.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/merger/build.gradle" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/merger/res/main.wxs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/merger/res/win-merger.properties" root0="FORCE_HIGHLIGHTING" />
@@ -183,10 +189,10 @@
       <recent name="data" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="gui" />
       <recent name="data" />
       <recent name="com.kurswahlApp.data" />
       <recent name="com.kurswahlApp.gui" />
-      <recent name="gui" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.kurswahlApp" />

@@ -26,14 +26,6 @@ import gui.VerticalLayout.Companion.TOP
 import java.awt.*
 import kotlin.math.max
 
-
-/**
-THIS PROGRAM IS PROVIDED "AS IS" WITHOUT ANY WARRANTIES (OR CONDITIONS),
-EXPRESS OR IMPLIED WITH RESPECT TO THE PROGRAM, INCLUDING THE IMPLIED WARRANTIES (OR CONDITIONS)
-OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK ARISING OUT OF USE OR
-PERFORMANCE OF THE PROGRAM AND DOCUMENTATION REMAINS WITH THE USER.
- */
-
 /**
  *
  * A vertical layout manager similar to [java.awt.FlowLayout].
@@ -59,7 +51,7 @@ class VerticalLayout(
     private val anchor: Int = TOP
 ) : LayoutManager {
 
-    private fun layoutSize(parent: Container, minimum: Boolean): Dimension {
+    private fun layoutSize(parent: Container): Dimension {
         val dim = Dimension(0, 0)
         var d: Dimension
         synchronized(parent.treeLock) {
@@ -67,7 +59,7 @@ class VerticalLayout(
             for (i in 0 until n) {
                 val c = parent.getComponent(i)
                 if (c.isVisible) {
-                    d = if (minimum) c.minimumSize else c.preferredSize
+                    d = c.preferredSize
                     dim.width = max(dim.width, d.width)
                     dim.height += d.height
                     if (i > 0) dim.height += vgap
@@ -120,14 +112,9 @@ class VerticalLayout(
     }
 
 
-    override fun minimumLayoutSize(parent: Container): Dimension {
-        return layoutSize(parent, false)
-    }
+    override fun minimumLayoutSize(parent: Container): Dimension = layoutSize(parent)
 
-
-    override fun preferredLayoutSize(parent: Container): Dimension {
-        return layoutSize(parent, false)
-    }
+    override fun preferredLayoutSize(parent: Container): Dimension = layoutSize(parent)
 
     /**
      * Not used by this class
@@ -140,9 +127,7 @@ class VerticalLayout(
     override fun removeLayoutComponent(comp: Component) {}
 
 
-    override fun toString(): String {
-        return javaClass.name + "[vgap=" + vgap + " align=" + alignment + " anchor=" + anchor + "]"
-    }
+    override fun toString(): String = "${javaClass.name}[vgap=$vgap align=$alignment anchor=$anchor]"
 
     companion object {
         /**

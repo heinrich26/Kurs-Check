@@ -67,23 +67,14 @@ object SchoolConfig {
 
 
     const val CONFIG_SERVER_URL = "https://raw.githubusercontent.com/heinrich26/Kurs-Check/data/"
-    val CONFIG_FILE_URL = URL(CONFIG_SERVER_URL + "per-school-settings.json")
     const val CONFIG_FOLDER_URL = CONFIG_SERVER_URL + "schools/"
+    val CONFIG_FILE_URL = URL(CONFIG_SERVER_URL + "per-school-settings.json")
 
     val LOCAL_CONFIG_DIR = System.getProperty("os.name").lowercase().let {
         when {
-            "win" in it -> {
-                System.getenv("AppData")
-            }
-
-            "nix" in it || "nux" in it || "aix" in it -> {
-                System.getProperty("user.home")
-            }
-
-            "mac" in it -> {
-                System.getProperty("user.home") + "/Library/Preferences"
-            }
-
+            "win" in it -> System.getenv("AppData")
+            "nix" in it || "nux" in it || "aix" in it -> System.getProperty("user.home")
+            "mac" in it -> System.getProperty("user.home") + "/Library/Preferences"
             else -> System.getProperty("user.home")
         }!! + "/.kurs-check"
     }
@@ -124,19 +115,6 @@ object SchoolConfig {
             } catch (_: IOException) {
             }
         }
-
-        // Scanner(
-        //     CONFIG_FILE_URL.openStream(),
-        //     StandardCharsets.UTF_8.toString()
-        // ).use { scanner ->
-        //     scanner.useDelimiter("\\A")
-
-        //     if (scanner.hasNext())
-        //         return scanner.next().also {
-        //             suspend { runCatching { Files.writeString(Paths.get(LOCAL_MAIN_CONFIG), it) } }
-        //         }
-        //     else throw IOException()
-        // }
     }
 
     /** Versucht die Konfiguration für die angeforderte Schule vom Server zu laden */
@@ -154,27 +132,6 @@ object SchoolConfig {
             } catch (_: IOException) {
             }
         }
-        // Scanner(
-        //     URL(CONFIG_FOLDER_URL + schoolKey).openStream(),
-        //     StandardCharsets.UTF_8.toString()
-        // ).use { scanner ->
-        //     scanner.useDelimiter("\\A")
-
-        //     return if (scanner.hasNext())
-        //         scanner.next().also {
-        //             try {
-        //                 AsynchronousFileChannel.open(Paths.get(LOCAL_SCHOOLS_DIR + schoolKey), StandardOpenOption.CREATE, StandardOpenOption.WRITE).use { asyncChannel ->
-        //                     // Datei schreiben
-        //                     asyncChannel.write(ByteBuffer.wrap(it.encodeToByteArray()), 0)
-        //                 }
-        //             } catch (e: IOException) {}
-
-        //             /*suspend {
-        //                 runCatching { Files.writeString(Paths.get(LOCAL_SCHOOLS_DIR + schoolKey), it) }
-        //             }*/
-        //         }
-        //     else null
-        // }
     }
 
     fun loadSchool(schoolKey: String): String? {
@@ -231,9 +188,9 @@ object SchoolConfig {
      * @param schoolKey ID der Schule
      */
     fun writeLastSchool(schoolKey: String) {
+        val data = StringWriter()
         with(Properties()) {
             setProperty(LAST_KEY, schoolKey)
-            val data = StringWriter()
             store(data, null)
 
             AsynchronousFileChannel.open(
@@ -244,23 +201,7 @@ object SchoolConfig {
                 // Datei schreiben
                 asyncChannel.write(ByteBuffer.wrap(data.toString().encodeToByteArray()), 0)
             }
-
         }
-        /*
-        alter versuch mit suspend, der nicht funktioniert...
-        suspend {
-            with(Properties()) {
-                setProperty(LAST_KEY, schoolKey)
-                runCatching {
-                    try {
-                        store(FileWriter(LOCAL_LAST_SCHOOL_PROPS), null)
-                    } catch (e: Exception) {
-                        JOptionPane.showConfirmDialog(null, "dummmi")
-                    }
-                }
-
-            }
-        }*/
     }
 
 }

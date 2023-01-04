@@ -45,18 +45,13 @@ import javax.swing.SwingConstants
  * components added to the panel will be size to fill the area available,
  * based on the rules of the applicable layout manager of course.
  *
- * from: [Original Source (copied)](https://tips4java.wordpress.com/2009/12/20/scrollable-panel/)
+ * from: [Original Source (copied & altered for Kotlin)](https://tips4java.wordpress.com/2009/12/20/scrollable-panel/)
  */
 @Suppress("unused")
-open class ScrollablePanel(layout: LayoutManager? = FlowLayout()) : JPanel(layout),
-    Scrollable, SwingConstants {
-    enum class ScrollableSizeHint {
-        NONE, FIT, STRETCH
-    }
+open class ScrollablePanel(layout: LayoutManager? = FlowLayout()) : JPanel(layout), Scrollable, SwingConstants {
+    enum class ScrollableSizeHint { NONE, FIT, STRETCH }
 
-    enum class IncrementType {
-        PERCENT, PIXELS
-    }
+    enum class IncrementType { PERCENT, PIXELS }
 
     private var scrollableHeight = ScrollableSizeHint.NONE
     private var scrollableWidth = ScrollableSizeHint.NONE
@@ -70,9 +65,7 @@ open class ScrollablePanel(layout: LayoutManager? = FlowLayout()) : JPanel(layou
      *
      * @return the [ScrollableSizeHint] enum for the height
      */
-    fun getScrollableHeight(): ScrollableSizeHint {
-        return scrollableHeight
-    }
+    fun getScrollableHeight(): ScrollableSizeHint = scrollableHeight
 
     /**
      * Set the ScrollableSizeHint enum for the height. The enum is used to
@@ -201,23 +194,19 @@ open class ScrollablePanel(layout: LayoutManager? = FlowLayout()) : JPanel(layou
     //  Implement Scrollable interface
     override fun getPreferredScrollableViewportSize(): Dimension = preferredSize
 
-    override fun getScrollableUnitIncrement(
-        visible: Rectangle, orientation: Int, direction: Int
-    ): Int {
-        return when (orientation) {
+    override fun getScrollableUnitIncrement(visible: Rectangle, orientation: Int, direction: Int): Int =
+        when (orientation) {
             SwingConstants.HORIZONTAL -> getScrollableIncrement(horizontalUnit, visible.width)
             SwingConstants.VERTICAL -> getScrollableIncrement(verticalUnit, visible.height)
             else -> throw IllegalArgumentException("Invalid orientation: $orientation")
         }
-    }
 
-    override fun getScrollableBlockIncrement(
-        visible: Rectangle, orientation: Int, direction: Int
-    ): Int = when (orientation) {
-        SwingConstants.HORIZONTAL -> getScrollableIncrement(horizontalBlock, visible.width)
-        SwingConstants.VERTICAL -> getScrollableIncrement(verticalBlock, visible.height)
-        else -> throw IllegalArgumentException("Invalid orientation: $orientation")
-    }
+    override fun getScrollableBlockIncrement(visible: Rectangle, orientation: Int, direction: Int): Int =
+        when (orientation) {
+            SwingConstants.HORIZONTAL -> getScrollableIncrement(horizontalBlock, visible.width)
+            SwingConstants.VERTICAL -> getScrollableIncrement(verticalBlock, visible.height)
+            else -> throw IllegalArgumentException("Invalid orientation: $orientation")
+        }
 
     private fun getScrollableIncrement(info: IncrementInfo?, distance: Int): Int =
         if (info!!.increment == IncrementType.PIXELS) info.amount else distance * info.amount / 100

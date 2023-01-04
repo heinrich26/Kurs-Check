@@ -73,8 +73,8 @@ class Toolbar(text: String, private val shadowSize: Int = 8) : JPanel(GridBagLay
 
     private var i = 0
 
-    fun addActionItem(shape: Shape, id: String, action: () -> Unit) {
-        val btn = ActionItem(shape, id, action)
+    fun addActionItem(shape: Shape, id: String, tooltip: String? = null, action: () -> Unit) {
+        val btn = ActionItem(shape, id, tooltip, action)
         actionButtons.add(btn)
         add(btn, row = 0, column = i++, anchor = GridBagConstraints.EAST, margin = Insets(0, 8, 0, 0))
     }
@@ -95,7 +95,7 @@ class Toolbar(text: String, private val shadowSize: Int = 8) : JPanel(GridBagLay
         val transform2: AffineTransform = (TOOLBAR_ICON_SIZE / 28.0).let { AffineTransform.getScaleInstance(it, it) }
         val transform3: AffineTransform = (TOOLBAR_ICON_SIZE / 2.0).let { AffineTransform.getTranslateInstance(it, it) }
 
-        private class ActionItem(shape: Shape, val id: String, action: () -> Unit) : JComponent() {
+        private class ActionItem(shape: Shape, val id: String, tooltip: String?, action: () -> Unit) : JComponent() {
             private val shape =
                 transform3.createTransformedShape(
                     transform2.createTransformedShape(
@@ -115,6 +115,8 @@ class Toolbar(text: String, private val shadowSize: Int = 8) : JPanel(GridBagLay
                 preferredSize = Dimension(TOOLBAR_ICON_SIZE, TOOLBAR_ICON_SIZE)
                 minimumSize = preferredSize
 
+                toolTipText = tooltip
+
                 addMouseListener(onClick = { action() }, onEnter = { hasFocus = true }, onExit = { hasFocus = false })
             }
 
@@ -124,8 +126,9 @@ class Toolbar(text: String, private val shadowSize: Int = 8) : JPanel(GridBagLay
                 g2D.setRenderingHints(RENDERING_HINTS)
 
                 g2D.color = if (hasFocus) COLOR_ON_PRIMARY_FOCUS else COLOR_ON_PRIMARY
-                // g2D.drawRect(0, 0, width, height) // DEBUG
                 g2D.fill(shape)
+
+                g.dispose()
             }
         }
     }

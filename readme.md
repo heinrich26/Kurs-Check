@@ -8,17 +8,17 @@ Eine App, um die Kurswahl an Berliner Schulen zu erleichtern.
 Ein Projekt des Informatik LKs 2021-2023 am Willi-Graf-Gymnasium
 
 ## TODOs
-- [ ] Echtzeitinfo bei unvollständiger Eingabe
+- [x] Echtzeitinfo bei unvollständiger Eingabe
 - [ ] Dateiöffnung bei UNC-Pfaden fixen
 - [x] volle Ländernamen nach Berliner Standard
-- [ ] LFs/PFs & 5. anstelle von PKs/LKs in der Sidebar
+- [x] PFs & 5. anstelle von PKs in der Sidebar
 - [x] Wahlmöglichkeit 2./3. erlauben
 - [x] 5\. PK anstelle von 5. PF in der Übersicht
 - [x] Name von PF5 in PK5 in CSV ändern
-- [ ] Beschreibung fürs/besseres Öffnen-Icon
+- [x] Beschreibung fürs/besseres Öffnen-Icon
 - [ ] größere Fenstergröße
 - [x] Feld für Unterschrift & Datum im Output
-- [ ] AndRegel für Mathe/-CAS bei lili.json implementieren
+- [x] AndRegel für Mathe/-CAS bei lili.json implementieren
 
 
 ## GUID

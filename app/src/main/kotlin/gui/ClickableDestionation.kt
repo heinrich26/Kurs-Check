@@ -20,8 +20,9 @@ package gui
 import com.kurswahlApp.data.Consts
 import java.awt.Dimension
 import javax.swing.JComponent
+import javax.swing.JOptionPane
 
-@Suppress("unused", "unused", "unused")
+@Suppress("unused")
 open class ClickableDestionation(
     defaultSelected: Boolean = false,
     defaultEnabled: Boolean = true,
@@ -48,9 +49,12 @@ open class ClickableDestionation(
         isEnabled = defaultEnabled
 
         this.addMouseListener(
-            onClick = { if (isEnabled && !isSelected) clickEvent() },
+            onClick = { if (!isSelected) { if (isEnabled) clickEvent() else uncompleteAlert() } },
             onEnter = { hasFocus = isEnabled },
             onExit = { hasFocus = false }
         )
+    }
+    private fun uncompleteAlert() {
+        JOptionPane.showMessageDialog(this, "Bitte fülle zuerst die vorherigen Abschnitte aus!", "Der Reihe nach...", JOptionPane.WARNING_MESSAGE)
     }
 }

@@ -17,12 +17,14 @@
 
 package gui
 
-import java.awt.*
+import java.awt.Component
+import java.awt.Container
+import java.awt.Rectangle
 import java.awt.image.BufferedImage
 import java.io.File
 import java.io.IOException
 import javax.imageio.ImageIO
-import javax.swing.*
+import javax.swing.JComponent
 
 
 /**
@@ -113,37 +115,6 @@ object ScreenImage {
         component.print(g2d)
         g2d.dispose()
         return image
-    }
-
-    /**
-     *  Create a [BufferedImage] for AWT components.
-     *  This will include Swing components [JFrame], [JDialog] and [JWindow]
-     *  which all extend from [Component], not [JComponent].
-     *
-     *  @param  component AWT component to create image from
-     *  @return a [BufferedImage], the image for the given region
-     *  @exception AWTException see Robot class constructors
-     */
-    @Throws(AWTException::class)
-    fun createImage(component: Component): BufferedImage {
-        val p = Point(0, 0)
-        SwingUtilities.convertPointToScreen(p, component)
-        val region = component.bounds
-        region.x = p.x
-        region.y = p.y
-        return createImage(region)
-    }
-
-    /**
-     * Create a [BufferedImage] from a rectangular region on the screen.
-     *
-     * @param     region region on the screen to create image from
-     * @return    a [BufferedImage], the image for the given region
-     * @exception AWTException see Robot class constructors
-     */
-    @Throws(AWTException::class)
-    fun createImage(region: Rectangle?): BufferedImage {
-        return Robot().createScreenCapture(region)
     }
 
     /**

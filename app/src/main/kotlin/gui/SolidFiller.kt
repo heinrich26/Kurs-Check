@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022  Hendrik Horstmann
+ * Copyright (c) 2022-2023  Hendrik Horstmann
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.kurswahlApp.data
+package gui
 
 import java.awt.Color
 import java.awt.Dimension
@@ -27,7 +27,6 @@ import javax.swing.JComponent
  *
  * @param color Farbe dieses Hintergrunds
  */
-// TODO Nach 'app' verschieben
 class SolidFiller(color: Color) : JComponent() {
     companion object {
         val minSize = Dimension(0,0)
@@ -55,5 +54,6 @@ class SolidFiller(color: Color) : JComponent() {
     override fun paintComponent(g: Graphics) {
         g.color = background
         g.fillRoundRect(0, 2, width, height-4, 4, 4)
+        g.dispose()
     }
 }

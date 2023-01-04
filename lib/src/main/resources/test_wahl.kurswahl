@@ -1,34 +1,34 @@
-// Beispiel einer Kurswahl-Datei
 {
-	"schulId": "wgg.json",
-	"jsonVersion": "1.2",
+	"jsonVersion": "2.0",
 	"lk1": "Ma",
 	"lk2": "Inf",
-	"pf3": "En",
-	"pf4": "Phy",
-	"pf5": "Geo",
+	"pf3": "E",
+	"pf4": "Geo",
+	"pf5": "Ph",
 	"pf5_typ": "praes",
 	"gks": {
 		"De": "1-4",
 		"Ku": "1-3",
+		"Ch": "1-4",
 		"Ge": "3-4",
-		"Che": "1-4",
-		"SuB": "1-2",
-		"ED": "1-2",
-		"Sp": "1-4"
+		"Sp": "1-4",
+		"StuB": "1-2",
+		"CAE": "1-2"
 	},
 	"fremdsprachen": {
-		"En": 3,
+		"E": 3,
 		"Fr": 7
 	},
 	"wpfs": {
 		"first": "Inf",
-		"second": null
+		"second": "Ph"
 	},
+	"klasse": null,
 	"wahlzeile": 29,
-	"vorname": "Hendrik Sven",
-	"nachname": "Horstmann",
-	"geburtsdatum": "2005-09-27",
+	"vorname": "Max",
+	"nachname": "Mustermann",
+	"geburtsdatum": "2006-08-26",
 	"geburtsort": "Berlin",
-	"staatsangehoerigkeit": "DE"
+	"staatsangehoerigkeit": "DE",
+	"schulId": "lili.json"
 }

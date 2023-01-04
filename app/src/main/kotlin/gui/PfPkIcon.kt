@@ -27,7 +27,7 @@ import java.awt.Font
 import java.awt.Graphics
 import java.awt.Graphics2D
 
-class FsWpfIcon(clickEvent: () -> Unit) : ClickableDestionation(clickEvent = clickEvent) {
+class PfPkIcon(clickEvent: () -> Unit) : ClickableDestionation(clickEvent = clickEvent) {
 
     companion object {
         @JvmStatic
@@ -37,13 +37,13 @@ class FsWpfIcon(clickEvent: () -> Unit) : ClickableDestionation(clickEvent = cli
         val smallFont = Font(FONT_NAME, Font.BOLD, 15)
     }
 
-    private val fsLen: Int
-    private val wpfLen: Int
+    private val pfLen: Int
+    private val pkLen: Int
 
     init {
         getFontMetrics(bigFont).let {
-            fsLen = it.stringWidth("FS")
-            wpfLen = it.stringWidth("WPF")
+            pfLen = it.stringWidth("PF")
+            pkLen = it.stringWidth("5. PK")
         }
     }
 
@@ -65,11 +65,10 @@ class FsWpfIcon(clickEvent: () -> Unit) : ClickableDestionation(clickEvent = cli
 
         g2D.font = bigFont
 
-        g2D.drawString("FS", 10, 36)
-        g2D.drawString("WPF", 18, 54)
+        g2D.drawString("PF", 10, 36)
+        g2D.drawString("5. PK", 18, 54)
         g2D.font = smallFont
-        g2D.drawString("s", 10 + fsLen, 36)
-        g2D.drawString("s", 18 + wpfLen, 54)
+        g2D.drawString("s", 10 + pfLen, 36)
 
         g2D.dispose()
     }
