@@ -5,7 +5,9 @@ on:
     branches-ignore:
     - data
     paths-ignore:
-    - '*.md'
+    - '**.md'
+    - '.idea/**'
+    - '**.py'
     
   workflow_dispatch:
 
