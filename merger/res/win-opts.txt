@@ -1,5 +1,0 @@
---win-menu
---win-shortcut-prompt
---win-help-url https://github.com/heinrich26/kurswahlApp
---win-per-user-install
---win-dir-chooser

@@ -36,19 +36,24 @@ launch4j { // Baut die GUI exe
 
 jpackageImage.dependsOn copyInstallerResources
 
+String osPrefix = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'win' : ((Os.isFamily(Os.FAMILY_MAC)) ? 'mac' : 'linux')
 runtime {
     jpackage {
         installerOutputDir = file("$rootDir/out/executable/basic")
         imageName = rootProject.name
         installerName = rootProject.name
 
-        installerType = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'msi' : 'pkg'
+        installerType = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'msi' :
+                ((Os.isFamily(Os.FAMILY_MAC)) ? 'pkg' : 'deb')
 
         installerOptions = ['--file-associations', "$buildDir/$resDirName/kurswahl.properties",
-                            '--vendor', '"Willi-Graf-Gymnasium"', '--description', "\"$description\"",
-                            '--copyright', '"Copyright Hendrik Horstmann 2022, All rights reserved"',
+                            '--vendor', '"Willi-Graf-Gymnasium"',
+                            '--description', "\"$description\"",
+                            '--copyright', '"Copyright Hendrik Horstmann 2023, All rights reserved"',
                             '--about-url', 'https://github.com/heinrich26/kurswahlApp',
-                            (Os.isFamily(Os.FAMILY_WINDOWS)) ? '@res/win-opts.txt' : '@res/mac-opts.txt']
+                            '--license-file', "$rootDir/COPYRIGHT",
+                            "@res/$osPrefix-opts.txt"]
+
         resourceDir = file("$buildDir/$resDirName")
     }
 

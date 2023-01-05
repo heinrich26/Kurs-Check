@@ -1,0 +1,6 @@
+--linux-deb-maintainer hendrik-horstmann@o2mail.de
+--linux-menu-group Kurs-Check
+--linux-rpm-license-type GPLv3
+--linux-app-category Education
+--linux-app-release 1
+--linux-shortcut
