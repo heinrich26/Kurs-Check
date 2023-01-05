@@ -94,10 +94,7 @@ data class KurswahlData(
             @JsonProperty schulId: String,
             @JacksonInject fachDataMirror: FachDataMirror
         ): KurswahlData {
-            val fachData: FachData =
-                if (fachDataMirror.fachData != null && fachDataMirror.fachData.schulId == schulId)
-                    fachDataMirror.fachData
-                else fachDataMirror.supplier?.invoke(schulId)
+            val fachData: FachData = fachDataMirror.get(schulId)
                     ?: throw IllegalArgumentException("Die Schule der Nutzerdaten passt nicht zu den Fach-Daten!")
 
 

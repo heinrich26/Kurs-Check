@@ -43,8 +43,8 @@ String osPrefix = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'win' : ((Os.isFamily(Os.FA
 runtime {
     jpackage {
         installerOutputDir = file("$rootDir/out/executable/full")
-        imageName = rootProject.name
         installerName = rootProject.name + '-full'
+        imageName = rootProject.name
         imageOptions = ['--add-launcher', "wahl-merger=res/$osPrefix-merger.properties"]
 
         installerType = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'msi' :
@@ -56,6 +56,7 @@ runtime {
                             '--copyright', '"Copyright Hendrik Horstmann 2023, All rights reserved"',
                             '--about-url', 'https://github.com/heinrich26/kurswahlApp',
                             '--license-file', "$rootDir/COPYRIGHT",
+                            '--icon', "$rootDir/res/icons/app_icon.ico",
                             "@$rootDir/app/res/$osPrefix-opts.txt",
                             '--temp', "$buildDir/temp"]
         resourceDir = file("$buildDir/$resDirName")

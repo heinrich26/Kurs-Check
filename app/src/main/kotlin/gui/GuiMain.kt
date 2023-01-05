@@ -55,6 +55,13 @@ class GuiMain(file: File? = null) : JPanel() {
     private lateinit var wahlData: KurswahlData
     private var currentSchool: School? = null
 
+    /** Aktuallisiert die FachData und führt setzt alle damit verbundenen Daten neu */
+    private fun updateFachData(data: FachData) {
+        this.fachData = data
+        this.currentSchool = SchoolConfig.schools.find { it.schulId == data.schulId }
+        thread { SchoolConfig.writeLastSchool(data.schulId) }
+    }
+
     init {
         SchoolConfig.updateConfig()
 
@@ -63,23 +70,16 @@ class GuiMain(file: File? = null) : JPanel() {
             if (lastSchool != null) {
                 val data = SchoolConfig.getSchool(lastSchool)
                 if (data != null) {
-                    currentSchool = SchoolConfig.schools.find { it.schulId == lastSchool }
-                    fachData = data
+                    updateFachData(data)
                     wahlData = data.createKurswahl(lastSchool)
-                    SchoolConfig.writeLastSchool(data.schulId)
                 } else {
                     showLoadingError()
                     showSchoolChooser()
                 }
             } else showSchoolChooser()
-        } else {
-            loadKurswahlFile(file)?.apply {
-                updatePflichtfaecher()
-                wahlData = this
-            } ?: run {
-                showLoadingError()
-                showSchoolChooser()
-            }
+        } else if (!loadKurswahlFile(file)) {
+            showLoadingError()
+            showSchoolChooser()
         }
 
     }
@@ -95,7 +95,7 @@ class GuiMain(file: File? = null) : JPanel() {
                     currentSchool = it
                     fachData = data
                     wahlData = data.createKurswahl(it.schulId)
-                    thread { SchoolConfig.writeLastSchool(data.schulId) }
+                    thread { SchoolConfig.writeLastSchool(it.schulId) }
 
                     if (!initial) {
                         reloadToStart()
@@ -114,7 +114,6 @@ class GuiMain(file: File? = null) : JPanel() {
 
         @JvmStatic
         fun main(args: Array<String>) {
-            println(args.contentToString())
             val parser = ArgParser(APP_NAME)
 
             val input by parser.argument(
@@ -183,6 +182,8 @@ class GuiMain(file: File? = null) : JPanel() {
         it.foreground = Color.RED
         it.font = font.deriveFont(12f)
     }
+
+    private val chooseSchoolButton = JButton(currentSchool!!.name)
 
     // Nav Bar Logik
     private val sidebar = JPanel(GridBagLayout()).apply {
@@ -264,6 +265,8 @@ class GuiMain(file: File? = null) : JPanel() {
 
         unvollstaendigeEingabeLabel.isVisible = !curPanel.isDataValid()
 
+        chooseSchoolButton.text = currentSchool!!.name
+
         validate()
     }
 
@@ -306,7 +309,7 @@ class GuiMain(file: File? = null) : JPanel() {
 
         add(resetButton, row = 2, column = 2, anchor = GridBagConstraints.EAST, margin = Insets(4, 4, 4, 4))
 
-        val chooseSchoolButton = JButton(currentSchool!!.name)
+
         chooseSchoolButton.addMouseListener(
             onEnter = { chooseSchoolButton.text = "\u2190 Schule wechseln" },
             onExit = { chooseSchoolButton.text = currentSchool!!.name }
@@ -330,28 +333,48 @@ class GuiMain(file: File? = null) : JPanel() {
     /**
      * Läd eine Kurswahl Datei
      */
-    private fun loadKurswahlFile(file: File): KurswahlData? {
-        if (file.extension != FILETYPE_EXTENSION) return null
+    private fun loadKurswahlFile(file: File): Boolean {
+        if (file.extension != FILETYPE_EXTENSION) return false
 
         if (file.exists() && file.canRead()) {
-            val mirror = FachDataMirror(if (this::fachData.isInitialized) fachData else null) { schulId ->
-                SchoolConfig.getSchool(schulId)?.also { data ->
-                    if (!this::fachData.isInitialized) {
-                        fachData = data
-                        currentSchool = SchoolConfig.schools.find { it.schulId == schulId }
-                    }
-                }
-                    ?: throw RuntimeException("Abbruch, FachData konnte nicht gefunden werden!")
-            }
+            val mirror = FachDataMirror(if (this::fachData.isInitialized) fachData else null, SchoolConfig::getSchool)
 
             val mapper = jacksonObjectMapper()
             mapper.factory.enable(JsonParser.Feature.ALLOW_COMMENTS)
-            val injectables = InjectableValues.Std()
-            injectables.addValue(FachDataMirror::class.java, mirror)
-            mapper.injectableValues = injectables
+            mapper.injectableValues = InjectableValues.Std().addValue(FachDataMirror::class.java, mirror)
 
             try {
-                return mapper.readValue(file, KurswahlData::class.java)
+                val data = mapper.readValue(file, KurswahlData::class.java)
+                val newFachData: FachData = mirror.fachData!!
+                when {
+                    data.readJsonVersion.first != newFachData.jsonVersion.first -> {
+                        JOptionPane.showMessageDialog(
+                            this,
+                            "Die Version deiner Datei ist inkompatibel! Es tut uns leid, aber du musst deine Wahl erneut eingeben!",
+                            "Inkompatible Datei",
+                            JOptionPane.ERROR_MESSAGE
+                        )
+                        return false
+                    }
+                    data.readJsonVersion.second > newFachData.jsonVersion.second ->
+                        JOptionPane.showMessageDialog(
+                            this,
+                            "Die Version deiner Datei ist neuer als die des Programms! Unter Umständen gehen ein paar Daten verloren!",
+                            "Versionsunterschiede",
+                            JOptionPane.WARNING_MESSAGE
+                        )
+                    data.readJsonVersion.second < newFachData.jsonVersion.second ->
+                        JOptionPane.showMessageDialog(
+                            this,
+                            "Die Version deiner Datei ist älter als die des Programms! Unter Umständen müssen ein paar Daten neu eingetragen werden!",
+                            "Versionsunterschiede",
+                            JOptionPane.WARNING_MESSAGE
+                        )
+                }
+                updateFachData(newFachData)
+                wahlData = data
+                data.updatePflichtfaecher()
+                return true
             } catch (e: DatabindException) {
                 JOptionPane.showMessageDialog(
                     this,
@@ -373,7 +396,7 @@ class GuiMain(file: File? = null) : JPanel() {
             }
         }
 
-        return null
+        return false
     }
 
     private fun openKurswahlAction() {
@@ -382,39 +405,9 @@ class GuiMain(file: File? = null) : JPanel() {
         chooser.dialogTitle = "Kurswahl-Datei öffnen"
 
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            val data: KurswahlData = loadKurswahlFile(chooser.selectedFile) ?: return
-
-            when {
-                data.readJsonVersion.first != fachData.jsonVersion.first -> {
-                    JOptionPane.showMessageDialog(
-                        this,
-                        "Die Version deiner Datei ist inkompatibel! Es tut uns leid, aber du musst deine Wahl erneut eingeben!",
-                        "Inkompatible Datei",
-                        JOptionPane.ERROR_MESSAGE
-                    )
-                    return
-                }
-
-                data.readJsonVersion.second > fachData.jsonVersion.second ->
-                    JOptionPane.showMessageDialog(
-                        this,
-                        "Die Version deiner Datei ist neuer als die des Programms! Unter Umständen gehen ein paar Daten verloren!",
-                        "Versionsunterschiede",
-                        JOptionPane.WARNING_MESSAGE
-                    )
-
-                data.readJsonVersion.second < fachData.jsonVersion.second ->
-                    JOptionPane.showMessageDialog(
-                        this,
-                        "Die Version deiner Datei ist älter als die des Programms! Unter Umständen müssen ein paar Daten neu eingetragen werden!",
-                        "Versionsunterschiede",
-                        JOptionPane.WARNING_MESSAGE
-                    )
-            }
-            wahlData = data
-
-            // Das GUI updaten
-            reloadToStart()
+            if (loadKurswahlFile(chooser.selectedFile))
+                // Das GUI updaten
+                reloadToStart()
         }
     }
 
