@@ -21,7 +21,8 @@ Ein Projekt des Informatik LKs 2021-2023 am Willi-Graf-Gymnasium
 - [x] AndRegel für Mathe/-CAS bei lili.json implementieren
 - [ ] Version für MacOS
 - [ ] Version für Linux
-
+- [ ] Entweder Checkboxbreite oder unsichtbare Checkboxen im Grundkurswahl Fenster für die Kurszahlen benutzen, damit es auch auf MacOS funzt
+- [ ] Eingabe wird ungültig angezeigt bei Grundkurswahl
 
 ## GUID
 Kurs-Check benutzt die GUID: `928348ff-a1f1-4e0d-881c-11256e369b08`
