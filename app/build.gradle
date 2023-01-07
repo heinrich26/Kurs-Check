@@ -40,7 +40,7 @@ runtime {
         installerName = rootProject.name
         installerOutputDir = file("$rootDir/out/executable/basic")
         installerType = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'msi' : ((Os.isFamily(Os.FAMILY_MAC)) ? 'pkg' : 'deb')
-        installerOptions = ['--file-associations', "$buildDir/res/kurswahl.properties",
+        installerOptions = ['--file-associations', "$projectDir/res/kurswahl.properties",
                             '--vendor', '"Willi-Graf-Gymnasium"',
                             '--description', "\"$description\"",
                             '--copyright', '"Copyright Hendrik Horstmann 2023, All rights reserved"',

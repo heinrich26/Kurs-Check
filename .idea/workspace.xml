@@ -12,20 +12,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Lade- und Linux-Build-Probleme gefixt">
-      <change afterPath="$PROJECT_DIR$/res/icons/app_icon.icns" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/icons/app_icon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/gradle-build.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/gradle-build.yml" afterDir="false" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Arbeit an der Linux Kompatibilität">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/res/mac-opts.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/res/mac-opts.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/merger/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/merger/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/icons/app_icon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/res/icons/app_icon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/icons/app_icon.xcf" beforeDir="false" afterPath="$PROJECT_DIR$/res/icons/app_icon.xcf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,6 +100,13 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/app/build.gradle" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/app/res/kurswahl.properties" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lib/src/main/kotlin/data/Consts.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lib/src/main/kotlin/data/SchoolConfig.kt" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="KotlinCodeInsightWorkspaceSettings">
     <option name="optimizeImportsOnTheFly" value="true" />
@@ -205,7 +202,7 @@
       <command value="gradle merger:jar" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.App Build (WSL)">
+  <component name="RunManager" selected="Gradle.App Build (Win)">
     <configuration name="App Build (WSL)" type="GradleRunConfiguration" factoryName="Gradle">
       <target name="WSL - Ubuntu-20.04" />
       <ExternalSystemSettings>
@@ -495,14 +492,7 @@
       <workItem from="1672322502592" duration="7051000" />
       <workItem from="1672576423933" duration="3814000" />
       <workItem from="1672924786880" duration="22238000" />
-      <workItem from="1673023248628" duration="5289000" />
-    </task>
-    <task id="LOCAL-00064" summary="Extra Padding hinzugefügt, um Lesbarkeit zu verbessern">
-      <created>1654975128471</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1654975128471</updated>
+      <workItem from="1673023248628" duration="6471000" />
     </task>
     <task id="LOCAL-00065" summary="IntelliJ Changes">
       <created>1654975141592</created>
@@ -840,7 +830,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672935241328</updated>
     </task>
-    <option name="localTasksCounter" value="113" />
+    <task id="LOCAL-00113" summary="Arbeit an der Linux Kompatibilität">
+      <created>1673095319707</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1673095319708</updated>
+    </task>
+    <option name="localTasksCounter" value="114" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -862,7 +859,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="AusgabeLayout repariert, es wird nun wieder ein Bild ausgegeben!" />
     <MESSAGE value="Umstellung auf Online-Daten (W.I.P)" />
     <MESSAGE value="Umstellung auf Online-Daten - Sollte nun mehr oder weniger funktionieren" />
     <MESSAGE value="Aktualisierung der mitgelieferten JSON Dateien!" />
@@ -887,7 +883,8 @@
     <MESSAGE value="Laden von Dateien beim Start gefixt" />
     <MESSAGE value="Linux Build hinzugefügt" />
     <MESSAGE value="Lade- und Linux-Build-Probleme gefixt" />
-    <option name="LAST_COMMIT_MESSAGE" value="Lade- und Linux-Build-Probleme gefixt" />
+    <MESSAGE value="Arbeit an der Linux Kompatibilität" />
+    <option name="LAST_COMMIT_MESSAGE" value="Arbeit an der Linux Kompatibilität" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

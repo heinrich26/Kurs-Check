@@ -3,7 +3,6 @@ import org.apache.tools.ant.taskdefs.condition.Os
 plugins {
     id 'myproject.java-conventions'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
-    id 'edu.sc.seis.launch4j' version '2.5.3'
     id 'org.beryx.runtime' version '1.12.7'
 }
 
@@ -23,16 +22,8 @@ dependencies {
     implementation 'org.apache.commons:commons-csv:1.9.0'
 }
 
-launch4j { // Baut die GUI exe
-    icon = "${rootProject.projectDir}/res/icons/app_icon.ico"
-    copyConfigurable = []
-    jarTask = project.tasks.shadowJar
-    headerType = "console"
-    outfile = "${artifactName}.exe"
-    fileDescription = "Kommandozeilen-Anwendung zum Zusammenführen der .kurswahl Dateien! Siehe: ${outfile} --help"
-}
 
-tasks.register('prepInstallerRes', Delete) {
+task prepInstallerRes(type: Delete) {
     delete layout.buildDirectory.dir(resDirName), layout.buildDirectory.dir('temp')
 }
 
@@ -40,16 +31,21 @@ copyInstallerResources.dependsOn prepInstallerRes
 jpackageImage.dependsOn copyInstallerResources
 
 String osPrefix = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'win' : ((Os.isFamily(Os.FAMILY_MAC)) ? 'mac' : 'linux')
+String iconExt = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'ico' : ((Os.isFamily(Os.FAMILY_MAC)) ? 'icns' : 'png')
 runtime {
+    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+
+    additive = true
+    modules = ['jdk.crypto.cryptoki']
+
     jpackage {
-        installerOutputDir = file("$rootDir/out/executable/full")
         imageName = rootProject.name
+        imageOptions = ['--add-launcher', "wahl-merger=res/$osPrefix-merger.properties",
+                        '--icon', "$rootDir/res/icons/app_icon.$iconExt"]
+
         installerName = rootProject.name + '-full'
-        imageOptions = ['--add-launcher', "wahl-merger=res/$osPrefix-merger.properties"]
-
-        installerType = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'msi' :
-                ((Os.isFamily(Os.FAMILY_MAC)) ? 'pkg' : 'deb')
-
+        installerOutputDir = file("$rootDir/out/executable/full")
+        installerType = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'msi' : ((Os.isFamily(Os.FAMILY_MAC)) ? 'pkg' : 'deb')
         installerOptions = ['--file-associations', "$rootDir/app/res/kurswahl.properties",
                             '--vendor', '"Willi-Graf-Gymnasium"',
                             '--description', "\"$description\"",
@@ -60,6 +56,4 @@ runtime {
                             '--temp', "$buildDir/temp"]
         resourceDir = file("$buildDir/$resDirName")
     }
-
-    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages', '--add-modules', 'jdk.crypto.cryptoki']
 }
