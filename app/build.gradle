@@ -3,7 +3,6 @@ import org.apache.tools.ant.taskdefs.condition.Os
 plugins {
     id 'myproject.java-conventions'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
-    id 'edu.sc.seis.launch4j' version '2.5.3'
     id 'org.beryx.runtime' version '1.12.7'
 }
 
@@ -24,39 +23,32 @@ application {
     mainClass = 'gui.GuiMain'
 }
 
-
-launch4j { // Baut die GUI exe
-    icon = "${rootProject.projectDir}/res/icons/app_icon.ico"
-    splashWaitForWindows = false
-    copyConfigurable = []
-    fileDescription = "digitale Anwendung zur Erleichterung der Kurswahl"
-    jarTask = project.tasks.shadowJar
-    outfile = "${rootProject.name}.exe"
-}
-
 jpackageImage.dependsOn copyInstallerResources
 
 String osPrefix = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'win' : ((Os.isFamily(Os.FAMILY_MAC)) ? 'mac' : 'linux')
+String iconExt = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'ico' : ((Os.isFamily(Os.FAMILY_MAC)) ? 'icns' : 'png')
 runtime {
+    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+
+    additive = true
+    modules = ['jdk.crypto.cryptoki']
+
     jpackage {
-        installerOutputDir = file("$rootDir/out/executable/basic")
-        installerName = rootProject.name
         imageName = rootProject.name
+        imageOptions = ['--icon', "$rootDir/res/icons/app_icon.$iconExt"]
 
-        installerType = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'msi' :
-                ((Os.isFamily(Os.FAMILY_MAC)) ? 'pkg' : 'deb')
-
-        installerOptions = ['--file-associations', "$buildDir/$resDirName/kurswahl.properties",
+        installerName = rootProject.name
+        installerOutputDir = file("$rootDir/out/executable/basic")
+        installerType = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'msi' : ((Os.isFamily(Os.FAMILY_MAC)) ? 'pkg' : 'deb')
+        installerOptions = ['--file-associations', "$buildDir/res/kurswahl.properties",
                             '--vendor', '"Willi-Graf-Gymnasium"',
                             '--description', "\"$description\"",
                             '--copyright', '"Copyright Hendrik Horstmann 2023, All rights reserved"',
                             '--about-url', 'https://github.com/heinrich26/kurswahlApp',
                             '--license-file', "$rootDir/COPYRIGHT",
-                            '--icon', "$rootDir/res/icons/app_icon.ico",
+                            '--verbose',
                             "@res/$osPrefix-opts.txt"]
 
         resourceDir = file("$buildDir/$resDirName")
     }
-
-    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages', '--add-modules', 'jdk.crypto.cryptoki']
 }

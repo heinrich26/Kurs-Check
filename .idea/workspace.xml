@@ -12,13 +12,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Linux Build hinzugefügt">
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Lade- und Linux-Build-Probleme gefixt">
+      <change afterPath="$PROJECT_DIR$/res/icons/app_icon.icns" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/icons/app_icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/gradle-build.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/gradle-build.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/res/mac-opts.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/res/mac-opts.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachDataMirror.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachDataMirror.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/KurswahlData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/KurswahlData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/merger/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/merger/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/icons/app_icon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/res/icons/app_icon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/icons/app_icon.xcf" beforeDir="false" afterPath="$PROJECT_DIR$/res/icons/app_icon.xcf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,24 +111,6 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/.github/workflows/gradle-build.yml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/app/build.gradle" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/app/res/kurswahl.properties" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/ClickableDestionation.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/ExclusiveComboBoxModel.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/lib/src/main/kotlin/data/KurswahlData.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/lib/src/main/kotlin/data/TestData.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/lib/src/main/kotlin/data/WahlzeileLinientyp.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/merger/build.gradle" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/merger/res/main.wxs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/merger/res/win-merger.properties" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/merger/settings.gradle" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/res/icons/app_icon.svg" root0="SKIP_HIGHLIGHTING" />
-  </component>
   <component name="KotlinCodeInsightWorkspaceSettings">
     <option name="optimizeImportsOnTheFly" value="true" />
   </component>
@@ -139,20 +128,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Project.color&quot;: &quot;0f3259&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Settings.Markdown&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Project.color": "0f3259",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "Settings.Markdown"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="javax.swing.text.html" />
@@ -215,8 +205,9 @@
       <command value="gradle merger:jar" />
     </option>
   </component>
-  <component name="RunManager" selected="Kotlin.Main">
-    <configuration name="app  [createExe]" type="GradleRunConfiguration" factoryName="Gradle">
+  <component name="RunManager" selected="Gradle.App Build (WSL)">
+    <configuration name="App Build (WSL)" type="GradleRunConfiguration" factoryName="Gradle">
+      <target name="WSL - Ubuntu-20.04" />
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -227,7 +218,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value=":app:createExe" />
+            <option value=":app:jpackage" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -237,17 +228,19 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="app [JPackage]" type="GradleRunConfiguration" factoryName="Gradle">
+    <configuration name="App Build (Win)" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value=":app:jpackage" />
+        <option name="scriptParameters" value="" />
         <option name="taskDescriptions">
           <list />
         </option>
         <option name="taskNames">
-          <list />
+          <list>
+            <option value=":app:jpackage" />
+          </list>
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
@@ -256,7 +249,72 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="kurswahlApp [app:run]" type="GradleRunConfiguration" factoryName="Gradle">
+    <configuration name="Full Build (WSL)" type="GradleRunConfiguration" factoryName="Gradle">
+      <target name="WSL - Ubuntu-20.04" />
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":merger:jpackage" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Full Build (Win)" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":merger:jpackage" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Run App (WSL)" type="GradleRunConfiguration" factoryName="Gradle">
+      <target name="WSL - Ubuntu-20.04" />
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":app:run" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Run App (Win)" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -298,77 +356,6 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="kurswahlApp [runShadow]" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="runShadow" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="merger [JPackage]" type="GradleRunConfiguration" factoryName="Gradle">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":merger:jpackage" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="merger [createExe]" type="GradleRunConfiguration" factoryName="Gradle">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":merger:createExe" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="Fremdsprachen" type="JetRunConfigurationType" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="gui.Fremdsprachen" />
-      <module name="Kurs-Check.app.main" />
-      <shortenClasspath name="NONE" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="GeneratorKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.kurswahlApp.GeneratorKt" />
       <module name="Kurs-Check.merger.main" />
@@ -377,9 +364,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GrundkursWahl" type="JetRunConfigurationType" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="gui.GrundkursWahl" />
+    <configuration name="Main (WSL)" type="JetRunConfigurationType">
+      <option name="MAIN_CLASS_NAME" value="gui.GuiMain" />
       <module name="Kurs-Check.app.main" />
+      <target name="WSL - Ubuntu-20.04" />
+      <shortenClasspath name="NONE" />
+      <option name="VM_PARAMETERS" value="-Dsun.java2d.dpiaware=false -Dsun.java2d.uiScale=1.25" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main w. testData (WSL)" type="JetRunConfigurationType">
+      <option name="MAIN_CLASS_NAME" value="gui.GuiMain" />
+      <module name="Kurs-Check.app.main" />
+      <option name="PROGRAM_PARAMETERS" value="--useTestData" />
+      <target name="WSL - Ubuntu-20.04" />
       <shortenClasspath name="NONE" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -397,7 +396,6 @@
     <configuration name="Main" type="JetRunConfigurationType">
       <option name="MAIN_CLASS_NAME" value="gui.GuiMain" />
       <module name="Kurs-Check.app.main" />
-      <option name="PROGRAM_PARAMETERS" value="&quot;E:\Users\Hendrik\Documents\Schule\Sek 2\Informatik\Hendrik_Horstmann.kurswahl&quot;" />
       <shortenClasspath name="NONE" />
       <option name="VM_PARAMETERS" value="-Dsun.java2d.dpiaware=false -Dsun.java2d.uiScale=1.25" />
       <method v="2">
@@ -405,17 +403,17 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Gradle.kurswahlApp [runShadow]" />
-      <item itemvalue="Gradle.app [JPackage]" />
-      <item itemvalue="Gradle.app  [createExe]" />
-      <item itemvalue="Gradle.merger [createExe]" />
-      <item itemvalue="Gradle.merger [JPackage]" />
-      <item itemvalue="Gradle.kurswahlApp [app:run]" />
+      <item itemvalue="Gradle.App Build (Win)" />
+      <item itemvalue="Gradle.App Build (WSL)" />
+      <item itemvalue="Gradle.Full Build (Win)" />
+      <item itemvalue="Gradle.Full Build (WSL)" />
+      <item itemvalue="Gradle.Run App (Win)" />
+      <item itemvalue="Gradle.Run App (WSL)" />
       <item itemvalue="Gradle.kurswahlApp [merger:runShadow]" />
-      <item itemvalue="Kotlin.Fremdsprachen" />
-      <item itemvalue="Kotlin.GrundkursWahl" />
       <item itemvalue="Kotlin.Main w. testData" />
+      <item itemvalue="Kotlin.Main w. testData (WSL)" />
       <item itemvalue="Kotlin.Main" />
+      <item itemvalue="Kotlin.Main (WSL)" />
       <item itemvalue="Kotlin.GeneratorKt" />
     </list>
     <recent_temporary>
@@ -496,14 +494,8 @@
       <workItem from="1672322328176" duration="147000" />
       <workItem from="1672322502592" duration="7051000" />
       <workItem from="1672576423933" duration="3814000" />
-      <workItem from="1672924786880" duration="9757000" />
-    </task>
-    <task id="LOCAL-00063" summary="Labels werden nun Rot, wenn die Zeile ungültig ist">
-      <created>1654975104864</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1654975104864</updated>
+      <workItem from="1672924786880" duration="22238000" />
+      <workItem from="1673023248628" duration="5289000" />
     </task>
     <task id="LOCAL-00064" summary="Extra Padding hinzugefügt, um Lesbarkeit zu verbessern">
       <created>1654975128471</created>
@@ -841,7 +833,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672927495881</updated>
     </task>
-    <option name="localTasksCounter" value="112" />
+    <task id="LOCAL-00112" summary="Lade- und Linux-Build-Probleme gefixt">
+      <created>1672935241328</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1672935241328</updated>
+    </task>
+    <option name="localTasksCounter" value="113" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -863,7 +862,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Layout hinzugefügt, um im AusgabeLayout Overflow zu verhindern (TODO)" />
     <MESSAGE value="AusgabeLayout repariert, es wird nun wieder ein Bild ausgegeben!" />
     <MESSAGE value="Umstellung auf Online-Daten (W.I.P)" />
     <MESSAGE value="Umstellung auf Online-Daten - Sollte nun mehr oder weniger funktionieren" />
@@ -888,7 +886,8 @@
     <MESSAGE value="Visuelle Bestätigung, ob die Eingabe gültig ist; Beschreibung für die Toolbar Icons; SidebarIcons sagen nun PFs &amp; 5. PK anstelle von PFs." />
     <MESSAGE value="Laden von Dateien beim Start gefixt" />
     <MESSAGE value="Linux Build hinzugefügt" />
-    <option name="LAST_COMMIT_MESSAGE" value="Linux Build hinzugefügt" />
+    <MESSAGE value="Lade- und Linux-Build-Probleme gefixt" />
+    <option name="LAST_COMMIT_MESSAGE" value="Lade- und Linux-Build-Probleme gefixt" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

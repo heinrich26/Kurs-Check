@@ -55,12 +55,6 @@ class GuiMain(file: File? = null) : JPanel() {
     private lateinit var wahlData: KurswahlData
     private var currentSchool: School? = null
 
-    /** Aktuallisiert die FachData und führt setzt alle damit verbundenen Daten neu */
-    private fun updateFachData(data: FachData) {
-        this.fachData = data
-        this.currentSchool = SchoolConfig.schools.find { it.schulId == data.schulId }
-        thread { SchoolConfig.writeLastSchool(data.schulId) }
-    }
 
     init {
         SchoolConfig.updateConfig()
@@ -131,7 +125,13 @@ class GuiMain(file: File? = null) : JPanel() {
 
             // System UI verwenden
             try {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName().let {
+                    if (it == "javax.swing.plaf.metal.MetalLookAndFeel") {
+                        "com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
+                    }
+                    return@let it
+                })
+
 
                 // Font Hack
                 /*for ((key, value) in UIManager.getLookAndFeelDefaults()) {
@@ -148,6 +148,11 @@ class GuiMain(file: File? = null) : JPanel() {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+
+//            System.setProperty("swing.aatext", "true")
+//            System.setProperty("awt.useSystemAAFontSettings", "lcd")
+//            JFrame.setDefaultLookAndFeelDecorated(true)
+//            JDialog.setDefaultLookAndFeelDecorated(true)
 
             SwingUtilities.invokeLater { createAndShowGUI(input, useTestData) }
         }
@@ -254,7 +259,7 @@ class GuiMain(file: File? = null) : JPanel() {
                         for (i in (index + 1)..4)
                             sidebarBtns[i].isEnabled = false
                 }
-
+                4 -> { it -> unvollstaendigeEingabeLabel.isVisible = !it }
                 else -> { _ -> }
             }
 
@@ -328,6 +333,15 @@ class GuiMain(file: File? = null) : JPanel() {
         }
 
         add(chooseSchoolButton, row = 2, column = 2, anchor = GridBagConstraints.WEST, margin = Insets(4, 4, 4, 4))
+    }
+
+    /**
+     * Aktualisiert die FachData und alle damit verbundenen Daten
+     */
+    private fun updateFachData(data: FachData) {
+        this.fachData = data
+        this.currentSchool = SchoolConfig.schools.find { it.schulId == data.schulId }
+        thread { SchoolConfig.writeLastSchool(data.schulId) }
     }
 
     /**

@@ -41,6 +41,8 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
     }
 
     override fun isDataValid(): Boolean {
+        if (invalidRows != 0) return false
+
         val pfs = wahlData.pfs
         var counter = 0
         for ((i, fach) in fachData.faecher.withIndex()) {
@@ -48,13 +50,12 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                 counter += 4
                 continue
             }
-            val row = checkboxRows[i] ?: continue
             // Übergabe der gewählten Grundkurse und dessen Semester
-            counter += row.selection().count { it }
+            counter += (checkboxRows[i] ?: continue).toWahlmoeglichkeit()?.n ?: 0
         }
 
         // Überprüfen, dass pro Semester die maximale Kurszahl nicht überschritten wird
-        if (!wahlData.countCourses(true).zip(fachData.semesterkurse).all { it.first <= it.second }) return false
+        if (!close().countCourses(true).zip(fachData.semesterkurse).all { it.first <= it.second }) return false
 
         return counter in fachData.minKurse..fachData.maxKurse
     }
@@ -69,6 +70,19 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
             Color(COLOR_PRIMARY.colorSpace, COLOR_PRIMARY.getRGBColorComponents(null), .1f)
     }
 
+    private var dataValid = true
+    private var invalidRows = 0
+        set(value) {
+            if (field != 0 && value == 0) {
+                if (dataValid)
+                    notifier.invoke(true)
+            } else if (field == 0 && value != 0) {
+                notifier.invoke(false)
+            }
+
+            field = value
+        }
+
     // Repräsentiert eine Zeile von Checkboxen für ein Fach
     private inner class CheckboxRow(fach: Fach) : JPanel(GridBagLayout()) {
         private val label = JLabel(fach.name).also { isOpaque = false }
@@ -76,6 +90,8 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         private val zeile = arrayOf(JCheckBox(), JCheckBox(), JCheckBox(), JCheckBox())
 
         val isExtra = fach.isExtra
+
+        var isRowValid = true
 
         init {
             label.addMouseListener(onClick = {
@@ -129,15 +145,26 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                         if (!isExtra) semesterAnzahlDecr(i)
                     }
                     // Das Label Rot färben, wenn die Reihe ungültig ist
-                    label.foreground =
-                        if (zeile.map { it.isSelected }.let {
-                                it == UNGEWAEHLT_BOOLS || Wahlmoeglichkeit.fromBools(it) != null
-                            }) Color.BLACK
-                        else Consts.COLOR_ERROR
+
+                    if (zeile.map { it.isSelected }.let {
+                            it == UNGEWAEHLT_BOOLS || Wahlmoeglichkeit.fromBools(it) != null
+                        }) {
+                        if (!isRowValid) {
+                            isRowValid = true
+                            invalidRows--
+                            label.foreground = Color.BLACK
+                        }
+                    } else if (isRowValid) {
+                        isRowValid = false
+                        invalidRows++
+                        label.foreground = Consts.COLOR_ERROR
+                    }
                 }
 
-                add(box, row = 0, column = i + 1,
-                    anchor = GridBagConstraints.EAST)
+                add(
+                    box, row = 0, column = i + 1,
+                    anchor = GridBagConstraints.EAST
+                )
             }
 
             if (isExtra)
@@ -192,9 +219,8 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
     private fun checkData(): Boolean {
         val data = close()
         data.lock()
-        return regelLabelArray.map {
-            it.match(data)
-        }.all { it } && kursanzahlInfoLabel.match(semesterkurse)
+        dataValid = regelLabelArray.all { it.match(data) } && kursanzahlInfoLabel.match(semesterkurse)
+        return dataValid
     }
 
 
@@ -228,10 +254,10 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
     private val kursanzahlInfoLabel = KursanzahlInfo(fachData.semesterkurse)
 
     // Labels für die Kurse/Semester
-    private val q1AnzahlLabel = JLabel("0")
-    private val q2AnzahlLabel = JLabel("0")
-    private val q3AnzahlLabel = JLabel("0")
-    private val q4AnzahlLabel = JLabel("0")
+    private val q1AnzahlLabel = JLabel("0", JLabel.CENTER)
+    private val q2AnzahlLabel = JLabel("0", JLabel.CENTER)
+    private val q3AnzahlLabel = JLabel("0", JLabel.CENTER)
+    private val q4AnzahlLabel = JLabel("0", JLabel.CENTER)
     private var q1Anzahl = 0
         set(value) {
             field = semesterAnzahlSetter(value, q1AnzahlLabel, 0)
@@ -280,7 +306,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         add(anzahlLabel, row = 1)
         add(anzahlInfoLabel, row = 1)
 
-        checkButton.addActionListener { checkData() }
+        checkButton.addActionListener { notifier.invoke(invalidRows == 0 && checkData()) }
         add(checkButton, row = 1, column = 2)
 
         buildCheckboxes()
@@ -335,12 +361,11 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         val scrollPane2 = JScrollPane(regelPanel)
         scrollPane2.preferredSize = Dimension(200, 350)
 
-        checkData()
-
         add(scrollPane2, row = 0, column = 2, margin = Insets(0, 8, 6, 0))
 
-        // TODO Conflicting Courses & Gruppierung der Checkboxen Implementieren
+        notifier.invoke(checkData())
     }
+
 
     /**
      * Erstellt Checkboxen mit Labels und versteckt jene, die der Schüler nicht wählen kann
@@ -356,20 +381,24 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                     toolTipText = "Lila hinterlegte Fächer zählen extra"
                 },
                 anchor = GridBagConstraints.WEST,
-                weightx = 1.0, fill = GridBagConstraints.HORIZONTAL,
+                weightx = 1.0,
+                fill = GridBagConstraints.HORIZONTAL,
                 margin = Insets(0, 4, 0, 0)
             )
+
+            Dimension(JCheckBox().preferredSize.width, q1AnzahlLabel.preferredSize.height).let {
+                q1AnzahlLabel.preferredSize = it
+                q2AnzahlLabel.preferredSize = it
+                q3AnzahlLabel.preferredSize = it
+                q4AnzahlLabel.preferredSize = it
+            }
+
             add(q1AnzahlLabel, row = 0, column = 1)
             add(q2AnzahlLabel, row = 0, column = 2)
             add(q3AnzahlLabel, row = 0, column = 3)
             add(q4AnzahlLabel, row = 0, column = 4)
 
-            add(Box.createHorizontalStrut(21), row = 0, column = 1)
-            add(Box.createHorizontalStrut(21), row = 0, column = 2)
-            add(Box.createHorizontalStrut(21), row = 0, column = 3)
-            add(Box.createHorizontalStrut(21), row = 0, column = 4)
-
-            checkboxPanel.add(this, fill = GridBagConstraints.HORIZONTAL, weightx=1.0)
+            checkboxPanel.add(this, fill = GridBagConstraints.HORIZONTAL, weightx = 1.0)
         }
         var af = Int.MIN_VALUE
         var offset = 1
@@ -379,11 +408,8 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                 Daraus geht hervor, dass SuS jegliche Fächer zum Grundkurs wählen können,
                 mit der Ausnahme von Fremdsprachen, die müssen mind. in JG 10/E-Phase begonnen
                 worden sein. */
-            val waehlbar: Boolean = fach.isKurs && (!fach.isFremdsprache || fach in fs) && fach.checkKlasse(wahlData.klasse)
-
-
-            if (waehlbar) {
-                // Unterteilung anhand des Aufgabenfelds vornehmen
+            if (fach.isKurs && (!fach.isFremdsprache || fach in fs) && fach.checkKlasse(wahlData.klasse)) {
+                // Unterteilung anhand des Aufgabenfelds vornehmen, neue Überschriften hinzufügen
                 fach.aufgabenfeld.let {
                     if (it != af) {
                         checkboxPanel.add(
@@ -405,7 +431,14 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
 
                 val row = CheckboxRow(fach)
                 checkboxRows[i] = row
-                checkboxPanel.add(row, row = i + offset, column = 0, columnspan = 5, fill = GridBagConstraints.HORIZONTAL, weightx = 1.0)
+                checkboxPanel.add(
+                    row,
+                    row = i + offset,
+                    column = 0,
+                    columnspan = 5,
+                    fill = GridBagConstraints.HORIZONTAL,
+                    weightx = 1.0
+                )
             }
         }
     }
