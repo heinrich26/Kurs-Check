@@ -93,3 +93,26 @@ fun List<Boolean>.intersects(other: List<Boolean>): Boolean {
         if (a && b) return true
     return false
 }
+
+/**
+ * Creates and initializes a new `Insets` object with the
+ * specified inset on each side.
+ * @param       all the inset from each side.
+ */
+fun Insets(all: Int) = Insets(all, all, all, all)
+/**
+ * Creates and initializes a new `Insets` object with the
+ * specified x and y insets.
+ * @param       x   the inset from the left and right.
+ * @param       y   the inset from the top and bottom.
+ */
+fun Insets(x: Int = 0, y: Int = 0) = Insets(y, x, y, x)
+/**
+ * Creates and initializes a new `Insets` object with the
+ * specified top, left, bottom, and right insets.
+ * @param       top   the inset from the top.
+ * @param       left   the inset from the left.
+ * @param       bottom   the inset from the bottom.
+ * @param       right   the inset from the right.
+ */
+fun Insets(top: Int = 0, left: Int = 0, bottom: Int = 0, right: Int = 0) = java.awt.Insets(top, left, bottom, right)

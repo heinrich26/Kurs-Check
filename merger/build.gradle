@@ -12,8 +12,6 @@ application {
     mainClass = 'gui.GuiMain'
 }
 
-def artifactName = 'wahl-merger'
-
 dependencies {
     implementation project(':lib')
     implementation project(':app')
@@ -46,7 +44,7 @@ runtime {
         installerName = rootProject.name + '-full'
         installerOutputDir = file("$rootDir/out/executable/full")
         installerType = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'msi' : ((Os.isFamily(Os.FAMILY_MAC)) ? 'pkg' : 'deb')
-        installerOptions = ['--file-associations', "$rootDir/app/res/kurswahl.properties",
+        installerOptions = ['--file-associations', "$buildDir/$resDirName/kurswahl-${osPrefix}.properties",
                             '--vendor', '"Willi-Graf-Gymnasium"',
                             '--description', "\"$description\"",
                             '--copyright', '"Copyright Hendrik Horstmann 2023, All rights reserved"',

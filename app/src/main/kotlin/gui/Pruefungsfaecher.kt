@@ -22,9 +22,10 @@ import com.kurswahlApp.data.Wahlzeile.Companion.isAny
 import com.kurswahlApp.data.Wahlzeile.Companion.isWildcard
 import com.kurswahlApp.data.WahlzeileLinientyp.*
 import java.awt.GridBagConstraints
-import java.awt.Insets
+import java.awt.GridBagLayout
 import javax.swing.JComboBox
 import javax.swing.JLabel
+import javax.swing.JPanel
 
 
 class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean) -> Unit = {}) :
@@ -121,20 +122,24 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
         }
 
 
+        val container = JPanel(GridBagLayout())
+        container.border = RoundedBorder(12)
         // Anzeigen
         // Margin hinzufügen
-        Insets(1, 0, 1, 0).let {
-            add(pf3, row = 1, column = 1, fill = GridBagConstraints.BOTH, margin = it)
-            add(pf4, row = 2, column = 1, fill = GridBagConstraints.BOTH, margin = it)
-            add(pf5, row = 3, column = 1, fill = GridBagConstraints.BOTH, margin = it)
-            add(pf5_typ, row = 3, column = 3, margin = it)
+        Insets(y = 1).let {
+            container.add(pf3, row = 1, column = 1, fill = GridBagConstraints.BOTH, margin = it)
+            container.add(pf4, row = 2, column = 1, fill = GridBagConstraints.BOTH, margin = it)
+            container.add(pf5, row = 3, column = 1, fill = GridBagConstraints.BOTH, margin = it)
+            container.add(pf5_typ, row = 3, column = 3, margin = it)
         }
 
         // Beschriftungen hinzufügen
-        add(JLabel("3. PF "), row = 1, column = 0)
-        add(JLabel("4. PF "), row = 2, column = 0)
-        add(JLabel("5. PK "), row = 3, column = 0)
-        add(JLabel(" als "), row = 3, column = 2)
+        container.add(JLabel("3. PF "), row = 1, column = 0)
+        container.add(JLabel("4. PF "), row = 2, column = 0)
+        container.add(JLabel("5. PK "), row = 3, column = 0)
+        container.add(JLabel(" als "), row = 3, column = 2)
+
+        add(container)
     }
 
     private fun pf3Faecher(): Collection<Fach> {
@@ -332,5 +337,5 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
         (pf3.selectedItem != null && pf4.selectedItem != null && pf5.selectedItem != null)
 
     override val windowName: String
-        get() = "Prüfungsfächer"
+        get() = "Prüfungsfächer & 5. Prüfungskomponente"
 }

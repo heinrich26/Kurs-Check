@@ -29,6 +29,7 @@ import java.awt.geom.GeneralPath
 import java.time.LocalDate
 import java.util.*
 import javax.swing.*
+import javax.swing.border.TitledBorder
 
 
 class Nutzerdaten(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean) -> Unit) :
@@ -48,16 +49,22 @@ class Nutzerdaten(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean
             border = null
         }
 
+        with(geburtsdatumPicker.componentDateTextField) {
+            JTextField().let {
+                border = it.border
+                margin = it.margin
+            }
+        }
 
         with(geburtsdatumPicker.settings) {
             allowEmptyDates = false
-            geburtsdatumPicker.settings.setColorBackgroundWeekNumberLabels(Consts.COLOR_PRIMARY, true)
-            geburtsdatumPicker.settings.setColorBackgroundWeekdayLabels(Consts.COLOR_PRIMARY, true)
+            setColorBackgroundWeekNumberLabels(Consts.COLOR_PRIMARY, true)
+            setColorBackgroundWeekdayLabels(Consts.COLOR_PRIMARY, true)
             setColor(DatePickerSettings.DateArea.CalendarTextWeekdays, Color.WHITE)
             setColor(DatePickerSettings.DateArea.CalendarBackgroundSelectedDate, Consts.COLOR_CONTROL)
             setColor(DatePickerSettings.DateArea.CalendarBorderSelectedDate, Consts.COLOR_CONTROL)
             setColor(DatePickerSettings.DateArea.BackgroundCalendarPanelLabelsOnHover, Color(223, 205, 251))
-
+            this.visibleTodayButton = false
 
             setFormatForDatesCommonEra("dd.MM.yyyy")
             setFormatForDatesBeforeCommonEra("dd.MM.uuuu")
@@ -74,21 +81,26 @@ class Nutzerdaten(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean
         staatsangehoerigkeitPicker.renderer = CountryRenderer
         geburtsdatumPicker.date = wahlData.geburtsdatum
 
+
+        val container = JPanel(GridBagLayout())
+        container.border = TitledBorder(RoundedBorder(12), windowName.wrapTags("html", "b"))
         // Beschreibungen hinzufügen
-        add(JLabel("Vornamen (alle)"), row = 0, anchor = GridBagConstraints.WEST)
-        add(JLabel("Nachname"), row = 1, anchor = GridBagConstraints.WEST)
-        add(JLabel("Geburtsort"), row = 2, anchor = GridBagConstraints.WEST)
-        add(JLabel("Geburtsdatum"), row = 3, anchor = GridBagConstraints.WEST)
-        add(JLabel("Staatsangehörigkeit"), row = 4, anchor = GridBagConstraints.WEST)
+        container.add(JLabel("Vornamen (alle)"), row = 0, anchor = GridBagConstraints.WEST)
+        container.add(JLabel("Nachname"), row = 1, anchor = GridBagConstraints.WEST)
+        container.add(JLabel("Geburtsort"), row = 2, anchor = GridBagConstraints.WEST)
+        container.add(JLabel("Geburtsdatum"), row = 3, anchor = GridBagConstraints.WEST)
+        container.add(JLabel("Staatsangehörigkeit"), row = 4, anchor = GridBagConstraints.WEST)
 
         // Felder mit genügen Abstand anzeigen
-        Insets(2, 2, 2, 2).let {
-            add(vornameEntry, row = 0, column = 1, margin = it, fill = GridBagConstraints.BOTH)
-            add(nachnameEntry, row = 1, column = 1, margin = it, fill = GridBagConstraints.BOTH)
-            add(geburtsortEntry, row = 2, column = 1, margin = it, fill = GridBagConstraints.BOTH)
-            add(geburtsdatumPicker, row = 3, column = 1, margin = it, fill = GridBagConstraints.BOTH)
-            add(staatsangehoerigkeitPicker, row = 4, column = 1, margin = it, fill = GridBagConstraints.BOTH)
+        Insets(2).let {
+            container.add(vornameEntry, row = 0, column = 1, margin = it, fill = GridBagConstraints.BOTH)
+            container.add(nachnameEntry, row = 1, column = 1, margin = it, fill = GridBagConstraints.BOTH)
+            container.add(geburtsortEntry, row = 2, column = 1, margin = it, fill = GridBagConstraints.BOTH)
+            container.add(geburtsdatumPicker, row = 3, column = 1, margin = it, fill = GridBagConstraints.BOTH)
+            container.add(staatsangehoerigkeitPicker, row = 4, column = 1, margin = it, fill = GridBagConstraints.BOTH)
         }
+
+        add(container)
 
         notifier.invoke(true)
     }

@@ -21,48 +21,46 @@ import com.kurswahlApp.data.KurswahlData
 import java.awt.Font
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
-import java.awt.Insets
 import javax.swing.JLabel
 import javax.swing.JPanel
 import javax.swing.JSeparator
 import javax.swing.border.TitledBorder
 
-class WahlVisualizer(val data: KurswahlData) : JPanel() {
+class WahlVisualizer(val data: KurswahlData) : JPanel(GridBagLayout()) {
     init {
-        layout = GridBagLayout()
         border = TitledBorder(RoundedBorder(16), "Übersicht").apply { titleFont = titleFont.deriveFont(Font.BOLD, 13f) }
 
         if (data.lk1 != null) {
-            add(JLabel("1. LK"), row = 2, column = 0, anchor = GridBagConstraints.WEST, margin = Insets(6, 0, 0, 0))
+            add(JLabel("1. LK"), row = 2, column = 0, anchor = GridBagConstraints.WEST, margin = Insets(top = 6))
             add(
                 JLabel(data.lk1!!.nameFormatted()),
                 row = 2,
                 column = 1,
                 columnspan = 2,
                 anchor = GridBagConstraints.WEST,
-                margin = Insets(6, 0, 0, 0)
+                margin = Insets(top = 6)
             )
             if (data.lk2 != null) {
-                add(JLabel("2. LK"), row = 3, column = 0, anchor = GridBagConstraints.WEST, margin = Insets(2, 0, 0, 0))
+                add(JLabel("2. LK"), row = 3, column = 0, anchor = GridBagConstraints.WEST, margin = Insets(top = 2))
                 add(
                     JLabel(data.lk2!!.nameFormatted()),
                     row = 3,
                     column = 1,
                     columnspan = 2,
                     anchor = GridBagConstraints.WEST,
-                    margin = Insets(2, 0, 0, 0)
+                    margin = Insets(top = 2)
                 )
             }
         }
         if (data.pf3 != null) {
-            add(JLabel("3. PF"), row = 4, column = 0, anchor = GridBagConstraints.WEST, margin = Insets(2, 0, 0, 0))
+            add(JLabel("3. PF"), row = 4, column = 0, anchor = GridBagConstraints.WEST, margin = Insets(top = 2))
             add(
                 JLabel(data.pf3!!.nameFormatted()),
                 row = 4,
                 column = 1,
                 columnspan = 2,
                 anchor = GridBagConstraints.WEST,
-                margin = Insets(2, 0, 0, 0)
+                margin = Insets(top = 2)
             )
             if (data.pf4 != null) {
                 add(
@@ -70,7 +68,7 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
                     row = 5,
                     column = 0,
                     anchor = GridBagConstraints.WEST,
-                    margin = Insets(2, 0, 0, 0)
+                    margin = Insets(top = 2)
                 )
                 add(
                     JLabel(data.pf4!!.nameFormatted()),
@@ -78,7 +76,7 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
                     column = 1,
                     columnspan = 2,
                     anchor = GridBagConstraints.WEST,
-                    margin = Insets(2, 0, 0, 0)
+                    margin = Insets(top = 2)
                 )
                 if (data.pf5 != null) {
                     add(
@@ -86,7 +84,7 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
                         row = 6,
                         column = 0,
                         anchor = GridBagConstraints.WEST,
-                        margin = Insets(2, 0, 0, 0)
+                        margin = Insets(top = 2)
                     )
                     add(
                         JLabel(data.pf5!!.nameFormatted()),
@@ -94,7 +92,7 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
                         column = 1,
                         columnspan = 2,
                         anchor = GridBagConstraints.WEST,
-                        margin = Insets(2, 0, 0, 0)
+                        margin = Insets(top = 2)
                     )
                     add(
                         JLabel("(${data.pf5_typ.repr})"),
@@ -102,7 +100,7 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
                         column = 1,
                         columnspan = 2,
                         anchor = GridBagConstraints.WEST,
-                        margin = Insets(0, 0, 1, 0)
+                        margin = Insets(bottom = 1)
                     )
                 }
             }
@@ -116,7 +114,7 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
                 column = 1,
                 columnspan = 2,
                 anchor = GridBagConstraints.WEST,
-                margin = Insets(1, 0, 1, 0)
+                margin = Insets(y = 1)
             )
         }
 
@@ -125,7 +123,7 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
             row = i++,
             columnspan = 3,
             fill = GridBagConstraints.HORIZONTAL,
-            margin = Insets(4, 0, 6, 0)
+            margin = Insets(top = 4, bottom = 6)
         )
 
         add(JLabel("Anzahl Kurse"), row = i, anchor = GridBagConstraints.WEST)
@@ -154,7 +152,7 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
             row = i++,
             columnspan = 3,
             fill = GridBagConstraints.HORIZONTAL,
-            margin = Insets(4, 0, 6, 0)
+            margin = Insets(top = 4, bottom = 6)
         )
 
         add(
@@ -162,7 +160,7 @@ class WahlVisualizer(val data: KurswahlData) : JPanel() {
             row = i,
             rowspan = 2,
             anchor = GridBagConstraints.WEST,
-            margin = Insets(0, 0, 0, 6)
+            margin = Insets(right = 6)
         )
         add(JLabel("Q1 & Q2"), row = i, column = 1, anchor = GridBagConstraints.WEST)
         add(JLabel("Q3 & Q4"), row = i + 1, column = 1, anchor = GridBagConstraints.WEST)

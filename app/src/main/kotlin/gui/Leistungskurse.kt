@@ -21,7 +21,6 @@ import com.kurswahlApp.data.*
 import com.kurswahlApp.data.Wahlzeile.Companion.isWildcard
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
-import java.awt.Insets
 import java.awt.event.ItemEvent
 import javax.swing.Box
 import javax.swing.JLabel
@@ -128,11 +127,11 @@ class Leistungskurse(wahlData: KurswahlData, fachData: FachData, notifier: (Bool
         // Margin hinzufügen
 
         val container = JPanel(GridBagLayout())
-        container.border = TitledBorder(RoundedBorder(12), "Leistungskurse".wrapTags("html", "b"))
+        container.border = TitledBorder(RoundedBorder(12), windowName.wrapTags("html", "b"))
 
         container.add(JLabel("1. LK "), row = 0, column = 0)
         container.add(JLabel("2. LK "), row = 1, column = 0)
-        Insets(1, 0, 1, 0).let {
+        Insets(y = 1).let {
             container.add(lk1, row = 0, column = 1, fill = GridBagConstraints.BOTH, margin = it)
             container.add(lk2, row = 1, column = 1, fill = GridBagConstraints.BOTH, margin = it)
         }

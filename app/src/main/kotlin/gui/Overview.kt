@@ -20,11 +20,13 @@ package gui
 import com.kurswahlApp.data.FachData
 import com.kurswahlApp.data.KurswahlData
 import java.awt.Desktop
+import java.awt.Dimension
 import java.awt.GridBagConstraints
-import java.awt.Insets
+import java.awt.event.ComponentEvent
+import java.awt.event.ComponentListener
 import java.net.URL
 import javax.swing.JButton
-import javax.swing.JPanel
+import javax.swing.JScrollPane
 
 
 class Overview(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean) -> Unit = {}) :
@@ -38,16 +40,54 @@ class Overview(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean) -
         get() = "Deine Kurswahl"
 
     init {
-        add(JPanel().apply { isOpaque = false }, weightx = 1.0, weighty = 1.0)
-        add(WahlVisualizer(wahlData), row = 0, column = 0, anchor = GridBagConstraints.CENTER)
+        val copyrightButton = JButton("\u24b8 Hendrik Horstmann").apply {
+            isFocusable = false
+            addActionListener { openWebpage(URL("https://github.com/heinrich26/Kurs-Check")) }
+        }
         add(
-            JButton("\u24b8 Hendrik Horstmann").apply {
-                isFocusable = false
-                addActionListener { openWebpage(URL("https://github.com/heinrich26/Kurs-Check")) }
-            }, row = 0, column = 0,
+            copyrightButton,
+            row = 2,
+            column = 0,
             anchor = GridBagConstraints.SOUTHEAST,
-            margin = Insets(4, 4, 4, 4)
+            margin = Insets(4)
         )
+
+        val visualizer = WahlVisualizer(wahlData)
+        val scrollPane = JScrollPane(
+            visualizer,
+            JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
+        )
+        scrollPane.verticalScrollBar.unitIncrement = 16
+        scrollPane.viewportBorder = null
+        scrollPane.border = null
+        add(
+            scrollPane,
+            row = 0,
+            column = 0,
+            anchor = GridBagConstraints.CENTER,
+            weighty = 1.0,
+            weightx = 1.0
+        )
+
+
+        val prefHeight = visualizer.preferredSize.height
+        val prefWidth = visualizer.preferredSize.width
+        addComponentListener(object : ComponentListener {
+            override fun componentResized(e: ComponentEvent) {
+                val givenHeight = height - copyrightButton.height - 8 /* Insets des Buttons */
+                scrollPane.preferredSize = if (givenHeight < prefHeight) Dimension(
+                    prefWidth + scrollPane.verticalScrollBar.preferredSize.width,
+                    givenHeight
+                ) else Dimension(prefWidth + 16 /* Breite der Rounded Border */, prefHeight)
+            }
+
+            override fun componentMoved(e: ComponentEvent) {}
+
+            override fun componentShown(e: ComponentEvent) {}
+
+            override fun componentHidden(e: ComponentEvent) {}
+        })
     }
 
     /**
@@ -59,7 +99,8 @@ class Overview(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean) -
             try {
                 desktop.browse(url.toURI())
                 return true
-            } catch (_: Exception) {}
+            } catch (_: Exception) {
+            }
         }
         return false
     }

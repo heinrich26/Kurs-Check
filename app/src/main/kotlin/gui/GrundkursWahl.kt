@@ -68,6 +68,8 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
 
         private val extraFachColor =
             Color(COLOR_PRIMARY.colorSpace, COLOR_PRIMARY.getRGBColorComponents(null), .1f)
+
+        private val LABEL_TEXT_COLOR = JLabel().foreground
     }
 
     private var dataValid = true
@@ -130,7 +132,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                 column = 0,
                 fill = GridBagConstraints.BOTH,
                 weightx = 1.0,
-                margin = Insets(0, 4, 0, 0)
+                margin = Insets(left = 4)
             )
 
             for ((i, box) in zeile.withIndex()) {
@@ -234,18 +236,22 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
             field = value
             anzahlLabel.text = "$anzahl Kurse"
 
-            anzahlInfoLabel.text = when {
-                value < fachData.minKurse -> "Bitte wähle mindestens ${fachData.minKurse} Kurse".wrapHtml(
-                    "p",
-                    "color:#F92F60"
-                ).wrapHtml()
+            when {
+                value < fachData.minKurse -> {
+                    anzahlInfoLabel.text = "Bitte wähle mindestens ${fachData.minKurse} Kurse"
+                    anzahlInfoLabel.foreground = Consts.COLOR_ERROR
+                }
 
-                value > fachData.maxKurse -> "Bitte wähle maximal ${fachData.maxKurse} Kurse".wrapHtml(
-                    "p",
-                    "color:#F92F60"
-                ).wrapHtml()
+                value > fachData.maxKurse -> {
+                    anzahlInfoLabel.text = "Bitte wähle maximal ${fachData.maxKurse} Kurse"
+                    anzahlInfoLabel.foreground = Consts.COLOR_ERROR
 
-                else -> "Es wurden genug Kurse gewählt".wrapHtml("p", "color:#00D26A").wrapHtml()
+                }
+
+                else -> {
+                    anzahlInfoLabel.text = "Es wurden genug Kurse gewählt"
+                    anzahlInfoLabel.foreground = LABEL_TEXT_COLOR
+                }
             }
         }
 
@@ -304,10 +310,10 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
 
     init {
         add(anzahlLabel, row = 1)
-        add(anzahlInfoLabel, row = 1)
+        add(anzahlInfoLabel, row = 1, column = 0, columnspan = 3)
 
         checkButton.addActionListener { notifier.invoke(invalidRows == 0 && checkData()) }
-        add(checkButton, row = 1, column = 2)
+        add(checkButton, row = 1, column = 2, anchor = GridBagConstraints.EAST)
 
         buildCheckboxes()
 
@@ -319,7 +325,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
             )
         scrollPane.preferredSize = Dimension(250, 350)
         scrollPane.verticalScrollBar.unitIncrement = 16
-        add(scrollPane, row = 0, column = 0, columnspan = 2, margin = Insets(0, 0, 6, 0))
+        add(scrollPane, row = 0, column = 0, columnspan = 2, margin = Insets(bottom = 6))
 
         faecherBlocken()
 
@@ -361,7 +367,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         val scrollPane2 = JScrollPane(regelPanel)
         scrollPane2.preferredSize = Dimension(200, 350)
 
-        add(scrollPane2, row = 0, column = 2, margin = Insets(0, 8, 6, 0))
+        add(scrollPane2, row = 0, column = 2, margin = Insets(left = 8, bottom = 6))
 
         notifier.invoke(checkData())
     }
@@ -383,7 +389,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                 anchor = GridBagConstraints.WEST,
                 weightx = 1.0,
                 fill = GridBagConstraints.HORIZONTAL,
-                margin = Insets(0, 4, 0, 0)
+                margin = Insets(left = 4)
             )
 
             Dimension(JCheckBox().preferredSize.width, q1AnzahlLabel.preferredSize.height).let {
@@ -421,7 +427,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                                 }
                             ).apply { font = font.deriveFont(Font.BOLD, 16f) },
                             row = i + offset, anchor = GridBagConstraints.WEST,
-                            margin = Insets(6, 4, 0, 0)
+                            margin = Insets(top = 6, left = 4)
                         )
 
                         af = it

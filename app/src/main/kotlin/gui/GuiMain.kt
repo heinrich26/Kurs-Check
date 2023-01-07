@@ -40,7 +40,10 @@ import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
 import kotlinx.cli.default
 import kotlinx.cli.optional
-import java.awt.*
+import java.awt.Color
+import java.awt.Dimension
+import java.awt.GridBagConstraints
+import java.awt.GridBagLayout
 import java.io.File
 import javax.imageio.ImageIO
 import javax.swing.*
@@ -116,7 +119,6 @@ class GuiMain(file: File? = null) : JPanel() {
             ).optional()
 
 
-
             val useTestData by parser.option(ArgType.Boolean, "useTestData", description = "Testdaten verwenden")
                 .default(false)
 
@@ -125,12 +127,7 @@ class GuiMain(file: File? = null) : JPanel() {
 
             // System UI verwenden
             try {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName().let {
-                    if (it == "javax.swing.plaf.metal.MetalLookAndFeel") {
-                        "com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
-                    }
-                    return@let it
-                })
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
 
 
                 // Font Hack
@@ -148,11 +145,6 @@ class GuiMain(file: File? = null) : JPanel() {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-
-//            System.setProperty("swing.aatext", "true")
-//            System.setProperty("awt.useSystemAAFontSettings", "lcd")
-//            JFrame.setDefaultLookAndFeelDecorated(true)
-//            JDialog.setDefaultLookAndFeelDecorated(true)
 
             SwingUtilities.invokeLater { createAndShowGUI(input, useTestData) }
         }
@@ -259,6 +251,7 @@ class GuiMain(file: File? = null) : JPanel() {
                         for (i in (index + 1)..4)
                             sidebarBtns[i].isEnabled = false
                 }
+
                 4 -> { it -> unvollstaendigeEingabeLabel.isVisible = !it }
                 else -> { _ -> }
             }
@@ -312,7 +305,7 @@ class GuiMain(file: File? = null) : JPanel() {
             }
         }
 
-        add(resetButton, row = 2, column = 2, anchor = GridBagConstraints.EAST, margin = Insets(4, 4, 4, 4))
+        add(resetButton, row = 2, column = 2, anchor = GridBagConstraints.EAST, margin = Insets(4))
 
 
         chooseSchoolButton.addMouseListener(
@@ -332,7 +325,7 @@ class GuiMain(file: File? = null) : JPanel() {
             ) showSchoolChooser(false)
         }
 
-        add(chooseSchoolButton, row = 2, column = 2, anchor = GridBagConstraints.WEST, margin = Insets(4, 4, 4, 4))
+        add(chooseSchoolButton, row = 2, column = 2, anchor = GridBagConstraints.WEST, margin = Insets(4))
     }
 
     /**
@@ -370,6 +363,7 @@ class GuiMain(file: File? = null) : JPanel() {
                         )
                         return false
                     }
+
                     data.readJsonVersion.second > newFachData.jsonVersion.second ->
                         JOptionPane.showMessageDialog(
                             this,
@@ -377,6 +371,7 @@ class GuiMain(file: File? = null) : JPanel() {
                             "Versionsunterschiede",
                             JOptionPane.WARNING_MESSAGE
                         )
+
                     data.readJsonVersion.second < newFachData.jsonVersion.second ->
                         JOptionPane.showMessageDialog(
                             this,
@@ -420,7 +415,7 @@ class GuiMain(file: File? = null) : JPanel() {
 
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             if (loadKurswahlFile(chooser.selectedFile))
-                // Das GUI updaten
+            // Das GUI updaten
                 reloadToStart()
         }
     }
@@ -578,7 +573,7 @@ class GuiMain(file: File? = null) : JPanel() {
                 row = 1,
                 column = 0,
                 anchor = GridBagConstraints.EAST,
-                margin = Insets(9, 0, 2, 0),
+                margin = Insets(top = 9, bottom = 2),
                 weightx = 1.0
             )
             layout.add(JButton("Abbrechen").apply {
@@ -587,8 +582,8 @@ class GuiMain(file: File? = null) : JPanel() {
                     result = JOptionPane.CANCEL_OPTION
                     dialog.dispose()
                 }
-            }, row = 1, column = 1, anchor = GridBagConstraints.WEST, margin = Insets(9, 0, 2, 0), weightx = 1.0)
-        } else layout.add(okBtn, row = 1, column = 0, columnspan = 2, margin = Insets(9, 0, 2, 0))
+            }, row = 1, column = 1, anchor = GridBagConstraints.WEST, margin = Insets(top = 9, bottom = 2), weightx = 1.0)
+        } else layout.add(okBtn, row = 1, column = 0, columnspan = 2, margin = Insets(top = 9, bottom = 2))
 
         layout.border = EmptyBorder(10, 10, 10, 10)
 

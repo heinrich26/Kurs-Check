@@ -20,9 +20,10 @@ package gui
 import com.kurswahlApp.data.*
 import java.awt.Component
 import java.awt.GridBagConstraints
-import java.awt.Insets
+import java.awt.GridBagLayout
 import java.awt.event.ActionEvent
 import javax.swing.*
+import javax.swing.border.TitledBorder
 
 
 class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean) -> Unit = {}) :
@@ -51,25 +52,17 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
     private val klasse: JComboBox<String?>
 
     init {
-        add(
-            JLabel("Fremdsprachen:"),
-            column = 0,
-            columnspan = 2,
-            margin = Insets(0, 0, 4, 0),
-            anchor = GridBagConstraints.WEST
-        )
-        // Dummy damit das Fremdsprachen Label nicht alles verzerrt
-        add(Box.createHorizontalStrut(50), column = 2)
+        val container1 = JPanel(GridBagLayout())
+        val container2 = JPanel(GridBagLayout())
+        val container3 = JPanel(GridBagLayout())
+        RoundedBorder(12).let {
+            container1.border = TitledBorder(it, "Fremdsprachen".wrapTags("html", "b"))
+            container2.border = TitledBorder(it, "Wahlpflichtfächer".wrapTags("html", "b"))
+            container3.border = TitledBorder(it, "Klasse".wrapTags("html", "b"))
+        }
 
-        add(JLabel("ab Kl.:"), column = 3, anchor = GridBagConstraints.NORTHWEST)
-        add(
-            JLabel("Wahlpflicht:"),
-            row = 5,
-            column = 0,
-            columnspan = 2,
-            anchor = GridBagConstraints.WEST,
-            margin = Insets(10, 0, 4, 0)
-        )
+
+        container1.add(JLabel("ab Kl.:"), column = 3, anchor = GridBagConstraints.NORTHWEST)
 
         fsJahr4 = SpinnerNumberModel(1, 1, 10, 1)
         fsJahr3 = SpinnerNumberModel(1, 1, 10, 1)
@@ -81,10 +74,10 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         spinner3.isEnabled = false
         spinner4.isEnabled = false
 
-        add(JSpinner(fsJahr1), row = 1, column = 3)
-        add(JSpinner(fsJahr2), row = 2, column = 3)
-        add(spinner3, row = 3, column = 3)
-        add(spinner4, row = 4, column = 3)
+        container1.add(JSpinner(fsJahr1), row = 1, column = 3)
+        container1.add(JSpinner(fsJahr2), row = 2, column = 3)
+        container1.add(spinner3, row = 3, column = 3)
+        container1.add(spinner4, row = 4, column = 3)
 
         val model4 = ExclusiveComboBoxModel(fachData.fremdsprachen)
         fs4 = FachComboBox(model4)
@@ -94,7 +87,6 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         fs2 = FachComboBox(model2)
         val model1 = ExclusiveComboBoxModel(fachData.fremdsprachen, fs2)
         fs1 = FachComboBox(model1)
-
 
         fs3.isEnabled = false
         fs4.isEnabled = false
@@ -123,7 +115,7 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         }
 
         for (i in 1..4) {
-            add(JLabel("$i."), row = i, column = 0)
+            container1.add(JLabel("$i."), row = i, column = 0)
         }
 
         fs1.renderer = FachRenderer
@@ -187,15 +179,12 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                     wpf2.selectedIndex = 0
                 } else wpf2.isEnabled = true
             }
-            add(checker, row = 7, column = 0, anchor = GridBagConstraints.EAST)
+            container2.add(checker, row = 1, column = 0, anchor = GridBagConstraints.EAST)
         }
 
-        add(
-            JLabel("Klasse: "), row = 8, column = 0,
-            columnspan = 2, anchor = GridBagConstraints.WEST,
-            margin = Insets(10, 0, 4, 0)
-        )
-        // Klasse wählen
+
+
+        // Wahl der Klasse
         klasse = JComboBox(DefaultComboBoxModel(arrayOf(null, *fachData.klassen.toTypedArray())))
         klasse.renderer = object : DefaultListCellRenderer() {
             override fun getListCellRendererComponent(
@@ -206,13 +195,14 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         }
         klasse.selectedItem = wahlData.klasse
 
+
         // Daten einsetzen
         wahlData.wpfs?.let {
             wpf1.selectedItem = it.first
             wpf2.selectedItem = it.second
         }
 
-        // Die hauptklasse informieren, ob die eingabe gültig ist
+        // Die Hauptklasse informieren, ob die Eingabe gültig ist
         wpf1.addActionListener {
             if (it.actionCommand == "comboBoxChanged") {
                 notifier.invoke(fs2.selectedItem != null && wpf1.selectedItem != null)
@@ -224,18 +214,23 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
 
         // Anzeigen
         // Margin hinzufügen
-        Insets(1, 0, 1, 0).let {
-            add(fs1, row = 1, column = 1, fill = GridBagConstraints.BOTH, margin = it)
-            add(fs2, row = 2, column = 1, fill = GridBagConstraints.BOTH, margin = it)
-            add(fs3, row = 3, column = 1, fill = GridBagConstraints.BOTH, margin = it)
-            add(fs4, row = 4, column = 1, fill = GridBagConstraints.BOTH, margin = it)
+        Insets(x = 2, y = 1).let {
+            container1.add(fs1, row = 1, column = 1, fill = GridBagConstraints.BOTH, margin = it)
+            container1.add(fs2, row = 2, column = 1, fill = GridBagConstraints.BOTH, margin = it)
+            container1.add(fs3, row = 3, column = 1, fill = GridBagConstraints.BOTH, margin = it)
+            container1.add(fs4, row = 4, column = 1, fill = GridBagConstraints.BOTH, margin = it)
 
-            add(wpf1, row = 6, column = 1, fill = GridBagConstraints.BOTH, margin = it)
-            add(wpf2, row = 7, column = 1, fill = GridBagConstraints.BOTH, margin = it)
 
-            add(klasse, row = 9, column = 1, fill = GridBagConstraints.BOTH, margin = it)
         }
 
+        container2.add(wpf1, row = 0, column = 1, fill = GridBagConstraints.BOTH, margin = Insets(bottom = 2))
+        container2.add(wpf2, row = 1, column = 1, fill = GridBagConstraints.BOTH)
+
+        container3.add(klasse, row = 9, column = 1, fill = GridBagConstraints.BOTH)
+
+        add(container1, row = 0, fill = GridBagConstraints.BOTH)
+        add(container2, row = 1, fill = GridBagConstraints.BOTH)
+        add(container3, row = 2, fill = GridBagConstraints.BOTH)
     }
 
 

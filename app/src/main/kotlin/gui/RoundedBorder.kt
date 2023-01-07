@@ -18,20 +18,21 @@
 package gui
 
 import com.kurswahlApp.data.Consts.RENDERING_HINTS
+import java.awt.Color
 import java.awt.Component
 import java.awt.Graphics
 import java.awt.Graphics2D
-import java.awt.Insets
 import javax.swing.border.Border
 
 
-class RoundedBorder(private val radius: Int) : Border {
-    override fun getBorderInsets(c: Component?): Insets = (radius/2).let { Insets(it, it, it, it)
-    }
+class RoundedBorder(private val radius: Int, private val color: Color? = null) : Border {
+    override fun getBorderInsets(c: Component?) = Insets(radius / 2)
 
-    override fun isBorderOpaque(): Boolean = false
+    override fun isBorderOpaque() = false
+
 
     override fun paintBorder(c: Component, g: Graphics, x: Int, y: Int, width: Int, height: Int) {
+        if (color != null) g.color = color
         with(g as Graphics2D) {
             setRenderingHints(RENDERING_HINTS)
             drawRoundRect(x + 1, y + 1, width - 2, height - 2, radius, radius)
