@@ -33,7 +33,7 @@ task copyInstallerResources(type: Copy) {
         include 'app_icon.ico', 'app_icon.icns', 'app_icon.png'
         rename 'app_icon(.*)', "${rootProject.name}\$1"
     }
-    from layout.projectDirectory.dir("res")
+    from layout.projectDirectory.dir("res"), "${rootProject.projectDir}/app/res"
     into layout.buildDirectory.dir((String) project.resDirName)
 }
 

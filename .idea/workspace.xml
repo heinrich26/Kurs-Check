@@ -12,24 +12,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Build Error mit der Filetype Association behoben">
-      <change afterPath="$PROJECT_DIR$/app/res/kurswahl-mac.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/res/kurswahl-win.properties" afterDir="false" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="kleine visuelle Änderungen und refactoring">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/res/kurswahl.properties" beforeDir="false" afterPath="$PROJECT_DIR$/app/res/kurswahl-linux.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/res/mac-opts.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/res/mac-opts.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Extensions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Extensions.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Fremdsprachen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Fremdsprachen.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Leistungskurse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Leistungskurse.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Nutzerdaten.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Nutzerdaten.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Overview.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Overview.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Pruefungsfaecher.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Pruefungsfaecher.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/RoundedBorder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/RoundedBorder.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/WahlVisualizer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/WahlVisualizer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/merger/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/merger/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -507,14 +492,7 @@
       <workItem from="1672322502592" duration="7051000" />
       <workItem from="1672576423933" duration="3814000" />
       <workItem from="1672924786880" duration="22238000" />
-      <workItem from="1673023248628" duration="21389000" />
-    </task>
-    <task id="LOCAL-00066" summary="App Icon hinzugefügt und Layout verschönert">
-      <created>1654980443830</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1654980443830</updated>
+      <workItem from="1673023248628" duration="22192000" />
     </task>
     <task id="LOCAL-00067" summary="Generator Bugs gefixt; Datumsformat ist nun yyyy-MM-dd!">
       <created>1654982295599</created>
@@ -852,7 +830,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673096406480</updated>
     </task>
-    <option name="localTasksCounter" value="115" />
+    <task id="LOCAL-00115" summary="kleine visuelle Änderungen und refactoring">
+      <created>1673116422075</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1673116422075</updated>
+    </task>
+    <option name="localTasksCounter" value="116" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -874,7 +859,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Umstellung auf Online-Daten - Sollte nun mehr oder weniger funktionieren" />
     <MESSAGE value="Aktualisierung der mitgelieferten JSON Dateien!" />
     <MESSAGE value="Gradle-Version in die gradle.properties verschoben" />
     <MESSAGE value="Deprecation-Warnung bei Test-Daten aufgehoben" />
@@ -899,7 +883,8 @@
     <MESSAGE value="Lade- und Linux-Build-Probleme gefixt" />
     <MESSAGE value="Arbeit an der Linux Kompatibilität" />
     <MESSAGE value="Build Error mit der Filetype Association behoben" />
-    <option name="LAST_COMMIT_MESSAGE" value="Build Error mit der Filetype Association behoben" />
+    <MESSAGE value="kleine visuelle Änderungen und refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="kleine visuelle Änderungen und refactoring" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
