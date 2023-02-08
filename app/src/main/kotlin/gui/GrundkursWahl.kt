@@ -312,7 +312,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         add(anzahlLabel, row = 1)
         add(anzahlInfoLabel, row = 1, column = 0, columnspan = 3)
 
-        checkButton.addActionListener { notifier.invoke(invalidRows == 0 && checkData()) }
+        checkButton.addActionListener { notifier.invoke(invalidRows == 0 and checkData()) }
         add(checkButton, row = 1, column = 2, anchor = GridBagConstraints.EAST)
 
         buildCheckboxes()
