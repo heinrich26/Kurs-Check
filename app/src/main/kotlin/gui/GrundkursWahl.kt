@@ -221,7 +221,8 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
     private fun checkData(): Boolean {
         val data = close()
         data.lock()
-        dataValid = regelLabelArray.all { it.match(data) } && kursanzahlInfoLabel.match(semesterkurse)
+        // Muss komplett evaluiert werden! (List.all() wäre Lazy -> würde nicht alle Regeln updaten)
+        dataValid = regelLabelArray.map { it.match(data) }.all { it } and kursanzahlInfoLabel.match(semesterkurse)
         return dataValid
     }
 
