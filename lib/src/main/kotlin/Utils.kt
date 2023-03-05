@@ -74,6 +74,18 @@ object PngFileFilter : FileFilter() {
     override fun getDescription(): String = "Png Dateien (.png)"
 }
 
+object PdfFileFilter : FileFilter() {
+    override fun accept(f: File): Boolean = f.isDirectory || (f.extension == "pdf" && (!f.exists() || f.canWrite()))
+
+    override fun getDescription(): String = "LUSD Formulare (.pdf)"
+}
+
+class ExclusivePdfFileFilter(private val exclude: File) : FileFilter() {
+    override fun accept(f: File): Boolean = f.isDirectory  || (f != exclude && f.extension == "pdf" && (!f.exists() || f.canWrite()))
+
+    override fun getDescription(): String = "Pdf-Dateien (.pdf)"
+}
+
 
 /**
  * Returns a list of `null`s of the given type with the given [size].

@@ -23,7 +23,15 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer
+import com.kurswahlApp.data.Consts.JAHRGANG_ID_FIELD
+import com.kurswahlApp.data.Consts.PF_5_TYP_FIELD
+import com.kurswahlApp.data.Consts.SCHUELER_ID_FIELD
 import com.kurswahlApp.data.Wahlmoeglichkeit.*
+import com.kurswahlApp.data.lusd_pdf.FeldZeile
+import org.apache.pdfbox.pdmodel.PDDocument
+import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException
+import java.io.File
+import java.io.IOException
 import java.time.LocalDate
 
 /**
@@ -95,7 +103,7 @@ data class KurswahlData(
             @JacksonInject fachDataMirror: FachDataMirror
         ): KurswahlData {
             val fachData: FachData = fachDataMirror.get(schulId)
-                    ?: throw IllegalArgumentException("Die Schule der Nutzerdaten passt nicht zu den Fach-Daten!")
+                ?: throw IllegalArgumentException("Die Schule der Nutzerdaten passt nicht zu den Fach-Daten!")
 
 
             return KurswahlData(
@@ -122,6 +130,56 @@ data class KurswahlData(
                 schulId = schulId
             )
         }
+
+        /**
+         * Läd eine Kurswahl aus einer LUSD PDF
+         * Achtung: Wahlpflichtfächer, Fremdsprachen und die Klasse gehen dabei verloren!
+         */
+        /*@JvmStatic
+        fun fromPDF(file: File, fachData: FachData, kurswahlData: KurswahlData? = null): KurswahlData {
+            println("ThreadID: ${Thread.currentThread().id}")
+
+            // Fächer umkehren, da associateBy das letzte Vorkommen nutzt, wir aber das 1. brauchen
+            val fachIdMap = fachData.faecher.reversed().associateBy { it.lusdId }
+
+            lateinit var pk5TypFeld: PDField
+
+            val doc = PDDocument.load(file)
+
+            val felder = fachIdMap.values.associateWith { FeldZeile() }
+            doc.documentCatalog.acroForm.fields.forEach {
+                when (val name = it.fullyQualifiedName) {
+                    SCHUELER_ID_FIELD, JAHRGANG_ID_FIELD -> {}
+
+                    PF_5_TYP_FIELD -> {
+                        pk5TypFeld = it
+                    }
+
+                    else -> {
+                        val parts = name.split('$')
+                        val id = parts[3].toInt()
+                        val zeile = felder[fachIdMap[id]]!!
+                        when (parts.last()) {
+                            "LK1_0" -> zeile.lk1 = it
+                            "LK2_0" -> zeile.lk2 = it
+                            "LK3_0" -> zeile.lk3 = it
+                            "PF3_0" -> zeile.pf3 = it
+                            "PF4_0" -> zeile.pf4 = it
+                            "PK5_0" -> zeile.pk5 = it
+                            "Q1_0" -> zeile.q1 = it
+                            "Q2_0" -> zeile.q2 = it
+                            "Q3_0" -> zeile.q3 = it
+                            "Q4_0" -> zeile.q4 = it
+                        }
+                    }
+                }
+            }
+
+            val ref = PDFReference(doc, felder, pk5TypFeld)
+
+
+            return kurswahlData.copy(lusdPdfReference = ref)
+        }*/
     }
 
     /**
@@ -144,6 +202,7 @@ data class KurswahlData(
                     courseCounts[1]++
                     courseCounts[2]++
                 }
+
                 ZWEITES_DRITTES -> {
                     courseCounts[1]++
                     courseCounts[2]++
@@ -348,4 +407,74 @@ data class KurswahlData(
             gks + pflichtfaecher.filter { (key, value) -> key !in _pfs!! && gks[key].let { it == null || it in value } }
         unlock()
     }
+
+    /**
+     * Läd ein LUSD-Formular und exportiert diese Kurswahl mit ihm
+     */
+    @Throws(InvalidPasswordException::class, IOException::class)
+    fun exportPDF(`in`: File, out: File, fachData: FachData) {
+        val fachIdMap = fachData.faecher.reversed().associateBy { it.lusdId }
+        val felder = fachIdMap.values.associateWith { FeldZeile() }
+
+        val doc = PDDocument.load(`in`)
+
+//        val felder = fachData.faecher.reversed().associate { it.lusdId to FeldZeile() }
+        for (feld in doc.documentCatalog.acroForm.fields) {
+            when (val name = feld.fullyQualifiedName) {
+                SCHUELER_ID_FIELD, JAHRGANG_ID_FIELD -> {}
+                PF_5_TYP_FIELD -> feld.setValue(pf5_typ.lusdId)
+                else -> {
+                    feld.checked = false
+                    val parts = name.split('$')
+                    val id = parts[3].toInt()
+                    val zeile = felder[fachIdMap[id]]!!
+//                    val zeile = felder[id]!!
+                    when (parts.last()) {
+                        "LK1_0" -> zeile.lk1 = feld
+                        "LK2_0" -> zeile.lk2 = feld
+                        "LK3_0" -> zeile.lk3 = feld
+                        "PF3_0" -> zeile.pf3 = feld
+                        "PF4_0" -> zeile.pf4 = feld
+                        "PK5_0" -> zeile.pk5 = feld
+                        "Q1_0" -> zeile.q1 = feld
+                        "Q2_0" -> zeile.q2 = feld
+                        "Q3_0" -> zeile.q3 = feld
+                        "Q4_0" -> zeile.q4 = feld
+                    }
+                }
+            }
+        }
+
+
+        felder[lk1]!!.checkLK1()
+        felder[lk2]!!.checkLK2()
+//            felder[lk3]!!.checkLK3()
+        felder[pf3]!!.checkPF3()
+        felder[pf4]!!.checkPF4()
+        felder[pf5]!!.checkPK5()
+
+        /* ChatGPT hat gesagt, dass sei langsamer als andersherum
+        felder.forEach { (fach, zeile) ->
+            zeile.clear()
+            gks[fach]?.let {
+                zeile.wahlmoeglichkeit = it
+            }
+        }*/
+
+        for ((fach, wm) in gks) {
+            felder[fach]!!.wahlmoeglichkeit = wm
+        }
+
+        try {
+            doc.save(out)
+        } catch (e: Exception) {
+            throw e
+        } finally {
+            doc.close()
+        }
+    }
+
+    fun toFilename(): String = "${vorname!!.split(' ')[0]}_${nachname}"
+        .replace(Regex("[\\\\/:*?\"<>|.&$]"), "")
+        .replace(' ', '_')
 }

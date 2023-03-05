@@ -57,7 +57,7 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         val container3 = JPanel(GridBagLayout())
         RoundedBorder(12).let {
             container1.border = TitledBorder(it, "Fremdsprachen".wrapTags("html", "b"))
-            container2.border = TitledBorder(it, "Wahlpflichtfächer".wrapTags("html", "b"))
+            container2.border = TitledBorder(it, "Wahlpflichtfächer (Kl. 10)".wrapTags("html", "b"))
             container3.border = TitledBorder(it, "Klasse".wrapTags("html", "b"))
         }
 

@@ -20,7 +20,10 @@ package gui
 import java.awt.*
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
+import java.awt.geom.AffineTransform
+import java.awt.geom.Path2D
 import javax.swing.JComponent
+import kotlin.system.measureNanoTime
 
 /**
  * Fügt den [Component] zu dem [Container] mit [GridBagLayout] hinzu
@@ -45,10 +48,8 @@ fun Container.add(
     }
 
     this.add(
-        component,
-        GridBagConstraints(
-            column, row, columnspan, rowspan,
-            weightx, weighty, anchor, fill, margin, ipadx, ipady
+        component, GridBagConstraints(
+            column, row, columnspan, rowspan, weightx, weighty, anchor, fill, margin, ipadx, ipady
         )
     )
 }
@@ -64,19 +65,23 @@ fun String.wrappable(width: Int? = null) =
  * Fügt am Anfang und Ende ein Html-[tag] an!
  * Kann zusätzlich [styles] hinzufügen
  */
-fun String.wrapHtml(tag: String = "html", vararg styles: String): String =
-    if (styles.isEmpty()) "<$tag>$this</$tag>"
-    else "<$tag style=\"${styles.joinToString(";", postfix = ";")}\">$this</$tag>"
+fun String.wrapHtml(tag: String = "html", vararg styles: String): String = if (styles.isEmpty()) "<$tag>$this</$tag>"
+else "<$tag style=\"${styles.joinToString(";", postfix = ";")}\">$this</$tag>"
 
 /**
  * Fügt alle Html-[tags] von außen nach innen an den Enden an
  */
-fun String.wrapTags(vararg tags: String): String =
-    if (tags.isEmpty()) this
-    else if (tags.size == 1) this.wrapHtml(tags[0])
-    else this.wrapTags(*tags.takeLast(tags.size - 1).toTypedArray()).wrapHtml(tags[0])
+fun String.wrapTags(vararg tags: String): String = if (tags.isEmpty()) this
+else if (tags.size == 1) this.wrapHtml(tags[0])
+else this.wrapTags(*tags.takeLast(tags.size - 1).toTypedArray()).wrapHtml(tags[0])
 
-fun JComponent.addMouseListener(onClick: (e: MouseEvent) -> Unit = {}, onPress: (e: MouseEvent) -> Unit = {}, onRelease: (e: MouseEvent) -> Unit = {}, onEnter: (e: MouseEvent) -> Unit = {}, onExit: (e: MouseEvent) -> Unit = {}) {
+fun JComponent.addMouseListener(
+    onClick: (e: MouseEvent) -> Unit = {},
+    onPress: (e: MouseEvent) -> Unit = {},
+    onRelease: (e: MouseEvent) -> Unit = {},
+    onEnter: (e: MouseEvent) -> Unit = {},
+    onExit: (e: MouseEvent) -> Unit = {}
+) {
     this.addMouseListener(object : MouseAdapter() {
         override fun mouseClicked(e: MouseEvent) = onClick(e)
         override fun mousePressed(e: MouseEvent) = onPress(e)
@@ -89,8 +94,7 @@ fun JComponent.addMouseListener(onClick: (e: MouseEvent) -> Unit = {}, onPress: 
 }
 
 fun List<Boolean>.intersects(other: List<Boolean>): Boolean {
-    for ((a, b) in this.zip(other))
-        if (a && b) return true
+    for ((a, b) in this.zip(other)) if (a && b) return true
     return false
 }
 
@@ -100,6 +104,7 @@ fun List<Boolean>.intersects(other: List<Boolean>): Boolean {
  * @param       all the inset from each side.
  */
 fun Insets(all: Int) = Insets(all, all, all, all)
+
 /**
  * Creates and initializes a new `Insets` object with the
  * specified x and y insets.
@@ -107,6 +112,7 @@ fun Insets(all: Int) = Insets(all, all, all, all)
  * @param       y   the inset from the top and bottom.
  */
 fun Insets(x: Int = 0, y: Int = 0) = Insets(y, x, y, x)
+
 /**
  * Creates and initializes a new `Insets` object with the
  * specified top, left, bottom, and right insets.
@@ -116,3 +122,11 @@ fun Insets(x: Int = 0, y: Int = 0) = Insets(y, x, y, x)
  * @param       right   the inset from the right.
  */
 fun Insets(top: Int = 0, left: Int = 0, bottom: Int = 0, right: Int = 0) = java.awt.Insets(top, left, bottom, right)
+
+fun Path2D.scale(sx: Double, sy: Double): Shape = createTransformedShape(AffineTransform.getScaleInstance(sx, sy))
+
+fun <R> measureNanos(block: () -> R): R {
+    val result: R
+    println(measureNanoTime { result = block() })
+    return result
+}

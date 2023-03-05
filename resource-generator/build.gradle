@@ -1,0 +1,35 @@
+plugins {
+    id 'myproject.java-conventions'
+    id 'application'
+}
+
+ext {
+    javaMainClass = "SvgProcessorKt"
+}
+
+
+def appProject = rootProject.project("app")
+
+
+task processVectors(type: JavaExec) {
+    dependsOn jar
+    args(appProject.projectDir.absolutePath + "/src/main/resources/drawables", appProject.buildDir.absolutePath + "/generated/sources/vectors/main")
+    group = "Execution"
+    description = "Erstellt Shape Objekte für alle .svg Dateien"
+    main = javaMainClass
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+//    implementation("javax.annotation:javax.annotation-api:1.3.2")
+//    implementation("com.google.auto.service:auto-service-annotations:1.0.1")
+    implementation("com.squareup:kotlinpoet:1.10.0")
+}
+
+test {
+    useJUnitPlatform()
+}

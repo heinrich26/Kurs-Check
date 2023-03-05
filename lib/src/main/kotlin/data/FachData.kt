@@ -54,11 +54,12 @@ import java.io.IOException
  * @property semesterkurse Legt fest, wie viele Kurse je Semester maximal belegt werden dürfen (4 Semester => 4 Zahlen)
  * @property klassen Definiert die an der Schule angebotenen Klassen
  * @property schultyp Bestimmt welcher Schultyp vorliegt
+ * @property nutztLusd Legt fest, ob LUSD PDFs geladen und gespeichert werden können
  */
 @Suppress("unused")
 @JsonIncludeProperties(
     "schulId", "jsonVersion", "faecher", "pflichtfaecher", "wpfs", "regeln", "wahlzeilen", "wildcards",
-    "minKurse", "maxKurse", "pf3_4AusschlussFaecher", "zweiWPFs", "semesterkurse", "klassen", "schultyp"
+    "minKurse", "maxKurse", "pf3_4AusschlussFaecher", "zweiWPFs", "semesterkurse", "klassen", "schultyp", "nutztLusd"
 )
 class FachData(
     val schulId: String,
@@ -76,7 +77,8 @@ class FachData(
     val zweiWPFs: Boolean,
     val semesterkurse: Array<Int>,
     val klassen: Set<String> = emptySet(),
-    val schultyp: Schultyp
+    val schultyp: Schultyp,
+    val nutztLusd: Boolean = false
 ) {
     val faecher: List<Fach> = faecherMap.values.toList()
     val fremdsprachen: List<Fach> = faecher.filter { it.isFremdsprache }
@@ -168,7 +170,8 @@ class FachData(
             "zweiWPFs=$zweiWPFs",
             "semesterkurse=$semesterkurse",
             "klassen=$klassen",
-            "schultyp=$schultyp"
+            "schultyp=$schultyp",
+            "nutztLUSD=$nutztLusd"
         ).joinToString(
             ",\n\t",
             "FachData[schulID: $schulId - version ${jsonVersion.first}.${jsonVersion.second}](\n\t",
@@ -199,7 +202,8 @@ class FachData(
             @JsonProperty zweiWPFs: Boolean,
             @JsonProperty semesterkurse: Array<Int>,
             @JsonProperty klassen: Set<String>,
-            @JsonProperty schultyp: Schultyp
+            @JsonProperty schultyp: Schultyp,
+            @JsonProperty nutztLusd: Boolean
         ): FachData {
             if (semesterkurse.size != 4) {
                 throw IllegalArgumentException("Die Länge von 'semesterkurse' muss exakt 4 sein")
@@ -229,7 +233,8 @@ class FachData(
                 zweiWPFs = zweiWPFs,
                 semesterkurse = semesterkurse,
                 klassen = klassen,
-                schultyp = schultyp
+                schultyp = schultyp,
+                nutztLusd = nutztLusd
             )
         }
     }

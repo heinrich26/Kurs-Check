@@ -18,14 +18,16 @@
 package com.kurswahlApp.data
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.kurswahlApp.data.Consts.PF_5_VAL_BLL
+import com.kurswahlApp.data.Consts.PF_5_VAL_PRAES
 import java.awt.Component
 import javax.swing.DefaultListCellRenderer
 import javax.swing.JList
 
-enum class Pf5Typ(val repr: String) {
-    @JsonProperty("schriftl") SCHRIFTLICH("schriftlich"),
-    @JsonProperty("praes") PRAESENTATION("Präsentation"),
-    @JsonProperty("wettbewerb") WETTBEWERB("Wettbewerb");
+enum class Pf5Typ(val repr: String, val lusdId: String) {
+    @JsonProperty("schriftl") SCHRIFTLICH("schriftlich", PF_5_VAL_BLL),
+    @JsonProperty("praes") PRAESENTATION("Präsentation", PF_5_VAL_PRAES),
+    @JsonProperty("wettbewerb") WETTBEWERB("Wettbewerb", PF_5_VAL_BLL);
 
     object Renderer : DefaultListCellRenderer() {
         override fun getListCellRendererComponent(
@@ -41,5 +43,14 @@ enum class Pf5Typ(val repr: String) {
             isSelected,
             cellHasFocus
         )
+    }
+
+    companion object {
+        @JvmStatic
+        fun byLusdId(id: String): Pf5Typ = when (id) {
+            PF_5_VAL_BLL -> SCHRIFTLICH
+            PF_5_VAL_PRAES -> PRAESENTATION
+            else -> PRAESENTATION
+        }
     }
 }

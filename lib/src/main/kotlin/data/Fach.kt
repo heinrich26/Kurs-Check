@@ -35,6 +35,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize
  * @property nurIn beschränkt, in welchen Semestern das Fach gewählt werden kann
  * @property nurFuer bestimmt welche Klassen das Fach wählen können
  * @property isExtra [Fach] zählt nicht zum maximalen Kurse-pro-Semester Zähler
+ * @property lusdId Id des [Fach]s im LUSD-System
  */
 @JsonSerialize(using = FachSerializer::class, keyUsing = FachKeySerializer::class)
 data class Fach(
@@ -48,8 +49,10 @@ data class Fach(
     val nurPf4_5: Boolean = false,
     val nurIn: Wahlmoeglichkeit = Wahlmoeglichkeit.DURCHGEHEND,
     val nurFuer: Set<String>? = null,
-    val isExtra: Boolean = false
+    val isExtra: Boolean = false,
+    val lusdId: Int = -1
 ) {
+
     /**
      * Gibt den Namen des [Fach]s mit, wenn vorhanden, dem Aufgabenfeld zurück
      *

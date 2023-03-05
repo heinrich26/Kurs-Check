@@ -22,29 +22,25 @@ import com.fasterxml.jackson.databind.DatabindException
 import com.fasterxml.jackson.databind.InjectableValues
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.kurswahlApp.KurswahlFileFilter
-import com.kurswahlApp.PngFileFilter
+import com.kurswahlApp.*
 import com.kurswahlApp.data.*
 import com.kurswahlApp.data.Consts.APP_ICONS
 import com.kurswahlApp.data.Consts.APP_NAME
 import com.kurswahlApp.data.Consts.FILETYPE_EXTENSION
 import com.kurswahlApp.data.Consts.HOME_POLY
-import com.kurswahlApp.data.Consts.IMPORT_ICON
 import com.kurswahlApp.data.Consts.PERSON_ICON
-import com.kurswahlApp.data.Consts.SAVE_ICON
 import com.kurswahlApp.data.Consts.SIDEBAR_SIZE
 import com.kurswahlApp.data.Consts.TEST_FILE_NAME
-import com.kurswahlApp.getResourceURL
 import github_status.GithubStatus
 import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
 import kotlinx.cli.default
 import kotlinx.cli.optional
-import java.awt.Color
 import java.awt.Dimension
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.io.File
+import java.io.IOException
 import javax.imageio.ImageIO
 import javax.swing.*
 import javax.swing.border.EmptyBorder
@@ -114,8 +110,7 @@ class GuiMain(file: File? = null) : JPanel() {
             val parser = ArgParser(APP_NAME)
 
             val input by parser.argument(
-                ArgType.String, "input",
-                "Die zum öffnen verwendete Datei"
+                ArgType.String, "input", "Die zum öffnen verwendete Datei"
             ).optional()
 
 
@@ -157,10 +152,9 @@ class GuiMain(file: File? = null) : JPanel() {
 
             // contentPane setzen
             // wenn vorhanden, Testdatei/gesetzte Datei laden
-            frame.contentPane =
-                if (useTestData) GuiMain(File(getResourceURL(TEST_FILE_NAME)!!.toURI()))
-                else if (file != null) GuiMain(File(file))
-                else GuiMain()
+            frame.contentPane = if (useTestData) GuiMain(File(getResourceURL(TEST_FILE_NAME)!!.toURI()))
+            else if (file != null) GuiMain(File(file))
+            else GuiMain()
 
             frame.minimumSize = Dimension(640, 560)
             // Anzeigen.
@@ -176,7 +170,7 @@ class GuiMain(file: File? = null) : JPanel() {
 
     private val unvollstaendigeEingabeLabel: JLabel = JLabel(UNVOLLSTAENDIGE_EINGABE_TEXT).also {
         it.isVisible = false
-        it.foreground = Color.RED
+        it.foreground = Consts.COLOR_ERROR
         it.font = font.deriveFont(12f)
     }
 
@@ -187,14 +181,12 @@ class GuiMain(file: File? = null) : JPanel() {
         this.preferredSize = Dimension(SIDEBAR_SIZE, 0)
     }
 
-    private val sidebarBtns = arrayOf(
-        PolyIcon(PERSON_ICON, false) { navTo(Nutzerdaten::class, 0) },
+    private val sidebarBtns = arrayOf(PolyIcon(PERSON_ICON, false) { navTo(Nutzerdaten::class, 0) },
         FsWpfIcon { navTo(Fremdsprachen::class, 1) },
         SidebarLabel("LKs") { navTo(Leistungskurse::class, 2) },
         PfPkIcon { navTo(Pruefungsfaecher::class, 3) },
         SidebarLabel("GKs") { navTo(GrundkursWahl::class, 4) },
-        PolyIcon(HOME_POLY, true) { navTo(Overview::class, 5) }
-    ).apply {
+        PolyIcon(HOME_POLY, true) { navTo(Overview::class, 5) }).apply {
         this.forEachIndexed { i, dest ->
             sidebar.add(dest, row = i, anchor = GridBagConstraints.SOUTH, weighty = if (i == 5) 1.0 else 0.0)
         }
@@ -238,23 +230,19 @@ class GuiMain(file: File? = null) : JPanel() {
     private fun swapPanel(panel: KClass<out KurswahlPanel> = curPanel::class, index: Int = -1) {
         remove(curPanel)
 
-        val callback: (Boolean) -> Unit =
-            when (index) {
-                -1 -> curPanel.notifier
-                in 1..3 -> { it ->
-                    // TODO Fixen, dass man wenn man eine komplette Wahl hat,
-                    //  von den LKS nicht direkt zu den Grundkursen gehen kann!
-                    unvollstaendigeEingabeLabel.isVisible = !it
-                    if (it)
-                        sidebarBtns[index + 1].isEnabled = true
-                    else
-                        for (i in (index + 1)..4)
-                            sidebarBtns[i].isEnabled = false
-                }
-
-                4 -> { it -> unvollstaendigeEingabeLabel.isVisible = !it }
-                else -> { _ -> }
+        val callback: (Boolean) -> Unit = when (index) {
+            -1 -> curPanel.notifier
+            in 1..3 -> { it ->
+                // TODO Fixen, dass man wenn man eine komplette Wahl hat,
+                //  von den LKS nicht direkt zu den Grundkursen gehen kann!
+                unvollstaendigeEingabeLabel.isVisible = !it
+                if (it) sidebarBtns[index + 1].isEnabled = true
+                else for (i in (index + 1)..4) sidebarBtns[i].isEnabled = false
             }
+
+            4 -> { it -> unvollstaendigeEingabeLabel.isVisible = !it }
+            else -> { _ -> }
+        }
 
         curPanel = panel.constructors.first().call(wahlData, fachData, callback)
         add(curPanel, row = 1, column = 2, fill = GridBagConstraints.BOTH, weightx = 1.0)
@@ -273,16 +261,15 @@ class GuiMain(file: File? = null) : JPanel() {
 
 
         add(toolbar, fill = GridBagConstraints.HORIZONTAL, row = 0, column = 0, columnspan = 3)
-        toolbar.addActionItem(IMPORT_ICON, "open-action", "Kurswahl öffnen", this::openKurswahlAction)
-        toolbar.addActionItem(SAVE_ICON, "save-action", "Kurswahl speichern", this::saveKurswahlAction)
+        toolbar.addActionItem(R.file_open, "open-action", "Kurswahl öffnen", this::openKurswahlAction)
+        toolbar.addActionItem(R.save, "save-action", "Kurswahl speichern", this::saveKurswahlAction)
 
         (layout as GridBagLayout).rowWeights = doubleArrayOf(0.0, 1.0, .0)
 
         disableDestinations()
 
         add(
-            JSeparator(JSeparator.VERTICAL), row = 0, column = 1, rowspan = 3,
-            fill = GridBagConstraints.VERTICAL
+            JSeparator(JSeparator.VERTICAL), row = 0, column = 1, rowspan = 3, fill = GridBagConstraints.VERTICAL
         )
 
         add(curPanel, row = 1, column = 2, fill = GridBagConstraints.BOTH, weightx = 1.0)
@@ -308,10 +295,8 @@ class GuiMain(file: File? = null) : JPanel() {
         add(resetButton, row = 2, column = 2, anchor = GridBagConstraints.EAST, margin = Insets(4))
 
 
-        chooseSchoolButton.addMouseListener(
-            onEnter = { chooseSchoolButton.text = "\u2190 Schule wechseln" },
-            onExit = { chooseSchoolButton.text = currentSchool!!.name }
-        )
+        chooseSchoolButton.addMouseListener(onEnter = { chooseSchoolButton.text = "\u2190 Schule wechseln" },
+            onExit = { chooseSchoolButton.text = currentSchool!!.name })
 
         chooseSchoolButton.isFocusable = false
         chooseSchoolButton.foreground = Consts.COLOR_PRIMARY
@@ -364,21 +349,19 @@ class GuiMain(file: File? = null) : JPanel() {
                         return false
                     }
 
-                    data.readJsonVersion.second > newFachData.jsonVersion.second ->
-                        JOptionPane.showMessageDialog(
-                            this,
-                            "Die Version deiner Datei ist neuer als die des Programms! Unter Umständen gehen ein paar Daten verloren!",
-                            "Versionsunterschiede",
-                            JOptionPane.WARNING_MESSAGE
-                        )
+                    data.readJsonVersion.second > newFachData.jsonVersion.second -> JOptionPane.showMessageDialog(
+                        this,
+                        "Die Version deiner Datei ist neuer als die des Programms! Unter Umständen gehen ein paar Daten verloren!",
+                        "Versionsunterschiede",
+                        JOptionPane.WARNING_MESSAGE
+                    )
 
-                    data.readJsonVersion.second < newFachData.jsonVersion.second ->
-                        JOptionPane.showMessageDialog(
-                            this,
-                            "Die Version deiner Datei ist älter als die des Programms! Unter Umständen müssen ein paar Daten neu eingetragen werden!",
-                            "Versionsunterschiede",
-                            JOptionPane.WARNING_MESSAGE
-                        )
+                    data.readJsonVersion.second < newFachData.jsonVersion.second -> JOptionPane.showMessageDialog(
+                        this,
+                        "Die Version deiner Datei ist älter als die des Programms! Unter Umständen müssen ein paar Daten neu eingetragen werden!",
+                        "Versionsunterschiede",
+                        JOptionPane.WARNING_MESSAGE
+                    )
                 }
                 updateFachData(newFachData)
                 wahlData = data
@@ -445,73 +428,122 @@ class GuiMain(file: File? = null) : JPanel() {
                 "Ungültige Wahl",
                 JOptionPane.ERROR_MESSAGE
             )
-        } else if (fachData.regeln.all { it.match(data) }) {
+        } else if (!fachData.regeln.all { it.match(data) }) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Deine Wahl erfüllt nicht alle Regeln! Es tut uns leid, aber du musst deine Wahl vervollständigen, bevor du sie exportieren kannst!",
+                "Ungültige Wahl",
+                JOptionPane.ERROR_MESSAGE
+            )
+        } else {
             val chooser = JFileChooser()
-            chooser.fileFilter = KurswahlFileFilter
-            chooser.dialogTitle = "Datei für den Oberstufenkoordinator speichern"
-            chooser.selectedFile =
-                File(
-                    "${data.vorname!!.split(' ')[0]}_${data.nachname}"
-                        .replace(Regex("[\\\\/:*?\"<>|.&$]"), "")
-                        .replace(' ', '_') + ".$FILETYPE_EXTENSION"
-                )
 
-            if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-                val f =
-                    chooser.selectedFile.let { File(it.parent, "${it.nameWithoutExtension}.$FILETYPE_EXTENSION") }
+            /**
+             * Speichert eine Json Variante der Kurswahl
+             */
+            fun saveKurswahl() {
+                chooser.fileFilter = KurswahlFileFilter
+                chooser.dialogTitle = "Datei für den Oberstufenkoordinator speichern"
+                chooser.selectedFile = File("${data.toFilename()}.$FILETYPE_EXTENSION")
 
-                thread {
-                    try {
-                        f.createNewFile()
+                if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+                    val f =
+                        chooser.selectedFile.let { File(it.parent, "${it.nameWithoutExtension}.$FILETYPE_EXTENSION") }
 
-                        jacksonObjectMapper().writer()
-                            .withAttribute("jsonVersion", fachData.jsonVersion.let { "${it.first}.${it.second}" })
-                            .writeValue(f, data)
-                    } catch (exception: SecurityException) {
-                        JOptionPane.showMessageDialog(
-                            this,
-                            "Du hast keine Berechtigung diese Datei zu schreiben! Versuche einen anderen Namen oder Ordner!",
-                            "Keine Rechte", JOptionPane.ERROR_MESSAGE
-                        )
+                    thread {
+                        try {
+                            f.createNewFile()
+
+                            jacksonObjectMapper().writer()
+                                .withAttribute("jsonVersion", fachData.jsonVersion.let { "${it.first}.${it.second}" })
+                                .writeValue(f, data)
+                        } catch (exception: SecurityException) {
+                            JOptionPane.showMessageDialog(
+                                this,
+                                "Du hast keine Berechtigung diese Datei zu schreiben! Versuche einen anderen Namen oder Ordner!",
+                                "Keine Rechte",
+                                JOptionPane.ERROR_MESSAGE
+                            )
+                        }
                     }
                 }
             }
 
-            // speichern des Bilds der Kurswahl
-            if (chooser.selectedFile != null)
-                chooser.selectedFile =
+            /**
+             * Speichert ein Bild der Kurswahl
+             */
+            fun saveBild() {
+                if (chooser.selectedFile != null) chooser.selectedFile =
                     File(chooser.currentDirectory, chooser.selectedFile.nameWithoutExtension + ".png")
-            chooser.resetChoosableFileFilters()
-            chooser.fileFilter = PngFileFilter
-            chooser.dialogTitle = "Bild für dich speichern"
+//              chooser.resetChoosableFileFilters()
+                chooser.fileFilter = PngFileFilter
+                chooser.dialogTitle = "Bild für dich speichern"
 
 
-            if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-                val f =
-                    File("${chooser.selectedFile.parent}${File.separatorChar}${chooser.selectedFile.nameWithoutExtension}.png")
+                if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+                    val f =
+                        File("${chooser.selectedFile.parent}${File.separatorChar}${chooser.selectedFile.nameWithoutExtension}.png")
 
-                thread {
-                    try {
-                        val img = ScreenImage.createImage(AusgabeLayout(fachData, data))
-                        ImageIO.write(img, "png", f)
-                    } catch (exception: SecurityException) {
-                        JOptionPane.showMessageDialog(
-                            this,
-                            "Du hast keine Berechtigung diese Datei zu schreiben! Versuche einen anderen Namen oder Ordner!",
-                            "Keine Rechte", JOptionPane.ERROR_MESSAGE
-                        )
+                    thread {
+                        try {
+                            val img = ScreenImage.createImage(AusgabeLayout(fachData, data))
+                            ImageIO.write(img, "png", f)
+                        } catch (exception: SecurityException) {
+                            JOptionPane.showMessageDialog(
+                                this,
+                                "Du hast keine Berechtigung diese Datei zu schreiben! Versuche einen anderen Namen oder Ordner!",
+                                "Keine Rechte",
+                                JOptionPane.ERROR_MESSAGE
+                            )
+                        }
                     }
                 }
             }
 
+            fun askFallback() {
+                if (JOptionPane.showConfirmDialog(
+                        this,
+                        "Du hast kein Formular ausgewählt! Möchstest du trotzdem eine Datei zur Weiterbearbeitung speichern?",
+                        "Nichts Ausgewählt",
+                        JOptionPane.YES_NO_OPTION
+                    ) == JOptionPane.YES_OPTION
+                ) {
+                    saveKurswahl()
+                }
+            }
 
-        } else JOptionPane.showMessageDialog(
-            this,
-            "Deine Wahl erfüllt nicht alle Regeln! Es tut uns leid, aber du musst deine Wahl vervollständigen, bevor du sie exportieren kannst!",
-            "Ungültige Wahl", JOptionPane.ERROR_MESSAGE
-        )
+            if (fachData.nutztLusd) {
+                chooser.fileFilter = PdfFileFilter
+                chooser.dialogTitle = "Dein LUSD-Formular zum Eintragen öffnen"
 
-        data.unlock()
+                if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+                    val formFile = chooser.selectedFile
+
+                    chooser.fileFilter = ExclusivePdfFileFilter(formFile)
+                    chooser.dialogTitle = "Dein ausgefülltes Formular speichern"
+                    chooser.selectedFile = File(formFile.parent, data.toFilename() + ".pdf")
+
+                    if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+                        val dest = chooser.selectedFile.let { File(it.parent, "${it.nameWithoutExtension}.pdf") }
+                        thread {
+                            try {
+                                measureNanos { data.exportPDF(formFile, dest, fachData) }
+                            } catch (_: IOException) {
+                                JOptionPane.showMessageDialog(
+                                    this,
+                                    "Beim Speichern ist ein Fehler aufgetreten! Versuche einen anderen Namen oder Ordner!",
+                                    "Speicher-Fehler",
+                                    JOptionPane.ERROR_MESSAGE
+                                )
+                            }
+                        }
+                    } else askFallback()
+                } else askFallback()
+            } else {
+                saveKurswahl()
+                saveBild()
+            }
+        }
     }
 
     /**
@@ -519,15 +551,13 @@ class GuiMain(file: File? = null) : JPanel() {
      */
     private fun showLoadingError() {
         val githubStatus = GithubStatus.get()
-        val msg =
-            if (githubStatus == null) "Stelle sicher das du eine Internet-Verbindung hast und versuche es erneut!"
-            else if (githubStatus.indicator == GithubStatus.Companion.Status.NONE) "Scheint als sei ein Fehler beim Laden aufgetreten! Versuche es erneut!"
-            else "GitHub's Server sind nicht erreichbar, da lässt sich nicht viel machen! Siehe: githubstatus.com"
+        val msg = if (githubStatus == null) "Stelle sicher das du eine Internet-Verbindung hast und versuche es erneut!"
+        else if (githubStatus.indicator == GithubStatus.Companion.Status.NONE) "Scheint als sei ein Fehler beim Laden aufgetreten! Versuche es erneut!"
+        else "GitHub's Server sind nicht erreichbar, da lässt sich nicht viel machen! Siehe: githubstatus.com"
 
         JOptionPane.showMessageDialog(
             this,
-            "Die Daten für deine Schule konnten nicht geladen werden! " +
-                    msg,
+            "Die Daten für deine Schule konnten nicht geladen werden! $msg",
             "Fehler beim Laden der Datei!",
             JOptionPane.ERROR_MESSAGE
         )
@@ -545,9 +575,8 @@ class GuiMain(file: File? = null) : JPanel() {
         val schoolList = JList(listModel)
 
         // Ausgangswert setzen
-        schoolList.selectedIndex =
-            if (currentSchool == null) 0
-            else listModel.indexOf(currentSchool)
+        schoolList.selectedIndex = if (currentSchool == null) 0
+        else listModel.indexOf(currentSchool)
 
         schoolList.cellRenderer = SchoolRenderer()
         val pane = JScrollPane(schoolList)
@@ -576,13 +605,20 @@ class GuiMain(file: File? = null) : JPanel() {
                 margin = Insets(top = 9, bottom = 2),
                 weightx = 1.0
             )
-            layout.add(JButton("Abbrechen").apply {
-                this.preferredSize = btnDim
-                this.addActionListener {
-                    result = JOptionPane.CANCEL_OPTION
-                    dialog.dispose()
-                }
-            }, row = 1, column = 1, anchor = GridBagConstraints.WEST, margin = Insets(top = 9, bottom = 2), weightx = 1.0)
+            layout.add(
+                JButton("Abbrechen").apply {
+                    this.preferredSize = btnDim
+                    this.addActionListener {
+                        result = JOptionPane.CANCEL_OPTION
+                        dialog.dispose()
+                    }
+                },
+                row = 1,
+                column = 1,
+                anchor = GridBagConstraints.WEST,
+                margin = Insets(top = 9, bottom = 2),
+                weightx = 1.0
+            )
         } else layout.add(okBtn, row = 1, column = 0, columnspan = 2, margin = Insets(top = 9, bottom = 2))
 
         layout.border = EmptyBorder(10, 10, 10, 10)
@@ -610,13 +646,12 @@ class GuiMain(file: File? = null) : JPanel() {
      * da sie daten vorraussetzen die ungesetzt sind
      */
     private fun disableDestinations() {
-        if (wahlData.fremdsprachen.size < 2 || wahlData.wpfs == null)
-            for (i in 2..4) sidebarBtns[i].isEnabled = false
+        if (wahlData.fremdsprachen.size < 2 || wahlData.wpfs == null) for (i in 2..4) sidebarBtns[i].isEnabled = false
         else if (wahlData.lk1 == null || wahlData.lk2 == null) {
             sidebarBtns[3].isEnabled = false
             sidebarBtns[4].isEnabled = false
-        } else if (wahlData.pf3 == null || wahlData.pf4 == null || wahlData.pf5 == null)
-            sidebarBtns[4].isEnabled = false
+        } else if (wahlData.pf3 == null || wahlData.pf4 == null || wahlData.pf5 == null) sidebarBtns[4].isEnabled =
+            false
         else for (i in 2..4) sidebarBtns[i].isEnabled = true
     }
 }

@@ -4,10 +4,10 @@ import re
 from typing import Iterable, Iterator
 
 
-svg = input("SVG-Path: ")
+test_svg = 'M 14,0 H 2 C 0.89,0 0,0.9 0,2 v 14 c 0,1.1 0.89,2 2,2 h 14 c 1.1,0 2,-0.9 2,-2 V 4 Z M 9,16 c -1.66,0 -3,-1.34 -3,-3 0,-1.66 1.34,-3 3,-3 1.66,0 3,1.34 3,3 0,1.66 -1.34,3 -3,3 z M 12,6 H 2 V 2 h 10 z'
+svg = input("SVG-Element (aus der .svg Datei): ") or test_svg
 scale = Decimal(input("Scale: ") or 1)
 print('\n')
-# svg = 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-4h2v2h-2zm1.61-9.96c-2.06-.3-3.88.97-4.43 2.79-.18.58.26 1.17.87 1.17h.2c.41 0 .74-.29.88-.67.32-.89 1.27-1.5 2.3-1.28.95.2 1.65 1.13 1.57 2.1-.1 1.34-1.62 1.63-2.45 2.88 0 .01-.01.01-.01.02-.01.02-.02.03-.03.05-.09.15-.18.32-.25.5-.01.03-.03.05-.04.08-.01.02-.01.04-.02.07-.12.34-.2.75-.2 1.25h2c0-.42.11-.77.28-1.07.02-.03.03-.06.05-.09.08-.14.18-.27.28-.39.01-.01.02-.03.03-.04.1-.12.21-.23.33-.34.96-.91 2.26-1.65 1.99-3.56-.24-1.74-1.61-3.21-3.35-3.47z'
 
 
 def gen(path: str) -> Iterator[str]:
@@ -19,6 +19,7 @@ def gen(path: str) -> Iterator[str]:
         if c.isalpha():
             yield cur
             cur = c
+            dot = False
         else:
             if (c == "."):
                 if (dot):
@@ -33,6 +34,7 @@ def gen(path: str) -> Iterator[str]:
 calls: list[str] = []
 global pos
 pos = (0, 0)
+start_pos = (0, 0)
 
 
 def add_call(name, coords: Iterable[Decimal], size: int = None) -> str:
@@ -44,25 +46,40 @@ def add_call(name, coords: Iterable[Decimal], size: int = None) -> str:
         for i in range(0, len(coords), size):
             add_call(name, coords[i:i + size])
     else:
-        calls.append(f"{name}({', '.join(f'{num:.1f}' for num in coords)})")
+        calls.append(f"{name}({', '.join(str(float(round(num, 2))) for num in coords)})")
         global pos
         pos = coords[-2:]
 
 
 def make_tuples(n, iterable):
     iterator = iter(iterable)
-    
+
     return tuple(itertools.takewhile(bool, (tuple(itertools.islice(iterator, n)) for _ in itertools.repeat(None))))
 
 def make_abs(coords: Iterable[Decimal]) -> Iterable[Decimal]:
-    pos_x, pos_y = pos
-    return itertools.chain(*[(x + pos_x, y + pos_y) for x, y in make_tuples(2, coords)])
+    x, y = pos
+    _coords = []
+    for dx, dy in make_tuples(2, coords):
+        _coords += (dx + x, dy + y)
+        x += dx
+        y += dy
+    return _coords
+
+
+def make_abs(coords: Iterable[Decimal], block_size: int) -> tuple[Decimal]:
+    x, y = pos
+    _coords = []
+    for xs in make_tuples(block_size, coords):
+        _coords += ((dx + x, dy + y) for dx, dy in make_tuples(2, xs))
+        x += xs[-2]
+        y += xs[-1]
+    return tuple(itertools.chain(*_coords))
 
 
 def reflect(point: tuple[Decimal, Decimal], origin: tuple[Decimal, Decimal]) -> tuple[Decimal, Decimal]:
     p_x, p_y = point
     o_x, o_y = origin
-    return (2 * o_x - p_x, 2* o_y - p_y)
+    return (2 * o_x - p_x, 2 * o_y - p_y)
 
 
 prev_instruction = None
@@ -71,13 +88,17 @@ for command in gen(svg):
     instruction = command[0]
     coords = [Decimal(x) * scale for x in re.split('[ ,]', command[1:]) if x != '']
 
-
-    if (instruction != 'z' and instruction.islower() and len(coords) % 2 == 0):
+    if (instruction in 'ml'):
         coords = tuple(make_abs(coords))
 
     match instruction:
         case 'M' | 'm':
-            add_call('moveTo', coords)
+            add_call('moveTo', coords[:2])
+            # Startposition des Pfads merken
+            start_pos = pos
+
+            if len(coords) > 2:
+                add_call('lineTo', coords[2:], 2)
         case 'L' | 'l':
             add_call('lineTo', coords, 2)
         case 'H':
@@ -88,14 +109,27 @@ for command in gen(svg):
             add_call('lineTo', (pos[0], coords[0]))
         case 'v':
             add_call('lineTo', (pos[0], coords[0] + pos[1]))
-        case 'C' | 'c':
+        case 'C':
             add_call('curveTo', coords, 6)
-        case 'Q' | 'q':
+        case 'c':
+            coords = make_abs(coords, 6)
+            add_call('curveTo', coords, 6)
+        case 'Q':
+            add_call('quadTo', coords, 4)
+        case 'q':
+            coords = make_abs(coords, 4)
             add_call('quadTo', coords, 4)
         case 'z' | 'Z':
             calls.append('closePath()')
-        case 'S' | 's':
-            handle = reflect(prev_handle, pos) if (prev_instruction == 'c' or prev_instruction == 'c') else pos
+            pos = start_pos
+        case 'S':
+            handle = reflect(prev_handle, pos) if (prev_instruction == 'c' or prev_instruction == 'q') else pos
+            for call in make_tuples(4, coords):
+                add_call('curveTo', handle + call)
+                handle = call[-4:-2]
+        case 's':
+            coords = make_abs(coords, 4)
+            handle = reflect(prev_handle, pos) if (prev_instruction == 'c' or prev_instruction == 'q') else pos
             for call in make_tuples(4, coords):
                 add_call('curveTo', handle + call)
                 handle = call[-4:-2]
@@ -107,5 +141,7 @@ for command in gen(svg):
     prev_handle = coords[-4:-2]
 
 
-nt = '\n\t'
-print(f"GeneralPath().apply \u007b\n\t{nt.join(calls)}\n\u007d")
+sep = '\n\t'
+print(f"GeneralPath().apply \u007b\n\t{sep.join(calls)}\n\u007d")
+sep = ';\n\tpath.'
+print(f"GeneralPath path = new GeneralPath();\n\u007b\n\tpath.{sep.join(calls)};\n\u007d")

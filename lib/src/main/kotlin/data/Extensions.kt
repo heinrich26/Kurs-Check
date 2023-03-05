@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022  Hendrik Horstmann
+ * Copyright (c) 2023  Hendrik Horstmann
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,11 +17,8 @@
 
 package com.kurswahlApp.data
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import org.apache.pdfbox.pdmodel.interactive.form.PDField
 
-enum class RegelScope {
-    @JsonProperty("1-2") LK1_2,
-    @JsonProperty("1-4") PF1_4,
-    @JsonProperty("1-5") PF1_5,
-    @JsonProperty("5") PF5
-}
+var PDField.checked: Boolean
+    get() = this.valueAsString == "Yes"
+    set(value) = this.setValue(if (value) "Yes" else "Off")

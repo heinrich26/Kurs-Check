@@ -32,13 +32,11 @@ import java.awt.geom.AffineTransform
 class PolyIcon(poly: Shape, defaultSelected: Boolean, clickEvent: () -> Unit) :
     ClickableDestionation(defaultSelected,  clickEvent = clickEvent) {
     companion object {
-        val transform1 = AffineTransform(1.0, 0.0, 0.0, 1.0, -12.0, -12.0)
-        val transform2 = (SIDEBAR_SIZE / 36.0).let { AffineTransform(it, 0.0, 0.0, it, 0.0, 0.0) }
-        val transform3 = (SIDEBAR_SIZE / 2.0).let { AffineTransform(1.0, 0.0, 0.0, 1.0, it, it) }
+        val transform = AffineTransform(SIDEBAR_SIZE/36.0, .0,.0, SIDEBAR_SIZE/36.0, 12.0,12.0)
     }
 
-    private val shape =
-        transform3.createTransformedShape(transform2.createTransformedShape(transform1.createTransformedShape(poly)))
+    private val shape = transform.createTransformedShape(poly)
+
 
     override fun paintComponent(g: Graphics) {
         super.paintComponent(g)

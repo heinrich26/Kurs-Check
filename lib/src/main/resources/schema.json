@@ -1,207 +1,376 @@
-// Diese Datei ist keine gültige JSON und sollte nur als Referenz verwendet werden
-
-// Schema für die eine <FachData (SchulId)>.json
-// verwendet um das Verhalten der Wahl zu ändern!
-
-/* Datentypen
-
-Wahlmöglichkeit: beschreibt eine Semesterauswahl ("1-2" entspricht 1. & 2. Semester)
-mögliche Werte: null (egal) | "1-2" | "1-3" | "2-4" | "3-4" | "1-4"
-
-RegelScope: Bereich, auf den sich die Regel beschränkt
-mögliche Werte: null (Alle Kurse) | "1-2" (LKs) | "1-4" (PF 1-4) | "1-5" (PFs) | "5" (5. PK)
-
-Wildcard: Platzhalter für mehrere Kürzel, werden in "wildcards": {...: [...],...} definiert
-		  und MÜSSEN mit $ beginnen! Wildcards die in den Wahlzeilen verwendet werden,
-		  MÜSSEN zusätzlich in der "wzWildcards"-Liste aufgeführt werden!
-
-Weitere Beispiele können sie unter https://github.com/heinrich26/Kurs-Check/blob/data/schools/ finden */
-
 {
-	// Eindeutiger Identifikator für diese Schule; Entspricht dem Dateinamen mit der Dateinamenerweiterung .json!
-	"schulId": "<Dateiname>",
-	// Hauptversion ändern, wenn Fächer (als LK, PF, etc.) wegfallen oder Regeln strenger werden
-	// ansonsten Subversion ändern, wenn Fächer (als LK, PF, etc.) hinzukommen oder Texte (außer Kürzel) geändert werden
-	"jsonVersion": "1.2", // Hauptversion.Subversion
-	// Alle Fächer die irgendwo referenziert werden!
-	"faecher": [
-		// Definition eines Fachs
-		{
-			// Anzeigename für dieses Fach
-			"name": "Deutsch",
-			// Eindeutiger Schlüssel für dieses Fach
-			"kuerzel": "De",
-			// Zu welchem Aufgabenfeld das Fach gehört
-			"aufgabenfeld": 1, // 0, wenn kein Aufgabenfeld gg. ist (Sport), -1 bei Zusatzkursen
-
-			// Optionale Parameter
-			// Muss nur gesetzt werden wenn ein anderer Wert als der default Wert gewünscht ist!
-
-			// Ob das Fach eine Fremdsprache ist
-			"isFremdsprache": true, // default: false
-			// Ob das Fach als LK gewählt werden kann
-			"isLk": true, // default: false
-			// Ob das Fach als Wahlpflichtfach gewählt worden sein muss um es zu wählen
-			"brauchtWPF": true, // default: false
-			// Ob das Fach überhaupt gewählt werden kann, wird ansonsten nur als WPF/FS angezeigt
-			"isKurs": false, // default: true
-			// Limitiert, in welchen Semestern dieses Fach gewählt werden kann
-			"nurIn": "<Wahlmöglichkeit>", // default: "1-4"
-			// Ob das Fach nicht als 3. PF gewählt werden kann
-			"nurPf4_5": true, // default: false
-			// Ob das Fach zu der maximalen Kurszahl pro Semester zählt oder auf einer anderen Schiene, z.B. Nachmittags läuft
-			"isExtra": true // default: false
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"title": "FachData",
+	"description": "Die Konfigurationsdatei für die Möglichkeiten bei KursWahlen. Weitere Beispiele unter https://github.com/heinrich26/Kurs-Check/blob/data/schools/",
+	"type": "object",
+	"definitions": {
+		"Wahlmoeglichkeit": {
+			"type": "string",
+			"javaType": "com.kurswahlApp.data.Wahlmoeglichkeit",
+			"enum": [ null, "1-2", "1-3", "2-4", "3-4", "1-4" ]
 		},
-
-		// Beispiel:
-		{
-			"name": "Englisch",
-			"kuerzel": "En",
-			"aufgabenfeld": 1,
-			"isLk": true,
-			"isFremdsprache": true
-			// "brauchtWPF": false,
-			// "isKurs": true,
-			// "nurIn": "1-4",
-			// "nurPf4_5": false
-			// "isExtra": false
-		}
-	],
-	// Fächer die der Schüler wählen muss (werden automatisch angekreuzt)
-	"pflichtfaecher": {
-		"<Kürzel>": "<Wahlmöglichkeit>",
-
-		// Beispiel:
-		"Sp": "1-4"
-	},
-	// Bestimmt ob die Schüler*innen 2 oder nur 1 WPF wählen müssen
-	// (Die Option 2 zu wählen bleibt, damit Wechselnde bestimmte Fächer wählen können!)
-	"zweiWPFs": true, // or false
-	// Fächer die der/die Schüler*in als Wahlpflichtfach auswählen kann (auch Fächer die nicht relevant sind)
-	"wpfs": ["<Kürzel>", "<Kürzel>", /* Beispiel: */ "Inf", "Lat", "Fr"],
-	/* Regeln
-
-	Regeln bestimmen, wann eine Wahl vollständig ist! Mit ihnen lassen sich nach den Prüfungsfächern
-	die Grundkurse vervollständigen. Die Regeln können nach belieben geändert werden!
-	Jede Regel in dieser Liste muss erfüllt sein, ein AND verhalten kann daher nur auf oberster Ebene
-	erreicht werden.
-
-	Manche Regeln lassen sich schachteln:
-
-	IfThenRegel(
-		regel1=OrRegel(regel1=KuerzelRegel(...), regel2=WildcardRegel(...))
-		regel2=KuerzelRegel(...),
-		desc= ...
-	)  (die Notation ist abstrakt und nur zur Veranschaulichung!)
-	*/
-	"regeln": [
-		{
-			// Art der Regel
-			// Je nach Typ sind andere Attribute möglich
-			"type": "<WildcardRegel|KuerzelRegel|KonfliktRegel|OrRegel|AndRegel|IfThenRegel>",
-			// Beschreibung der Regel
-			"desc": "<Eine simple Beschreibung der Regel>",
-			// Text, der angezeigt wird, wenn die Regel nicht erfüllt wird (Imperativ)
-			"errorMsg": "<Eine eindeutige Anweisung, was der Schüler ändern muss!>",
-
-			/* WildcardRegel / KuerzelRegel
-			Hiermit lassen sich Fälle definieren wie: "Wähle Fach A dann und dann" oder
-			"Wähle Fach A, B, und/oder C"
-			*/
-			"wildcard": "<$Wildcard-Name>", /* oder */ "kuerzel": "<Kürzel>",
-			// Mindestanzahl an Kursen die benötigt wird, um die Regel zu erfüllen
-			"anzahl": 4, // Wert aus: 2-4
-			// optional: Art von Kursen, auf die sich diese Regel beschränkt
-			"scope": "<RegelScope>", // default: null
-			// optional: Wann die in "anzahl" definierten Kurse auf jeden Fall gewählt werden müssen
-			// 1-2 erlaubt auch 1-3 und 1-4 usw.
-			"wann": "<Wahlmöglichkeit>", // default: null
-
-			// IfThenRegel / OrRegel / AndRegel
-			"regel1": { /* <weitere Regel> */ },
-			"regel2": { /* <weitere Regel> */ },
-			// IfThen: ist erfüllt wenn: regel1 nicht erfüllt ist, ODER regel1 & regel2! (aka.: wenn, dann)
-			// OrRegel: mindestens eine der beiden Regeln MUSS erfüllt werden;
-			//          Wird die Erste erfüllt, wird die 2. nicht betrachtet!
-			// AndRegel: beide Regeln MÜSSEN erfüllt werden
-
-			// KonfliktRegel
-			// Schließt aus, dass sich Kurse in der gegebenen Wildcard überschneiden
-			"wildcard": "<$Wildcard-Name>"
+		"RegelAnzahl": {
+			"type": "integer",
+			"description": "Mindestanzahl an Kursen die benötigt wird, um die Regel zu erfüllen",
+			"minimum": 2,
+			"maximum": 4
 		},
-
-		// Beispiele
-		{
-			"type": "IfThenRegel",
-			"regel1": {
-				"type": "KuerzelRegel",
-				"kuerzel": "Bio",
-				"anzahl": 4
-			},
-			"regel2": {
-				"type": "OrRegel",
-				"regel1": {
-					"type": "KuerzelRegel",
-					"kuerzel": "Che",
-					"anzahl": 2
+		"RegelScope": {
+			"description": "Art von Kursen, auf die sich diese Regel beschränkt",
+			"default": null,
+			"type": "string",
+			"enum": [ "1-2", "1-4", "1-5", "5" ]
+		},
+		"RegelWann": {
+			"$ref": "#/definitions/Wahlmoeglichkeit",
+			"description": "Wann die in \"anzahl\" definierten Kurse auf jeden Fall gewählt werden müssen. 1-2 erlaubt auch 1-3 und 1-4 usw.",
+			"default": null
+		},
+		"Regel": {
+			"examples": [
+				{
+					"type": "IfThenRegel",
+					"regel1": {
+						"type": "KuerzelRegel", "kuerzel": "Bio", "anzahl": 4
+					},
+					"regel2": {
+						"type": "OrRegel", "regel1": {
+							"type": "KuerzelRegel", "kuerzel": "Che", "anzahl": 2
+						}, "regel2": {
+							"type": "KuerzelRegel", "kuerzel": "Phy", "anzahl": 2
+						}
+					},
+					"desc": "Bio 4 Semester -> zusätzliche Naturwissenschaft min. 2 Semester",
+					"errorMsg": "Wähle eine 2. Naturwissenschaft für min. 2 Semester!"
+				}, {
+					"type": "WildcardRegel", "wildcard": "$AF2ohneGE", "anzahl": 4, "scope": "1-5"
+				}
+			],
+			"type": "object",
+			"allOf": [
+				{
+					"if": {
+						"properties": { "type": { "const": "KuerzelRegel" } }
+					},
+					"then": {
+						"description": "KürzelRegel - ergibt: Wähle Fach A (in ...)",
+						"properties": {
+							"type": true,
+							"desc": true,
+							"errorMsg": true,
+							"kuerzel": {
+								"$ref": "#/definitions/Kuerzel",
+								"description": "Kürzel des Fachs das diese Regel erfüllt"
+							},
+							"anzahl": { "$ref": "#/definitions/RegelAnzahl"},
+							"scope": { "$ref": "#/definitions/RegelScope"},
+							"wann": { "$ref": "#/definitions/RegelWann" }
+						}, "required": [ "anzahl", "kuerzel" ], "additionalProperties": false
+					}
+				}, {
+					"if": {
+						"properties": { "type": { "const": "WildcardRegel" } }
+					},
+					"then": {
+						"description": "WildcardRegel - ergibt: Wähle Fach A, B, und/oder C (in ...)", "properties": {
+							"type": true,
+							"desc": true,
+							"errorMsg": true,
+							"wildcard": {
+								"type": "string",
+								"pattern": "^\\$[^$]+$",
+								"description": "Wildcard von Fächern die diese Regel erfüllen"
+							},
+							"anzahl": { "$ref": "#/definitions/RegelAnzahl"},
+							"scope": { "$ref": "#/definitions/RegelScope"},
+							"wann": { "$ref": "#/definitions/RegelWann" }
+						}, "required": [ "wildcard","anzahl" ], "additionalProperties": false
+					}
+				}, {
+					"if": {
+						"properties": { "type": { "const": "KonfliktRegel" } }
+					},
+					"then": {
+						"description": "KonfliktRegel - ergibt: Wähle maximal eins von Fach A, B, ... gleichzeitig",
+						"properties": {
+							"type": true,
+							"desc": true,
+							"errorMsg": true,
+							"wildcard": {
+								"type": "string",
+								"pattern": "^\\$[^$]+$",
+								"description": "Wildcard von Fächern die nicht zur gleichen Zeit gewählt werden können"
+							}
+						}, "required": [ "wildcard" ], "additionalProperties": false
+					}
+				}, {
+					"if": {
+						"properties": {
+							"type": { "enum": [ "OrRegel", "AndRegel", "IfThenRegel" ] }
+						}
+					},
+					"then": {
+						"description": "OrRegel - ergibt: Regel1 UND/ODER Regel2; AndRegel - ergibt: Regel1 UND Regel2; IfThenRegel - ergibt: (Nicht Regel1) ODER Regel2",
+						"properties": {
+							"type": true,
+							"desc": true,
+							"errorMsg": true,
+							"regel1": { "$ref": "#/definitions/Regel" },
+							"regel2": { "$ref": "#/definitions/Regel" }
+						}, "required": [ "regel1", "regel2" ], "additionalProperties": false
+					}
+				}
+			],
+			"required": [ "type" ],
+			"properties": {
+				"type": {
+					"type": "string",
+					"description": "Art der Regel. Je nach Typ sind andere Attribute möglich",
+					"enum": [
+						"WildcardRegel",
+						"KuerzelRegel",
+						"KonfliktRegel",
+						"OrRegel",
+						"AndRegel",
+						"IfThenRegel"
+					]
 				},
-				"regel2": {
-					"type": "KuerzelRegel",
-					"kuerzel": "Phy",
-					"anzahl": 2
+				"desc": {
+					"description": "Eine simple Beschreibung der Regel",
+					"type": "string",
+					"default": null
+				},
+				"errorMsg": {
+					"description": "Text, der angezeigt wird, wenn die Regel nicht erfüllt wird (Imperativ)",
+					"type": "string",
+					"default": null
+				}
+			}
+		},
+		"WahlzeilenWert": {
+			"type": "string",
+			"pattern": "^\\$?[^$]+|\\*$",
+			"description": "Ein Kürzel, eine Wildcard oder * für ein beliebiges Fach"
+		},
+		"Wahlzeile": {
+			"type": "object",
+			"properties": {
+				"lk1": { "$ref": "#/definitions/WahlzeilenWert" },
+				"lk2": { "$ref": "#/definitions/WahlzeilenWert" },
+				"pf3": { "$ref": "#/definitions/WahlzeilenWert" },
+				"pf4": { "$ref": "#/definitions/WahlzeilenWert" },
+				"pf5": { "$ref": "#/definitions/WahlzeilenWert" },
+				"linien": {
+					"description": "Beschreibt die Linien des 3.-5. Prüfungsfachs/-komponente, wie sie in den Tabellen des Senats zu finden sind!",
+					"type": "string",
+					"enum": [ "keine", "durchgezogen", "keine|durchgezogen", "gestrichelt" ]
 				}
 			},
-			"desc": "Bio 4 Semester -> zusätzliche Naturwissenschaft min. 2 Semester",
-			"errorMsg": "Wähle eine 2. Naturwissenschaft für min. 2 Semester!"
+			"required": [ "lk1", "lk2", "pf3", "pf4", "pf5", "linien" ],
+			"additionalProperties": false
 		},
-		{
-			"type": "WildcardRegel",
-			"wildcard": "$AF2ohneGE",
-			"anzahl": 4,
-			"scope": "1-5"
+		"Kuerzel": { "type": "string", "description": "Kürzel eines Fachs", "pattern": "^[^$]+$" }
+	},
+	"properties": {
+		"schulId": {
+			"type": "string",
+			"description": "Eindeutiger Identifikator für diese Schule; Entspricht dem Dateinamen mit der Dateinamenerweiterung .json!",
+			"examples": [ "lili.json" ]
+		},
+		"jsonVersion": {
+			"type": "string",
+			"description": "Hauptversion.Subversion:\nHauptversion ändern, wenn Fächer (als LK, PF, etc.) wegfallen oder Regeln strenger werden! Ansonsten Subversion ändern, wenn Fächer (als LK, PF, etc.) hinzukommen oder Texte (außer Kürzel) geändert werden",
+			"examples": [ "1.2" ]
+		},
+		"faecher": {
+			"type": "array",
+			"description": "Alle Fächer die irgendwo referenziert werden",
+			"uniqueItems": true,
+			"items": {
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "Anzeigename für dieses Fach",
+						"examples": [ "Deutsch" ]
+					},
+					"kuerzel": {
+						"$ref": "#/definitions/Kuerzel",
+						"description": "Eindeutiger Schlüssel für dieses Fach",
+						"examples": [ "De" ]
+					},
+					"aufgabenfeld": {
+						"type": "integer",
+						"minimum": -1,
+						"maximum": 3,
+						"description": "Zu welchem Aufgabenfeld das Fach gehört. 0, wenn kein Aufgabenfeld gegeben ist (Sport), -1 bei Zusatzkursen",
+						"examples": [ ]
+					},
+					// Optionale Parameter
+					// Muss nur gesetzt werden wenn ein anderer Wert als der default Wert gewünscht ist!
+					"isFremdsprache": {
+						"type": "boolean",
+						"default": false,
+						"description": "Ob das Fach eine Fremdsprache ist"
+					},
+					"isLk": {
+						"type": "boolean",
+						"default": false,
+						"description": "Ob das Fach als LK gewählt werden kann"
+					},
+					"brauchtWPF": {
+						"type": "boolean",
+						"default": false,
+						"description": "Ob das Fach als Wahlpflichtfach gewählt worden sein muss um es zu wählen"
+					},
+					"isKurs": {
+						"type": "boolean",
+						"default": true,
+						"description": "Ob das Fach überhaupt gewählt werden kann, wird ansonsten nur als WPF/FS angezeigt"
+					},
+					"nurIn": {
+						"description": "Limitiert, in welchen Semestern dieses Fach gewählt werden kann",
+						"$ref": "#/definitions/Wahlmoeglichkeit",
+						"default": "1-4"
+					},
+					"nurPf4_5": {
+						"type": "boolean",
+						"default": false,
+						"description": "Ob das Fach nicht als 3. PF gewählt werden kann"
+					},
+					"isExtra": {
+						"type": "boolean",
+						"default": false,
+						"description": "Ob das Fach zu der maximalen Kurszahl pro Semester zählt oder auf einer anderen Schiene, z.B. Nachmittags läuft"
+					},
+					"lusdId": {
+						"type": "integer",
+						"description": "ID des Fachs im LUSD Formular. Nutzen mehrere Fächer dieselbe ID, dann muss das \"Hauptfach\" zuerst stehen, also bspw.: Geschichte vor Geschichte Bili!",
+						"default": null
+					}
+				},
+				"type": "object",
+				"description": "Beschreibt ein Fach. Jedes Kürzel darf nur 1x vorkommen",
+				"required": [ "kuerzel", "name", "aufgabenfeld" ]
+			}
+		},
+		"pflichtfaecher": {
+			"type": "object", "patternProperties": {
+				"^[^$]+$": {
+					"$ref": "#/definitions/Wahlmoeglichkeit",
+					"description": "Fächer(-kürzel) die automatisch gewählt werden"
+				}
+			}, "additionalProperties": false, "examples": [ { "Sp": "1-4" } ]
+		},
+		"zweiWPFs": {
+			"description": "Bestimmt ob die Schüler*innen 2 oder nur 1 WPF wählen müssen. Die Option zwei zu wählen bleibt, damit Wechselnde bestimmte Fächer wählen können!",
+			"type": "boolean"
+		},
+		"wpfs": {
+			"type": "array",
+			"description": "Fächer die der/die Schüler*in als Wahlpflichtfach auswählen kann (auch Fächer die nicht relevant sind)",
+			"items": { "$ref": "#/definitions/Kuerzel" },
+			"examples": [ [ "Inf", "Lat", "Fr" ] ],
+			"uniqueItems": true
+		},
+		"regeln": {
+			"description": "Regeln bestimmen, wann eine Wahl vollständig/gültig ist! Mit ihnen lassen sich nach den Prüfungsfächern die Grundkurse vervollständigen. Die Regeln können nach belieben geändert werden!",
+			"type": "array",
+			"items": { "$ref": "#/definitions/Regel" }
+		},
+		"wahlzeilen": {
+			"description": "Wahlzeilen beschreiben die möglichen Kombinationen von Prüfungsfächern, die gewählt werden können! Jede Nummer sollte optimalerweise nur ein Mal vorkommen!",
+			"type": "object",
+			"examples": [
+				{
+					"1": {
+						"lk1": "$FS",
+						"lk2": "De",
+						"pf3": "$AF2",
+						"pf4": "Ma",
+						"pf5": "*",
+						"linien": "keine"
+					}
+				}
+			],
+			"patternProperties": {
+				"^[1-9][0-9]*$": { "$ref": "#/definitions/Wahlzeile" }
+			},
+			"uniqueItems": true,
+			"additionalProperties": false
+		},
+		"wildcards": {
+			"description": "Definition der Wildcards", "type": "object", "patternProperties": {
+				"^\\$[^$]+$": {
+					"description": "Wildcard", "type": "array", "items": { "$ref": "#/definitions/Kuerzel" },
+					"uniqueItems": true
+				}
+			}, "examples": [
+				{
+					"$AF2": [
+						"Ge", "PW", "Geo"
+					]
+				}
+			], "additionalProperties": false
+		},
+		"minKurse": {
+			"type": "integer",
+			"description": "Mindestanzahl an Grund- und Leistungskursen, die der/die Schüler*in wählen muss",
+			"examples": [ 40 ]
+		},
+		"maxKurse": {
+			"type": "integer",
+			"description": "Höchstzahl an Grund- und Leistungskursen, die der/die Schüler*in wählen kann",
+			"examples": [ 40 ]
+		},
+		"pf3_4AusschlussFaecher": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Kuerzel", "description": "Fachkürzel"
+			},
+			"description": "Fächer, von denen nur 1 as PF 3/4 gewählt werden darf (§ 23,6 VO-GO)",
+			"uniqueItems": true
+		},
+		"semesterkurse": {
+			"type": "array",
+			"minLength": 4,
+			"maxLength": 4,
+			"items": {
+				"type": "integer", "minimum": 5
+			},
+			"description": "Limitiert die Anzahl Kurse (einschließlich LKs), die in einem Semester belegt werden können! "
+		},
+		"klassen": {
+			"type": "array",
+			"items": { "type": "string", "description": "Namen der weiteren Klassen" },
+			"examples": [ [ "Bili", "Nawi" ] ],
+			"default": [ ],
+			"uniqueItems": true
+		},
+		"schultyp": {
+			"description": "Typ der Schule. Legt z.B. fest wann die E-Phase stattfindet",
+			"enum": [ "Gymnasium", "Sekundarschule", "Berufsschule" ]
+		},
+		"nutztLusd": {
+			"type": "boolean",
+			"description": "Ob der Export mit LUSD Formularen erfolgt",
+			"default": false
 		}
+	},
+	"required": [
+		"schulId",
+		"jsonVersion",
+		"faecher",
+		"pflichtfaecher",
+		"zweiWPFs",
+		"wpfs",
+		"regeln",
+		"wahlzeilen",
+		"wildcards",
+		"minKurse",
+		"maxKurse",
+		"pf3_4AusschlussFaecher",
+		"semesterkurse",
+		"schultyp"
 	],
-	/* Wahlzeilen beschreiben die möglichen Kombinationen von Prüfungsfächern, die gewählt werden können!
-	Beim übertragen sollte beachtet werden, dass die Reihenfolge erhalten bleibt!
-
-	Definition Linientyp: beschreibt die Linien der 3.-5. PFs, wie sie in den Tabellen des Senats zu finden sind!
-	mögliche Werte: "keine" | "durchgezogen" | "keine|durchgezogen" | "gestrichelt"
-
-	Jede Nummer sollte optimalerweise nur 1 mal vorkommen!
-	*/
-	"wahlzeilen": {
-		"<Nummer>": {
-			"lk1": "<Kürzel>|<$WildcardName>|*", // Das * steht für beliebig
-			"lk2": "<Kürzel>|<$WildcardName>|*",
-			"pf3": "<Kürzel>|<$WildcardName>|*",
-			"pf4": "<Kürzel>|<$WildcardName>|*",
-			"pf5": "<Kürzel>|<$WildcardName>|*",
-			"linien": "<Linientyp>"
-		},
-
-		// Beispiel
-		"1": {
-			"lk1": "$FS",
-			"lk2": "De",
-			"pf3": "$AF2",
-			"pf4": "Ma",
-			"pf5": "*",
-			"linien": "keine"
-		}
-	},
-	// Definition der Wildcards, für weitere Info: siehe Datentypen oben
-	"wildcards": {
-		"$<wildcardname>": ["Kürzel1", "Kürzel2" /*...*/],
-
-		// Beispiel:
-		"$AF2": ["Ge", "PW", "Geo"] // Wildcard für Kurse aus dem Aufgabenfeld 2
-	},
-	// Mindestanzahl an Grund- und Leistungskursen, die der/die Schüler*in wählen muss
-	"minKurse": 40,
-	// Höchstzahl    ----------------------------""----------------------------
-	"maxKurse": 44,
-	// Fächer, von denen nur 1 as PF 3/4 gewählt werden darf (§ 23,6 VO-GO)
-	"pf3_4AusschlussFaecher": ["<Kürzel1>", "Kürzel2" /*...*/],
-	// Typ der Schule, legt z.B. fest wann die E-Phase stattfindet
-	"schultyp": "Gymnasium|Sekundarschule|Berufsschule"
+	"additionalProperties": false
 }

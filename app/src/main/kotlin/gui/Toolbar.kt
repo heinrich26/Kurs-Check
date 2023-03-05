@@ -23,7 +23,6 @@ import com.kurswahlApp.data.Consts.COLOR_PRIMARY
 import com.kurswahlApp.data.Consts.RENDERING_HINTS
 import com.kurswahlApp.data.Consts.TOOLBAR_ICON_SIZE
 import java.awt.*
-import java.awt.geom.AffineTransform
 import javax.swing.JComponent
 import javax.swing.JLabel
 import javax.swing.JPanel
@@ -91,19 +90,7 @@ class Toolbar(text: String, private val shadowSize: Int = 8) : JPanel(GridBagLay
 
 
         // ActionButton Stuff
-        val transform1: AffineTransform = AffineTransform.getTranslateInstance(-12.0, -12.0)
-        val transform2: AffineTransform = (TOOLBAR_ICON_SIZE / 28.0).let { AffineTransform.getScaleInstance(it, it) }
-        val transform3: AffineTransform = (TOOLBAR_ICON_SIZE / 2.0).let { AffineTransform.getTranslateInstance(it, it) }
-
-        private class ActionItem(shape: Shape, val id: String, tooltip: String?, action: () -> Unit) : JComponent() {
-            private val shape =
-                transform3.createTransformedShape(
-                    transform2.createTransformedShape(
-                        transform1.createTransformedShape(
-                            shape
-                        )
-                    )
-                )
+        private class ActionItem(private val icon: Shape, val id: String, tooltip: String?, action: () -> Unit) : JComponent() {
 
             var hasFocus = false
                 set(value) {
@@ -126,7 +113,7 @@ class Toolbar(text: String, private val shadowSize: Int = 8) : JPanel(GridBagLay
                 g2D.setRenderingHints(RENDERING_HINTS)
 
                 g2D.color = if (hasFocus) COLOR_ON_PRIMARY_FOCUS else COLOR_ON_PRIMARY
-                g2D.fill(shape)
+                g2D.fill(icon)
 
                 g.dispose()
             }
