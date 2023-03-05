@@ -497,30 +497,6 @@
             "pf5": "*",
             "linien": "gestrichelt"
         },
-        "18": {
-            "lk1": "$FS",
-            "lk2": "Sp",
-            "pf3": "De",
-            "pf4": "$AF2",
-            "pf5": "$NW",
-            "linien": "gestrichelt"
-        },
-        "19": {
-            "lk1": "$FS",
-            "lk2": "Sp",
-            "pf3": "De",
-            "pf4": "$AF2",
-            "pf5": "Inf",
-            "linien": "gestrichelt"
-        },
-        "20": {
-            "lk1": "$FS",
-            "lk2": "Sp",
-            "pf3": "$MA",
-            "pf4": "$AF2",
-            "pf5": "*",
-            "linien": "gestrichelt"
-        },
         "21": {
             "lk1": "$MA",
             "lk2": "De",
@@ -588,22 +564,6 @@
         "29": {
             "lk1": "$MA",
             "lk2": "Inf",
-            "pf3": "$FS",
-            "pf4": "$AF2",
-            "pf5": "*",
-            "linien": "gestrichelt"
-        },
-        "30": {
-            "lk1": "$MA",
-            "lk2": "Sp",
-            "pf3": "De",
-            "pf4": "$AF2",
-            "pf5": "*",
-            "linien": "gestrichelt"
-        },
-        "31": {
-            "lk1": "$MA",
-            "lk2": "Sp",
             "pf3": "$FS",
             "pf4": "$AF2",
             "pf5": "*",
@@ -721,30 +681,6 @@
             "pf5": "$AF2",
             "linien": "keine|durchgezogen"
         },
-        "46": {
-            "lk1": "$NW",
-            "lk2": "Sp",
-            "pf3": "$FS",
-            "pf4": "De",
-            "pf5": "$AF2",
-            "linien": "keine|durchgezogen"
-        },
-        "47": {
-            "lk1": "$NW",
-            "lk2": "Sp",
-            "pf3": "$FS",
-            "pf4": "$MA",
-            "pf5": "$AF2",
-            "linien": "keine|durchgezogen"
-        },
-        "48": {
-            "lk1": "$NW",
-            "lk2": "Sp",
-            "pf3": "$MA",
-            "pf4": "De",
-            "pf5": "$AF2",
-            "linien": "keine|durchgezogen"
-        },
         "49": {
             "lk1": "De",
             "lk2": "$Mu/Ku",
@@ -808,30 +744,6 @@
             "pf4": "$AF2",
             "pf5": "*",
             "linien": "gestrichelt"
-        },
-		"57": {
-            "lk1": "De",
-            "lk2": "Sp",
-            "pf3": "$FS",
-            "pf4": "$AF2",
-            "pf5": "$NW",
-            "linien": "gestrichelt"
-        },
-		"58": {
-            "lk1": "De",
-            "lk2": "Sp",
-            "pf3": "$FS",
-            "pf4": "$AF2",
-            "pf5": "Inf",
-            "linien": "gestrichelt"
-        },
-		"59": {
-            "lk1": "De",
-            "lk2": "Sp",
-            "pf3": "$MA",
-            "pf4": "$AF2",
-            "pf5": "*",
-            "linien": "gestrichelt"
         }
     },
     "wildcards": {
@@ -843,9 +755,9 @@
         "$MA": ["Ma", "MaCAS"],
         // Andere Wildcards (z.B. f. Regeln)
         "$KF": ["Mu", "Ku", "DS"],
-	// alle fächer aus AF2, außer Geschichte
+        // alle fächer aus AF2, außer Geschichte
         "$AF2ohneGE": ["Pw", "Geo", "Pl"],
-	    "$GE": ["Ge", "GeBi"]
+        "$GE": ["Ge", "GeBi"]
     },
     // Grundkurse und Leistungskurse zusammen
     "minKurse": 40,
