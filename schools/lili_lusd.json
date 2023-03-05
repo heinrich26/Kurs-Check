@@ -157,7 +157,7 @@
             "kuerzel": "Sp",
             "aufgabenfeld": 0,
             "nurPf4_5": true,
-	        "isExtra": true,
+            "isExtra": true,
             "lusdId": 3402
         },
         {
@@ -181,7 +181,7 @@
             "name": "Geschichte Bili",
             "kuerzel": "GeBi",
             "aufgabenfeld": 3,
-	        "nurFuer": ["Bili"],
+            "nurFuer": ["Bili"],
             "lusdId": 3403
         },
         {
