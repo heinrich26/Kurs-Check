@@ -8,7 +8,7 @@
             <SchemaInfo>
               <option name="generatedName" value="New Schema" />
               <option name="name" value="fachData Scheme" />
-              <option name="relativePathToSchema" value="lib/src/main/resources/schema.json" />
+              <option name="relativePathToSchema" value="res/schema.json" />
               <option name="schemaVersion" value="JSON Schema version 7" />
               <option name="patterns">
                 <list>

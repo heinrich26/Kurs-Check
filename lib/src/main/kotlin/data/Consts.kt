@@ -28,15 +28,14 @@ object Consts {
     val COLOR_PRIMARY = Color(96, 2, 238)
     val COLOR_ON_PRIMARY: Color = Color.WHITE
     val COLOR_ON_PRIMARY_FOCUS = Color(190, 190, 190)
-    val COLOR_CONTROL = Color(COLOR_PRIMARY.colorSpace, COLOR_PRIMARY.getRGBColorComponents(null), .1f)
+    val COLOR_CONTROL = COLOR_PRIMARY.transparentise(.1f)
     val COLOR_ON_BACKGROUND = Color(94, 99, 103)
-    val COLOR_ON_BACKGROUND_DISABLED =
-        Color(COLOR_ON_BACKGROUND.colorSpace, COLOR_ON_BACKGROUND.getRGBColorComponents(null), .6f)
+    val COLOR_ON_BACKGROUND_DISABLED = COLOR_ON_BACKGROUND.transparentise(.6f)
     val COLOR_BACKGROUND: Color = Color.WHITE
     val COLOR_VALID = Color(0, 210, 106)
     val COLOR_ERROR = Color(249, 47, 96)
 
-    const val FONT_NAME = "Roboto"
+    const val FONT_NAME = "Fira Sans"
 
 
     const val PANEL_WIDTH = 400
@@ -64,51 +63,6 @@ object Consts {
         curveTo(9.8, 23.6, 6.05, 27.9, 6.05, 32.0)
         closePath()
     }.createTransformedShape(AffineTransform(20 / 36.0, .0, .0, 20 / 36.0, 2.0, 2.0))
-
-
-    // Fixme redo, wurde mit kaputter SVG Gen Version produziert
-    val HELP_ICON = GeneralPath().apply {
-        moveTo(12.0, 2.0)
-        curveTo(6.5, 2.0, 2.0, 6.5, 2.0, 12.0)
-        curveTo(2.0, 17.5, 6.5, 22.0, 12.0, 22.0)
-        curveTo(6.5, 22.0, 12.0, 7.5, 12.0, 2.0)
-        curveTo(12.0, 2.0, 17.5, 2.0, 12.0, 2.0)
-        closePath()
-        moveTo(12.0, 20.0)
-        curveTo(7.6, 20.0, 4.0, 16.4, 4.0, 12.0)
-        curveTo(4.0, 7.6, 7.6, 4.0, 12.0, 4.0)
-        curveTo(7.6, 4.0, 12.0, 15.6, 12.0, 20.0)
-        curveTo(12.0, 15.6, 0.4, 20.0, -4.0, 20.0)
-        closePath()
-        moveTo(-5.0, 16.0)
-        lineTo(-3.0, 16.0)
-        lineTo(-3.0, 18.0)
-        lineTo(-5.0, 18.0)
-        closePath()
-        moveTo(-3.4, 8.0)
-        curveTo(-5.4, 7.7, -7.3, 9.0, -7.8, 10.8)
-        curveTo(-3.6, 8.6, -3.1, 9.2, -2.5, 9.2)
-        lineTo(-2.3, 9.2)
-        curveTo(-1.9, 9.2, -1.6, 8.9, -1.4, 8.5)
-        curveTo(-2.0, 8.3, -1.0, 7.7, -0.0, 7.9)
-        curveTo(-1.4, 9.4, -0.7, 10.3, -0.8, 11.3)
-        curveTo(-2.4, 10.6, -3.9, 10.8, -4.8, 12.1)
-        curveTo(-2.3, 9.2, -2.3, 9.2, -2.3, 9.2)
-        curveTo(-2.3, 9.2, -2.3, 9.2, -2.4, 9.3)
-        curveTo(-2.4, 9.4, -2.5, 9.5, -2.6, 9.7)
-        curveTo(-2.3, 9.2, -2.4, 9.3, -2.4, 9.3)
-        curveTo(-2.3, 9.2, -2.3, 9.2, -2.3, 9.3)
-        curveTo(-2.4, 9.6, -2.5, 10.0, -2.5, 10.5)
-        lineTo(-0.5, 10.5)
-        curveTo(-0.5, 10.0, -0.4, 9.7, -0.2, 9.4)
-        curveTo(-0.5, 10.4, -0.5, 10.4, -0.5, 10.4)
-        curveTo(-0.4, 10.3, -0.3, 10.2, -0.2, 10.1)
-        curveTo(-0.5, 10.4, -0.5, 10.4, -0.5, 10.4)
-        curveTo(-0.4, 10.3, -0.3, 10.2, -0.2, 10.1)
-        curveTo(0.4, 9.6, 1.7, 8.8, 1.5, 6.9)
-        curveTo(-0.8, 8.7, -2.1, 7.2, -3.9, 7.0)
-        closePath()
-    }
 
     val CHECKBOX_CHECKED = Area(RoundRectangle2D.Float(0f, 0f, 24f, 24f, 10f, 10f)).apply {
         subtract(Area(GeneralPath().apply {
@@ -203,7 +157,7 @@ object Consts {
     )
 
     const val FILETYPE_EXTENSION = "kurswahl"
-    const val TEST_FILE_NAME = "test_wahl.kurswahl"
+    const val TEST_FILE_NAME = "res/test_wahl.kurswahl"
 
     /** Höchstalter, um für die Gymnasiale Oberstufe zugelassen zu werden */
     const val MAX_ALTER = 22

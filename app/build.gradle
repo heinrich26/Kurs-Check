@@ -2,11 +2,10 @@ import org.apache.tools.ant.taskdefs.condition.Os
 
 plugins {
     id 'myproject.java-conventions'
-    id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'org.beryx.runtime' version '1.12.7'
+    id "org.jetbrains.gradle.plugin.idea-ext" version "1.1.7"
 }
 
-apply plugin: 'com.github.johnrengelman.shadow'
 
 dependencies {
     implementation project(':lib')
@@ -19,30 +18,29 @@ dependencies {
 }
 
 sourceSets {
-    main {
-        java {
-            srcDirs("src/main/kotlin")
-            srcDirs("build/generated/sources/vectors/main")
-        }
-    }
+    main.kotlin.srcDirs += "build/generated/sources/vectors/main"
+}
+idea.module.settings.packagePrefix["src/main/kotlin"] = group
+
+kotlin {
+    jvmToolchain(18)
 }
 
-
 application {
-    mainClass = 'gui.GuiMain'
+    mainClass = "${group}.gui.GuiMain"
 }
 
 compileKotlin.dependsOn(':resource-generator:processVectors')
-jpackageImage.dependsOn copyInstallerResources
+jpackageImage.dependsOn(copyInstallerResources, downloadSchoolsData)
 
 
 String osPrefix = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'win' : ((Os.isFamily(Os.FAMILY_MAC)) ? 'mac' : 'linux')
 String iconExt = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'ico' : ((Os.isFamily(Os.FAMILY_MAC)) ? 'icns' : 'png')
 runtime {
-    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+    addOptions '--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages'
 
     additive = true
-    modules = ['jdk.crypto.cryptoki']
+    modules.set(['jdk.crypto.cryptoki'])
 
     jpackage {
         imageName = rootProject.name

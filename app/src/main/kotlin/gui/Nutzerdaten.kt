@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package gui
+package com.kurswahlApp.gui
 
 import com.github.lgooddatepicker.components.DatePicker
 import com.github.lgooddatepicker.components.DatePickerSettings
@@ -24,6 +24,7 @@ import com.kurswahlApp.data.Consts.MAX_ALTER
 import com.kurswahlApp.data.Consts.MIN_ALTER
 import com.kurswahlApp.data.FachData
 import com.kurswahlApp.data.KurswahlData
+import org.intellij.lang.annotations.Language
 import java.awt.*
 import java.awt.geom.GeneralPath
 import java.time.LocalDate
@@ -116,6 +117,9 @@ class Nutzerdaten(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean
 
     override fun isDataValid(): Boolean =
         vornameEntry.text.isNotBlank() && nachnameEntry.text.isNotBlank() && geburtsortEntry.text.isNotBlank() && (geburtsdatumPicker.isTextFieldValid && geburtsdatumPicker.date != null)
+
+    @Language("HTML")
+    override fun showHelp(): String ="<h2>$windowName</h2><p>Hier musst du deine eigenen Daten eingeben! Das kriegst du doch hin, oder?</p>"
 
     override val windowName: String
         get() = "Persönliche Daten"

@@ -15,12 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package gui
+package com.kurswahlApp.gui
 
 import com.kurswahlApp.data.*
 import com.kurswahlApp.data.Wahlzeile.Companion.isAny
 import com.kurswahlApp.data.Wahlzeile.Companion.isWildcard
 import com.kurswahlApp.data.WahlzeileLinientyp.*
+import org.intellij.lang.annotations.Language
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import javax.swing.JComboBox
@@ -54,8 +55,8 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
     private val pf4: FachComboBox
     private val pf5: FachComboBox
 
-    @Suppress("PrivatePropertyName")
-    private val pf5_typ = JComboBox(Pf5Typ.values())
+
+    private val pf5Typ = JComboBox(Pf5Typ.values())
 
     private val userFs = wahlData.fremdsprachen.map { it.first }
     private val userWpfs = wahlData.wpfs
@@ -100,21 +101,21 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
         pf3.renderer = FachRenderer
         pf4.renderer = FachRenderer
         pf5.renderer = FachRenderer
-        pf5_typ.renderer = Pf5Typ.Renderer
+        pf5Typ.renderer = Pf5Typ.Renderer
 
 
         // Daten einsetzen
         pf3.selectedItem = wahlData.pf3
         pf4.selectedItem = wahlData.pf4
         pf5.selectedItem = wahlData.pf5
-        pf5_typ.selectedItem = wahlData.pf5_typ
+        pf5Typ.selectedItem = wahlData.pf5_typ
 
         pf3.addActionListener { notifier.invoke(pf3.selectedItem != null && pf4.selectedItem != null && pf5.selectedItem != null) }
         pf4.addActionListener { notifier.invoke(pf4.selectedItem != null && pf5.selectedItem != null) }
         pf5.addActionListener { notifier.invoke(pf5.selectedItem != null) }
         notifier.invoke(pf5.selectedItem != null)
 
-        pf5_typ.addActionListener {
+        pf5Typ.addActionListener {
             notifier.invoke(false)
             pf5Model.removeAllElements()
             pf5Model.addAll(pf5Faecher())
@@ -130,7 +131,7 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
             container.add(pf3, row = 1, column = 1, fill = GridBagConstraints.BOTH, margin = it)
             container.add(pf4, row = 2, column = 1, fill = GridBagConstraints.BOTH, margin = it)
             container.add(pf5, row = 3, column = 1, fill = GridBagConstraints.BOTH, margin = it)
-            container.add(pf5_typ, row = 3, column = 3, margin = it)
+            container.add(pf5Typ, row = 3, column = 3, margin = it)
         }
 
         // Beschriftungen hinzufügen
@@ -147,23 +148,23 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
 
         val beliebig: () -> List<Fach> = { filteredFaecher.mapNotNull { if (it.value.nurPf4_5) null else it.value } }
 
-        for (wz in filteredZeilen.values) {
-            if (wz.pf3.isAny) return beliebig()
+        for ((_, _, pf3, pf4, pf5, linien) in filteredZeilen.values) {
+            if (pf3.isAny) return beliebig()
 
-            if (wz.pf3.isWildcard) kuerzel.addAll(fachData.wzWildcards[wz.pf3]!!)
-            else kuerzel.add(wz.pf3)
+            if (pf3.isWildcard) kuerzel.addAll(fachData.wzWildcards[pf3]!!)
+            else kuerzel.add(pf3)
 
-            if (wz.linien != DURCHGEZOGEN) {
-                if (wz.pf4.isAny) return beliebig()
+            if (linien != DURCHGEZOGEN) {
+                if (pf4.isAny) return beliebig()
 
-                if (wz.pf4.isWildcard) kuerzel.addAll(fachData.wzWildcards[wz.pf4]!!)
-                else kuerzel.add(wz.pf4)
+                if (pf4.isWildcard) kuerzel.addAll(fachData.wzWildcards[pf4]!!)
+                else kuerzel.add(pf4)
 
-                if (wz.linien != KEINE_DURCHGEZOGEN) {
-                    if (wz.pf5.isAny) return beliebig()
+                if (linien != KEINE_DURCHGEZOGEN) {
+                    if (pf5.isAny) return beliebig()
 
-                    if (wz.pf5.isWildcard) kuerzel.addAll(fachData.wzWildcards[wz.pf5]!!)
-                    else kuerzel.add(wz.pf5)
+                    if (pf5.isWildcard) kuerzel.addAll(fachData.wzWildcards[pf5]!!)
+                    else kuerzel.add(pf5)
                 }
             }
         }
@@ -185,48 +186,48 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
         }
 
         val kuerzel = mutableSetOf<String>()
-        for (wz in filteredZeilen.values) {
-            if (wz.pf3 in pf3Groups) {
-                if (wz.pf4.isAny) return beliebig()
+        for ((_, _, pf3, pf4, pf5, linien) in filteredZeilen.values) {
+            if (pf3 in pf3Groups) {
+                if (pf4.isAny) return beliebig()
 
-                if (wz.pf4.isWildcard) kuerzel.addAll(fachData.wzWildcards[wz.pf4]!!)
-                else kuerzel.add(wz.pf4)
+                if (pf4.isWildcard) kuerzel.addAll(fachData.wzWildcards[pf4]!!)
+                else kuerzel.add(pf4)
 
-                if (wz.linien == GESTRICHELT || wz.linien == KEINE) {
-                    if (wz.pf5.isAny) return beliebig()
+                if (linien == GESTRICHELT || linien == KEINE) {
+                    if (pf5.isAny) return beliebig()
 
-                    if (wz.pf5.isWildcard) kuerzel.addAll(fachData.wzWildcards[wz.pf5]!!)
-                    else kuerzel.add(wz.pf5)
+                    if (pf5.isWildcard) kuerzel.addAll(fachData.wzWildcards[pf5]!!)
+                    else kuerzel.add(pf5)
                 }
             }
 
-            if (wz.linien != DURCHGEZOGEN) {
-                if (wz.pf4 in pf3Groups) {
-                    if (wz.pf3.isAny) return beliebig()
+            if (linien != DURCHGEZOGEN) {
+                if (pf4 in pf3Groups) {
+                    if (pf3.isAny) return beliebig()
 
-                    if (wz.pf3.isWildcard) kuerzel.addAll(fachData.wzWildcards[wz.pf3]!!)
-                    else kuerzel.add(wz.pf3)
+                    if (pf3.isWildcard) kuerzel.addAll(fachData.wzWildcards[pf3]!!)
+                    else kuerzel.add(pf3)
 
-                    if (wz.linien == KEINE) {
-                        if (wz.pf5.isWildcard) return beliebig()
+                    if (linien == KEINE) {
+                        if (pf5.isWildcard) return beliebig()
 
-                        if (wz.pf5.isWildcard) kuerzel.addAll(fachData.wzWildcards[wz.pf5]!!)
-                        else kuerzel.add(wz.pf5)
+                        if (pf5.isWildcard) kuerzel.addAll(fachData.wzWildcards[pf5]!!)
+                        else kuerzel.add(pf5)
                     }
                 }
 
-                if (wz.pf5 in pf3Groups) {
-                    if (wz.pf3.isAny) return beliebig()
+                if (pf5 in pf3Groups) {
+                    if (pf3.isAny) return beliebig()
 
-                    if (wz.linien == KEINE) {
-                        if (wz.pf4.isAny) return beliebig()
+                    if (linien == KEINE) {
+                        if (pf4.isAny) return beliebig()
 
-                        if (wz.pf4.isWildcard) kuerzel.addAll(fachData.wzWildcards[wz.pf4]!!)
-                        else kuerzel.add(wz.pf4)
+                        if (pf4.isWildcard) kuerzel.addAll(fachData.wzWildcards[pf4]!!)
+                        else kuerzel.add(pf4)
                     }
 
-                    if (wz.pf3.isWildcard) kuerzel.addAll(fachData.wzWildcards[wz.pf3]!!)
-                    else kuerzel.add(wz.pf3)
+                    if (pf3.isWildcard) kuerzel.addAll(fachData.wzWildcards[pf3]!!)
+                    else kuerzel.add(pf3)
                 }
             }
         }
@@ -247,7 +248,7 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
 
         // bei Präsentation bereits gewählte entfernen!
         val beliebig: () -> List<Fach> = {
-            if (pf5_typ.selectedItem as Pf5Typ == Pf5Typ.PRAESENTATION)
+            if (pf5Typ.selectedItem as Pf5Typ == Pf5Typ.PRAESENTATION)
                 filteredFaecherPf5.values.toMutableList().apply {
                     removeAll(arrayOf(wahlData.lk1!!, wahlData.lk2!!, selectedPf3, selectedPf4))
                 }.toList()
@@ -299,7 +300,7 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
         }
 
         // bei Präsentation bereits gewählte entfernen!
-        if (pf5_typ.selectedItem as Pf5Typ == Pf5Typ.PRAESENTATION) {
+        if (pf5Typ.selectedItem as Pf5Typ == Pf5Typ.PRAESENTATION) {
             kuerzel.removeAll(
                 arrayOf(wahlData.lk1!!.kuerzel, wahlData.lk2!!.kuerzel, selectedPf3.kuerzel, selectedPf4.kuerzel)
             )
@@ -328,13 +329,16 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
             pf3 = pf3.selectedItem!!,
             pf4 = pf4.selectedItem!!,
             pf5 = selectedPf5,
-            pf5_typ = pf5_typ.selectedItem as Pf5Typ,
+            pf5_typ = pf5Typ.selectedItem as Pf5Typ,
             wahlzeile = zeile
         )
     }
 
     override fun isDataValid(): Boolean =
         (pf3.selectedItem != null && pf4.selectedItem != null && pf5.selectedItem != null)
+
+    @Language("HTML")
+    override fun showHelp(): String = "<h2>$windowName</h2>\n<p>Die Prüfungsfächer ergeben sich wie folgt:<br><b>Beschwere dich bei deinem PäKo, dass er/sie keine Hilfe verfasst hat!</b></p>\n"
 
     override val windowName: String
         get() = "Prüfungsfächer & 5. Prüfungskomponente"

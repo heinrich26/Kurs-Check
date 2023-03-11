@@ -15,9 +15,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package gui
+package com.kurswahlApp.gui
 
 import com.kurswahlApp.data.*
+import org.intellij.lang.annotations.Language
 import java.awt.Component
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
@@ -231,6 +232,7 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         add(container1, row = 0, fill = GridBagConstraints.BOTH)
         add(container2, row = 1, fill = GridBagConstraints.BOTH)
         add(container3, row = 2, fill = GridBagConstraints.BOTH)
+        add(Box.createHorizontalStrut(200), row = 0, column = 0)
     }
 
 
@@ -254,6 +256,9 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
     override fun isDataValid(): Boolean {
         return (fs1.selectedItem != null && fs2.selectedItem != null && wpf1.selectedItem != null && (!fachData.zweiWPFs || wpf2.selectedItem != null))
     }
+
+    @Language("HTML")
+    override fun showHelp(): String = "<h2>$windowName</h2><p>Hier musst du deine Fremdsprachen, deine Wahlpflichtfächer der 10. Klasse und eventuell deine Klasse auswählen.<br><b>Beschwere dich bei deinem PäKo, dass er/sie keine hilfreichere Hilfe verfasst hat!</b></p>"
 
     override val windowName: String
         get() = "Fremdsprachen & Wahlpflichtfächer"

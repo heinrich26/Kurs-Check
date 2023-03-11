@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Vector-Resources" pattern="file[Kurs-Check.app]:assets/drawables/*||file[Kurs-Check.app.main]:resources/*.properties" />
+</component>

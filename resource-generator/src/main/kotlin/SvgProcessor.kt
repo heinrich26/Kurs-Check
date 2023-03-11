@@ -15,10 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import com.squareup.kotlinpoet.FileSpec
-import com.squareup.kotlinpoet.MemberName
-import com.squareup.kotlinpoet.PropertySpec
-import com.squareup.kotlinpoet.TypeSpec
+import com.squareup.kotlinpoet.*
+import org.jetbrains.annotations.PropertyKey
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.w3c.dom.Node
@@ -26,6 +24,8 @@ import org.w3c.dom.NodeList
 import java.awt.geom.GeneralPath
 import java.awt.geom.Path2D
 import java.io.File
+import java.text.MessageFormat
+import java.util.*
 import javax.annotation.processing.Filer
 import javax.xml.XMLConstants
 import javax.xml.parsers.DocumentBuilder
@@ -50,25 +50,69 @@ class SvgProcessor : AbstractProcessor() {
     }
 }*/
 
-fun process(resourcesDir: String, dest: Any) {
+typealias AnyNull = Any?
+
+fun process(resourcesDir: String, translateableDir: File, dest: Any) {
     val resources = File(resourcesDir).listFiles { _, name -> name.endsWith(".svg") }
     // Generate the Kotlin file for the resources
     val className = "R"
     val file = FileSpec.builder("com.kurswahlApp", className).addType(
         TypeSpec.objectBuilder(className).apply {
-            resources.forEach { resourceFile ->
+            resources?.forEach { resourceFile ->
                 getPathData(resourceFile)?.let { (data, sx, _) ->
                     val propertyName = resourceFile.name.removeSuffix(".svg")
                     addProperty(
                         PropertySpec.builder(propertyName, Path2D::class)
-                            .initializer("%M().apply {\n" +
-                                    "\t${GeneralPath().fromSVG(data, sx /* nur einen Faktor nutzen, ist einfacher*/).joinToString("\n\t")}\n" +
-                                    "}", MemberName("java.awt.geom", "GeneralPath"))
+                            .initializer(
+                                "%T().apply {\n" +
+                                        "\t${
+                                            GeneralPath().fromSVG(data, sx /* nur einen Faktor nutzen, ist einfacher*/)
+                                                .joinToString("\n\t")
+                                        }\n" +
+                                        "}", GeneralPath::class
+                            )
                             .build()
                     )
                 }
 
             }
+            /*val bundle = ResourceBundle.getBundle(
+                "kursCheckStrings",
+                Locale.getDefault(),
+                URLClassLoader(arrayOf(translateableDir.toURI().toURL()))
+            )*/
+            addProperty(
+                PropertySpec.builder("bundle", ResourceBundle::class, KModifier.PRIVATE)
+                    .initializer("ResourceBundle.getBundle(%S)", "kursCheckStrings")
+                    .build()
+            )
+            addFunction(
+                FunSpec.builder("getString")
+                    .returns(String::class)
+                    .addParameter(
+                        ParameterSpec.builder("key", String::class).addAnnotation(
+                            AnnotationSpec.builder(PropertyKey::class)
+                                .addMember("resourceBundle = %S", "kursCheckStrings")
+                                .build()
+                        ).build()
+                    )
+                    .addParameter("params", Any::class.asTypeName().copy(nullable = true), KModifier.VARARG)
+                    .addStatement("val value: String = bundle.getString(key)")
+                    .addStatement("return if (params.isNotEmpty()) %T.format(value, *params) else value", MessageFormat::class)
+                    .build()
+
+            )
+            /*addType(
+                TypeSpec.objectBuilder("strings").apply {
+                    for (key in bundle.keys) {
+                        addProperty(
+                            PropertySpec.builder(key, String::class).getter(
+                                FunSpec.getterBuilder().addStatement("return bundle.getString(%S)", key).build()
+                            ).build()
+                        )
+                    }
+                }.build()
+            )*/
         }.build()
     ).build()
 
@@ -81,7 +125,7 @@ fun process(resourcesDir: String, dest: Any) {
 }
 
 fun main(args: Array<String>) {
-    process(args[0], File(args[1]))
+    process(args[0] + "/drawables", File(args[1]), File(args[2]))
 }
 
 fun getPathData(f: File): Triple<String, Double, Double>? {

@@ -7,13 +7,19 @@ ext {
     javaMainClass = "SvgProcessorKt"
 }
 
+def appDir = rootProject.project("app").projectDir.absolutePath
 
-def appProject = rootProject.project("app")
+jar {
+    manifest {
+        attributes['Main-Class'] = javaMainClass
+    }
+    archiveName 'resource-generator.jar'
+}
 
-
-task processVectors(type: JavaExec) {
+tasks.register('processVectors', JavaExec) {
     dependsOn jar
-    args(appProject.projectDir.absolutePath + "/src/main/resources/drawables", appProject.buildDir.absolutePath + "/generated/sources/vectors/main")
+    jvmArgs('-Duser.language=en', '-Duser.country=US')
+    args(appDir + '/assets', appDir + '/src/main/resources', rootProject.project("app").buildDir.absolutePath + "/generated/sources/vectors/main")
     group = "Execution"
     description = "Erstellt Shape Objekte für alle .svg Dateien"
     main = javaMainClass

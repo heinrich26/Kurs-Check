@@ -84,17 +84,17 @@ class FachData(
     val fremdsprachen: List<Fach> = faecher.filter { it.isFremdsprache }
 
     val lk1Moeglichkeiten = LinkedHashSet<String>().apply {
-        for (wz in wahlzeilen.values) {
-            if (wz.lk1.startsWith("$"))
-                this.addAll(wzWildcards[wz.lk1]!!)
-            else this.add(wz.lk1)
+        for ((lk1) in wahlzeilen.values) {
+            if (lk1.startsWith("$"))
+                this.addAll(wzWildcards[lk1]!!)
+            else this.add(lk1)
         }
     }.map { faecherMap[it]!! }
     val lk2Moeglichkeiten = LinkedHashSet<String>().apply {
-        for (wz in wahlzeilen.values) {
-            if (wz.lk2.startsWith("$"))
-                this.addAll(wzWildcards[wz.lk2]!!)
-            else this.add(wz.lk2)
+        for ((_, lk2) in wahlzeilen.values) {
+            if (lk2.startsWith("$"))
+                this.addAll(wzWildcards[lk2]!!)
+            else this.add(lk2)
         }
     }.map { faecherMap[it]!! }
 

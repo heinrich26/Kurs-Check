@@ -15,13 +15,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package gui
+package com.kurswahlApp.gui
 
 
+import com.kurswahlApp.R
 import com.kurswahlApp.data.Fach
 import com.kurswahlApp.data.FachData
 import com.kurswahlApp.data.KurswahlData
-import java.awt.*
+import java.awt.Color
+import java.awt.Dimension
+import java.awt.GridBagConstraints
+import java.awt.GridBagLayout
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -41,7 +45,7 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
     init {
         preferredSize = Dimension(614, 874) // Din A4
         minimumSize = preferredSize
-        add(JLabel("Übersichtsplan".wrapTags("html", "h2")), row = 0, column = 0, columnspan = 2)
+        add(JLabel(R.getString("overview").wrapTags("html", "h2")), row = 0, column = 0, columnspan = 2)
 
 
         val checkboxPanel = JPanel(GridBagLayout())
@@ -67,7 +71,7 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
                 feld = fach.aufgabenfeld
                 feldPanel = JPanel(GridBagLayout())
                 feldPanel.border =
-                    TitledBorder(RoundedBorder(8), if (feld > 0) "Aufgabenfeld $feld" else "weitere Fächer")
+                    TitledBorder(RoundedBorder(8), if (feld > 0) "${R.getString("aufgabenfeld")} $feld" else R.getString("additional_subjects"))
 
             }
             // if A: B else true == !A or B
@@ -125,10 +129,10 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
         // Panel mit allen anderen Infos
         feldPanel = JPanel(GridBagLayout())
         feldPanel.border =
-            TitledBorder(RoundedBorder(8), "Deine Infos")
+            TitledBorder(RoundedBorder(8), R.getString("your_infos"))
 
         feldPanel.add(
-            JLabel("Form der 5. PK: <b>${wahlData.pf5_typ.repr}</b> ".wrapHtml()),
+            JLabel("${R.getString("type_of_pk5")}: <b>${wahlData.pf5_typ.repr}</b> ".wrapHtml()),
             row = 0,
             column = 0,
             anchor = GridBagConstraints.LINE_START
@@ -142,42 +146,42 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
             feldPanel!!.add(
                 JLabel(
                     (year.toString().wrapHtml("h3", "text-align: center") +
-                            "Jahr des Eintritts in die<br>gymnasiale Oberstufe").wrapHtml()
+                            R.getString("entry_year_sek2")).wrapHtml()
                 ), row = 0, column = 1, rowspan = 2, margin = Insets(0, 8, 0, 0)
             )
         }
 
         // Wahlzeile
         feldPanel.add(
-            JLabel("Wahlzeile: <b>${wahlData.wahlzeile}</b>".wrapHtml()),
+            JLabel("${R.getString("wahlzeile")}: <b>${wahlData.wahlzeile}</b>".wrapHtml()),
             row = 1,
             column = 0,
             anchor = GridBagConstraints.LINE_START
         )
 
         feldPanel.add(
-            JLabel("Vorname: <b>${wahlData.vorname}</b>".wrapHtml()),
+            JLabel("${R.getString("first_name")}: <b>${wahlData.vorname}</b>".wrapHtml()),
             row = 2,
             column = 0,
             anchor = GridBagConstraints.LINE_START
         )
 
         feldPanel.add(
-            JLabel("Nachname: <b>${wahlData.nachname}</b>".wrapHtml()),
+            JLabel("${R.getString("last_name")}: <b>${wahlData.nachname}</b>".wrapHtml()),
             row = 3,
             column = 0,
             anchor = GridBagConstraints.LINE_START
         )
 
         feldPanel.add(
-            JLabel("geboren: <b>${wahlData.geburtsdatum!!.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))}</b> in <b>${wahlData.geburtsort}</b>".wrapHtml()),
+            JLabel("${R.getString("born")}: <b>${wahlData.geburtsdatum!!.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))}</b> in <b>${wahlData.geburtsort}</b>".wrapHtml()),
             row = 4,
             column = 0,
             anchor = GridBagConstraints.LINE_START
         )
 
         feldPanel.add(
-            JLabel("Staatsangehörigkeit: <b>${wahlData.staatsangehoerigkeit}</b>".wrapHtml()),
+            JLabel("${R.getString("nationality")}: <b>${wahlData.staatsangehoerigkeit}</b>".wrapHtml()),
             row = 5,
             column = 0,
             anchor = GridBagConstraints.LINE_START
@@ -189,7 +193,7 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
         infoPanel.add(feldPanel)
 
         feldPanel = JPanel(GridBagLayout())
-        feldPanel.border = TitledBorder(RoundedBorder(8), "Anzahl Kurse")
+        feldPanel.border = TitledBorder(RoundedBorder(8), R.getString("course_count"))
 
         // Kursanzahlen
         val anzahlen = wahlData.countCourses()
@@ -198,14 +202,14 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
             feldPanel.add(JLabel("Q${i + 1}", JLabel.LEFT), row = i, column = 1, anchor = GridBagConstraints.WEST)
             feldPanel.add(JLabel("$n".wrapHtml("b", "font-size: 10px").wrapHtml()), row = i, column = 2)
         }
-        feldPanel.add(JLabel("gesamt   ", JLabel.LEFT), row = 4, column = 1, anchor = GridBagConstraints.WEST)
+        feldPanel.add(JLabel("${R.getString("total")}   ", JLabel.LEFT), row = 4, column = 1, anchor = GridBagConstraints.WEST)
         feldPanel.add(JLabel("${anzahlen.sum()}".wrapHtml("b", "font-size: 10px").wrapHtml()), row = 4, column = 2)
 
         infoPanel.add(feldPanel)
 
 
         feldPanel = JPanel(GridBagLayout())
-        feldPanel.border = TitledBorder(RoundedBorder(8), "Unterschrift")
+        feldPanel.border = TitledBorder(RoundedBorder(8), R.getString("signature"))
         feldPanel.add(JLabel(LocalDate.now().format(DateTimeFormatter.ofPattern("d.M.yyyy"))).also {
             Color(120, 120, 120).let { gray ->
                 it.border = MatteBorder(0, 0, 2, 0, gray)

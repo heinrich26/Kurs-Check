@@ -19,6 +19,7 @@
 
 import java.awt.geom.GeneralPath
 import java.awt.geom.Point2D
+import java.util.*
 
 fun GeneralPath.fromSVG(path: String, scale: Double = 1.0): MutableList<String> {
 
@@ -139,7 +140,7 @@ fun GeneralPath.fromSVG(path: String, scale: Double = 1.0): MutableList<String> 
             }
 
             'S' -> for ((x1, y1, x, y) in coords.chunked(4)) {
-                (if (prevInstruction == 'c' || prevInstruction == 'q') currentPoint.mirror(handle) else currentPoint).let { (hx, hy) ->
+                (if (prevInstruction in "cqs") currentPoint.mirror(handle) else currentPoint).let { (hx, hy) ->
                     addCall("curveTo", hx, hy, x1, y1, x, y)
                     curveTo(hx, hy, x1, y1, x, y)
                 }
@@ -148,7 +149,7 @@ fun GeneralPath.fromSVG(path: String, scale: Double = 1.0): MutableList<String> 
 
             's' -> for ((dx1, dy1, dx, dy) in coords.chunked(4)) {
                 currentPoint.let { (x, y) ->
-                    (if (prevInstruction == 'c' || prevInstruction == 'q') currentPoint.mirror(handle) else currentPoint).let { (hx, hy) ->
+                    (if (prevInstruction  in "cqs") currentPoint.mirror(handle) else currentPoint).let { (hx, hy) ->
                         addCall("curveTo", hx, hy, dx1 + x, dy1 + y, dx + x, dy + y)
                         curveTo(hx, hy, dx1 + x, dy1 + y, dx + x, dy + y)
                     }

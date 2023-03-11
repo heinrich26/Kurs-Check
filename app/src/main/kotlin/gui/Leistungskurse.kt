@@ -15,10 +15,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package gui
+package com.kurswahlApp.gui
 
 import com.kurswahlApp.data.*
 import com.kurswahlApp.data.Wahlzeile.Companion.isWildcard
+import org.intellij.lang.annotations.Language
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.event.ItemEvent
@@ -72,7 +73,8 @@ class Leistungskurse(wahlData: KurswahlData, fachData: FachData, notifier: (Bool
 
         // Eine Fremdsprache, die erst in der Jahrgangsstufe 10 oder in der Einführungsphase begonnen wurde,
         // darf nur als 3. oder 4. Prüfungsfach oder als Referenzfach der 5. PK gewählt werden.
-        val fs = wahlData.fremdsprachen.mapNotNull { (fach, jahr) -> if (jahr >= 10) null else fach }
+        val fs =
+            wahlData.fremdsprachen.mapNotNull { (fach, jahr) -> if (jahr >= fachData.schultyp.ePhase) null else fach }
 
         val model1 = FachComboBoxModel(fachData.lk1Moeglichkeiten.filter {
             !it.isFremdsprache || it in fs && it.checkKlasse(wahlData.klasse)
@@ -83,10 +85,10 @@ class Leistungskurse(wahlData: KurswahlData, fachData: FachData, notifier: (Bool
         val wpfs = wahlData.wpfs
         val moeglichkeiten = fachData.lk2Moeglichkeiten.filter {
             it != lk1.selectedItem &&
-            /* Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1 */
-            (if (it.isFremdsprache) it in fs
-            /* Hat keine WPF or Fach ist weder 1./2. WPF */
-            else (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second))))
+                    /* Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1 */
+                    (if (it.isFremdsprache) it in fs
+                    /* Hat keine WPF or Fach ist weder 1./2. WPF */
+                    else (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second))))
                     && it.checkKlasse(wahlData.klasse)
         }
         val model2 = LKComboBoxModel(moeglichkeiten, lk1)
@@ -96,18 +98,18 @@ class Leistungskurse(wahlData: KurswahlData, fachData: FachData, notifier: (Bool
         lk1.addActionListener {
             model2.clear()
             model2.addAll(LinkedHashSet<String>().apply {
-                for (wz in fachData.wahlzeilen.values) {
-                    if (wz.lk1.isWildcard && lk1.selectedItem != null && lk1.selectedItem!!.kuerzel in fachData.wzWildcards[wz.lk1]!! || wz.lk1 == lk1.selectedItem?.kuerzel)
-                        if (wz.lk2.isWildcard)
-                            this.addAll(fachData.wzWildcards[wz.lk2]!!)
-                        else this.add(wz.lk2)
+                for ((lk11, lk21) in fachData.wahlzeilen.values) {
+                    if (lk11.isWildcard && lk1.selectedItem != null && lk1.selectedItem!!.kuerzel in fachData.wzWildcards[lk11]!! || lk11 == lk1.selectedItem?.kuerzel)
+                        if (lk21.isWildcard)
+                            this.addAll(fachData.wzWildcards[lk21]!!)
+                        else this.add(lk21)
                 }
             }.map { fachData.faecherMap[it]!! }.filter {
                 it != lk1.selectedItem &&
-                /* Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1 */
-                (if (it.isFremdsprache) it in fs
-                /* Hat keine WPF or Fach ist weder 1./2. WPF */
-                else (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second))))
+                        /* Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1 */
+                        (if (it.isFremdsprache) it in fs
+                        /* Hat keine WPF or Fach ist weder 1./2. WPF */
+                        else (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second))))
                         && it.checkKlasse(wahlData.klasse)
             })
         }
@@ -136,6 +138,8 @@ class Leistungskurse(wahlData: KurswahlData, fachData: FachData, notifier: (Bool
             container.add(lk2, row = 1, column = 1, fill = GridBagConstraints.BOTH, margin = it)
         }
 
+        container.add(Box.createHorizontalStrut(200), row = 0, column = 0, columnspan = 2)
+
         add(container)
     }
 
@@ -143,6 +147,9 @@ class Leistungskurse(wahlData: KurswahlData, fachData: FachData, notifier: (Bool
     override fun close(): KurswahlData = wahlData.updateLKs(lk1 = lk1.selectedItem!!, lk2 = lk2.selectedItem!!)
 
     override fun isDataValid(): Boolean = (lk1.selectedItem != null && lk2.selectedItem != null)
+
+    @Language("HTML")
+    override fun showHelp(): String = "<h2>$windowName</h2><p>Die Leistungskurse ergeben sich wie folgt:<br><b>Beschwere dich bei deinem PäKo, dass er/sie keine Hilfe verfasst hat!</b></p>"
 
     override val windowName: String
         get() = "Leistungskurse"

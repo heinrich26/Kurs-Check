@@ -15,23 +15,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package gui
+package com.kurswahlApp.gui
 
-import com.kurswahlApp.data.Consts.COLOR_ON_BACKGROUND
+import com.kurswahlApp.data.Consts
+import com.kurswahlApp.data.Consts.FONT_NAME
 import com.kurswahlApp.data.School
-import java.awt.Component
-import javax.swing.BorderFactory
-import javax.swing.JLabel
-import javax.swing.JList
-import javax.swing.ListCellRenderer
+import java.awt.*
+import javax.swing.*
+import javax.swing.border.MatteBorder
 
-class SchoolRenderer : JLabel(), ListCellRenderer<School> {
+class SchoolRenderer : JPanel(GridBagLayout()), ListCellRenderer<School> {
+    private val title = JLabel()
+    private val subtitle = JLabel()
     init {
         isOpaque = true
+        title.font = TITLE_FONT
+        title.foreground = Consts.COLOR_PRIMARY
+        add(title, fill = GridBagConstraints.BOTH, weightx = 1.0, weighty = 1.0, margin = Insets(4))
+        add(subtitle, row = 1, fill = GridBagConstraints.HORIZONTAL, margin = Insets(0,4,4,4))
     }
 
     companion object {
-        val SEPARATOR = BorderFactory.createMatteBorder(0, 0, 1, 0, COLOR_ON_BACKGROUND)
+        val SEPARATOR: MatteBorder = BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE.darker())
+        val TITLE_FONT = Font(FONT_NAME, Font.BOLD, 14)
     }
 
     override fun getListCellRendererComponent(
@@ -42,17 +48,14 @@ class SchoolRenderer : JLabel(), ListCellRenderer<School> {
         cellHasFocus: Boolean
     ): Component {
         // einen Separator zwischen den Einträgen anzeigen
-        border = if (list.model.size - 1 != index) SEPARATOR else null
+        border = SEPARATOR
+        title.text = value.name.wrappable(166)
+        subtitle.text = value.adresse.wrappable(166)
 
-        text = (value.name.wrapHtml("b", "font-size: 14px", "font-weight: 700") + "<br>" +
-                value.adresse).wrapHtml("div", "margin: 0 4px").wrapHtml()
-
-        if (isSelected) {
-            background = list.selectionBackground
-            foreground = list.selectionForeground
+        background = if (isSelected) {
+            Consts.COLOR_CONTROL
         } else {
-            background = list.background
-            foreground = list.foreground
+            Consts.COLOR_BACKGROUND
         }
 
         return this

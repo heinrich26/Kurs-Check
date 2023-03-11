@@ -15,16 +15,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package gui
+package com.kurswahlApp.gui
 
 import com.kurswahlApp.data.Consts.PANEL_HEIGHT
 import com.kurswahlApp.data.Consts.PANEL_WIDTH
 import com.kurswahlApp.data.FachData
 import com.kurswahlApp.data.KurswahlData
-import java.awt.Color
+import org.intellij.lang.annotations.Language
 import java.awt.Dimension
 import java.awt.GridBagLayout
-import javax.swing.BorderFactory
 import javax.swing.JFrame
 import javax.swing.JPanel
 import javax.swing.UIManager
@@ -40,6 +39,9 @@ abstract class KurswahlPanel(val wahlData: KurswahlData, val fachData: FachData,
     abstract fun close() : KurswahlData
 
     abstract fun isDataValid(): Boolean
+
+    @Language("HTML")
+    abstract fun showHelp(): String
 
     abstract val windowName: String
 
@@ -62,7 +64,7 @@ abstract class KurswahlPanel(val wahlData: KurswahlData, val fachData: FachData,
 
             frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
             frame.setSize(300, 300)
-            frame.setLocation(430, 100)
+            frame.setLocationRelativeTo(null)
             frame.isVisible = true
         }
     }

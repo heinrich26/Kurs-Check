@@ -18,7 +18,11 @@
 package com.kurswahlApp.data
 
 import org.apache.pdfbox.pdmodel.interactive.form.PDField
+import java.awt.Color
 
 var PDField.checked: Boolean
     get() = this.valueAsString == "Yes"
     set(value) = this.setValue(if (value) "Yes" else "Off")
+
+fun Color.transparentise(value: Float): Color = Color(red, green, blue, (255*value).toInt())
+fun Color.transparentise(value: Int): Color = Color(red, green, blue, value)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022  Hendrik Horstmann
+ * Copyright (c) 2022-2023  Hendrik Horstmann
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package gui
+package com.kurswahlApp.gui
 
 import com.kurswahlApp.data.Consts.COLOR_ON_PRIMARY
 import com.kurswahlApp.data.Consts.COLOR_ON_PRIMARY_FOCUS

@@ -2,6 +2,9 @@
 <project version="4">
   <component name="AnalysisUIOptions">
     <option name="ANALYZE_TEST_SOURCES" value="false" />
+    <option name="ANALYZE_INJECTED_CODE" value="false" />
+    <option name="SCOPE_TYPE" value="8" />
+    <option name="CUSTOM_SCOPE_NAME" value="Open Files" />
   </component>
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
@@ -12,43 +15,76 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Build Error behoben">
-      <change afterPath="$PROJECT_DIR$/.idea/jsonSchemas.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/remote-targets.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/resources/drawables/file_open.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/resources/drawables/save.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/Extensions.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/lusd_pdf/FeldZeile.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/lusd_pdf/Main.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/lusd_pdf/PDFReference.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/main/resources/formular.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resource-generator/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resource-generator/src/main/kotlin/SvgGenerator.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resource-generator/src/main/kotlin/SvgProcessor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="B-LUSD Integration und Änderungen am Build System um SVGs automatisch in JAVA Objekte zu konvertieren.">
+      <change afterPath="$PROJECT_DIR$/.idea/scopes/Vector_Resources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/drawables/help.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/resources/FiraSans-Bold.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/resources/FiraSans-BoldItalic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/resources/FiraSans-Italic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/resources/FiraSans-Regular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/resources/kursCheckStrings.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/resources/kursCheckStrings_de.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/resources/kursCheckStrings_en.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsonSchemas.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsonSchemas.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/github_status/GithubStatus.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/github_status/GithubStatus.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/AusgabeCheckBox.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/AusgabeCheckBox.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/AusgabeLayout.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/AusgabeLayout.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/ClickableDestionation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/ClickableDestionation.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/ExclusiveComboBoxModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/ExclusiveComboBoxModel.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Extensions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Extensions.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/FachComboBox.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/FachComboBox.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/FachComboBoxModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/FachComboBoxModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/FachRenderer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/FachRenderer.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Fremdsprachen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Fremdsprachen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/FsWpfIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/FsWpfIcon.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/HintTextField.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/HintTextField.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/KursanzahlInfo.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/KursanzahlInfo.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/KurswahlPanel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/KurswahlPanel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Leistungskurse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Leistungskurse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Nutzerdaten.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Nutzerdaten.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Overview.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Overview.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/PfPkIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/PfPkIcon.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/PolyIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/PolyIcon.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Pruefungsfaecher.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Pruefungsfaecher.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/RegelLabel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/RegelLabel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/RoundedBorder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/RoundedBorder.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/SchoolRenderer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/SchoolRenderer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/ScreenImage.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/ScreenImage.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/ScrollablePanel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/ScrollablePanel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/SidebarLabel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/SidebarLabel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/SolidFiller.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/SolidFiller.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Toolbar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Toolbar.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/lib/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/Utils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/Utils.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/VerticalLayout.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/VerticalLayout.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/WahlVisualizer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/WahlVisualizer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/resources/drawables/file_open.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/drawables/file_open.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/resources/drawables/save.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/drawables/save.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/resources/schools-data/per-school-settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/Consts.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/Consts.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/Fach.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/Fach.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/Extensions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/Extensions.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/KurswahlData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/KurswahlData.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/Pf5Typ.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/Pf5Typ.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/RegelScope.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/RegelScope.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/resources/schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/resources/schema.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/svgToSwingConverter.py" beforeDir="false" afterPath="$PROJECT_DIR$/svgToSwingConverter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/SchoolConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/SchoolConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/Schultyp.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/Schultyp.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/lusd_pdf/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/lusd_pdf/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/lusd_pdf/PDFReference.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/resources/formular.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/res/formular.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/resources/schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/res/schema.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/resources/test_wahl.kurswahl" beforeDir="false" afterPath="$PROJECT_DIR$/res/test_wahl.kurswahl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/merger/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/merger/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resource-generator/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/resource-generator/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resource-generator/src/main/kotlin/SvgGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/resource-generator/src/main/kotlin/SvgGenerator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resource-generator/src/main/kotlin/SvgProcessor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/resource-generator/src/main/kotlin/SvgProcessor.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,9 +139,10 @@
         <option value="module-info" />
         <option value="Kotlin Object" />
         <option value="Kotlin Data Class" />
-        <option value="Kotlin File" />
         <option value="Kotlin Class" />
         <option value="Class" />
+        <option value="package-info" />
+        <option value="Kotlin File" />
       </list>
     </option>
   </component>
@@ -131,7 +168,6 @@
     <setting file="jar://$USER_HOME$/.jdks/openjdk-18.0.1.1/lib/src.zip!/java.desktop/java/awt/geom/Path2D.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/app/build.gradle" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/app/res/kurswahl-win.properties" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/lib/src/main/kotlin/data/Consts.kt" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/lib/src/main/kotlin/data/SchoolConfig.kt" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -140,6 +176,14 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="NamedScopeManager">
+    <order>
+      <scope name="Vector-Resources" />
+    </order>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
@@ -154,6 +198,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "NewWatcherDialog.advanced.open": "true",
     "Project.color": "0f3259",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -161,12 +206,18 @@
     "WebServerToolWindowFactoryState": "false",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "jdk.selected.JAVA_MODULE": "openjdk-18",
-    "last_opened_file_path": "C:/Users/Hendrik/Desktop/kurswahlApp/lib/src/main/resources/schema.json",
+    "last_opened_file_path": "C:/Users/Hendrik/Desktop/kurswahlApp/app/src/main/resources",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.sourceCode.JSON"
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "watcher.settings",
+    "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
     "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
@@ -179,21 +230,21 @@
       <recent name="javax.swing.text.html" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\lib\src\main\resources" />
       <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\app\src\main\resources" />
+      <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\app\src\main\resources\drawables" />
+      <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\lib\src\main\resources" />
       <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\lib\src\main\kotlin\data\lusd_pdf" />
       <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\app\res" />
-      <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\merger\res" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\app\src\main\resources\drawables" />
-      <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\app\src\main\resources\icons" />
       <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\app\src\main\resources" />
-      <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\app\src\main\java" />
-      <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\resource-generator\src\main\kotlin" />
+      <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\app\assets" />
+      <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\app\src\main\kotlin\com\kurswahlApp\" />
+      <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\res" />
+      <recent name="C:\Users\Hendrik\Desktop\kurswahlApp\app\res" />
     </key>
     <key name="CreateKotlinClassDialog.RecentsKey">
       <recent name="com.kurswahlApp.data.lusd_pdf" />
@@ -227,7 +278,6 @@
       <command value="gradle createAllExecutables" />
       <command value="gradle shadowJar" />
       <command value="gradle :app:createExe" />
-      <command value="gradle clean" />
       <command value="gradle app:run" />
       <command value="gradle app:run clean" />
       <command value="gradle merger:jpackageImage" />
@@ -246,9 +296,11 @@
       <command value="gradle app:build" />
       <command value="gradle :resource-generator:run" />
       <command value="gradle :resource-generator:processVectors" />
+      <command value="gradle merger:jpackage clean" />
+      <command value="gradle clean" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.generateResources">
+  <component name="RunManager" selected="Kotlin.GuiMain">
     <configuration name="App Build (WSL)" type="GradleRunConfiguration" factoryName="Gradle">
       <target name="WSL - Ubuntu-20.04" />
       <ExternalSystemSettings>
@@ -347,7 +399,6 @@
         <option name="taskNames">
           <list>
             <option value=":app:run" />
-            <option value="clean" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -393,7 +444,7 @@
             <option value=":app:run" />
           </list>
         </option>
-        <option name="vmOptions" />
+        <option name="vmOptions" value="-Duser.language=de -Duser.country=DE -Duser.variant=DE" />
       </ExternalSystemSettings>
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
@@ -420,6 +471,77 @@
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
+    </configuration>
+    <configuration name="kurswahlApp [:resource-generator:processVectors]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":resource-generator:processVectors" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="kurswahlApp [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="kurswahlApp [merger:jpackage clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="merger:jpackage" />
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="GuiMain" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.kurswahlApp.gui.GuiMain" />
+      <module name="Kurs-Check.app.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration name="Main (WSL)" type="JetRunConfigurationType">
       <option name="MAIN_CLASS_NAME" value="gui.GuiMain" />
@@ -466,6 +588,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Gradle.App Build (Win)" />
       <item itemvalue="Gradle.App Build (WSL)" />
@@ -475,14 +608,22 @@
       <item itemvalue="Gradle.Project Build" />
       <item itemvalue="Gradle.Run App (WSL)" />
       <item itemvalue="Gradle.generateResources" />
+      <item itemvalue="Gradle.kurswahlApp [clean]" />
+      <item itemvalue="Gradle.kurswahlApp [merger:jpackage clean]" />
+      <item itemvalue="Gradle.kurswahlApp [:resource-generator:processVectors]" />
       <item itemvalue="Kotlin.Main w. testData" />
       <item itemvalue="Kotlin.Main w. testData (WSL)" />
       <item itemvalue="Kotlin.Main" />
       <item itemvalue="Kotlin.Main (WSL)" />
+      <item itemvalue="Kotlin.GuiMain" />
       <item itemvalue="Kotlin.MainKt" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.kurswahlApp [:resource-generator:processVectors]" />
+        <item itemvalue="Kotlin.GuiMain" />
+        <item itemvalue="Gradle.kurswahlApp [clean]" />
+        <item itemvalue="Gradle.kurswahlApp [merger:jpackage clean]" />
         <item itemvalue="Kotlin.MainKt" />
       </list>
     </recent_temporary>
@@ -563,14 +704,14 @@
       <workItem from="1673174755885" duration="747000" />
       <workItem from="1677155366986" duration="15807000" />
       <workItem from="1677503294829" duration="94000" />
-      <workItem from="1677762629724" duration="78520000" />
-    </task>
-    <task id="LOCAL-00068" summary="Dialog-Titel bei den Open/Save Dialogen hinzugefügt.">
-      <created>1654982710880</created>
-      <option name="number" value="00068" />
-      <option name="presentableId" value="LOCAL-00068" />
-      <option name="project" value="LOCAL" />
-      <updated>1654982710880</updated>
+      <workItem from="1677762629724" duration="78639000" />
+      <workItem from="1678267644608" duration="407000" />
+      <workItem from="1678268088673" duration="55000" />
+      <workItem from="1678270984199" duration="4905000" />
+      <workItem from="1678371742663" duration="12340000" />
+      <workItem from="1678384335311" duration="14603000" />
+      <workItem from="1678438621276" duration="3962000" />
+      <workItem from="1678458407373" duration="7966000" />
     </task>
     <task id="LOCAL-00069" summary="Fächer, welche kein Kurs sind, werden im CSV-Generator ausgelassen">
       <created>1654998996647</created>
@@ -908,7 +1049,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673117032025</updated>
     </task>
-    <option name="localTasksCounter" value="117" />
+    <task id="LOCAL-00117" summary="B-LUSD Integration und Änderungen am Build System um SVGs automatisch in JAVA Objekte zu konvertieren.">
+      <created>1678046144537</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
+      <option name="project" value="LOCAL" />
+      <updated>1678046144537</updated>
+    </task>
+    <option name="localTasksCounter" value="118" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -930,7 +1078,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Gradle-Version in die gradle.properties verschoben" />
     <MESSAGE value="Deprecation-Warnung bei Test-Daten aufgehoben" />
     <MESSAGE value="gitignore Update" />
     <MESSAGE value="Internetproblem behoben" />
@@ -955,7 +1102,8 @@
     <MESSAGE value="Build Error mit der Filetype Association behoben" />
     <MESSAGE value="kleine visuelle Änderungen und refactoring" />
     <MESSAGE value="Build Error behoben" />
-    <option name="LAST_COMMIT_MESSAGE" value="Build Error behoben" />
+    <MESSAGE value="B-LUSD Integration und Änderungen am Build System um SVGs automatisch in JAVA Objekte zu konvertieren." />
+    <option name="LAST_COMMIT_MESSAGE" value="B-LUSD Integration und Änderungen am Build System um SVGs automatisch in JAVA Objekte zu konvertieren." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

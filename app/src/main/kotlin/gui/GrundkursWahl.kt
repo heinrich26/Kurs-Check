@@ -15,12 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package gui
+package com.kurswahlApp.gui
 
 import com.kurswahlApp.data.*
-import com.kurswahlApp.data.Consts.COLOR_PRIMARY
+import com.kurswahlApp.data.Consts.COLOR_CONTROL
 import com.kurswahlApp.data.Wahlmoeglichkeit.*
 import com.kurswahlApp.data.Wahlmoeglichkeit.Companion.UNGEWAEHLT_BOOLS
+import org.intellij.lang.annotations.Language
 import java.awt.*
 import javax.swing.*
 
@@ -60,14 +61,16 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         return counter in fachData.minKurse..fachData.maxKurse
     }
 
+    @Language("HTML")
+    override fun showHelp(): String = "<h2>$windowName</h2><p>Auf der linken Seite kannst du Kurse auswählen. Kurse die du bereits als Prüfungsfächer hast, sind bereits angeklickt! Auf der rechten Seite findest du alle Regeln, die deine Grundkurse erfüllen müssen! Wähle ein paar Kurse und klicke auf <b>Überprüfen</b> um zu sehen welche Fächer/Kurse dir noch fehlen!</p><p>Die Grundkurse ergeben sich wie folgt:<br><b>Beschwere dich bei deinem PäKo, dass er/sie keine bessere Hilfe verfasst hat!</b></p>"
+
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
             runTest { GrundkursWahl(testKurswahl, testFachdata) }
         }
 
-        private val extraFachColor =
-            Color(COLOR_PRIMARY.colorSpace, COLOR_PRIMARY.getRGBColorComponents(null), .1f)
+        private val extraFachColor = COLOR_CONTROL
 
         private val LABEL_TEXT_COLOR = JLabel().foreground
     }

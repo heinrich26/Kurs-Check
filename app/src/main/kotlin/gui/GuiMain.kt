@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package gui
+package com.kurswahlApp.gui
 
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DatabindException
@@ -27,23 +27,30 @@ import com.kurswahlApp.data.*
 import com.kurswahlApp.data.Consts.APP_ICONS
 import com.kurswahlApp.data.Consts.APP_NAME
 import com.kurswahlApp.data.Consts.FILETYPE_EXTENSION
+import com.kurswahlApp.data.Consts.FONT_NAME
 import com.kurswahlApp.data.Consts.HOME_POLY
+import com.kurswahlApp.data.Consts.PANEL_WIDTH
 import com.kurswahlApp.data.Consts.PERSON_ICON
 import com.kurswahlApp.data.Consts.SIDEBAR_SIZE
 import com.kurswahlApp.data.Consts.TEST_FILE_NAME
-import github_status.GithubStatus
+import com.kurswahlApp.github_status.GithubStatus
 import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
 import kotlinx.cli.default
 import kotlinx.cli.optional
-import java.awt.Dimension
-import java.awt.GridBagConstraints
-import java.awt.GridBagLayout
+import java.awt.*
+import java.awt.event.ComponentAdapter
+import java.awt.event.ComponentEvent
+import java.awt.event.ComponentListener
 import java.io.File
 import java.io.IOException
+import java.net.URL
 import javax.imageio.ImageIO
 import javax.swing.*
 import javax.swing.border.EmptyBorder
+import javax.swing.event.HyperlinkEvent
+import javax.swing.plaf.FontUIResource
+import javax.swing.text.html.HTMLEditorKit
 import kotlin.concurrent.thread
 import kotlin.reflect.KClass
 import kotlin.system.exitProcess
@@ -110,7 +117,7 @@ class GuiMain(file: File? = null) : JPanel() {
             val parser = ArgParser(APP_NAME)
 
             val input by parser.argument(
-                ArgType.String, "input", "Die zum öffnen verwendete Datei"
+                ArgType.String, "input", "Die zum Öffnen verwendete Datei"
             ).optional()
 
 
@@ -125,20 +132,33 @@ class GuiMain(file: File? = null) : JPanel() {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
 
 
+                val ge = GraphicsEnvironment.getLocalGraphicsEnvironment()
+                arrayOf("Bold", "BoldItalic", "Italic", "Regular").forEach {
+                    ge.registerFont(
+                        Font.createFont(
+                            Font.TRUETYPE_FONT,
+                            getResourceURL("FiraSans-$it.ttf")!!.openStream()
+                        )
+                    )
+                }
+
+                val defaults = UIManager.getLookAndFeelDefaults()
                 // Font Hack
-                /*for ((key, value) in UIManager.getLookAndFeelDefaults()) {
+                for ((key, value) in defaults) {
                     if (key is String && key.endsWith(".font")) {
                         // Hack für WindowsLookAndFeel
                         if (value is UIDefaults.ActiveValue) {
-                            val val2 = value.createValue(UIManager.getDefaults())
-                            if (val2 is FontUIResource)
-                                UIManager.put(key, FontUIResource(FONT_NAME, val2.style, val2.size))
-                        } else if (value is FontUIResource) // Hack für den Standard LookAndFeel
-                            UIManager.put(key, FontUIResource(FONT_NAME, value.style, value.size))
+                            val val2 = value.createValue(defaults)
+                            if (val2 is FontUIResource) {
+                                defaults[key] = FontUIResource(FONT_NAME, val2.style, 13)
+                            }
+                        } else if (value is FontUIResource) {
+                            // Hack für den Standard LookAndFeel
+                            defaults[key] = FontUIResource(FONT_NAME, value.style, 13)
+                        }
                     }
-                }*/
-            } catch (e: Exception) {
-                e.printStackTrace()
+                }
+            } catch (_: Exception) {
             }
 
             SwingUtilities.invokeLater { createAndShowGUI(input, useTestData) }
@@ -159,7 +179,7 @@ class GuiMain(file: File? = null) : JPanel() {
             frame.minimumSize = Dimension(640, 560)
             // Anzeigen.
             frame.pack()
-            frame.setLocation(500, 200)
+            frame.setLocationRelativeTo(null)
             frame.isVisible = true
         }
     }
@@ -196,8 +216,8 @@ class GuiMain(file: File? = null) : JPanel() {
         if (!curPanel.isDataValid()) {
             val choice = JOptionPane.showConfirmDialog(
                 this,
-                "Deine Änderungen sind ungültig und gehen verloren, wenn du jetzt weitergehst!",
-                "Ungültige Daten",
+                R.getString("data_loss_alert"),
+                R.getString("invalid_data"),
                 JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.WARNING_MESSAGE
             )
@@ -261,8 +281,9 @@ class GuiMain(file: File? = null) : JPanel() {
 
 
         add(toolbar, fill = GridBagConstraints.HORIZONTAL, row = 0, column = 0, columnspan = 3)
-        toolbar.addActionItem(R.file_open, "open-action", "Kurswahl öffnen", this::openKurswahlAction)
-        toolbar.addActionItem(R.save, "save-action", "Kurswahl speichern", this::saveKurswahlAction)
+        toolbar.addActionItem(R.file_open, "open-action", R.getString("open_kurswahl"), this::openKurswahlAction)
+        toolbar.addActionItem(R.save, "save-action", R.getString("save_kurswahl"), this::saveKurswahlAction)
+        toolbar.addActionItem(R.help, "help-action", R.getString("help"), this::showHelp)
 
         (layout as GridBagLayout).rowWeights = doubleArrayOf(0.0, 1.0, .0)
 
@@ -277,13 +298,13 @@ class GuiMain(file: File? = null) : JPanel() {
 
         add(unvollstaendigeEingabeLabel, row = 2, column = 2, anchor = GridBagConstraints.CENTER)
 
-        val resetButton = JButton("Zurücksetzen")
+        val resetButton = JButton(R.getString("reset"))
         resetButton.isFocusable = false
         resetButton.addActionListener {
             if (JOptionPane.showConfirmDialog(
                     this,
-                    "Möchtest du deine komplette Wahl zurücksetzen? Alle ungespeicherten Eingaben gehen dadurch verloren!",
-                    "Zurücksetzen?",
+                    R.getString("ask_reset"),
+                    "${R.getString("reset")}?",
                     JOptionPane.YES_NO_OPTION
                 ) == JOptionPane.YES_OPTION
             ) {
@@ -303,14 +324,54 @@ class GuiMain(file: File? = null) : JPanel() {
         chooseSchoolButton.addActionListener {
             if (JOptionPane.showConfirmDialog(
                     this,
-                    "Möchtest du die Schule wirklich wechseln? Alle ungespeicherten Eingaben gehen dadurch verloren!",
-                    "Fortfahren?",
+                    R.getString("change_school"),
+                    "${R.getString("continue")}?",
                     JOptionPane.YES_NO_OPTION
                 ) == JOptionPane.YES_OPTION
             ) showSchoolChooser(false)
         }
 
         add(chooseSchoolButton, row = 2, column = 2, anchor = GridBagConstraints.WEST, margin = Insets(4))
+    }
+
+
+    private fun layoutComponent(component: Component) {
+        synchronized(component.treeLock) {
+            component.doLayout()
+            if (component is Container) {
+                for (child in component.components) {
+                    layoutComponent(child)
+                }
+            }
+        }
+    }
+
+    /**
+     * Zeigt den Hilfedialog jedes Panels an
+     */
+    private fun showHelp() {
+        val content = JEditorPane("text/html", "<html><body><h1><a name=''>Kurs-Check Hife</a></h1>${curPanel.showHelp()}</body></html>")
+        val pane = JScrollPane(content, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER)
+
+        content.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, true)
+        content.isEditable = false
+        content.isOpaque = false
+        content.font = JLabel().font
+        content.maximumSize = Dimension(PANEL_WIDTH - pane.verticalScrollBar.preferredSize.width - 2, Int.MAX_VALUE)
+        with((content.editorKit as HTMLEditorKit).styleSheet) {
+            addRule("a, h1, h2, h3, h4, h5, h6 {color: ${Consts.COLOR_PRIMARY.hexString()}}")
+        }
+        content.addHyperlinkListener {
+            if (it.eventType == HyperlinkEvent.EventType.ACTIVATED && it.description != null) {
+                content.scrollToReference(it.description.substring(1))
+            }
+        }
+
+        pane.preferredSize = Dimension(500, 400)
+
+        pane.viewport.viewPosition = Point(0, 0)
+        pane.verticalScrollBar.value = 0
+        JOptionPane.showMessageDialog(this, pane, R.getString("help"), JOptionPane.PLAIN_MESSAGE)
     }
 
     /**
@@ -342,8 +403,8 @@ class GuiMain(file: File? = null) : JPanel() {
                     data.readJsonVersion.first != newFachData.jsonVersion.first -> {
                         JOptionPane.showMessageDialog(
                             this,
-                            "Die Version deiner Datei ist inkompatibel! Es tut uns leid, aber du musst deine Wahl erneut eingeben!",
-                            "Inkompatible Datei",
+                            R.getString("incompatible_file_alert"),
+                            R.getString("incompatible_file"),
                             JOptionPane.ERROR_MESSAGE
                         )
                         return false
@@ -351,15 +412,15 @@ class GuiMain(file: File? = null) : JPanel() {
 
                     data.readJsonVersion.second > newFachData.jsonVersion.second -> JOptionPane.showMessageDialog(
                         this,
-                        "Die Version deiner Datei ist neuer als die des Programms! Unter Umständen gehen ein paar Daten verloren!",
-                        "Versionsunterschiede",
+                        R.getString("newer_file_alert"),
+                        R.getString("version_differences"),
                         JOptionPane.WARNING_MESSAGE
                     )
 
                     data.readJsonVersion.second < newFachData.jsonVersion.second -> JOptionPane.showMessageDialog(
                         this,
-                        "Die Version deiner Datei ist älter als die des Programms! Unter Umständen müssen ein paar Daten neu eingetragen werden!",
-                        "Versionsunterschiede",
+                        R.getString("older_file_alert"),
+                        R.getString("version_differences"),
                         JOptionPane.WARNING_MESSAGE
                     )
                 }
@@ -370,19 +431,17 @@ class GuiMain(file: File? = null) : JPanel() {
             } catch (e: DatabindException) {
                 JOptionPane.showMessageDialog(
                     this,
-                    "Die Datei konnte nicht gelesen werden! Es tut uns leid, aber du musst deine Wahl erneut eingeben!",
-                    "Fehlerhafte Datei",
+                    R.getString("cannot_read_alert"),
+                    R.getString("bad_file"),
                     JOptionPane.ERROR_MESSAGE
                 )
-                e.printStackTrace()
             } catch (e: MissingKotlinParameterException) {
                 JOptionPane.showMessageDialog(
                     this,
-                    "Die Datei konnte nicht gelesen werden! Es tut uns leid, aber du musst deine Wahl erneut eingeben!",
-                    "Fehlerhafte Datei",
+                    R.getString("cannot_read_alert"),
+                    R.getString("bad_file"),
                     JOptionPane.ERROR_MESSAGE
                 )
-                e.printStackTrace()
             } catch (e: RuntimeException) {
                 showLoadingError()
             }
@@ -394,7 +453,7 @@ class GuiMain(file: File? = null) : JPanel() {
     private fun openKurswahlAction() {
         val chooser = JFileChooser()
         chooser.fileFilter = KurswahlFileFilter
-        chooser.dialogTitle = "Kurswahl-Datei öffnen"
+        chooser.dialogTitle = R.getString("open_kurswahl_file")
 
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             if (loadKurswahlFile(chooser.selectedFile))
@@ -407,8 +466,8 @@ class GuiMain(file: File? = null) : JPanel() {
         if (!curPanel.isDataValid()) {
             JOptionPane.showMessageDialog(
                 this,
-                "Dein Wahl ist noch unvollständig oder ungültig! Vervollständige deine Wahl, bevor du sie exportieren kannst",
-                "Ungültige Wahl",
+                R.getString("wahl_incomplete_alert"),
+                R.getString("invalid_wahl"),
                 JOptionPane.ERROR_MESSAGE
             )
             return
@@ -420,19 +479,19 @@ class GuiMain(file: File? = null) : JPanel() {
         val todos = data.check()
 
         if (todos != null) {
-            JOptionPane.showMessageDialog(this, todos, "Ungültige Wahl", JOptionPane.ERROR_MESSAGE)
+            JOptionPane.showMessageDialog(this, todos, R.getString("invalid_wahl"), JOptionPane.ERROR_MESSAGE)
         } else if (data.countCourses().sum() !in fachData.minKurse..fachData.maxKurse) {
             JOptionPane.showMessageDialog(
                 this,
-                "Du hast noch nicht genügend Grundkurse! Es tut uns leid, aber du musst deine Wahl vervollständigen, bevor du sie exportieren kannst",
-                "Ungültige Wahl",
+                "${R.getString("not_enough_grundkurse")} ${R.getString("comlete_wahl_to_export")}",
+                R.getString("invalid_wahl"),
                 JOptionPane.ERROR_MESSAGE
             )
         } else if (!fachData.regeln.all { it.match(data) }) {
             JOptionPane.showMessageDialog(
                 this,
-                "Deine Wahl erfüllt nicht alle Regeln! Es tut uns leid, aber du musst deine Wahl vervollständigen, bevor du sie exportieren kannst!",
-                "Ungültige Wahl",
+                "${R.getString("rules_unfullfilled")} ${R.getString("comlete_wahl_to_export")}",
+                R.getString("invalid_wahl"),
                 JOptionPane.ERROR_MESSAGE
             )
         } else {
@@ -443,7 +502,7 @@ class GuiMain(file: File? = null) : JPanel() {
              */
             fun saveKurswahl() {
                 chooser.fileFilter = KurswahlFileFilter
-                chooser.dialogTitle = "Datei für den Oberstufenkoordinator speichern"
+                chooser.dialogTitle = R.getString("save_file_for_paeko")
                 chooser.selectedFile = File("${data.toFilename()}.$FILETYPE_EXTENSION")
 
                 if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
@@ -460,8 +519,8 @@ class GuiMain(file: File? = null) : JPanel() {
                         } catch (exception: SecurityException) {
                             JOptionPane.showMessageDialog(
                                 this,
-                                "Du hast keine Berechtigung diese Datei zu schreiben! Versuche einen anderen Namen oder Ordner!",
-                                "Keine Rechte",
+                                R.getString("missing_write_permission"),
+                                R.getString("no_rights"),
                                 JOptionPane.ERROR_MESSAGE
                             )
                         }
@@ -473,16 +532,13 @@ class GuiMain(file: File? = null) : JPanel() {
              * Speichert ein Bild der Kurswahl
              */
             fun saveBild() {
-                if (chooser.selectedFile != null) chooser.selectedFile =
-                    File(chooser.currentDirectory, chooser.selectedFile.nameWithoutExtension + ".png")
-//              chooser.resetChoosableFileFilters()
+                if (chooser.selectedFile != null) chooser.selectedFile = chooser.selectedFile.withExtension("png")
                 chooser.fileFilter = PngFileFilter
-                chooser.dialogTitle = "Bild für dich speichern"
+                chooser.dialogTitle = R.getString("save_for_you")
 
 
                 if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-                    val f =
-                        File("${chooser.selectedFile.parent}${File.separatorChar}${chooser.selectedFile.nameWithoutExtension}.png")
+                    val f = chooser.selectedFile.withExtension("png")
 
                     thread {
                         try {
@@ -491,8 +547,8 @@ class GuiMain(file: File? = null) : JPanel() {
                         } catch (exception: SecurityException) {
                             JOptionPane.showMessageDialog(
                                 this,
-                                "Du hast keine Berechtigung diese Datei zu schreiben! Versuche einen anderen Namen oder Ordner!",
-                                "Keine Rechte",
+                                R.getString("missing_write_permission"),
+                                R.getString("no_rights"),
                                 JOptionPane.ERROR_MESSAGE
                             )
                         }
@@ -503,8 +559,8 @@ class GuiMain(file: File? = null) : JPanel() {
             fun askFallback() {
                 if (JOptionPane.showConfirmDialog(
                         this,
-                        "Du hast kein Formular ausgewählt! Möchstest du trotzdem eine Datei zur Weiterbearbeitung speichern?",
-                        "Nichts Ausgewählt",
+                        R.getString("no_form_selected_alert"),
+                        R.getString("nothing_selected"),
                         JOptionPane.YES_NO_OPTION
                     ) == JOptionPane.YES_OPTION
                 ) {
@@ -514,13 +570,13 @@ class GuiMain(file: File? = null) : JPanel() {
 
             if (fachData.nutztLusd) {
                 chooser.fileFilter = PdfFileFilter
-                chooser.dialogTitle = "Dein LUSD-Formular zum Eintragen öffnen"
+                chooser.dialogTitle = R.getString("open_lusd_file")
 
                 if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
                     val formFile = chooser.selectedFile
 
                     chooser.fileFilter = ExclusivePdfFileFilter(formFile)
-                    chooser.dialogTitle = "Dein ausgefülltes Formular speichern"
+                    chooser.dialogTitle = R.getString("save_filled_form")
                     chooser.selectedFile = File(formFile.parent, data.toFilename() + ".pdf")
 
                     if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
@@ -531,8 +587,8 @@ class GuiMain(file: File? = null) : JPanel() {
                             } catch (_: IOException) {
                                 JOptionPane.showMessageDialog(
                                     this,
-                                    "Beim Speichern ist ein Fehler aufgetreten! Versuche einen anderen Namen oder Ordner!",
-                                    "Speicher-Fehler",
+                                    R.getString("saving_error_alert"),
+                                    R.getString("saving_error"),
                                     JOptionPane.ERROR_MESSAGE
                                 )
                             }
@@ -551,14 +607,24 @@ class GuiMain(file: File? = null) : JPanel() {
      */
     private fun showLoadingError() {
         val githubStatus = GithubStatus.get()
-        val msg = if (githubStatus == null) "Stelle sicher das du eine Internet-Verbindung hast und versuche es erneut!"
-        else if (githubStatus.indicator == GithubStatus.Companion.Status.NONE) "Scheint als sei ein Fehler beim Laden aufgetreten! Versuche es erneut!"
-        else "GitHub's Server sind nicht erreichbar, da lässt sich nicht viel machen! Siehe: githubstatus.com"
+        val msg = if (githubStatus == null) R.getString("ensure_internet_alert")
+        else if (githubStatus.indicator == GithubStatus.Companion.Status.NONE) R.getString("loading_error_alert")
+        else "${R.getString("github_server_unreachable")} <a href=''>githubstatus.com</a>"
 
+        val pane = JEditorPane("text/html", "${R.getString("school_loading_error_alert")} $msg".wrapHtml())
+        pane.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, true)
+        pane.isEditable = false
+        pane.isOpaque = false
+        pane.font = JLabel().font
+        pane.addHyperlinkListener {
+            if (it.eventType == HyperlinkEvent.EventType.ACTIVATED) {
+                openWebpage(URL("https://www.githubstatus.com"))
+            }
+        }
         JOptionPane.showMessageDialog(
             this,
-            "Die Daten für deine Schule konnten nicht geladen werden! $msg",
-            "Fehler beim Laden der Datei!",
+            pane,
+            R.getString("school_loading_error"),
             JOptionPane.ERROR_MESSAGE
         )
     }
@@ -582,14 +648,26 @@ class GuiMain(file: File? = null) : JPanel() {
         val pane = JScrollPane(schoolList)
         pane.preferredSize = Dimension(242, 298)
 
+        schoolList.fixedCellHeight = 56
+
+        val l: ComponentListener = object : ComponentAdapter() {
+            override fun componentResized(e: ComponentEvent?) {
+                // for core: force cache invalidation by temporarily setting fixed height
+                schoolList.fixedCellHeight = 10
+                schoolList.fixedCellHeight = 56
+            }
+        }
+
+        schoolList.addComponentListener(l)
         val layout = JPanel(GridBagLayout())
         layout.add(pane, row = 0, column = 0, columnspan = 2, weightx = 1.0)
 
-        val dialog = JDialog(null as JDialog?, "Schule wählen!", true)
+        // TODO mit JOptionPane machen
+        val dialog = JDialog(null as JDialog?, R.getString("choose_school"), true)
         var result = -1
 
-        val okBtn = JButton("OK")
-        val btnDim = Dimension(85, 25)
+        val okBtn = JButton(R.getString("ok"))
+        val btnDim = Dimension(100, 25)
         okBtn.preferredSize = btnDim
         okBtn.addActionListener {
             result = JOptionPane.OK_OPTION
@@ -606,7 +684,7 @@ class GuiMain(file: File? = null) : JPanel() {
                 weightx = 1.0
             )
             layout.add(
-                JButton("Abbrechen").apply {
+                JButton(R.getString("cancel")).apply {
                     this.preferredSize = btnDim
                     this.addActionListener {
                         result = JOptionPane.CANCEL_OPTION

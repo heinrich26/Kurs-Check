@@ -24,6 +24,7 @@ import com.kurswahlApp.getResource
 import java.io.FileInputStream
 import java.io.IOException
 import java.io.StringWriter
+import java.net.ConnectException
 import java.net.URI
 import java.net.URL
 import java.net.http.HttpClient
@@ -47,7 +48,7 @@ object SchoolConfig {
 
     private val client = HttpClient.newHttpClient()
 
-    @Throws(IOException::class, InterruptedException::class)
+    @Throws(IOException::class, InterruptedException::class, ConnectException::class)
     private fun doRequest(uri: URI): String {
         val request = HttpRequest.newBuilder()
             .version(HttpClient.Version.HTTP_2)
@@ -59,10 +60,10 @@ object SchoolConfig {
         return client.send(request, HttpResponse.BodyHandlers.ofString()).body()
     }
 
-    @Throws(IOException::class, InterruptedException::class)
+    @Throws(IOException::class, InterruptedException::class, ConnectException::class)
     private fun doRequest(url: String): String = doRequest(URI.create(url))
 
-    @Throws(IOException::class, InterruptedException::class)
+    @Throws(IOException::class, InterruptedException::class, ConnectException::class)
     private fun doRequest(url: URL): String = doRequest(url.toURI())
 
 
@@ -112,8 +113,7 @@ object SchoolConfig {
                     // Datei schreiben
                     asyncChannel.write(ByteBuffer.wrap(it.encodeToByteArray()), 0)
                 }
-            } catch (_: IOException) {
-            }
+            } catch (_: IOException) {}
         }
     }
 
@@ -129,8 +129,7 @@ object SchoolConfig {
                     // Datei schreiben
                     asyncChannel.write(ByteBuffer.wrap(it.encodeToByteArray()), 0)
                 }
-            } catch (_: IOException) {
-            }
+            } catch (_: IOException) {}
         }
     }
 
@@ -151,7 +150,6 @@ object SchoolConfig {
         return try {
             fetchSchool(schulId)
         } catch (e: IOException) {
-            e.printStackTrace()
             loadSchool(schulId)
         }?.let { mapper.readValue(it, FachData::class.java) }
     }

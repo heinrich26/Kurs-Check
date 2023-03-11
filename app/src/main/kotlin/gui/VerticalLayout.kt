@@ -15,14 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package gui
+package com.kurswahlApp.gui
 
-import gui.VerticalLayout.Companion.BOTH
-import gui.VerticalLayout.Companion.BOTTOM
-import gui.VerticalLayout.Companion.CENTER
-import gui.VerticalLayout.Companion.LEFT
-import gui.VerticalLayout.Companion.RIGHT
-import gui.VerticalLayout.Companion.TOP
+import com.kurswahlApp.gui.VerticalLayout.Companion.BOTH
+import com.kurswahlApp.gui.VerticalLayout.Companion.BOTTOM
+import com.kurswahlApp.gui.VerticalLayout.Companion.CENTER
+import com.kurswahlApp.gui.VerticalLayout.Companion.LEFT
+import com.kurswahlApp.gui.VerticalLayout.Companion.RIGHT
+import com.kurswahlApp.gui.VerticalLayout.Companion.TOP
 import java.awt.*
 import kotlin.math.max
 

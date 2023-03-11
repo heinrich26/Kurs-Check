@@ -16,8 +16,8 @@ const val JAHRGANG_ID_FIELD = "AbiturJahrgangId"
 
 const val PF_5_TYP_FIELD = "RadioGroupAcroFormField_Pruefungskomponente"
 
-fun main() {
-    val fname = "E:\\Users\\Hendrik\\Documents\\Schule\\Sek 2\\Informatik\\s_s.pdf"
+fun main(args: Array<String>) {
+    val fname = args[0]
     val doc = PDDocument.load(File(fname))
     val catalog = doc.documentCatalog
     val acroForm = catalog.acroForm

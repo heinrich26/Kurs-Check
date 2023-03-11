@@ -17,6 +17,7 @@
 
 package com.kurswahlApp.data
 
+import com.fasterxml.jackson.annotation.JsonAlias
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.kurswahlApp.data.Consts.PF_5_VAL_BLL
 import com.kurswahlApp.data.Consts.PF_5_VAL_PRAES
@@ -25,7 +26,7 @@ import javax.swing.DefaultListCellRenderer
 import javax.swing.JList
 
 enum class Pf5Typ(val repr: String, val lusdId: String) {
-    @JsonProperty("schriftl") SCHRIFTLICH("schriftlich", PF_5_VAL_BLL),
+    @JsonProperty("bll") @JsonAlias("schriftl") SCHRIFTLICH("BLL", PF_5_VAL_BLL),
     @JsonProperty("praes") PRAESENTATION("Präsentation", PF_5_VAL_PRAES),
     @JsonProperty("wettbewerb") WETTBEWERB("Wettbewerb", PF_5_VAL_BLL);
 
