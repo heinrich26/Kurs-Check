@@ -14,13 +14,5 @@
 		"y": 13.31204,
 		"config": "lili.json",
 		"version": "1.0"
-	},
-	{
-		"name": "Lilienthal-Gymnasium (LUSD)",
-		"adresse": "Ringstraße 2-3",
-		"x": 52.43578, 
-		"y": 13.31204,
-		"config": "lili_lusd.json",
-		"version": "1.0"
 	}
 ]
