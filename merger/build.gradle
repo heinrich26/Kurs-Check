@@ -2,7 +2,7 @@ import org.apache.tools.ant.taskdefs.condition.Os
 
 plugins {
     id 'myproject.java-conventions'
-    id 'org.beryx.runtime' version '1.13.0'
+    id 'org.beryx.runtime' version '1.12.7'
 }
 
 application {
