@@ -1,6 +1,6 @@
 {
     // eindeutiger Identifikator dieser FachDaten; Gleichzeitig der Dateiname dieser Datei!
-    "schulId": "lili_lusd.json",
+    "schulId": "lili.json",
     // Hauptversion.Subversion
     "jsonVersion": "2.0",
     // "aufgabenfeld" -> 0, wenn kein Aufgabenfeld gg. ist (Sport), Zusatzkurse -> -1
