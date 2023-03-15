@@ -6,7 +6,7 @@ plugins {
 }
 
 application {
-    mainClass = 'gui.GuiMain'
+    mainClass = "${group}.gui.GuiMain"
 }
 
 dependencies {

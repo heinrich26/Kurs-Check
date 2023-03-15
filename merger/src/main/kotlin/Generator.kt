@@ -20,6 +20,7 @@ package com.kurswahlApp
 import com.kurswahlApp.data.Consts
 import com.kurswahlApp.data.SchoolConfig
 import com.kurswahlApp.data.Wahlmoeglichkeit.*
+import com.kurswahlApp.gui.wrapHtml
 import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
 import kotlinx.cli.default
@@ -27,7 +28,13 @@ import kotlinx.cli.optional
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVPrinter
 import java.io.File
+import java.io.PrintStream
 import java.nio.charset.Charset
+import javax.swing.JFileChooser
+import javax.swing.JOptionPane
+import javax.swing.filechooser.FileNameExtensionFilter
+import kotlin.concurrent.thread
+import kotlin.system.exitProcess
 
 
 const val LK = "lk"
@@ -69,26 +76,79 @@ val CSV_HEADER = arrayOf(
 fun main(args: Array<String>) {
     val parser = ArgParser(Consts.APP_NAME)
 
-    val schulId by parser.argument(
-        ArgType.String,
-        "schulId",
+    val gui by parser.option(
+        ArgType.Boolean, "gui", null,
+        "Ob der Merger mit grafischer Oberfläche ausgeführt werden soll."
+    ).default(false)
+
+    var schulId by parser.argument(
+        ArgType.String, "schulId",
         "ID der Schule für die Dateien zusammengefasst werden (Dateiname der Konfiguration für ihre Schule) z.B.: 'lili.json'",
     )
 
-    val input by parser.argument(ArgType.String, "input", "Für die CSV-Generierung verwendeter Ordner")
+    var input by parser.argument(ArgType.String, "input", "Für die CSV-Generierung verwendeter Ordner")
         .optional().default(System.getProperty("user.dir"))
-    val output by parser.argument(ArgType.String, "output", "Speicherort der generierten .csv-Datei")
+    var output by parser.argument(ArgType.String, "output", "Speicherort der generierten .csv-Datei")
         .optional()
 
     parser.parse(args)
 
-    run(schulId, input, output) // CLI merger starten
+    if (gui) {
+        schulId = JOptionPane.showInputDialog(
+            null,
+            "Schul-ID mit <code>.json</code>-Endung:".wrapHtml(),
+            "Schuld-ID eingeben",
+            JOptionPane.QUESTION_MESSAGE
+        ) ?: run {
+            JOptionPane.showMessageDialog(null, "Keine Eingabe, Abbruch!", "Programmabbruch", JOptionPane.ERROR_MESSAGE)
+            exitProcess(0)
+        }
+
+        val chooser = JFileChooser()
+        chooser.fileSelectionMode = JFileChooser.DIRECTORIES_ONLY
+        chooser.dialogTitle = "Ordner mit den Kurswahlen auswählen"
+        if (chooser.showOpenDialog(null) != JFileChooser.APPROVE_OPTION) {
+            JOptionPane.showMessageDialog(
+                null,
+                "Sie haben keinen Ordner ausgewählt!",
+                "Vorgang abgebrochen",
+                JOptionPane.ERROR_MESSAGE
+            )
+            return
+        }
+
+        assert(chooser.selectedFile.isDirectory)
+
+        input = chooser.selectedFile.absolutePath
+
+        chooser.fileSelectionMode = JFileChooser.FILES_ONLY
+        chooser.isMultiSelectionEnabled = false
+        chooser.fileFilter = FileNameExtensionFilter("csv-Dateien", "csv")
+        chooser.dialogTitle = "Ziel-Datei für die Tabelle auswählen"
+        if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            output = chooser.selectedFile.absolutePath
+        }
+
+        try {
+            run(schulId, input, output, object : PrintStream(System.out) {
+                override fun print(s: String?) {
+                    super.print(s)
+                    thread { JOptionPane.showMessageDialog(null, s, "Warnung", JOptionPane.WARNING_MESSAGE) }
+                }
+            })
+        } catch (e: Exception) {
+            JOptionPane.showMessageDialog(null, e.localizedMessage, e.javaClass.name, JOptionPane.ERROR_MESSAGE)
+            exitProcess(0)
+        }
+    } else {
+        run(schulId, input, output, System.out) // CLI merger starten
+    }
+
 }
 
-private fun run(schulId: String, directory: String, output: String?) {
+private fun run(schulId: String, directory: String, output: String?, out: PrintStream) {
     val fachData = SchoolConfig.getSchool(schulId)
         ?: throw RuntimeException("Die gegebene 'schulId' existiert nicht! Bitte versuchen sie es erneut!")
-
 
 
     val dirFile = File(directory)
@@ -107,15 +167,15 @@ private fun run(schulId: String, directory: String, output: String?) {
         try {
             fachData.loadKurswahl(it)
         } catch (e: Exception) {
-            println("Fehler ${it.name}: Die Datei wurde für eine andere Schule erstellt oder ist ungültig, der/die Schüler*in muss seine/ihre Wahl wiederholen")
+            out.println("Fehler ${it.name}: Die Datei wurde für eine andere Schule erstellt oder ist ungültig, der/die Schüler*in muss seine/ihre Wahl wiederholen")
             null
         }
     }
 
     val outputFile = if (output != null) {
         File(output).let {
-            if (it.isFile && it.exists() && it.extension.equals("csv", true)) it else {
-                println("Ungültiger Pfad für die Output-Datei, nutze Default: $FILE_NAME im Ordner $dirFile!")
+            if (it.isFile && it.extension.equals("csv", true)) it else {
+                out.println("Ungültiger Pfad für die Output-Datei, nutze Default: $FILE_NAME im Ordner $dirFile!")
                 File(dirFile, FILE_NAME)
             }
         }
@@ -135,7 +195,7 @@ private fun run(schulId: String, directory: String, output: String?) {
     var filesProcessed = 0
     for (record in wahlDataList) {
         if (record.pfs.filterNotNull().size != 5) {
-            println("Ungültige Kurswahl Datei, überspringe!")
+            out.println("Ungültige Kurswahl Datei, überspringe!")
             continue
         }
 
@@ -164,7 +224,7 @@ private fun run(schulId: String, directory: String, output: String?) {
 
             // Überprüfen ob gks Kurse enthält, die wir nicht kennen
             if (row.size != gks.size * 4 + 20 + skipped /* 4*5 für die PFs */) {
-                println("Ungültige Kurswahl Datei, überspringe!")
+                out.println("Ungültige Kurswahl Datei, überspringe!")
                 return@with
             }
 
@@ -195,5 +255,5 @@ private fun run(schulId: String, directory: String, output: String?) {
 
     csvPrinter.close(true)
 
-    println("$filesProcessed Dateien zusammengefügt")
+    out.println("$filesProcessed Dateien zusammengefügt")
 }
