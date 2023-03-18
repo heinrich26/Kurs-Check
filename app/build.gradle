@@ -61,3 +61,8 @@ runtime {
         resourceDir = file("$buildDir/$resDirName")
     }
 }
+
+tasks.register('buildRPM', Task) {
+    runtime{ jpackage { installerType = 'rpm' } }
+    finalizedBy(jpackage)
+}

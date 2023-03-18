@@ -31,7 +31,7 @@ runtime {
     addOptions '--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages'
 
     additive = true
-    modules = ['jdk.crypto.cryptoki']
+    modules.set(['jdk.crypto.cryptoki'])
 
     jpackage {
         imageName = rootProject.name
@@ -50,4 +50,9 @@ runtime {
                             "@$rootDir/app/res/$osPrefix-opts.txt"]
         resourceDir = file("$buildDir/$resDirName")
     }
+}
+
+tasks.register('buildRPM', Task) {
+    runtime{ jpackage { installerType = 'rpm' } }
+    finalizedBy(jpackage)
 }
