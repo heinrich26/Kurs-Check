@@ -76,7 +76,7 @@ tasks.register('buildRPM', JPackageTask) {
 
             installerName = rootProject.name
             installerOutputDir = file("$rootDir/out/executable/basic")
-            installerType = 'pkg'
+            installerType = 'rpm'
             installerOptions = ['--file-associations', "$buildDir/$resDirName/kurswahl-linux.properties",
                                 '--vendor', '"Willi-Graf-Gymnasium"',
                                 '--description', "\"$description\"",
