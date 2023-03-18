@@ -37,8 +37,8 @@ jobs:
     - name: Build Commandline-Merger with JPackage
       run: gradle :merger:jpackage
 
-    - if: ${{ matrix.os }} == ubuntu-latest
-      name: Build RPMs with JPackage
+    - name: Build RPMs with JPackage
+      if: ${{ matrix.os == 'ubuntu-latest' }}
       run: |
         gradle :app:buildRPM
         gradle :merger:buildRPM
