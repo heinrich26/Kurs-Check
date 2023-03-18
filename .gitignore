@@ -5,9 +5,11 @@
 /app/build/
 /lib/build/
 /merger/build/
+/resource-generator/build/
 /.gradle/
 ~$*.docx
 out.pdf
 /app/bin/
 /lib/bin/
 /merger/bin/
+/resource-generator/bin/

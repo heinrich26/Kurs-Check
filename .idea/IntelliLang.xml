@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="LanguageInjectionConfiguration">
+    <injection language="HTML" injector-id="java">
+      <display-name>KurswahlPanel.showHelp (com.kurswahlApp.gui)</display-name>
+      <single-file value="true" />
+      <place><![CDATA[psiMethod().withName("showHelp").withParameters().definedInClass("com.kurswahlApp.gui.KurswahlPanel")]]></place>
+      <place><![CDATA[psiParameter().ofMethod(0, psiMethod().withName("fetchFromHTML").withParameters("java.lang.String").definedInClass("org.jooq.DSLContext"))]]></place>
+    </injection>
+  </component>
+</project>

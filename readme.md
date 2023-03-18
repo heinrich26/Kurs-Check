@@ -25,7 +25,7 @@ Ein Projekt des Informatik LKs 2021-2023 am Willi-Graf-Gymnasium
 - [ ] größere Fenstergröße
 - [ ] Alternative Fächer anständig implementieren
 - [ ] Schul-Check beim LUSD Export
-- [ ] Korrekte Umsetzung bei 5. PK (BLL)
+- [x] Korrekte Umsetzung bei 5. PK (BLL)
 - [ ] **Trennung von GUI und Framework** (Auslagerung in Controller-Klassen?)
 - [ ] Mehr Tooltips, Infos & Hilfen
 - [ ] Möglichkeit 2. WPF nicht zu setzen, auch bei 2 WPFs (sollte nur die Standardeinstellung beeinflussen)
