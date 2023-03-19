@@ -55,11 +55,13 @@ import java.io.IOException
  * @property klassen Definiert die an der Schule angebotenen Klassen
  * @property schultyp Bestimmt welcher Schultyp vorliegt
  * @property nutztLusd Legt fest, ob LUSD PDFs geladen und gespeichert werden können
+ * @property fnamePattern Regex, das die passende LUSD-PDF zum Schülernamen findet.
+ * Mögliche Variablen: [%vname%](KurswahlData.vorname) und [%nname%](KurswahlData.nachname) (Leerzeichen werden durch Unterstriche ersetzt)
  */
 @Suppress("unused")
 @JsonIncludeProperties(
-    "schulId", "jsonVersion", "faecher", "pflichtfaecher", "wpfs", "regeln", "wahlzeilen", "wildcards",
-    "minKurse", "maxKurse", "pf3_4AusschlussFaecher", "zweiWPFs", "semesterkurse", "klassen", "schultyp", "nutztLusd"
+    "schulId", "jsonVersion", "faecher", "pflichtfaecher", "wpfs", "regeln", "wahlzeilen", "wildcards", "minKurse",
+    "maxKurse", "pf3_4AusschlussFaecher", "zweiWPFs", "semesterkurse", "klassen", "schultyp", "nutztLusd", "fnamePattern"
 )
 class FachData(
     val schulId: String,
@@ -78,7 +80,8 @@ class FachData(
     val semesterkurse: Array<Int>,
     val klassen: Set<String> = emptySet(),
     val schultyp: Schultyp,
-    val nutztLusd: Boolean = false
+    val nutztLusd: Boolean = false,
+    val fnamePattern: String?
 ) {
     val faecher: List<Fach> = faecherMap.values.toList()
     val fremdsprachen: List<Fach> = faecher.filter { it.isFremdsprache }
@@ -171,7 +174,8 @@ class FachData(
             "semesterkurse=$semesterkurse",
             "klassen=$klassen",
             "schultyp=$schultyp",
-            "nutztLUSD=$nutztLusd"
+            "nutztLUSD=$nutztLusd",
+            "fnamePattern=$fnamePattern"
         ).joinToString(
             ",\n\t",
             "FachData[schulID: $schulId - version ${jsonVersion.first}.${jsonVersion.second}](\n\t",
@@ -203,7 +207,8 @@ class FachData(
             @JsonProperty semesterkurse: Array<Int>,
             @JsonProperty klassen: Set<String>,
             @JsonProperty schultyp: Schultyp,
-            @JsonProperty nutztLusd: Boolean
+            @JsonProperty nutztLusd: Boolean,
+            @JsonProperty fnamePattern: String?
         ): FachData {
             if (semesterkurse.size != 4) {
                 throw IllegalArgumentException("Die Länge von 'semesterkurse' muss exakt 4 sein")
@@ -234,7 +239,8 @@ class FachData(
                 semesterkurse = semesterkurse,
                 klassen = klassen,
                 schultyp = schultyp,
-                nutztLusd = nutztLusd
+                nutztLusd = nutztLusd,
+                fnamePattern = fnamePattern
             )
         }
     }

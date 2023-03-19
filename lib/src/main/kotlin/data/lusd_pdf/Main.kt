@@ -1,7 +1,9 @@
 package com.kurswahlApp.data.lusd_pdf
 
 import org.apache.pdfbox.pdmodel.PDDocument
+import org.apache.pdfbox.text.PDFTextStripper
 import java.io.File
+
 
 /**
  * @property fach Generelles Fach (Geschichte und Geschichte Bili)
@@ -17,10 +19,17 @@ const val JAHRGANG_ID_FIELD = "AbiturJahrgangId"
 const val PF_5_TYP_FIELD = "RadioGroupAcroFormField_Pruefungskomponente"
 
 fun main(args: Array<String>) {
-    val fname = args[0]
+    val fname = args.getOrElse(0) { "res/formular.pdf" }
     val doc = PDDocument.load(File(fname))
     val catalog = doc.documentCatalog
     val acroForm = catalog.acroForm
+
+    
+    val pdfStripper = PDFTextStripper()
+    pdfStripper.startPage = 1
+    pdfStripper.endPage = 1
+    val parsedText = pdfStripper.getText(doc)
+    println(parsedText)
 
     val felder = acroForm.fields.mapNotNull {
         if (it.fullyQualifiedName == "RadioGroupAcroFormField_Pruefungskomponente") null

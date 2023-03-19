@@ -18,8 +18,9 @@
 package com.kurswahlApp
 
 import com.kurswahlApp.data.Consts
+import com.kurswahlApp.data.FachData
+import com.kurswahlApp.data.KurswahlData
 import com.kurswahlApp.data.SchoolConfig
-import com.kurswahlApp.data.Wahlmoeglichkeit.*
 import com.kurswahlApp.gui.wrapHtml
 import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
@@ -69,6 +70,10 @@ val CSV_HEADER = arrayOf(
     // ...faecher
 )
 
+enum class TYP {
+    CSV, PDF
+}
+
 /**
  * Runnable, die KursWahl-Dateien in eine große CSV-Tabelle zusammenfasst.
  * @see CSV_HEADER
@@ -88,8 +93,10 @@ fun main(args: Array<String>) {
 
     var input by parser.argument(ArgType.String, "input", "Für die CSV-Generierung verwendeter Ordner")
         .optional().default(System.getProperty("user.dir"))
-    var output by parser.argument(ArgType.String, "output", "Speicherort der generierten .csv-Datei")
+    var output by parser.argument(ArgType.String, "output", "Speicherort der generierten CSV-Datei bzw. PDF-Dateien")
         .optional()
+
+    var action by parser.option(ArgType.Choice<TYP>(), "action", "a", "Ob PDFs oder eine CSV generiert werden sollen").default(TYP.CSV)
 
     parser.parse(args)
 
@@ -117,8 +124,6 @@ fun main(args: Array<String>) {
             return
         }
 
-        assert(chooser.selectedFile.isDirectory)
-
         input = chooser.selectedFile.absolutePath
 
         chooser.fileSelectionMode = JFileChooser.FILES_ONLY
@@ -129,8 +134,11 @@ fun main(args: Array<String>) {
             output = chooser.selectedFile.absolutePath
         }
 
+        action = TYP.values().getOrElse(JOptionPane.showOptionDialog(null, "Aktion auswählen", "Auswählen", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, TYP.values(), TYP.CSV)
+        ) { TYP.CSV }
+
         try {
-            run(schulId, input, output, object : PrintStream(System.out) {
+            run(schulId, input, output, action, object : PrintStream(System.out) {
                 override fun print(s: String?) {
                     super.print(s)
                     thread { JOptionPane.showMessageDialog(null, s, "Warnung", JOptionPane.WARNING_MESSAGE) }
@@ -141,27 +149,70 @@ fun main(args: Array<String>) {
             exitProcess(0)
         }
     } else {
-        run(schulId, input, output, System.out) // CLI merger starten
+        run(schulId, input, output, action, System.out) // CLI merger starten
     }
 
 }
 
-private fun run(schulId: String, directory: String, output: String?, out: PrintStream) {
+private fun run(schulId: String, directory: String, output: String?, action: TYP, out: PrintStream) {
     val fachData = SchoolConfig.getSchool(schulId)
         ?: throw RuntimeException("Die gegebene 'schulId' existiert nicht! Bitte versuchen sie es erneut!")
-
 
     val dirFile = File(directory)
     if (!dirFile.isDirectory) {
         throw RuntimeException("Der angegebene Pfad ist kein Ordner!")
     }
 
-
     val files = dirFile.listFiles { f -> f.extension == Consts.FILETYPE_EXTENSION }
         ?: throw RuntimeException("Ungültiger Pfad")
 
     if (files.isEmpty()) throw RuntimeException("Der Ordner war leer, keine Datei konnte erstellt werden!")
 
+    val outputFile = output?.let { File(it) }
+
+    if (action == TYP.CSV) {
+        mergeToCSV(fachData, files, outputFile, out)
+    } else {
+        convertToPDF(fachData, files, outputFile, out)
+    }
+}
+
+
+private fun convertToPDF(fachData: FachData, files: Array<out File>, outputDir: File?, out: PrintStream) {
+    for (f in files) {
+        val data: KurswahlData
+        try {
+            data = fachData.loadKurswahl(f)
+        } catch (e: Exception) {
+            out.println("Fehler ${f.name}: Die Datei wurde für eine andere Schule erstellt oder ist ungültig, der/die Schüler*in muss seine/ihre Wahl wiederholen")
+            continue
+        }
+
+        val form: File
+        try {
+            form = files.find {
+                it.nameWithoutExtension.matches(
+                    Regex(
+                        fachData.fnamePattern!!
+                            .replace("%vname%", data.vorname!!.replace(' ', '_'))
+                            .replace("%nname%", data.nachname!!.replace(' ', '_'))
+                    )
+                )
+            } ?: throw Exception()
+        } catch (ignored: Exception) {
+            out.println("Fehler ${f.name}: konnte keine PDF für ${data.vorname} ${data.nachname} finden.")
+            continue
+        }
+
+        try {
+            data.exportPDF(form, File(outputDir, f.name), fachData)
+        } catch (ignored: Exception) {
+            out.println("Fehler ${f.name}: Unerwarteter Fehler beim Export.")
+        }
+    }
+}
+
+private fun mergeToCSV(fachData: FachData, files: Array<out File>, outputFile: File?, out: PrintStream) {
     // Dateien laden, ungültige aussortieren
     val wahlDataList = files.mapNotNull {
         try {
@@ -172,16 +223,12 @@ private fun run(schulId: String, directory: String, output: String?, out: PrintS
         }
     }
 
-    val outputFile = if (output != null) {
-        File(output).let {
-            if (it.isFile && it.extension.equals("csv", true)) it else {
-                out.println("Ungültiger Pfad für die Output-Datei, nutze Default: $FILE_NAME im Ordner $dirFile!")
-                File(dirFile, FILE_NAME)
-            }
-        }
-    } else File(dirFile, FILE_NAME)
+    val f = if (outputFile == null || (outputFile.isFile && outputFile.extension.equals("csv", true))) {
+        out.println("Ungültiger Pfad für die Output-Datei, nutze Default: $FILE_NAME im Ordner ${files[0].parentFile}!")
+        File(files[0].parentFile, FILE_NAME)
+    } else outputFile
 
-    val writer = outputFile.bufferedWriter(Charset.forName("UTF-8"))
+    val writer = f.bufferedWriter(Charset.forName("UTF-8"))
 
 
     val filteredFaecher = fachData.faecher.filter { it.isKurs }
@@ -203,12 +250,12 @@ private fun run(schulId: String, directory: String, output: String?, out: PrintS
             var skipped = 0
             val row = filteredFaecher.flatMap {
                 when (gks[it]) {
-                    ERSTES_ZWEITES -> listOf(GK, GK, null, null)
-                    ERSTES_DRITTES -> listOf(GK, GK, GK, null)
-                    ZWEITES_DRITTES -> listOf(null, GK, GK, null)
-                    ZWEITES_VIERTES -> listOf(null, GK, GK, GK)
-                    DRITTES_VIERTES -> listOf(null, null, GK, GK)
-                    DURCHGEHEND -> listOf(GK, GK, GK, GK)
+                    com.kurswahlApp.data.Wahlmoeglichkeit.ERSTES_ZWEITES -> listOf(GK, GK, null, null)
+                    com.kurswahlApp.data.Wahlmoeglichkeit.ERSTES_DRITTES -> listOf(GK, GK, GK, null)
+                    com.kurswahlApp.data.Wahlmoeglichkeit.ZWEITES_DRITTES -> listOf(null, GK, GK, null)
+                    com.kurswahlApp.data.Wahlmoeglichkeit.ZWEITES_VIERTES -> listOf(null, GK, GK, GK)
+                    com.kurswahlApp.data.Wahlmoeglichkeit.DRITTES_VIERTES -> listOf(null, null, GK, GK)
+                    com.kurswahlApp.data.Wahlmoeglichkeit.DURCHGEHEND -> listOf(GK, GK, GK, GK)
                     null -> when (pfs.indexOf(it)) {
                         0, 1 -> listOf(LK, LK, LK, LK)
                         2 -> listOf(PF3, PF3, PF3, PF3)

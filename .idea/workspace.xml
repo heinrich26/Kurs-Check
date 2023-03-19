@@ -15,13 +15,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Merge remote-tracking branch 'origin/master'">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/kotlinScripting.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kotlinScripting.xml" afterDir="false" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Hoffentlicher Build für openSUSE">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/res/mac-opts.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/res/mac-opts.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/merger/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/merger/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/lusd_pdf/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/lusd_pdf/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/merger/src/main/kotlin/Generator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/merger/src/main/kotlin/Generator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/res/schema.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +119,7 @@
     </order>
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
@@ -238,7 +237,7 @@
       <command value="gradle clean" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.Full rpm Build (WSL)">
+  <component name="RunManager" selected="Gradle.Run App (Win)">
     <configuration name="App Build (WSL)" type="GradleRunConfiguration" factoryName="Gradle">
       <target name="WSL - Ubuntu-20.04" />
       <ExternalSystemSettings>
@@ -474,27 +473,14 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="kurswahlApp [merger:jpackage clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="merger:jpackage" />
-            <option value="clean" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
+    <configuration name="GeneratorKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.kurswahlApp.GeneratorKt" />
+      <module name="Kurs-Check.merger.main" />
+      <option name="PROGRAM_PARAMETERS" value="--gui true" />
+      <shortenClasspath name="NONE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration name="GuiMain" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.kurswahlApp.gui.GuiMain" />
@@ -571,22 +557,22 @@
       <item itemvalue="Gradle.Run App (WSL)" />
       <item itemvalue="Gradle.generateResources" />
       <item itemvalue="Gradle.kurswahlApp [clean]" />
-      <item itemvalue="Gradle.kurswahlApp [merger:jpackage clean]" />
       <item itemvalue="Gradle.kurswahlApp [:resource-generator:processVectors]" />
       <item itemvalue="Kotlin.Main w. testData" />
       <item itemvalue="Kotlin.Main w. testData (WSL)" />
       <item itemvalue="Kotlin.Main" />
       <item itemvalue="Kotlin.Main (WSL)" />
+      <item itemvalue="Kotlin.GeneratorKt" />
       <item itemvalue="Kotlin.GuiMain" />
       <item itemvalue="Kotlin.MainKt" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Kotlin.GeneratorKt" />
+        <item itemvalue="Kotlin.MainKt" />
         <item itemvalue="Kotlin.GuiMain" />
         <item itemvalue="Gradle.kurswahlApp [:resource-generator:processVectors]" />
         <item itemvalue="Gradle.kurswahlApp [clean]" />
-        <item itemvalue="Gradle.kurswahlApp [merger:jpackage clean]" />
-        <item itemvalue="Kotlin.MainKt" />
       </list>
     </recent_temporary>
   </component>
@@ -676,49 +662,9 @@
       <workItem from="1678458407373" duration="7966000" />
       <workItem from="1678531144721" duration="24837000" />
       <workItem from="1678716121288" duration="1163000" />
-      <workItem from="1679097262898" duration="3078000" />
-    </task>
-    <task id="LOCAL-00071" summary="Die extra Fremdsprachen können nun auch gewählt werden">
-      <created>1655043477113</created>
-      <option name="number" value="00071" />
-      <option name="presentableId" value="LOCAL-00071" />
-      <option name="project" value="LOCAL" />
-      <updated>1655043477113</updated>
-    </task>
-    <task id="LOCAL-00072" summary="Export nutzt nun noch ungespeicherte Daten aus dem aktuellen Panel und schlägt einen Dateinamen vor">
-      <created>1655046200183</created>
-      <option name="number" value="00072" />
-      <option name="presentableId" value="LOCAL-00072" />
-      <option name="project" value="LOCAL" />
-      <updated>1655046200183</updated>
-    </task>
-    <task id="LOCAL-00073" summary="Navigation gefixt">
-      <created>1655118198644</created>
-      <option name="number" value="00073" />
-      <option name="presentableId" value="LOCAL-00073" />
-      <option name="project" value="LOCAL" />
-      <updated>1655118198645</updated>
-    </task>
-    <task id="LOCAL-00074" summary="Java-Version auf 1.8 gesetzt, um größere Kompatibilität zu ermöglichen&#10;&#10;Benötigte eine Neuimplementierung des `FachComboBoxModel`s, denn addAll(...) gibt es in Java 1.8s ComboBox Implementation noch nicht">
-      <created>1655118406040</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1655118406040</updated>
-    </task>
-    <task id="LOCAL-00075" summary="Logging des working-directorys entfernt">
-      <created>1656164086858</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1656164086858</updated>
-    </task>
-    <task id="LOCAL-00076" summary="Logging des working-directorys entfernt">
-      <created>1656164094367</created>
-      <option name="number" value="00076" />
-      <option name="presentableId" value="LOCAL-00076" />
-      <option name="project" value="LOCAL" />
-      <updated>1656164094367</updated>
+      <workItem from="1679097262898" duration="3832000" />
+      <workItem from="1679101366043" duration="5011000" />
+      <workItem from="1679227325819" duration="11190000" />
     </task>
     <task id="LOCAL-00077" summary="Building als Installer umgesetzt">
       <created>1656250867670</created>
@@ -1021,7 +967,49 @@
       <option name="project" value="LOCAL" />
       <updated>1678556971269</updated>
     </task>
-    <option name="localTasksCounter" value="120" />
+    <task id="LOCAL-00120" summary="Hoffentlicher Build für openSUSE">
+      <created>1679101068845</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1679101068845</updated>
+    </task>
+    <task id="LOCAL-00121" summary="Hoffentlicher Build für openSUSE">
+      <created>1679101531714</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1679101531715</updated>
+    </task>
+    <task id="LOCAL-00122" summary="Hoffentlicher Build für openSUSE">
+      <created>1679104684159</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1679104684159</updated>
+    </task>
+    <task id="LOCAL-00123" summary="Hoffentlicher Build für openSUSE">
+      <created>1679104956918</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1679104956918</updated>
+    </task>
+    <task id="LOCAL-00124" summary="Hoffentlicher Build für openSUSE">
+      <created>1679105371581</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1679105371581</updated>
+    </task>
+    <task id="LOCAL-00125" summary="Hoffentlicher Build für openSUSE">
+      <created>1679105750836</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1679105750836</updated>
+    </task>
+    <option name="localTasksCounter" value="126" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1043,7 +1031,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Internetproblem behoben" />
     <MESSAGE value="Zu Internetproblem behoben: debugging Prints entfernt" />
     <MESSAGE value="Code-Cleanup bei den MouseListenern" />
     <MESSAGE value="Maximalzahl Kurse/Semester hinzugefügt, Bugs beim Speichern behoben und Kurse, die nicht zusammen gewählt werden können in der KurswahlData.kt implementiert - TODO: Visualisierung" />
@@ -1068,7 +1055,8 @@
     <MESSAGE value="B-LUSD Integration und Änderungen am Build System um SVGs automatisch in JAVA Objekte zu konvertieren." />
     <MESSAGE value="Texte können nun übersetzt werden und eine Hilfe-Funktion wurde integriert." />
     <MESSAGE value="Merge remote-tracking branch 'origin/master'" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'origin/master'" />
+    <MESSAGE value="Hoffentlicher Build für openSUSE" />
+    <option name="LAST_COMMIT_MESSAGE" value="Hoffentlicher Build für openSUSE" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

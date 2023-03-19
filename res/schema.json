@@ -354,6 +354,11 @@
 			"type": "boolean",
 			"description": "Ob der Export mit LUSD Formularen erfolgt",
 			"default": false
+		},
+		"fnamePattern": {
+			"type": "string",
+			"description": "Regex, das die passende LUSD-PDF zum Schülernamen findet. Mögliche Variablen: %vname% und %nname%",
+			"default": false
 		}
 	},
 	"required": [
