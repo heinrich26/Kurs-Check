@@ -770,5 +770,5 @@
     "klassen": ["Bili"],
     "schultyp": "Gymnasium",
     "nutztLusd": false,
-    "fnamePattern": ".+?_Kurswahl_Abitur_\\d{4}_\\d{2}_GYM_SEK_II_%vname%_%nname%_(\\d+).*"
+    "fnamePattern": ".+?_Kurswahl_Abitur_\\d{4}_\\d{2}_GYM_SEK_II_\%vname\%_\%nname\%_(\\d+).*"
 }
