@@ -15,12 +15,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Hoffentlicher Build für openSUSE">
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="wahl-merger kann nun auch PDFs ausfüllen">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/lusd_pdf/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/lusd_pdf/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Extensions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Extensions.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Fremdsprachen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Fremdsprachen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Nutzerdaten.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Nutzerdaten.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Overview.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Overview.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/KurswahlData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/KurswahlData.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/merger/src/main/kotlin/Generator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/merger/src/main/kotlin/Generator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/res/schema.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -237,7 +240,7 @@
       <command value="gradle clean" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.Run App (Win)">
+  <component name="RunManager" selected="Gradle.Full Build (Win)">
     <configuration name="App Build (WSL)" type="GradleRunConfiguration" factoryName="Gradle">
       <target name="WSL - Ubuntu-20.04" />
       <ExternalSystemSettings>
@@ -664,14 +667,8 @@
       <workItem from="1678716121288" duration="1163000" />
       <workItem from="1679097262898" duration="3832000" />
       <workItem from="1679101366043" duration="5011000" />
-      <workItem from="1679227325819" duration="11190000" />
-    </task>
-    <task id="LOCAL-00077" summary="Building als Installer umgesetzt">
-      <created>1656250867670</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1656250867670</updated>
+      <workItem from="1679227325819" duration="11428000" />
+      <workItem from="1679427032592" duration="7095000" />
     </task>
     <task id="LOCAL-00078" summary="icon als vektorgrafik hinzugefügt">
       <created>1656254711192</created>
@@ -1009,7 +1006,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679105750836</updated>
     </task>
-    <option name="localTasksCounter" value="126" />
+    <task id="LOCAL-00126" summary="wahl-merger kann nun auch PDFs ausfüllen">
+      <created>1679240251580</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1679240251580</updated>
+    </task>
+    <option name="localTasksCounter" value="127" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1031,7 +1035,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Zu Internetproblem behoben: debugging Prints entfernt" />
     <MESSAGE value="Code-Cleanup bei den MouseListenern" />
     <MESSAGE value="Maximalzahl Kurse/Semester hinzugefügt, Bugs beim Speichern behoben und Kurse, die nicht zusammen gewählt werden können in der KurswahlData.kt implementiert - TODO: Visualisierung" />
     <MESSAGE value="Versuch die Nutzung von TLSv1 zu erlauben, damit die Software im Schulnetzwerk läuft" />
@@ -1056,7 +1059,8 @@
     <MESSAGE value="Texte können nun übersetzt werden und eine Hilfe-Funktion wurde integriert." />
     <MESSAGE value="Merge remote-tracking branch 'origin/master'" />
     <MESSAGE value="Hoffentlicher Build für openSUSE" />
-    <option name="LAST_COMMIT_MESSAGE" value="Hoffentlicher Build für openSUSE" />
+    <MESSAGE value="wahl-merger kann nun auch PDFs ausfüllen" />
+    <option name="LAST_COMMIT_MESSAGE" value="wahl-merger kann nun auch PDFs ausfüllen" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

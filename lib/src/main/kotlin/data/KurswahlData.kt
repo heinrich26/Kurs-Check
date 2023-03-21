@@ -474,7 +474,7 @@ data class KurswahlData(
         }
     }
 
-    fun toFilename(): String = "${vorname!!.split(' ')[0]}_${nachname}"
+    fun toFilename(): String = "${vorname}_$nachname"
         .replace(Regex("[\\\\/:*?\"<>|.&$]"), "")
         .replace(' ', '_')
 }

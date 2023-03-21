@@ -134,7 +134,7 @@ fun <R> measureNanos(block: () -> R): R {
     return result
 }
 
-fun File.withExtension(ext: String): File = File(this.parentFile, nameWithoutExtension + ext)
+fun File.withExtension(ext: String): File = File(this.parentFile, "$nameWithoutExtension.$ext")
 
 /**
  * Öffnet eine Webseite im Browser

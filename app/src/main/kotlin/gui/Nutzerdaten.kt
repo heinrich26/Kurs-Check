@@ -26,11 +26,14 @@ import com.kurswahlApp.data.FachData
 import com.kurswahlApp.data.KurswahlData
 import org.intellij.lang.annotations.Language
 import java.awt.*
+import java.awt.event.ItemEvent
 import java.awt.geom.GeneralPath
 import java.time.LocalDate
 import java.util.*
 import javax.swing.*
 import javax.swing.border.TitledBorder
+import javax.swing.event.DocumentEvent
+import javax.swing.event.DocumentListener
 
 
 class Nutzerdaten(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean) -> Unit) :
@@ -101,9 +104,22 @@ class Nutzerdaten(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean
             container.add(staatsangehoerigkeitPicker, row = 4, column = 1, margin = it, fill = GridBagConstraints.BOTH)
         }
 
+
+        val docListener = object : DocumentListener {
+            override fun changedUpdate(e: DocumentEvent) = Unit
+            override fun insertUpdate(e: DocumentEvent) = notifier.invoke(isDataValid())
+            override fun removeUpdate(e: DocumentEvent) = notifier.invoke(isDataValid())
+        }
+
+        vornameEntry.document.addDocumentListener(docListener)
+        nachnameEntry.document.addDocumentListener(docListener)
+        geburtsortEntry.document.addDocumentListener(docListener)
+        geburtsdatumPicker.componentDateTextField.document.addDocumentListener(docListener)
+        staatsangehoerigkeitPicker.addItemListener { if (it.stateChange == ItemEvent.SELECTED) notifier.invoke(isDataValid())}
+
         add(container)
 
-        notifier.invoke(true)
+        notifier.invoke(isDataValid())
     }
 
 
@@ -115,8 +131,10 @@ class Nutzerdaten(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean
         staatsangehoerigkeit = staatsangehoerigkeitPicker.selectedItem as String
     )
 
-    override fun isDataValid(): Boolean =
-        vornameEntry.text.isNotBlank() && nachnameEntry.text.isNotBlank() && geburtsortEntry.text.isNotBlank() && (geburtsdatumPicker.isTextFieldValid && geburtsdatumPicker.date != null)
+    override fun isDataValid(): Boolean {
+        println("soss")
+        return vornameEntry.text.isNotBlank() && nachnameEntry.text.isNotBlank() && geburtsortEntry.text.isNotBlank() && (geburtsdatumPicker.isTextFieldValid && geburtsdatumPicker.date != null)
+    }
 
     @Language("HTML")
     override fun showHelp(): String ="<h2>$windowName</h2><p>Hier musst du deine eigenen Daten eingeben! Das kriegst du doch hin, oder?</p>"
@@ -125,7 +143,6 @@ class Nutzerdaten(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean
         get() = "Persönliche Daten"
 
     companion object {
-        // TODO evtl. Ländernamen anzeigen (https://www.codejava.net/java-se/swing/java-swing-country-list-combobox-example)
         private val COUNTRY_CODES = Locale.getISOCountries()
 
         private val CALENDAR_SHAPE = GeneralPath().apply {

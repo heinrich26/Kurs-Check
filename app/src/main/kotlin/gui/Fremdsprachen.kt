@@ -204,9 +204,17 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         }
 
         // Die Hauptklasse informieren, ob die Eingabe gültig ist
-        wpf1.addActionListener {
-            if (it.actionCommand == "comboBoxChanged") {
-                notifier.invoke(fs2.selectedItem != null && wpf1.selectedItem != null)
+        if (fachData.zweiWPFs) {
+            wpf2.addActionListener {
+                if (it.actionCommand == "comboBoxChanged") {
+                    notifier.invoke(fs2.selectedItem != null && wpf1.selectedItem != null && wpf2.selectedItem != null)
+                }
+            }
+        } else {
+            wpf1.addActionListener{
+                if (it.actionCommand == "comboBoxChanged") {
+                    notifier.invoke(fs2.selectedItem != null && wpf2.selectedItem != null)
+                }
             }
         }
 
@@ -220,8 +228,6 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
             container1.add(fs2, row = 2, column = 1, fill = GridBagConstraints.BOTH, margin = it)
             container1.add(fs3, row = 3, column = 1, fill = GridBagConstraints.BOTH, margin = it)
             container1.add(fs4, row = 4, column = 1, fill = GridBagConstraints.BOTH, margin = it)
-
-
         }
 
         container2.add(wpf1, row = 0, column = 1, fill = GridBagConstraints.BOTH, margin = Insets(bottom = 2))

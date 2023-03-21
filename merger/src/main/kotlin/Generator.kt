@@ -29,6 +29,7 @@ import kotlinx.cli.optional
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVPrinter
 import java.io.File
+import java.io.IOException
 import java.io.PrintStream
 import java.nio.charset.Charset
 import javax.swing.JFileChooser
@@ -96,7 +97,8 @@ fun main(args: Array<String>) {
     var output by parser.argument(ArgType.String, "output", "Speicherort der generierten CSV-Datei bzw. PDF-Dateien")
         .optional()
 
-    var action by parser.option(ArgType.Choice<TYP>(), "action", "a", "Ob PDFs oder eine CSV generiert werden sollen").default(TYP.CSV)
+    var action by parser.option(ArgType.Choice<TYP>(), "action", "a", "Ob PDFs oder eine CSV generiert werden sollen")
+        .default(TYP.CSV)
 
     parser.parse(args)
 
@@ -163,7 +165,7 @@ private fun run(schulId: String, directory: String, output: String?, action: TYP
         throw RuntimeException("Der angegebene Pfad ist kein Ordner!")
     }
 
-    val files = dirFile.listFiles { f -> f.extension == Consts.FILETYPE_EXTENSION }
+    val files = dirFile.listFiles { f -> f.extension.equals(Consts.FILETYPE_EXTENSION, true) }
         ?: throw RuntimeException("Ungültiger Pfad")
 
     if (files.isEmpty()) throw RuntimeException("Der Ordner war leer, keine Datei konnte erstellt werden!")
@@ -173,24 +175,33 @@ private fun run(schulId: String, directory: String, output: String?, action: TYP
     if (action == TYP.CSV) {
         mergeToCSV(fachData, files, outputFile, out)
     } else {
-        convertToPDF(fachData, files, outputFile, out)
+        val pdfs = dirFile.listFiles { f -> f.extension.equals("pdf", true) } ?: throw RuntimeException("Ungültiger Pfad")
+        convertToPDF(fachData, files, pdfs, outputFile?: File(dirFile, "output"), out)
     }
 }
 
 
-private fun convertToPDF(fachData: FachData, files: Array<out File>, outputDir: File?, out: PrintStream) {
+private fun convertToPDF(fachData: FachData, files: Array<out File>, pdfs: Array<out File>, outputDir: File, out: PrintStream) {
+    try {
+        outputDir.mkdirs()
+    } catch (e: IOException) {
+        out.println("Keine Berechtigung diesen Ordner zu erstellen")
+        return
+    }
+
     for (f in files) {
         val data: KurswahlData
         try {
             data = fachData.loadKurswahl(f)
         } catch (e: Exception) {
+            out.println(e.stackTraceToString())
             out.println("Fehler ${f.name}: Die Datei wurde für eine andere Schule erstellt oder ist ungültig, der/die Schüler*in muss seine/ihre Wahl wiederholen")
             continue
         }
 
         val form: File
         try {
-            form = files.find {
+            form = pdfs.find {
                 it.nameWithoutExtension.matches(
                     Regex(
                         fachData.fnamePattern!!
@@ -198,14 +209,14 @@ private fun convertToPDF(fachData: FachData, files: Array<out File>, outputDir: 
                             .replace("%nname%", data.nachname!!.replace(' ', '_'))
                     )
                 )
-            } ?: throw Exception()
-        } catch (ignored: Exception) {
+            } ?: throw RuntimeException()
+        } catch (ignored: RuntimeException) {
             out.println("Fehler ${f.name}: konnte keine PDF für ${data.vorname} ${data.nachname} finden.")
             continue
         }
 
         try {
-            data.exportPDF(form, File(outputDir, f.name), fachData)
+            data.exportPDF(form, File(outputDir, form.name), fachData)
         } catch (ignored: Exception) {
             out.println("Fehler ${f.name}: Unerwarteter Fehler beim Export.")
         }
@@ -223,7 +234,7 @@ private fun mergeToCSV(fachData: FachData, files: Array<out File>, outputFile: F
         }
     }
 
-    val f = if (outputFile == null || (outputFile.isFile && outputFile.extension.equals("csv", true))) {
+    val f = if (outputFile == null || !outputFile.isFile || !outputFile.extension.equals("csv", true)) {
         out.println("Ungültiger Pfad für die Output-Datei, nutze Default: $FILE_NAME im Ordner ${files[0].parentFile}!")
         File(files[0].parentFile, FILE_NAME)
     } else outputFile

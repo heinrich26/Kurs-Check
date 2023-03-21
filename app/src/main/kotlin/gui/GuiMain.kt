@@ -131,7 +131,6 @@ class GuiMain(file: File? = null) : JPanel() {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
 
-
                 val ge = GraphicsEnvironment.getLocalGraphicsEnvironment()
                 arrayOf("Bold", "BoldItalic", "Italic", "Regular").forEach {
                     ge.registerFont(
@@ -158,8 +157,7 @@ class GuiMain(file: File? = null) : JPanel() {
                         }
                     }
                 }
-            } catch (_: Exception) {
-            }
+            } catch (_: Exception) {}
 
             SwingUtilities.invokeLater { createAndShowGUI(input, useTestData) }
         }
@@ -176,7 +174,7 @@ class GuiMain(file: File? = null) : JPanel() {
             else if (file != null) GuiMain(File(file))
             else GuiMain()
 
-            frame.minimumSize = Dimension(640, 560)
+            frame.minimumSize = Dimension(720, 640)
             // Anzeigen.
             frame.pack()
             frame.setLocationRelativeTo(null)
@@ -201,7 +199,8 @@ class GuiMain(file: File? = null) : JPanel() {
         this.preferredSize = Dimension(SIDEBAR_SIZE, 0)
     }
 
-    private val sidebarBtns = arrayOf(PolyIcon(PERSON_ICON, false) { navTo(Nutzerdaten::class, 0) },
+    private val sidebarBtns = arrayOf(
+        PolyIcon(PERSON_ICON, false) { navTo(Nutzerdaten::class, 0) },
         FsWpfIcon { navTo(Fremdsprachen::class, 1) },
         SidebarLabel("LKs") { navTo(Leistungskurse::class, 2) },
         PfPkIcon { navTo(Pruefungsfaecher::class, 3) },
@@ -260,7 +259,7 @@ class GuiMain(file: File? = null) : JPanel() {
                 else for (i in (index + 1)..4) sidebarBtns[i].isEnabled = false
             }
 
-            4 -> { it -> unvollstaendigeEingabeLabel.isVisible = !it }
+            0, 4 -> { it -> unvollstaendigeEingabeLabel.isVisible = !it }
             else -> { _ -> }
         }
 

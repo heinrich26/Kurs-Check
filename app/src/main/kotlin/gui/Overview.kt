@@ -74,17 +74,21 @@ class Overview(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean) -
             weightx = 1.0
         )
 
-
         val prefHeight = visualizer.preferredSize.height
         val prefWidth = visualizer.preferredSize.width
+
+        fun updateScrollpane() {
+            val givenHeight = height - copyrightButton.height - 9 /* Insets des Buttons */
+            scrollPane.preferredSize = if (givenHeight < prefHeight) Dimension(
+                prefWidth + scrollPane.verticalScrollBar.preferredSize.width,
+                givenHeight
+            ) else Dimension(prefWidth + 16 /* Breite der Rounded Border */, prefHeight)
+            revalidate()
+        }
+
+
         addComponentListener(object : ComponentListener {
-            override fun componentResized(e: ComponentEvent) {
-                val givenHeight = height - copyrightButton.height - 8 /* Insets des Buttons */
-                scrollPane.preferredSize = if (givenHeight < prefHeight) Dimension(
-                    prefWidth + scrollPane.verticalScrollBar.preferredSize.width,
-                    givenHeight
-                ) else Dimension(prefWidth + 16 /* Breite der Rounded Border */, prefHeight)
-            }
+            override fun componentResized(e: ComponentEvent) = updateScrollpane()
 
             override fun componentMoved(e: ComponentEvent) {}
 
@@ -92,5 +96,7 @@ class Overview(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean) -
 
             override fun componentHidden(e: ComponentEvent) {}
         })
+
+        updateScrollpane()
     }
 }
