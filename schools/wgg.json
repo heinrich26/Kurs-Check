@@ -60,49 +60,49 @@
 		{
 			"name": "Geschichte",
 			"kuerzel": "Ge",
-			"aufgabenfeld": 3,
+			"aufgabenfeld": 2,
 			"isLk": true
 		},
 		{
 			"name": "Politikwissenschaft",
 			"kuerzel": "PW",
-			"aufgabenfeld": 3,
+			"aufgabenfeld": 2,
 			"isLk": true
 		},
 		{
 			"name": "Geografie",
 			"kuerzel": "Geo",
-			"aufgabenfeld": 3,
+			"aufgabenfeld": 2,
 			"isLk": true
 		},
 		{
 			"name": "Mathematik",
 			"kuerzel": "Ma",
-			"aufgabenfeld": 2,
+			"aufgabenfeld": 3,
 			"isLk": true
 		},
 		{
 			"name": "Physik",
 			"kuerzel": "Phy",
-			"aufgabenfeld": 2,
+			"aufgabenfeld": 3,
 			"isLk": true
 		},
 		{
 			"name": "Chemie",
 			"kuerzel": "Che",
-			"aufgabenfeld": 2,
+			"aufgabenfeld": 3,
 			"isLk": true
 		},
 		{
 			"name": "Biologie",
 			"kuerzel": "Bio",
-			"aufgabenfeld": 2,
+			"aufgabenfeld": 3,
 			"isLk": true
 		},
 		{
 			"name": "Informatik",
 			"kuerzel": "Inf",
-			"aufgabenfeld": 2,
+			"aufgabenfeld": 3,
 			"isLk": true,
 			"brauchtWPF": true
 		},
