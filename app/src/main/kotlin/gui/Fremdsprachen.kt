@@ -17,6 +17,7 @@
 
 package com.kurswahlApp.gui
 
+import com.kurswahlApp.R
 import com.kurswahlApp.data.*
 import org.intellij.lang.annotations.Language
 import java.awt.Component
@@ -174,6 +175,8 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                 }
             }
 
+            checker.toolTipText = R.getString("zweiWPFsTooltip")
+
             checker.addActionListener {
                 if (!checker.isSelected) {
                     wpf2.isEnabled = false
@@ -182,7 +185,6 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
             }
             container2.add(checker, row = 1, column = 0, anchor = GridBagConstraints.EAST)
         }
-
 
 
         // Wahl der Klasse
@@ -203,23 +205,17 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
             wpf2.selectedItem = it.second
         }
 
-        // Die Hauptklasse informieren, ob die Eingabe gültig ist
-        if (fachData.zweiWPFs) {
-            wpf2.addActionListener {
-                if (it.actionCommand == "comboBoxChanged") {
-                    notifier.invoke(fs2.selectedItem != null && wpf1.selectedItem != null && wpf2.selectedItem != null)
-                }
-            }
-        } else {
-            wpf1.addActionListener{
-                if (it.actionCommand == "comboBoxChanged") {
-                    notifier.invoke(fs2.selectedItem != null && wpf2.selectedItem != null)
-                }
-            }
-        }
 
-
-        fs2.addActionListener { notifier.invoke(fs2.selectedItem != null && wpf1.selectedItem != null) }
+        // Die Hauptklasse informieren, wenn sich die Eingabe ändert/ob die Eingabe gültig ist.
+        val callback: (it: ActionEvent) -> Unit =
+            if (fachData.zweiWPFs) { it ->
+                if (it.actionCommand == "comboBoxChanged") notifier.invoke(fs2.selectedItem != null && wpf1.selectedItem != null && wpf2.selectedItem != null)
+            } else { it ->
+                if (it.actionCommand == "comboBoxChanged") notifier.invoke(fs2.selectedItem != null && wpf1.selectedItem != null)
+            }
+        wpf1.addActionListener(callback)
+        wpf2.addActionListener(callback)
+        fs2.addActionListener(callback)
 
         // Anzeigen
         // Margin hinzufügen
@@ -264,7 +260,8 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
     }
 
     @Language("HTML")
-    override fun showHelp(): String = "<h2>$windowName</h2><p>Hier musst du deine Fremdsprachen, deine Wahlpflichtfächer der 10. Klasse und eventuell deine Klasse auswählen.<br><b>Beschwere dich bei deinem PäKo, dass er/sie keine hilfreichere Hilfe verfasst hat!</b></p>"
+    override fun showHelp(): String =
+        "<h2>$windowName</h2><p>Hier musst du deine Fremdsprachen, deine Wahlpflichtfächer der 10. Klasse und eventuell deine Klasse auswählen.<br><b>Beschwere dich bei deinem PäKo, dass er/sie keine hilfreichere Hilfe verfasst hat!</b></p>"
 
     override val windowName: String
         get() = "Fremdsprachen & Wahlpflichtfächer"

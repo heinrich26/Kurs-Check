@@ -232,13 +232,9 @@ data class KurswahlData(
     }
 
     /**
-     * Zählt die Wochenstunden für die beiden Schuljahre
+     * Zählt die Wochenstunden für jedes Schuljahr
      */
-    fun weeklyCourses(): Pair<Int, Int> {
-        // 3h p. GK + 5h p. Lk (um auf 10 für LKs zu kommen fehlen 4, Sport sind nur 2, dh. +3)
-        val weekly = countCourses().map { it * 3 + 3 }
-        return (weekly[0] + weekly[1]) / 2 to (weekly[2] + weekly[3]) / 2
-    }
+    fun weeklyCourses() = countCourses().map { it * 3 + 3 } // 3h p. GK + 5h p. Lk (um auf 10 für LKs zu kommen fehlen 4, Sport sind nur 2, dh. +3)
 
     private var _pfs: List<Fach?>? = null
 

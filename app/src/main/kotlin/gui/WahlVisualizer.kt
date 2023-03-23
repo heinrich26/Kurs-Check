@@ -156,16 +156,16 @@ class WahlVisualizer(val data: KurswahlData) : JPanel(GridBagLayout()) {
         )
 
         add(
-            JLabel("<html>Wochenstunden<br>pro Schuljahr</html>"),
+            JLabel("<html>Wochenstunden<br>pro Semester</html>"),
             row = i,
             rowspan = 2,
             anchor = GridBagConstraints.WEST,
             margin = Insets(right = 6)
         )
-        add(JLabel("Q1 & Q2"), row = i, column = 1, anchor = GridBagConstraints.WEST)
-        add(JLabel("Q3 & Q4"), row = i + 1, column = 1, anchor = GridBagConstraints.WEST)
-        val wochenstunden = data.weeklyCourses()
-        add(JLabel(wochenstunden.first.toString()), row = i, column = 2, anchor = GridBagConstraints.EAST)
-        add(JLabel(wochenstunden.second.toString()), row = i + 1, column = 2, anchor = GridBagConstraints.EAST)
+
+        for ((j, n) in data.weeklyCourses().withIndex()) {
+            add(JLabel("Q${j + 1}"), row = i + j, column = 1, anchor = GridBagConstraints.WEST)
+            add(JLabel(n.toString()), row = i + j, column = 2, anchor = GridBagConstraints.EAST)
+        }
     }
 }
