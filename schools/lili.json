@@ -84,56 +84,56 @@
         {
             "name": "Politikwissenschaft",
             "kuerzel": "Pw",
-            "aufgabenfeld": 3,
+            "aufgabenfeld": 2,
             "isLk": true,
             "lusdId": 3395
         },
         {
             "name": "Philosophie",
             "kuerzel": "Pl",
-            "aufgabenfeld": 3,
+            "aufgabenfeld": 2,
             "isLk": true,
             "lusdId": 3385
         },
         {
             "name": "Geografie",
             "kuerzel": "Geo",
-            "aufgabenfeld": 3,
+            "aufgabenfeld": 2,
             "isLk": true,
             "lusdId": 3397
         },
         {
             "name": "Mathematik",
             "kuerzel": "Ma",
-            "aufgabenfeld": 2,
+            "aufgabenfeld": 3,
             "isLk": true,
             "lusdId": 3398
         },
         {
             "name": "Physik",
             "kuerzel": "Ph",
-            "aufgabenfeld": 2,
+            "aufgabenfeld": 3,
             "isLk": true,
             "lusdId": 3394
         },
         {
             "name": "Chemie",
             "kuerzel": "Ch",
-            "aufgabenfeld": 2,
+            "aufgabenfeld": 3,
             "isLk": true,
             "lusdId": 3393
         },
         {
             "name": "Biologie",
             "kuerzel": "Bio",
-            "aufgabenfeld": 2,
+            "aufgabenfeld": 3,
             "isLk": true,
             "lusdId": 3392
         },
         {
             "name": "Informatik",
             "kuerzel": "Inf",
-            "aufgabenfeld": 2,
+            "aufgabenfeld": 3,
             "isLk": true,
             "brauchtWPF": true,
             "lusdId": 3388
@@ -180,7 +180,7 @@
             // Alternative für Geschichte
             "name": "Geschichte Bili",
             "kuerzel": "GeBi",
-            "aufgabenfeld": 3,
+            "aufgabenfeld": 2,
             "nurFuer": ["Bili"],
             "lusdId": 3403
         },
@@ -188,7 +188,7 @@
             // Alternative für Mathe
             "name": "Mathematik CAS",
             "kuerzel": "MaCAS",
-            "aufgabenfeld": 2,
+            "aufgabenfeld": 3,
             "isLk": true,
             "brauchtWPF": true,
             "lusdId": 3398
