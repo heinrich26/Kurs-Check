@@ -149,7 +149,7 @@ class Leistungskurse(wahlData: KurswahlData, fachData: FachData, notifier: (Bool
     override fun isDataValid(): Boolean = (lk1.selectedItem != null && lk2.selectedItem != null)
 
     @Language("HTML")
-    override fun showHelp(): String = "<h2>$windowName</h2><p>Die Leistungskurse ergeben sich wie folgt:<br><b>Beschwere dich bei deinem PäKo, dass er/sie keine Hilfe verfasst hat!</b></p>"
+    override fun showHelp(): String = "<h2>$windowName</h2><p>Die Leistungskurse ergeben sich wie folgt:<br><b>Ich bin leider nicht lyrisch begabt, deswegen beschwere dich bitte bei deinem PäKo, dass er/sie keine Hilfe verfasst hat!</b></p>"
 
     override val windowName: String
         get() = "Leistungskurse"
