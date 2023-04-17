@@ -338,7 +338,7 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
         (pf3.selectedItem != null && pf4.selectedItem != null && pf5.selectedItem != null)
 
     @Language("HTML")
-    override fun showHelp(): String = "<h2>$windowName</h2>\n<p>Die Prüfungsfächer ergeben sich wie folgt:<br><b>Beschwere dich bei deinem PäKo, dass er/sie keine Hilfe verfasst hat!</b></p>\n"
+    override fun showHelp(): String = "<h2>$windowName</h2>\n<p>Die Prüfungsfächer ergeben sich wie folgt:<br><b>Ich bin leider nicht lyrisch begabt, deswegen beschwere dich bitte bei deinem PäKo, dass er/sie keine Hilfe verfasst hat!</b></p>\n"
 
     override val windowName: String
         get() = "Prüfungsfächer & 5. Prüfungskomponente"
