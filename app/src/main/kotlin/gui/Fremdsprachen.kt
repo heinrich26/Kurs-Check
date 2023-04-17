@@ -261,7 +261,7 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
 
     @Language("HTML")
     override fun showHelp(): String =
-        "<h2>$windowName</h2><p>Hier musst du deine Fremdsprachen, deine Wahlpflichtfächer der 10. Klasse und eventuell deine Klasse auswählen.<br><b>Beschwere dich bei deinem PäKo, dass er/sie keine hilfreichere Hilfe verfasst hat!</b></p>"
+        "<h2>$windowName</h2><p>Hier musst du deine Fremdsprachen, deine Wahlpflichtfächer der 10. Klasse und eventuell deine Klasse auswählen.<br><b>Ich bin leider nicht lyrisch begabt, deswegen beschwere dich bitte bei deinem PäKo, dass er/sie keine hilfreichere Hilfe verfasst hat!</b></p>"
 
     override val windowName: String
         get() = "Fremdsprachen & Wahlpflichtfächer"
