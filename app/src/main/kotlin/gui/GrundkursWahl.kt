@@ -62,7 +62,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
     }
 
     @Language("HTML")
-    override fun showHelp(): String = "<h2>$windowName</h2><p>Auf der linken Seite kannst du Kurse auswählen. Kurse die du bereits als Prüfungsfächer hast, sind bereits angeklickt! Auf der rechten Seite findest du alle Regeln, die deine Grundkurse erfüllen müssen! Wähle ein paar Kurse und klicke auf <b>Überprüfen</b> um zu sehen welche Fächer/Kurse dir noch fehlen!</p><p>Die Grundkurse ergeben sich wie folgt:<br><b>Beschwere dich bei deinem PäKo, dass er/sie keine bessere Hilfe verfasst hat!</b></p>"
+    override fun showHelp(): String = "<h2>$windowName</h2><p>Auf der linken Seite kannst du Kurse auswählen. Kurse die du bereits als Prüfungsfächer hast, sind bereits angeklickt! Auf der rechten Seite findest du alle Regeln, die deine Grundkurse erfüllen müssen! Wähle ein paar Kurse und klicke auf <b>Überprüfen</b> um zu sehen welche Fächer/Kurse dir noch fehlen!</p><p>Die Grundkurse ergeben sich wie folgt:<br><b>Ich bin leider nicht lyrisch begabt, deswegen beschwere dich bitte bei deinem PäKo, dass er/sie keine bessere Hilfe verfasst hat!</b></p>"
 
     companion object {
         @JvmStatic
