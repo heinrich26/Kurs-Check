@@ -25,8 +25,6 @@ import java.awt.Dimension
 import java.awt.GridBagConstraints
 import java.awt.event.ComponentEvent
 import java.awt.event.ComponentListener
-import java.net.URL
-import javax.swing.JButton
 import javax.swing.JScrollPane
 
 
@@ -38,23 +36,12 @@ class Overview(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean) -
     override fun isDataValid(): Boolean = true // TODO Finales Checking?
 
     @Language("HTML")
-    override fun showHelp(): String = "<ol>\n    <li><a href='#aufbau'>Aufbau</a></li>\n    <li><a href='#ablauf'>Ablauf</a></li>\n    <li><a href='#speichern'>Speichern</a></li>\n</ol>\n<h2><a name='aufbau'>Aufbau</a></h2>\n${img("docs/start_screen.png")}\n<h3>Toolbar</h3>\n<p>In der Toolbar kannst du folgendes tun:\n<ul>\n    <li>Eine Kurswahl öffnen</li>\n    <li>Eine Kurswahl speichern</li>\n    <li>Diese Hilfe öffnen</li>\n</ul>\n</p>\n<h3>Seitenleiste</h3>\n<p>\n    Die Seitenleiste dient der Navigation. Du bist vermutlich gerade auf der Übersicht, ganz unten. Um mit der Kurswahl\n    zu beginnen, klicke auf eine der dunkelgrauen Schaltflächen. Du kannst beliebig zwischen den Abschnitten wechseln,\n    solange deine Eingaben gültig sind. Solltest du etwas ändern, kann es sein, dass du ein paar Sachen in den \n    nachfolgenden Abschnitten neueingeben musst!\n</p>\n<h3>Unterer Fensterrand</h3>\n<p>Ganz links kannst du <b>die Schule wechseln</b>. In der Mitte wird dir angezeigt, wenn deine <b>Eingaben ungültig</b> sind. Ganz rechts kannst du <b>deine Wahl zurücksetzen.</b></p>\n\n<h2><a name='ablauf'>Ablauf</a></h2>\n<ol>\n    <li>Persönliche Daten eingeben (Seitenleiste)</li>\n    <li>Fremdsprachen, Wahlpflichtfächer und die Klasse auswählen (Seitenleiste)</li>\n    <li>Leistungskurse wählen (Seitenleiste)</li>\n    <li>Prüfungsfächer &AMP; 5. PK wählen (Seitenleiste)</li>\n    <li>Grundkurse wählen (Seitenleiste)</li>\n    <li>Datei oder Formular speichern (Toolbar)</li>\n</ol>\n<p>\n    Klicke auf den obersten Eintrag in der Seitenleiste um zu beginnen. Hast du deine Daten eingegeben, kannst du zum\n    nächsten Abschnitt übergehen. Einträge die noch ausgegraut sind, erfordern das Abschließen der vorherigen Abschnitte!\n</p>\n<h2><a name='speichern'>Speichern</a></h2>\n<p>\n    Um deine Wahl zu sichern, klicke auf das <b>Speichern-Symbol</b> (das in der Mitte) in der Toolbar. Je nach Schule\n    unterscheidet sich das weitere Vorgehen!\n</p>\n<h3>LUSD-Export</h3>\n<p>\n    Wirst du gefragt ein <b>LUSD-Formular</b> auszuwählen, dann öffne das Formular, welches du von deinem PäKo bekommen\n    hast. Wähle nun einen neuen Speicherort oder -Namen aus, um dein Formular zu speichern, ansonsten schlägt der Export\n    fehl!<br>\n    Möchtest du <b>nur eine Datei für dich</b> speichern, klicke direkt auf <b>Abbrechen</b>. Du wirst dann gefragt, ob du eine\n    <a href='#json_export'>Datei für dich exportieren</a> möchtest.\n</p>\n<h3><a name='json_export'>kurswahl-Export</a></h3>\n<p>\n    Wirst du nach einem Ort zum Speichern der <b>Datei für den PäKo gefragt</b>, nutzt deine Schule den Standard-Export.\n    Wähle einen Ort für die Datei, an dem du sie wiederfindest. Du kannst diese Datei auch später öffnen, um deine Wahl\n    zu ändern. Danach wirst du gefragt, einen Ort zum Speichern eines Bildes auszuwählen. Dort wird ein <b>Bild deiner\n    Wahl</b> gespeichert dass du ausdrucken und unterschreiben kannst.\n</p>"
+    override fun showHelp(): String = "<ol>\n    <li><a href='#aufbau'>Aufbau</a></li>\n    <li><a href='#ablauf'>Ablauf</a></li>\n    <li><a href='#speichern'>Speichern</a></li>\n    <li><a href='#copyright'>Copyright</a></li>\n</ol>\n<h2><a name='aufbau'>Aufbau</a></h2>\n${img("docs/start_screen.png")}\n<h3>Toolbar</h3>\n<p>In der Toolbar kannst du folgendes tun:\n<ul>\n    <li>Eine Kurswahl öffnen</li>\n    <li>Eine Kurswahl speichern</li>\n    <li>Diese Hilfe öffnen</li>\n</ul>\n</p>\n<h3>Seitenleiste</h3>\n<p>\n    Die Seitenleiste dient der Navigation. Du bist vermutlich gerade auf der Übersicht, ganz unten. Um mit der Kurswahl\n    zu beginnen, klicke auf eine der dunkelgrauen Schaltflächen. Du kannst beliebig zwischen den Abschnitten wechseln,\n    solange deine Eingaben gültig sind. Solltest du etwas ändern, kann es sein, dass du ein paar Sachen in den \n    nachfolgenden Abschnitten neueingeben musst!\n</p>\n<h3>Unterer Fensterrand</h3>\n<p>Ganz links kannst du <b>die Schule wechseln</b>. In der Mitte wird dir angezeigt, wenn deine <b>Eingaben ungültig</b> sind. Ganz rechts kannst du <b>deine Wahl zurücksetzen.</b></p>\n\n<h2><a name='ablauf'>Ablauf</a></h2>\n<ol>\n    <li>Persönliche Daten eingeben (Seitenleiste)</li>\n    <li>Fremdsprachen, Wahlpflichtfächer und die Klasse auswählen (Seitenleiste)</li>\n    <li>Leistungskurse wählen (Seitenleiste)</li>\n    <li>Prüfungsfächer &AMP; 5. PK wählen (Seitenleiste)</li>\n    <li>Grundkurse wählen (Seitenleiste)</li>\n    <li>Datei oder Formular speichern (Toolbar)</li>\n</ol>\n<p>\n    Klicke auf den obersten Eintrag in der Seitenleiste um zu beginnen. Hast du deine Daten eingegeben, kannst du zum\n    nächsten Abschnitt übergehen. Einträge die noch ausgegraut sind, erfordern das Abschließen der vorherigen Abschnitte!\n</p>\n<h2><a name='speichern'>Speichern</a></h2>\n<p>\n    Um deine Wahl zu sichern, klicke auf das <b>Speichern-Symbol</b> (das in der Mitte) in der Toolbar. Je nach Schule\n    unterscheidet sich das weitere Vorgehen!\n</p>\n<h3>LUSD-Export</h3>\n<p>\n    Wirst du gefragt ein <b>LUSD-Formular</b> auszuwählen, dann öffne das Formular, welches du von deinem PäKo bekommen\n    hast. Wähle nun einen neuen Speicherort oder -Namen aus, um dein Formular zu speichern, ansonsten schlägt der Export\n    fehl!<br>\n    Möchtest du <b>nur eine Datei für dich</b> speichern, klicke direkt auf <b>Abbrechen</b>. Du wirst dann gefragt, ob du eine\n    <a href='#json_export'>Datei für dich exportieren</a> möchtest.\n</p>\n<h3><a name='json_export'>kurswahl-Export</a></h3>\n<p>\n    Wirst du nach einem Ort zum Speichern der <b>Datei für den PäKo gefragt</b>, nutzt deine Schule den Standard-Export.\n    Wähle einen Ort für die Datei, an dem du sie wiederfindest. Du kannst diese Datei auch später öffnen, um deine Wahl\n    zu ändern. Danach wirst du gefragt, einen Ort zum Speichern eines Bildes auszuwählen. Dort wird ein <b>Bild deiner\n    Wahl</b> gespeichert dass du ausdrucken und unterschreiben kannst.\n</p>\n<h2><a name='copyright'>Copyright</a></h2>\n<a href='https://github.com/heinrich26/Kurs-Check'>&copy; Hendrik Horstmann</a>"
 
     override val windowName: String
         get() = R.getString("your_kurswahl")
 
     init {
-        val copyrightButton = JButton("<html><span style='font-family:DIALOG'>\u24b8</span> Hendrik Horstmann</html>").apply {
-            isFocusable = false
-            addActionListener { openWebpage(URL("https://github.com/heinrich26/Kurs-Check")) }
-        }
-        add(
-            copyrightButton,
-            row = 2,
-            column = 0,
-            anchor = GridBagConstraints.SOUTHEAST,
-            margin = Insets(4)
-        )
 
         val visualizer = WahlVisualizer(wahlData)
         val scrollPane = JScrollPane(
@@ -78,10 +65,8 @@ class Overview(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean) -
         val prefWidth = visualizer.preferredSize.width
 
         fun updateScrollpane() {
-            val givenHeight = height - copyrightButton.height - 9 /* Insets des Buttons */
-            scrollPane.preferredSize = if (givenHeight < prefHeight) Dimension(
-                prefWidth + scrollPane.verticalScrollBar.preferredSize.width,
-                givenHeight
+            scrollPane.preferredSize = if (height < prefHeight) Dimension(
+                prefWidth + scrollPane.verticalScrollBar.preferredSize.width, height
             ) else Dimension(prefWidth + 16 /* Breite der Rounded Border */, prefHeight)
             revalidate()
         }

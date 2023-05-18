@@ -282,6 +282,7 @@ class GuiMain(file: File? = null) : JPanel() {
         add(toolbar, fill = GridBagConstraints.HORIZONTAL, row = 0, column = 0, columnspan = 3)
         toolbar.addActionItem(R.file_open, "open-action", R.getString("open_kurswahl"), this::openKurswahlAction)
         toolbar.addActionItem(R.save, "save-action", R.getString("save_kurswahl"), this::saveKurswahlAction)
+        toolbar.addActionItem(R.reset, "reset-action", R.getString("reset"), this::resetWahl)
         toolbar.addActionItem(R.help, "help-action", R.getString("help"), this::showHelp)
 
         (layout as GridBagLayout).rowWeights = doubleArrayOf(0.0, 1.0, .0)
@@ -297,22 +298,22 @@ class GuiMain(file: File? = null) : JPanel() {
 
         add(unvollstaendigeEingabeLabel, row = 2, column = 2, anchor = GridBagConstraints.CENTER)
 
-        val resetButton = JButton(R.getString("reset"))
-        resetButton.isFocusable = false
-        resetButton.addActionListener {
-            if (JOptionPane.showConfirmDialog(
-                    this,
-                    R.getString("ask_reset"),
-                    "${R.getString("reset")}?",
-                    JOptionPane.YES_NO_OPTION
-                ) == JOptionPane.YES_OPTION
-            ) {
-                wahlData = fachData.createKurswahl(currentSchool!!.schulId)
-                reloadToStart()
-            }
-        }
-
-        add(resetButton, row = 2, column = 2, anchor = GridBagConstraints.EAST, margin = Insets(4))
+//        val resetButton = JButton(R.getString("reset"))
+//        resetButton.isFocusable = false
+//        resetButton.addActionListener {
+//            if (JOptionPane.showConfirmDialog(
+//                    this,
+//                    R.getString("ask_reset"),
+//                    "${R.getString("reset")}?",
+//                    JOptionPane.YES_NO_OPTION
+//                ) == JOptionPane.YES_OPTION
+//            ) {
+//                wahlData = fachData.createKurswahl(currentSchool!!.schulId)
+//                reloadToStart()
+//            }
+//        }
+//
+//        add(resetButton, row = 2, column = 2, anchor = GridBagConstraints.EAST, margin = Insets(4))
 
 
         chooseSchoolButton.addMouseListener(onEnter = { chooseSchoolButton.text = "\u2190 Schule wechseln" },
@@ -362,7 +363,11 @@ class GuiMain(file: File? = null) : JPanel() {
         }
         content.addHyperlinkListener {
             if (it.eventType == HyperlinkEvent.EventType.ACTIVATED && it.description != null) {
-                content.scrollToReference(it.description.substring(1))
+                if (it.description.startsWith('#')) {
+                    content.scrollToReference(it.description.substring(1))
+                } else {
+                    openWebpage(it.url)
+                }
             }
         }
 
@@ -530,7 +535,7 @@ class GuiMain(file: File? = null) : JPanel() {
             /**
              * Speichert ein Bild der Kurswahl
              */
-            fun saveBild() {
+            fun saveImage() {
                 if (chooser.selectedFile != null) chooser.selectedFile = chooser.selectedFile.withExtension("png")
                 chooser.fileFilter = PngFileFilter
                 chooser.dialogTitle = R.getString("save_for_you")
@@ -596,8 +601,24 @@ class GuiMain(file: File? = null) : JPanel() {
                 } else askFallback()
             } else {
                 saveKurswahl()
-                saveBild()
+                saveImage()
             }
+        }
+    }
+
+    /**
+     * Setzt die Wahl zurück
+     */
+    private fun resetWahl() {
+        if (JOptionPane.showConfirmDialog(
+                this,
+                R.getString("ask_reset"),
+                "${R.getString("reset")}?",
+                JOptionPane.YES_NO_OPTION
+            ) == JOptionPane.YES_OPTION
+        ) {
+            wahlData = fachData.createKurswahl(currentSchool!!.schulId)
+            reloadToStart()
         }
     }
 

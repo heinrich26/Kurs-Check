@@ -19,7 +19,6 @@
 
 import java.awt.geom.GeneralPath
 import java.awt.geom.Point2D
-import java.util.*
 
 fun GeneralPath.fromSVG(path: String, scale: Double = 1.0): MutableList<String> {
 
@@ -149,12 +148,26 @@ fun GeneralPath.fromSVG(path: String, scale: Double = 1.0): MutableList<String> 
 
             's' -> for ((dx1, dy1, dx, dy) in coords.chunked(4)) {
                 currentPoint.let { (x, y) ->
-                    (if (prevInstruction  in "cqs") currentPoint.mirror(handle) else currentPoint).let { (hx, hy) ->
+                    (if (prevInstruction in "cqs") currentPoint.mirror(handle) else currentPoint).let { (hx, hy) ->
                         addCall("curveTo", hx, hy, dx1 + x, dy1 + y, dx + x, dy + y)
                         curveTo(hx, hy, dx1 + x, dy1 + y, dx + x, dy + y)
                     }
                     handle = Point2D.Double(x + dx1, y + dy1)
                 }
+            }
+            'A' -> coords.let { (rx, ry, phi, fa, fs, x2, y2) ->
+                a2c(currentPoint.x, currentPoint.y, x2, y2, fa, fs, rx, ry, phi)
+            }.forEach { (x1, y1, x2, y2, x, y) ->
+                addCall("curveTo", x1, y1, x2, y2, x, y)
+                curveTo(x1, y1, x2, y2, x, y)
+            }
+            'a' -> coords.let { (rx, ry, phi, fa, fs, dx, dy) ->
+                currentPoint.let { (x, y) ->
+                    a2c(x, y, x + dx, y + dy, fa, fs, rx, ry, phi)
+                }
+            }.forEach { (x1, y1, x2, y2, x, y) ->
+                addCall("curveTo", x1, y1, x2, y2, x, y)
+                curveTo(x1, y1, x2, y2, x, y)
             }
         }
 
@@ -164,11 +177,26 @@ fun GeneralPath.fromSVG(path: String, scale: Double = 1.0): MutableList<String> 
 }
 
 /**
+ * Returns 6st *element* from the array.
+ *
+ * If the size of this array is less than 6, throws an [IndexOutOfBoundsException] except in Kotlin/JS
+ * where the behavior is unspecified.
+ */
+private inline operator fun <T> Array<T>.component6(): T = get(5)
+
+/**
  * Returns 6th *element* from the list.
  *
  * Throws an [IndexOutOfBoundsException] if the size of this list is less than 5.
  */
 private inline operator fun <T> List<T>.component6(): T = get(5)
+
+/**
+ * Returns 7th *element* from the list.
+ *
+ * Throws an [IndexOutOfBoundsException] if the size of this list is less than 5.
+ */
+private inline operator fun <E> List<E>.component7(): E = get(6)
 private inline operator fun Point2D.component1() = this.x
 private inline operator fun Point2D.component2() = this.y
 private fun Point2D.mirror(other: Point2D) =

@@ -17,10 +17,12 @@
 
 package com.kurswahlApp.gui
 
-import com.kurswahlApp.createImageIcon
+import com.kurswahlApp.R
 import com.kurswahlApp.data.Consts
 import com.kurswahlApp.data.KurswahlData
 import com.kurswahlApp.data.Regel
+import java.awt.*
+import javax.swing.Icon
 import javax.swing.JLabel
 import javax.swing.border.EmptyBorder
 
@@ -38,7 +40,7 @@ class RegelLabel(private val regel: Regel) : JLabel(regel.desc?.wrappable(), val
     }
 
     init {
-        border = EmptyBorder(2, 4, 2, 0)
+        border = validBorder
         text = validText
         foreground = Consts.COLOR_VALID
     }
@@ -48,20 +50,24 @@ class RegelLabel(private val regel: Regel) : JLabel(regel.desc?.wrappable(), val
     private fun setAppearance(valid: Boolean) {
         if (apprearance != valid) {
             if (valid) {
+                border = validBorder
                 icon = validIcon
                 text = validText
                 foreground = Consts.COLOR_VALID
             } else {
+                border = errorBorder
+                icon = errorIcon
                 text = invalidText
                 foreground = Consts.COLOR_ERROR
-                icon = errorIcon
             }
             apprearance = valid
         }
     }
 
     companion object {
-        val validIcon = createImageIcon("icons/check.png")
-        val errorIcon = createImageIcon("icons/cross.png")
+        val validIcon = ShapeIcon(R.task_check, 24)
+        val errorIcon = ShapeIcon(R.error, 24)
+        private val validBorder = EmptyBorder(2, 5, 2, 5)
+        private val errorBorder = FilledRoundedBorder(Insets(2), Consts.COLOR_ERROR)
     }
 }

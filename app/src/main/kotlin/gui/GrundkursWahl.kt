@@ -232,7 +232,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
 
     private val checkboxRows = arrayOfNulls<CheckboxRow>(fachData.faecher.size)
 
-    private val regelLabelArray = fachData.regeln.map { RegelLabel(it) }.toTypedArray()
+    private val regelLabelArray = fachData.regeln.map(::RegelLabel).toTypedArray()
 
     // Absolutes Minimum/Maximum an Kursen wählbar! Zählt auch Extrakurse
     private var anzahl: Int = 0
@@ -363,7 +363,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         val regelPanel = ScrollablePanel(null)
         regelPanel.layout = BoxLayout(regelPanel, BoxLayout.PAGE_AXIS)
         regelPanel.setScrollableWidth(ScrollablePanel.ScrollableSizeHint.FIT)
-        regelLabelArray.forEach { regelPanel.add(it) }
+        regelLabelArray.forEach(regelPanel::add)
 
         // Label für die maximale Kurszahl/Semester
         regelPanel.add(kursanzahlInfoLabel)
@@ -382,7 +382,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
      */
     private fun buildCheckboxes() {
         // fremdsprachen & wpfs holen
-        val fs = wahlData.fremdsprachen.map { it.first }
+        val fs = wahlData.fremdsprachen.map(Pair<Fach, Int>::first)
 
         // Zeile mit den Zählern für Semesterkurse
         with(JPanel(GridBagLayout())) {
@@ -471,7 +471,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         for ((sprache, jahr) in wahlData.fremdsprachen) {
             if (jahr >= 9) {
                 val pos = fachPos(sprache)
-                // TODO bei Klasse 10 Belegungsverpflichtung für Künstlerisches Fach entfernen
+                // TODO bei Klasse 10 Belegungsverpflichtung für künstlerisches Fach entfernen
                 checkboxRows[pos]!!.apply(
                     if (fachData.schultyp.jahre - 2 == jahr) DURCHGEHEND else ERSTES_ZWEITES,
                     true
