@@ -17,14 +17,21 @@ jobs:
       fail-fast: false
       matrix:
         os: [ windows-latest, macos-latest, ubuntu-latest ]
+        arch: [ x64 ]
+        java-distro: [ corretto ]
+        include: 
+          - os: windows-latest
+            arch: x86
+            java-distro: zulu
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout project sources
       uses: actions/checkout@v3
     - uses: actions/setup-java@v3
       with:
-        distribution: 'corretto'
+        distribution: ${{ matrix.java-distro }}
         java-version: '18'
+        architecture: arch
         cache: 'gradle'
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
@@ -37,20 +44,19 @@ jobs:
     - name: Build Commandline-Merger with JPackage
       run: gradle :merger:jpackage
 
-    - name: Upload build reports
-      uses: actions/upload-artifact@v3
-      with:
-        name: application
-        path: out/executable/
-
     - name: Build RPMs with JPackage
       if: ${{ matrix.os == 'ubuntu-latest' }}
       run: |
         gradle :app:buildRPM
         gradle :merger:buildRPM
 
-    - name: Upload RPM build reports
-      if: ${{ matrix.os == 'ubuntu-latest' }}
+    - if: ${{ matrix.arch == x86 }}
+      run: |
+        for f in out/executable/*.msi; do
+            mv -- "$f" "${f%.msi}_win32.msi"
+        done
+
+    - name: Upload build reports
       uses: actions/upload-artifact@v3
       with:
         name: application
