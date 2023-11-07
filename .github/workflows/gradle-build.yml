@@ -53,9 +53,11 @@ jobs:
     - name: Rename win32 Binaries
       if: ${{ matrix.arch == 'x86' }}
       run: |
-        cd out/executable
+        cd out/executable/full
         ren "*.msi" "*_win32.msi"
-        cd ../..
+        cd ../basic
+        ren "*.msi" "*_win32.msi"
+        cd ../../..
 
     - name: Upload build reports
       uses: actions/upload-artifact@v3
