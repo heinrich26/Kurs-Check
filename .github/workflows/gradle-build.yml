@@ -50,7 +50,7 @@ jobs:
         gradle :app:buildRPM
         gradle :merger:buildRPM
 
-    - if: ${{ matrix.arch == x86 }}
+    - if: ${{ matrix.arch == 'x86' }}
       run: |
         for f in out/executable/*.msi; do
             mv -- "$f" "${f%.msi}_win32.msi"
