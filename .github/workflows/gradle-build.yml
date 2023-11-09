@@ -49,7 +49,7 @@ jobs:
         gradle :app:buildRPM
         gradle :merger:buildRPM
 
-    - name: Rename win32 Binaries (1)
+    - name: Rename win32 Binaries
       if: ${{ matrix.arch == 'x86' }}
       working-directory: ./out/executable/basic
       shell: cmd
