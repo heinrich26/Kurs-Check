@@ -54,6 +54,8 @@ jobs:
       if: ${{ matrix.arch == 'x86' }}
       run: |
         cd out/executable/full
+        cd
+        ls
         ren "*.msi" "*_win32.msi"
         cd ../basic
         ren "*.msi" "*_win32.msi"
