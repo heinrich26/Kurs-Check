@@ -58,7 +58,7 @@ import java.io.IOException
  * @property fnamePattern Regex, das die passende LUSD-PDF zum Schülernamen findet.
  * Mögliche Variablen: [%vname%](KurswahlData.vorname) und [%nname%](KurswahlData.nachname) (Leerzeichen werden durch Unterstriche ersetzt)
  */
-@Suppress("unused")
+@Suppress("unused", "PropertyName", "LocalVariableName")
 @JsonIncludeProperties(
     "schulId", "jsonVersion", "faecher", "pflichtfaecher", "wpfs", "regeln", "wahlzeilen", "wildcards", "minKurse",
     "maxKurse", "pf3_4AusschlussFaecher", "zweiWPFs", "semesterkurse", "klassen", "schultyp", "nutztLusd", "fnamePattern"
@@ -92,14 +92,14 @@ class FachData(
                 this.addAll(wzWildcards[lk1]!!)
             else this.add(lk1)
         }
-    }.map { faecherMap[it]!! }
+    }.mapNotNull { faecherMap[it]!!.takeIf(Fach::isLk) }
     val lk2Moeglichkeiten = LinkedHashSet<String>().apply {
         for ((_, lk2) in wahlzeilen.values) {
             if (lk2.startsWith("$"))
                 this.addAll(wzWildcards[lk2]!!)
             else this.add(lk2)
         }
-    }.map { faecherMap[it]!! }
+    }.mapNotNull { faecherMap[it]!!.takeIf(Fach::isLk) }
 
 
     init {
