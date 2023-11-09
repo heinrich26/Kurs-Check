@@ -53,11 +53,13 @@ jobs:
     - name: Rename win32 Binaries (1)
       if: ${{ matrix.arch == 'x86' }}
       working-directory: ./out/executable/basic
+      shell: cmd
       run: ren "*.msi" "*_win32.msi"
 
     - name: Rename win32 Binaries (2)
       if: ${{ matrix.arch == 'x86' }}
       working-directory: ./out/executable/full
+      shell: cmd
       run: ren "*.msi" "*_win32.msi"
 
     - name: Upload build reports
