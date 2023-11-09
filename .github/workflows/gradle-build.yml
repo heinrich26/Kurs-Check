@@ -8,7 +8,6 @@ on:
     - '**.md'
     - '.idea/**'
     - '**.py'
-    
   workflow_dispatch:
 
 jobs:   
@@ -55,7 +54,7 @@ jobs:
       working-directory: ./out/executable
       shell: cmd
       run: |
-        for /R %F in (.\*.msi) do ren "%~dF%~pF%F" "%~dF%~pF%~nF_win32.msi"
+        for /R %%F in (.\*.msi) do ren "%%~dF%%~pF%%F" "%%~dF%%~pF%%~nF_win32.msi"
 
     - name: Upload build reports
       uses: actions/upload-artifact@v3
