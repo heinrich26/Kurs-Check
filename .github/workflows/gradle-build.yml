@@ -50,16 +50,15 @@ jobs:
         gradle :app:buildRPM
         gradle :merger:buildRPM
 
-    - name: Rename win32 Binaries
+    - name: Rename win32 Binaries (1)
       if: ${{ matrix.arch == 'x86' }}
-      run: |
-        cd out/executable/full
-        cd
-        ls
-        ren "*.msi" "*_win32.msi"
-        cd ../basic
-        ren "*.msi" "*_win32.msi"
-        cd ../../..
+      working-directory: ./out/executable/basic
+      run: ren "*.msi" "*_win32.msi"
+
+    - name: Rename win32 Binaries (2)
+      if: ${{ matrix.arch == 'x86' }}
+      working-directory: ./out/executable/full
+      run: ren "*.msi" "*_win32.msi"
 
     - name: Upload build reports
       uses: actions/upload-artifact@v3
