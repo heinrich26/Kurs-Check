@@ -145,11 +145,50 @@
             "lusdId": 3382
         },
         {
-            "name": "Englisch Cambridge",
-            "kuerzel": "CAE",
+            "name": "Kreatives Schreiben",
+            "kuerzel": "KreS",
+            "aufgabenfeld": -1,
+            "nurIn": "1-2",
+            "lusdId": 33822
+        },
+        {
+            "name": "LCCI (English for Business 2)",
+            "kuerzel": "LCCI",
             "aufgabenfeld": -1,
             "nurIn": "1-2",
             "lusdId": 3381
+        },
+        {
+            "name": "Debating",
+            "kuerzel": "Deb",
+            "aufgabenfeld": -1,
+            "nurIn": "1-2",
+            "lusdId": 33812
+        },
+        {
+            "name": "Textiles Gestalten",
+            "kuerzel": "TexGe",
+            "aufgabenfeld": -1,
+            "nurIn": "1-2",
+            "lusdId": 33813
+        },
+        {
+            "name": "Musik Ensemble (Chor)",
+            "kuerzel": "Ens",
+            "aufgabenfeld": -1,
+            "lusdId": 3380
+        },
+        {
+            "name": "Big Band",
+            "kuerzel": "BB",
+            "aufgabenfeld": -1,
+            "lusdId": 33801
+        },
+        {
+            "name": "Geschichte und Religion",
+            "kuerzel": "GeRe",
+            "aufgabenfeld": -1,
+            "lusdId": 33802
         },
         {
             "name": "Sport",
@@ -166,14 +205,6 @@
             // Auf -1, damit es nicht als Prüfungsfach gewählt werden kann!
             "nurIn": "3-4",
             "lusdId": 3401
-        },
-        {
-            // alt für Musik
-            "name": "Musik Ensemble",
-            "kuerzel": "Ens",
-            "aufgabenfeld": 1,
-            "isExtra": true,
-            "lusdId": 3380
         },
         {
             // Alternative für Geschichte
