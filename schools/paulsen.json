@@ -32,7 +32,6 @@
             "name": "Spanisch",
             "kuerzel": "Spa",
             "aufgabenfeld": 1,
-            "isLk": true,
             "isFremdsprache": true,
             "lusdId": 3386
         },
@@ -64,6 +63,7 @@
             "aufgabenfeld": 1,
             "brauchtWPF": true,
             "nurPf4_5": true,
+            "isExtra": true,
             "lusdId": 3389
         },
         {
@@ -82,7 +82,7 @@
         },
         {
             "name": "Sozialwissenschaften",
-            "kuerzel": "SoWi",
+            "kuerzel": "Sw",
             "aufgabenfeld": 2,
             "isLk": true,
             "lusdId": 3385
@@ -93,13 +93,6 @@
             "aufgabenfeld": 2,
             "isLk": true,
             "lusdId": 3397
-        },
-        {
-            "name": "Psychologie",
-            "kuerzel": "Psy",
-            "aufgabenfeld": -1,
-            "nurIn": "1-2",
-            "lusdId": 34031
         },
         {
             "name": "Mathematik",
@@ -145,6 +138,13 @@
             "lusdId": 3382
         },
         {
+            "name": "Psychologie",
+            "kuerzel": "Psy",
+            "aufgabenfeld": -1,
+            "nurIn": "1-2",
+            "lusdId": 34031
+        },
+        {
             "name": "Kreatives Schreiben",
             "kuerzel": "KreS",
             "aufgabenfeld": -1,
@@ -173,9 +173,10 @@
             "lusdId": 33813
         },
         {
-            "name": "Musik Ensemble (Chor)",
+            "name": "Ensemblemusik",
             "kuerzel": "Ens",
             "aufgabenfeld": -1,
+            "isExtra": true,
             "lusdId": 3380
         },
         {
@@ -189,6 +190,27 @@
             "kuerzel": "GeRe",
             "aufgabenfeld": -1,
             "lusdId": 33802
+        },
+        {
+            "name": "Relativitätstheorie",
+            "kuerzel": "Ret",
+            "aufgabenfeld": -1,
+            "nurIn": "1-2",
+            "lusdId": 33804
+        },
+        {
+            "name": "Astronomie",
+            "kuerzel": "Astro",
+            "aufgabenfeld": -1,
+            "nurIn": "3-4",
+            "lusdId": 33805
+        },
+        {
+            "name": "Mathe Zusatz",
+            "kuerzel": "MaZ",
+            "aufgabenfeld": -1,
+            "nurIn": "3-4",
+            "lusdId": 33806
         },
         {
             "name": "Sport",
@@ -215,8 +237,8 @@
             "lusdId": 3403
         },
         {
-            // Alternative für Mathe
-            "name": "Politikwissenschaften Bili",
+            // Alternative für Politikwissenschaft
+            "name": "Politikwissenschaft Bili",
             "kuerzel": "PwBi",
             "aufgabenfeld": 2,
             "nurFuer": ["Bili"],
@@ -241,12 +263,12 @@
     ],
     "pflichtfaecher": {
         "De": "1-4",
+        "Ma": "1-4",
         "Sp": "1-4"
     },
     "zweiWPFs": true,
     "wpfs": [
         "Inf",
-        "I",
         "Lat",
         "Fr",
         "DS",
@@ -254,11 +276,10 @@
         "Ph",
         "Ch",
         "Pw",
-        "Pl",
         "Geo",
         "Mu",
         "Ku",
-        "MaCAS"
+        "Sw"
     ],
     "regeln": [
         {
@@ -295,8 +316,8 @@
                     "anzahl": 2
                 }
             },
-            "desc": "Bio 4 Semester -> zusätzliche Naturwissenschaft min. 2 Semester",
-            "errorMsg": "Wähle eine 2. Naturwissenschaft für min. 2 Semester!"
+            "desc": "Bio 4 Semester -> zusätzliche Naturwissenschaft mind. 2 Semester",
+            "errorMsg": "Wähle eine 2. Naturwissenschaft für mind. 2 Semester!"
         },
         // (§ 25 Abs. 3, § 26 Abs. 2 Nr. 3 VO-GO):
         {
@@ -311,8 +332,8 @@
                 "type": "OrRegel",
                 "regel1": {
                     // PW in Q3/Q4
-                    "type": "KuerzelRegel",
-                    "kuerzel": "Pw",
+                    "type": "WildcardRegel",
+                    "kuerzel": "$PW",
                     "anzahl": 2,
                     "wann": "3-4"
                 },
@@ -323,8 +344,8 @@
                     "anzahl": 4
                 }
             },
-            "desc": "Geschichte 4 Semester -> zusätzlich PW min. in Q3 & Q4 oder ein weiteres Fach aus AF2 durchgängig",
-            "errorMsg": "Wähle PW in Q3 & Q4 oder Geografie bzw. Philosophie durchgängig!"
+            "desc": "Geschichte 4 Semester -> zusätzlich PW mind. in Q3 & Q4 oder ein weiteres Fach aus AF2 durchgängig",
+            "errorMsg": "Wähle PW in Q3 & Q4 oder Geografie bzw. Sozialwissenschaften durchgängig!"
         },
         {
             "type": "IfThenRegel",
@@ -341,7 +362,7 @@
                 "anzahl": 2,
                 "wann": "3-4"
             },
-            "desc": "Geographie, Philosophie oder PW 4 Semester -> zusätzlich Ge min. in Q3 & Q4",
+            "desc": "Geographie, SW oder PW 4 Semester -> zusätzlich Ge mind. in Q3 & Q4",
             "errorMsg": "Wähle Geschichte in Q3 & Q4!"
         },
         {
@@ -365,28 +386,20 @@
                 "anzahl": 2,
                 "wann": "3-4"
             },
-            "desc": "Sport als PF -> zusätzlich Sport Theorie min. in Q3 & Q4",
+            "desc": "Sport als PF -> zusätzlich Sport Theorie mind. in Q3 & Q4",
             "errorMsg": "Wähle Sport Theorie in Q3 & Q4!"
-        },
-        {
-            "type": "AndRegel",
-            "regel1": {
-                "type": "KonfliktRegel",
-                "wildcard": "$MA"
-            },
-            "regel2":{
-                "type": "WildcardRegel",
-                "wildcard": "$MA",
-                "anzahl": 4
-            },
-            "desc": "<i>Mathe</i> oder <i>Mathe CAS</i> müssen durchgehend belegt werden",
-            "errorMsg": "Wähle 4 Semester <i>Mathe</i> oder <i>Mathe CAS</i>!"
         },
         {
             "type": "KonfliktRegel",
             "wildcard": "$GE",
-            "desc": "Wähle Geschichte <b>oder</b> Geschichte Bili",
+            "desc": "Wähle max. Geschichte <b>oder</b> Geschichte Bili",
             "errorMsg": "Du kannst nur Geschichte <b>oder</b> Geschichte Bili wählen!"
+        },
+        {
+            "type": "KonfliktRegel",
+            "wildcard": "$GE",
+            "desc": "Wähle max. PW <b>oder</b> PW Bili",
+            "errorMsg": "Du kannst nur PW <b>oder</b> PW Bili wählen!"
         }
     ],
     "wahlzeilen": {
@@ -394,7 +407,7 @@
             "lk1": "$FS",
             "lk2": "De",
             "pf3": "$AF2",
-            "pf4": "$MA",
+            "pf4": "Ma",
             "pf5": "*",
             "linien": "keine"
         },
@@ -433,7 +446,7 @@
         "6": {
             "lk1": "$FS",
             "lk2": "$FS",
-            "pf3": "$MA",
+            "pf3": "Ma",
             "pf4": "$AF2",
             "pf5": "*",
             "linien": "gestrichelt"
@@ -457,7 +470,7 @@
         "9": {
             "lk1": "$FS",
             "lk2": "$Mu/Ku",
-            "pf3": "$MA",
+            "pf3": "Ma",
             "pf4": "$AF2",
             "pf5": "*",
             "linien": "gestrichelt"
@@ -481,14 +494,14 @@
         "12": {
             "lk1": "$FS",
             "lk2": "$AF2",
-            "pf3": "$MA",
+            "pf3": "Ma",
             "pf4": "*",
             "pf5": "*",
             "linien": "gestrichelt"
         },
         "13": {
             "lk1": "$FS",
-            "lk2": "$MA",
+            "lk2": "Ma",
             "pf3": "$AF2",
             "pf4": "*",
             "pf5": "*",
@@ -505,7 +518,7 @@
         "15": {
             "lk1": "$FS",
             "lk2": "$NW",
-            "pf3": "$MA",
+            "pf3": "Ma",
             "pf4": "$AF2",
             "pf5": "*",
             "linien": "gestrichelt"
@@ -521,13 +534,13 @@
         "17": {
             "lk1": "$FS",
             "lk2": "Inf",
-            "pf3": "$MA",
+            "pf3": "Ma",
             "pf4": "$AF2",
             "pf5": "*",
             "linien": "gestrichelt"
         },
         "21": {
-            "lk1": "$MA",
+            "lk1": "Ma",
             "lk2": "De",
             "pf3": "$AF2",
             "pf4": "*",
@@ -535,7 +548,7 @@
             "linien": "gestrichelt"
         },
         "22": {
-            "lk1": "$MA",
+            "lk1": "Ma",
             "lk2": "$Mu/Ku",
             "pf3": "De",
             "pf4": "$AF2",
@@ -543,7 +556,7 @@
             "linien": "gestrichelt"
         },
         "23": {
-            "lk1": "$MA",
+            "lk1": "Ma",
             "lk2": "$Mu/Ku",
             "pf3": "$FS",
             "pf4": "$AF2",
@@ -551,7 +564,7 @@
             "linien": "gestrichelt"
         },
         "24": {
-            "lk1": "$MA",
+            "lk1": "Ma",
             "lk2": "$AF2",
             "pf3": "De",
             "pf4": "*",
@@ -559,7 +572,7 @@
             "linien": "gestrichelt"
         },
         "25": {
-            "lk1": "$MA",
+            "lk1": "Ma",
             "lk2": "$AF2",
             "pf3": "$FS",
             "pf4": "*",
@@ -567,7 +580,7 @@
             "linien": "gestrichelt"
         },
         "26": {
-            "lk1": "$MA",
+            "lk1": "Ma",
             "lk2": "$NW",
             "pf3": "De",
             "pf4": "$AF2",
@@ -575,7 +588,7 @@
             "linien": "gestrichelt"
         },
         "27": {
-            "lk1": "$MA",
+            "lk1": "Ma",
             "lk2": "$NW",
             "pf3": "$FS",
             "pf4": "$AF2",
@@ -583,7 +596,7 @@
             "linien": "gestrichelt"
         },
         "28": {
-            "lk1": "$MA",
+            "lk1": "Ma",
             "lk2": "Inf",
             "pf3": "De",
             "pf4": "$AF2",
@@ -591,7 +604,7 @@
             "linien": "gestrichelt"
         },
         "29": {
-            "lk1": "$MA",
+            "lk1": "Ma",
             "lk2": "Inf",
             "pf3": "$FS",
             "pf4": "$AF2",
@@ -609,7 +622,7 @@
         "33": {
             "lk1": "$NW",
             "lk2": "De",
-            "pf3": "$MA",
+            "pf3": "Ma",
             "pf4": "$AF2",
             "pf5": "*",
             "linien": "gestrichelt"
@@ -626,14 +639,14 @@
             "lk1": "$NW",
             "lk2": "$Mu/Ku",
             "pf3": "$FS",
-            "pf4": "$MA",
+            "pf4": "Ma",
             "pf5": "$AF2",
             "linien": "keine|durchgezogen"
         },
         "36": {
             "lk1": "$NW",
             "lk2": "$Mu/Ku",
-            "pf3": "$MA",
+            "pf3": "Ma",
             "pf4": "De",
             "pf5": "$AF2",
             "linien": "keine|durchgezogen"
@@ -650,14 +663,14 @@
             "lk1": "$NW",
             "lk2": "$AF2",
             "pf3": "$FS",
-            "pf4": "$MA",
+            "pf4": "Ma",
             "pf5": "*",
             "linien": "keine|durchgezogen"
         },
         "39": {
             "lk1": "$NW",
             "lk2": "$AF2",
-            "pf3": "$MA",
+            "pf3": "Ma",
             "pf4": "De",
             "pf5": "*",
             "linien": "keine|durchgezogen"
@@ -674,14 +687,14 @@
             "lk1": "$NW",
             "lk2": "$NW",
             "pf3": "$FS",
-            "pf4": "$MA",
+            "pf4": "Ma",
             "pf5": "$AF2",
             "linien": "keine|durchgezogen"
         },
         "42": {
             "lk1": "$NW",
             "lk2": "$NW",
-            "pf3": "$MA",
+            "pf3": "Ma",
             "pf4": "De",
             "pf5": "$AF2",
             "linien": "keine|durchgezogen"
@@ -698,14 +711,14 @@
             "lk1": "$NW",
             "lk2": "Inf",
             "pf3": "$FS",
-            "pf4": "$MA",
+            "pf4": "Ma",
             "pf5": "$AF2",
             "linien": "keine|durchgezogen"
         },
         "45": {
             "lk1": "$NW",
             "lk2": "Inf",
-            "pf3": "$MA",
+            "pf3": "Ma",
             "pf4": "De",
             "pf5": "$AF2",
             "linien": "keine|durchgezogen"
@@ -729,7 +742,7 @@
         "51": {
             "lk1": "De",
             "lk2": "$Mu/Ku",
-            "pf3": "$MA",
+            "pf3": "Ma",
             "pf4": "$AF2",
             "pf5": "*",
             "linien": "gestrichelt"
@@ -753,7 +766,7 @@
         "54": {
             "lk1": "De",
             "lk2": "$AF2",
-            "pf3": "$MA",
+            "pf3": "Ma",
             "pf4": "*",
             "pf5": "*",
             "linien": "gestrichelt"
@@ -769,24 +782,24 @@
         "56": {
             "lk1": "De",
             "lk2": "Inf",
-            "pf3": "$MA",
+            "pf3": "Ma",
             "pf4": "$AF2",
             "pf5": "*",
             "linien": "gestrichelt"
         }
     },
     "wildcards": {
-        "$AF2": ["Ge", "Pw", "Geo", "Pl", "GeBi"],
+        "$AF2": ["Ge", "Pw", "Geo", "GeBi", "PwBi", "Sw"],
         // Kurse aus dem Aufgabenfeld 2
-        "$FS": ["E", "Fr", "Spa", "Lat", "I"],
+        "$FS": ["E", "Fr", "Spa", "Lat"],
         "$NW": ["Ch", "Ph", "Bio"],
         "$Mu/Ku": ["Mu", "Ku"],
-        "$MA": ["Ma", "MaCAS"],
         // Andere Wildcards (z.B. f. Regeln)
         "$KF": ["Mu", "Ku", "DS"],
         // alle fächer aus AF2, außer Geschichte
-        "$AF2ohneGE": ["Pw", "Geo", "Pl"],
-        "$GE": ["Ge", "GeBi"]
+        "$AF2ohneGE": ["Pw", "Geo", "Pl", "PwBi", "Sw"],
+        "$GE": ["Ge", "GeBi"],
+        "$PW": ["Pw", "PwBi"]
     },
     // Grundkurse und Leistungskurse zusammen
     "minKurse": 40,
