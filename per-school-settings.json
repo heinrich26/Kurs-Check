@@ -13,6 +13,14 @@
 		"x": 52.43578, 
 		"y": 13.31204,
 		"config": "lili.json",
+		"version": "2.0"
+	},
+	{
+		"name": "Paulsen Gymnasium",
+		"adresse": "Gritznerstraße 57",
+		"x": 52.4619, 
+		"y": 13.31459,
+		"config": "paulsen.json",
 		"version": "1.0"
 	}
 ]
