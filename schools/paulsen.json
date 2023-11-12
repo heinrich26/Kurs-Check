@@ -333,7 +333,7 @@
                 "regel1": {
                     // PW in Q3/Q4
                     "type": "WildcardRegel",
-                    "kuerzel": "$PW",
+                    "wildcard": "$PW",
                     "anzahl": 2,
                     "wann": "3-4"
                 },
