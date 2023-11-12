@@ -249,18 +249,16 @@
         
         // Fächer, die nur als Fremdsprache/Wahlpflichtfach angezeigt werden sollen
         {
-            "name": "Altgriechisch",
-            "kuerzel": "AGr",
-            "aufgabenfeld": 1,
-            "isKurs": false,
-            "isFremdsprache": true
+            "name": "Geschichte/Erdkunde",
+            "kuerzel": "GeErd",
+            "aufgabenfeld": 2,
+            "isKurs": false
         },
         {
-            "name": "Griechisch",
-            "kuerzel": "Gr",
-            "aufgabenfeld": 1,
-            "isKurs": false,
-            "isFremdsprache": true
+            "name": "Bio/Chemie",
+            "kuerzel": "BioCh",
+            "aufgabenfeld": 3,
+            "isKurs": false
         }
     ],
     "pflichtfaecher": {
@@ -269,21 +267,9 @@
         "Sp": "1-4"
     },
     "zweiWPFs": true,
+    // Legt fest, dass Schüler auch für Grundkurse/5. PK das Wahlpflichtfach belegt haben müssen.
     "strikteWPFs": true,
-    "wpfs": [
-        "Inf",
-        "Lat",
-        "Fr",
-        "DS",
-        "Bio",
-        "Ph",
-        "Ch",
-        "Pw",
-        "Geo",
-        "Mu",
-        "Ku",
-        "Sw"
-    ],
+    "wpfs": ["Inf", "Spa", "GeErd", "DS", "BioCh", "Ma", "Deb", "Sw"],
     "regeln": [
         {
             "type": "WildcardRegel",
@@ -810,8 +796,6 @@
     "maxKurse": 46,
     // Fächer, von denen nur 1 gewählt werden darf (§ 23,6 VO-GO)
     "pf3_4AusschlussFaecher": ["Mu", "Ku", "DS", "Sp"],
-    // Legt fest, dass Schüler auch für Grundkurse/5. PK das Wahlpflichtfach belegt haben müssen.
-    "strikteWPFs": true,
     // Limitiert die Anzahl Kurse die in einem Semester belegt werden können!
     "semesterkurse": [10, 10, 10, 10],
     "klassen": ["Bili"],
