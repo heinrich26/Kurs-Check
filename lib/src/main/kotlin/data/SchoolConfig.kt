@@ -41,6 +41,7 @@ import kotlin.io.path.Path
 import kotlin.io.path.exists
 
 
+@Suppress("SameParameterValue")
 object SchoolConfig {
     init {
         System.setProperty("java.net.useSystemProxies", "true")
@@ -67,22 +68,19 @@ object SchoolConfig {
     private fun doRequest(url: URL): String = doRequest(url.toURI())
 
 
-    const val CONFIG_SERVER_URL = "https://raw.githubusercontent.com/heinrich26/Kurs-Check/data/"
-    const val CONFIG_FOLDER_URL = CONFIG_SERVER_URL + "schools/"
-    val CONFIG_FILE_URL = URL(CONFIG_SERVER_URL + "per-school-settings.json")
+    private const val CONFIG_SERVER_URL = "https://raw.githubusercontent.com/heinrich26/Kurs-Check/data/"
+    private const val CONFIG_FOLDER_URL = CONFIG_SERVER_URL + "schools/"
+    private val CONFIG_FILE_URL = URL(CONFIG_SERVER_URL + "per-school-settings.json")
 
-    val LOCAL_CONFIG_DIR = System.getProperty("os.name").lowercase().let {
-        when {
-            "win" in it -> System.getenv("AppData")
-            "nix" in it || "nux" in it || "aix" in it -> System.getProperty("user.home")
-            "mac" in it -> System.getProperty("user.home") + "/Library/Preferences"
-            else -> System.getProperty("user.home")
-        }!! + "/.kurs-check"
-    }
+    private val LOCAL_CONFIG_DIR = when (val os = System.getProperty("os.name").lowercase()) {
+        in os -> System.getenv("AppData")
+        in os -> System.getProperty("user.home") + "/Library/Preferences"
+        else -> System.getProperty("user.home")
+    }!! + "/.kurs-check"
 
-    val LOCAL_SCHOOLS_DIR = "$LOCAL_CONFIG_DIR/schools/"
-    val LOCAL_MAIN_CONFIG = "$LOCAL_CONFIG_DIR/per-school-settings.json"
-    val LOCAL_LAST_SCHOOL_PROPS = "$LOCAL_CONFIG_DIR/last.properties"
+    private val LOCAL_SCHOOLS_DIR = "$LOCAL_CONFIG_DIR/schools/"
+    private val LOCAL_MAIN_CONFIG = "$LOCAL_CONFIG_DIR/per-school-settings.json"
+    private val LOCAL_LAST_SCHOOL_PROPS = "$LOCAL_CONFIG_DIR/last.properties"
 
 
     init {
@@ -102,7 +100,7 @@ object SchoolConfig {
     }
 
     /** Loads the Config from the Server */
-    fun fetchConfig(): String {
+    private fun fetchConfig(): String {
         return doRequest(CONFIG_FILE_URL).also {
             try {
                 AsynchronousFileChannel.open(
@@ -113,12 +111,13 @@ object SchoolConfig {
                     // Datei schreiben
                     asyncChannel.write(ByteBuffer.wrap(it.encodeToByteArray()), 0)
                 }
-            } catch (_: IOException) {}
+            } catch (_: IOException) {
+            }
         }
     }
 
     /** Versucht die Konfiguration für die angeforderte Schule vom Server zu laden */
-    fun fetchSchool(schoolKey: String): String {
+    private fun fetchSchool(schoolKey: String): String {
         return doRequest(CONFIG_FOLDER_URL + schoolKey).also {
             try {
                 AsynchronousFileChannel.open(
@@ -129,11 +128,12 @@ object SchoolConfig {
                     // Datei schreiben
                     asyncChannel.write(ByteBuffer.wrap(it.encodeToByteArray()), 0)
                 }
-            } catch (_: IOException) {}
+            } catch (_: IOException) {
+            }
         }
     }
 
-    fun loadSchool(schoolKey: String): String? {
+    private fun loadSchool(schoolKey: String): String? {
         with(Paths.get(LOCAL_SCHOOLS_DIR, schoolKey)) {
             return if (this.exists()) Files.readString(this) else null
         }
@@ -158,7 +158,7 @@ object SchoolConfig {
      * Lädt die lokale Konfigurationsdatei, wenn z.B. kein Internet vorhanden ist
      * Ist keine lokale Datei vorhanden wird die Fallback-Datei aus der .jar verwendet!
      */
-    fun loadConfig(): String = with(Paths.get(LOCAL_MAIN_CONFIG)) {
+    private fun loadConfig(): String = with(Paths.get(LOCAL_MAIN_CONFIG)) {
         if (this.exists()) Files.readString(this)
         else getResource("schools-data/per-school-settings.json")!!
     }

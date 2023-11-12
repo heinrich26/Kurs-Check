@@ -26,8 +26,14 @@ dependencies {
 copyInstallerResources.dependsOn(downloadSchoolsData/*, prepInstallerRes*/)
 jpackageImage.dependsOn copyInstallerResources
 
-String osPrefix = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'win' : ((Os.isFamily(Os.FAMILY_MAC)) ? 'mac' : 'linux')
-String iconExt = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'ico' : ((Os.isFamily(Os.FAMILY_MAC)) ? 'icns' : 'png')
+def (osPrefix, iconExt, packageType) =
+    Os.isFamily(Os.FAMILY_WINDOWS) ? ['win', 'ico', 'msi'] :
+            Os.isFamily(Os.FAMILY_MAC) ? ['mac', 'icns', 'pkg'] :
+                    ['linux', 'png', 'deb']
+
+
+//String osPrefix = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'win' : ((Os.isFamily(Os.FAMILY_MAC)) ? 'mac' : 'linux')
+//String iconExt = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'ico' : ((Os.isFamily(Os.FAMILY_MAC)) ? 'icns' : 'png')
 runtime {
     addOptions '--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages'
 
@@ -41,11 +47,11 @@ runtime {
 
         installerName = rootProject.name + '-full'
         installerOutputDir = file("$rootDir/out/executable/full")
-        installerType = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'msi' : ((Os.isFamily(Os.FAMILY_MAC)) ? 'pkg' : 'deb')
+        installerType = packageType
         installerOptions = ['--file-associations', "$buildDir/$resDirName/kurswahl-${osPrefix}.properties",
                             '--vendor', '"Willi-Graf-Gymnasium"',
                             '--description', "\"$description\"",
-                            '--copyright', '"Copyright Hendrik Horstmann 2023, All rights reserved"',
+                            '--copyright', "\"Copyright Hendrik Horstmann ${Calendar.instance.get(Calendar.YEAR)}, Alle Rechte vorbehalten\"",
                             '--about-url', 'https://github.com/heinrich26/kurswahlApp',
                             '--license-file', "$rootDir/COPYRIGHT",
                             "@$rootDir/app/res/$osPrefix-opts.txt"]
@@ -71,7 +77,7 @@ tasks.register('buildRPM', JPackageTask) {
             installerOptions = ['--file-associations', "$buildDir/$resDirName/kurswahl-linux.properties",
                                 '--vendor', '"Willi-Graf-Gymnasium"',
                                 '--description', "\"$description\"",
-                                '--copyright', '"Copyright Hendrik Horstmann 2023, All rights reserved"',
+                                '--copyright', "\"Copyright Hendrik Horstmann ${Calendar.instance.get(Calendar.YEAR)}, Alle Rechte vorbehalten\"",
                                 '--about-url', 'https://github.com/heinrich26/kurswahlApp',
                                 '--license-file', "$rootDir/COPYRIGHT",
                                 "@$rootDir/app/res/linux-opts.txt"]

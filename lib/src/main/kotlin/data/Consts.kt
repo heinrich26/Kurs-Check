@@ -26,6 +26,7 @@ import javax.swing.JLabel
 object Consts {
 
     val COLOR_PRIMARY = Color(96, 2, 238)
+    val COLOR_PRIMARY_FOCUS = COLOR_PRIMARY.brighter()
     val COLOR_ON_PRIMARY: Color = Color.WHITE
     val COLOR_ON_PRIMARY_FOCUS = Color(190, 190, 190)
     val COLOR_CONTROL = COLOR_PRIMARY.transparentise(.1f)

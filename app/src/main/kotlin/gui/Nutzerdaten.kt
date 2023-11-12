@@ -132,7 +132,6 @@ class Nutzerdaten(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean
     )
 
     override fun isDataValid(): Boolean {
-        println("soss")
         return vornameEntry.text.isNotBlank() && nachnameEntry.text.isNotBlank() && geburtsortEntry.text.isNotBlank() && (geburtsdatumPicker.isTextFieldValid && geburtsdatumPicker.date != null)
     }
 

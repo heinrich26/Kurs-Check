@@ -107,8 +107,8 @@ data class KurswahlData(
 
 
             return KurswahlData(
-                lk1 = fachData.faecherMap[lk1].let { if (it != null && it.isLk) it else null },
-                lk2 = fachData.faecherMap[lk2].let { if (it != null && it.isLk) it else null },
+                lk1 = fachData.faecherMap[lk1].takeIf{ it != null && it.isLk },
+                lk2 = fachData.faecherMap[lk2].takeIf { it != null && it.isLk },
                 pf3 = fachData.faecherMap[pf3],
                 pf4 = fachData.faecherMap[pf4],
                 pf5 = fachData.faecherMap[pf5],
@@ -409,7 +409,7 @@ data class KurswahlData(
      */
     @Throws(InvalidPasswordException::class, IOException::class)
     fun exportPDF(`in`: File, out: File, fachData: FachData) {
-        val fachIdMap = fachData.faecher.reversed().associateBy { it.lusdId }
+        val fachIdMap = fachData.faecher.reversed().associateBy(Fach::lusdId)
         val felder = fachIdMap.values.associateWith { FeldZeile() }
 
         val doc = PDDocument.load(`in`)

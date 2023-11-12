@@ -22,6 +22,7 @@ import com.kurswahlApp.data.Wahlzeile.Companion.isWildcard
 import org.intellij.lang.annotations.Language
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
+import java.awt.event.ActionEvent
 import java.awt.event.ItemEvent
 import javax.swing.Box
 import javax.swing.JLabel
@@ -64,8 +65,8 @@ class Leistungskurse(wahlData: KurswahlData, fachData: FachData, notifier: (Bool
         }
     }
 
-    private val lk1: FachComboBox
-    private val lk2: FachComboBox
+    private val lk1ComboBox: FachComboBox
+    private val lk2ComboBox: FachComboBox
 
     init {
         add(Box.createHorizontalStrut(50), column = 2)
@@ -73,57 +74,55 @@ class Leistungskurse(wahlData: KurswahlData, fachData: FachData, notifier: (Bool
 
         // Eine Fremdsprache, die erst in der Jahrgangsstufe 10 oder in der Einführungsphase begonnen wurde,
         // darf nur als 3. oder 4. Prüfungsfach oder als Referenzfach der 5. PK gewählt werden.
-        val fs =
-            wahlData.fremdsprachen.mapNotNull { (fach, jahr) -> if (jahr >= fachData.schultyp.ePhase) null else fach }
+        val fs = wahlData.fremdsprachen.mapNotNull { (fach, jahr) -> fach.takeIf { (jahr < fachData.schultyp.ePhase) } }
+        val wpfs = wahlData.wpfs
 
         val model1 = FachComboBoxModel(fachData.lk1Moeglichkeiten.filter {
-            !it.isFremdsprache || it in fs && it.checkKlasse(wahlData.klasse)
-        })
-        lk1 = FachComboBox(model1)
-
-
-        val wpfs = wahlData.wpfs
-        val moeglichkeiten = fachData.lk2Moeglichkeiten.filter {
-            it != lk1.selectedItem &&
-                    /* Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1 */
-                    (if (it.isFremdsprache) it in fs
-                    /* Hat keine WPF or Fach ist weder 1./2. WPF */
-                    else (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second))))
+            (if (it.isFremdsprache) it in fs
+             else !it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second)))
                     && it.checkKlasse(wahlData.klasse)
-        }
-        val model2 = LKComboBoxModel(moeglichkeiten, lk1)
-        lk2 = FachComboBox(model2)
-        val listener: (Any) -> Unit = { notifier.invoke(lk2.selectedItem != null) }
-        lk1.addActionListener(listener)
-        lk1.addActionListener {
+        })
+        lk1ComboBox = FachComboBox(model1)
+
+        val model2 = LKComboBoxModel(emptyList(), lk1ComboBox)
+        lk2ComboBox = FachComboBox(model2)
+        val listener: (Any) -> Unit = { notifier.invoke(isDataValid()) }
+        lk1ComboBox.addActionListener(listener)
+        lk2ComboBox.addActionListener(listener)
+
+        lk1ComboBox.addActionListener {
             model2.clear()
-            model2.addAll(LinkedHashSet<String>().apply {
-                for ((lk11, lk21) in fachData.wahlzeilen.values) {
-                    if (lk11.isWildcard && lk1.selectedItem != null && lk1.selectedItem!!.kuerzel in fachData.wzWildcards[lk11]!! || lk11 == lk1.selectedItem?.kuerzel)
-                        if (lk21.isWildcard)
-                            this.addAll(fachData.wzWildcards[lk21]!!)
-                        else this.add(lk21)
+            model2.addAll(buildSet {
+                for ((lk1, lk2) in fachData.wahlzeilen.values) {
+                    if (lk1.isWildcard && lk1ComboBox.selectedItem != null
+                        && lk1ComboBox.selectedItem!!.kuerzel in fachData.wzWildcards[lk1]!!
+                        || lk1 == lk1ComboBox.selectedItem?.kuerzel) {
+                        if (lk2.isWildcard) addAll(fachData.wzWildcards[lk2]!!)
+                        else add(lk2)
+                    }
                 }
-            }.map { fachData.faecherMap[it]!! }.filter {
-                it != lk1.selectedItem &&
-                        /* Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1 */
-                        (if (it.isFremdsprache) it in fs
-                        /* Hat keine WPF or Fach ist weder 1./2. WPF */
-                        else (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second))))
-                        && it.checkKlasse(wahlData.klasse)
+            }.mapNotNull { k ->
+                fachData.faecherMap[k]!!.takeIf {
+                    it.isLk && it != lk1ComboBox.selectedItem
+                            /* Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1 */
+                            && (if (it.isFremdsprache) it in fs
+                            /* Hat keine WPF or Fach ist weder 1./2. WPF */
+                            else (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second))))
+                            && it.checkKlasse(wahlData.klasse)
+                }
             })
         }
-        lk2.addActionListener(listener)
-        listener.invoke(Any())
+        // ActionListener ausführen, damit man LK2 auswählen kann
+        lk1ComboBox.actionListeners.last()!!.actionPerformed(ActionEvent(0, -1, ""))
 
-
-        lk1.renderer = FachRenderer
-        lk2.renderer = FachRenderer
+        lk1ComboBox.renderer = FachRenderer
+        lk2ComboBox.renderer = FachRenderer
 
 
         // Daten einsetzen
-        lk1.selectedItem = wahlData.lk1
-        lk2.selectedItem = wahlData.lk2
+        lk1ComboBox.selectedItem = wahlData.lk1
+        lk2ComboBox.selectedItem = wahlData.lk2
+        listener.invoke(Any()) // auswahl überprüfen
 
         // Anzeigen
         // Margin hinzufügen
@@ -134,8 +133,8 @@ class Leistungskurse(wahlData: KurswahlData, fachData: FachData, notifier: (Bool
         container.add(JLabel("1. LK "), row = 0, column = 0)
         container.add(JLabel("2. LK "), row = 1, column = 0)
         Insets(y = 1).let {
-            container.add(lk1, row = 0, column = 1, fill = GridBagConstraints.BOTH, margin = it)
-            container.add(lk2, row = 1, column = 1, fill = GridBagConstraints.BOTH, margin = it)
+            container.add(lk1ComboBox, row = 0, column = 1, fill = GridBagConstraints.BOTH, margin = it)
+            container.add(lk2ComboBox, row = 1, column = 1, fill = GridBagConstraints.BOTH, margin = it)
         }
 
         container.add(Box.createHorizontalStrut(200), row = 0, column = 0, columnspan = 2)
@@ -144,12 +143,12 @@ class Leistungskurse(wahlData: KurswahlData, fachData: FachData, notifier: (Bool
     }
 
 
-    override fun close(): KurswahlData = wahlData.updateLKs(lk1 = lk1.selectedItem!!, lk2 = lk2.selectedItem!!)
+    override fun close(): KurswahlData = wahlData.updateLKs(lk1 = lk1ComboBox.selectedItem!!, lk2 = lk2ComboBox.selectedItem!!)
 
-    override fun isDataValid(): Boolean = (lk1.selectedItem != null && lk2.selectedItem != null)
+    override fun isDataValid(): Boolean = lk1ComboBox.selectedItem != null && lk2ComboBox.selectedItem != null
 
     @Language("HTML")
-    override fun showHelp(): String = "<h2>$windowName</h2><p>Die Leistungskurse ergeben sich wie folgt:<br><b>Ich bin leider nicht lyrisch begabt, deswegen beschwere dich bitte bei deinem PäKo, dass er/sie keine Hilfe verfasst hat!</b></p>"
+    override fun showHelp(): String = "<h2>$windowName</h2><p>Die Leistungskurse ergeben sich wie folgt:<br><b>Ich bin leider nicht lyrisch begabt, deswegen beschwere dich bitte bei deinem/deiner PäKo, dass er/sie keine Hilfe verfasst hat!</b></p>"
 
     override val windowName: String
         get() = "Leistungskurse"

@@ -210,32 +210,37 @@
 					"isFremdsprache": {
 						"type": "boolean",
 						"default": false,
-						"description": "Ob das Fach eine Fremdsprache ist"
+						"description": "Ob das Fach eine Fremdsprache ist."
 					},
 					"isLk": {
 						"type": "boolean",
 						"default": false,
-						"description": "Ob das Fach als LK gewählt werden kann"
+						"description": "Ob das Fach als LK gewählt werden kann."
 					},
 					"brauchtWPF": {
 						"type": "boolean",
 						"default": false,
-						"description": "Ob das Fach als Wahlpflichtfach gewählt worden sein muss um es zu wählen"
+						"description": "Ob das Fach als Wahlpflichtfach gewählt worden sein muss, um es (als PF) wählen zu können"
 					},
 					"isKurs": {
 						"type": "boolean",
 						"default": true,
-						"description": "Ob das Fach überhaupt gewählt werden kann, wird ansonsten nur als WPF/FS angezeigt"
+						"description": "Ob das Fach gewählt werden kann oder nur als WPF/FS angezeigt wird."
 					},
 					"nurIn": {
-						"description": "Limitiert, in welchen Semestern dieses Fach gewählt werden kann",
+						"description": "Limitiert, in welchen Semestern dieses Fach gewählt werden kann.",
 						"$ref": "#/definitions/Wahlmoeglichkeit",
 						"default": "1-4"
 					},
 					"nurPf4_5": {
 						"type": "boolean",
 						"default": false,
-						"description": "Ob das Fach nicht als 3. PF gewählt werden kann"
+						"description": "Ob das Fach nicht als 3. PF gewählt werden kann."
+					},
+					"nurLk": {
+						"type": "boolean",
+						"default": false,
+						"description": "Ob das Fach nur als Leistungskurs angeboten wird."
 					},
 					"isExtra": {
 						"type": "boolean",
@@ -249,7 +254,7 @@
 					}
 				},
 				"type": "object",
-				"description": "Beschreibt ein Fach. Jedes Kürzel darf nur 1x vorkommen",
+				"description": "Beschreibt ein Fach. Jedes Kürzel darf nur 1x vorkommen.",
 				"required": [ "kuerzel", "name", "aufgabenfeld" ]
 			}
 		},
@@ -264,6 +269,11 @@
 		"zweiWPFs": {
 			"description": "Bestimmt ob die Schüler*innen 2 oder nur 1 WPF wählen müssen. Die Option zwei zu wählen bleibt, damit Wechselnde bestimmte Fächer wählen können!",
 			"type": "boolean"
+		},
+		"strikteWPFs": {
+			"description": "Bestimmt ob die Schüler*innen Grundkurse belegen können, ohne das dazugehörige WPF belegt gehabt zu müssen.",
+			"type": "boolean",
+			"default": false
 		},
 		"wpfs": {
 			"type": "array",

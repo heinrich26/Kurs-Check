@@ -51,9 +51,11 @@ fun GeneralPath.fromSVG(path: String, scale: Double = 1.0): MutableList<String> 
 
     var prevInstruction = 'z'
     var handle = Point2D.Double(.0, .0)
+    moveTo(.0, .0)
 
     val calls = mutableListOf<String>()
     fun addCall(name: String, vararg nums: Double) = calls.add(nums.joinToString(", ", "$name(", ")") { "%.2f".format(it)})
+
 
 
     for ((instruction, coords) in gen) {

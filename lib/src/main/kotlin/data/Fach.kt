@@ -31,11 +31,12 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize
  * @property isFremdsprache ob das [Fach] eine Fremdsprache ist
  * @property isKurs ob das Fach als Kurs gewählt werden kann
  * @property brauchtWPF ob SuS das [Fach] as WPF belegt haben müssen
+ * @property nurLk ob das [Fach] lediglich als Leistungskurs angeboten wird.
  * @property nurPf4_5 ob das [Fach] nur als 4./5. PF gewählt werden kann
  * @property nurIn beschränkt, in welchen Semestern das Fach gewählt werden kann
  * @property nurFuer bestimmt welche Klassen das Fach wählen können
  * @property isExtra [Fach] zählt nicht zum maximalen Kurse-pro-Semester Zähler
- * @property lusdId Id des [Fach]s im LUSD-System
+ * @property lusdId Id des [Fachs][Fach] im LUSD-System
  */
 @JsonSerialize(using = FachSerializer::class, keyUsing = FachKeySerializer::class)
 data class Fach(
@@ -46,6 +47,7 @@ data class Fach(
     val isFremdsprache: Boolean = false,
     val isKurs: Boolean = true,
     val brauchtWPF: Boolean = false,
+    val nurLk: Boolean = false,
     val nurPf4_5: Boolean = false,
     val nurIn: Wahlmoeglichkeit = Wahlmoeglichkeit.DURCHGEHEND,
     val nurFuer: Set<String>? = null,
@@ -59,7 +61,6 @@ data class Fach(
      * Nach dem Schema: `<Fach.name> (<Fach.aufgabenfeld>)`
      */
     fun nameFormatted(): String = if (aufgabenfeld < 1) name else "$name ($aufgabenfeld)"
-//    fun nameFormatted(): String = if (aufgabenfeld < 1) name else "$name ${Char(9311+aufgabenfeld)}"
 
     override fun equals(other: Any?): Boolean = this === other || (other is Fach && this.kuerzel == other.kuerzel)
 

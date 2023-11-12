@@ -21,7 +21,7 @@ import com.kurswahlApp.data.Consts.RENDERING_HINTS
 import java.awt.*
 import javax.swing.Icon
 
-class ShapeIcon(private val shape: Shape, val size: Int, private val color: Color? = null) : Icon {
+class ShapeIcon(private val shape: Shape, val size: Int, var color: Color? = null) : Icon {
     override fun paintIcon(c: Component, g: Graphics, x: Int, y: Int) {
         with(g as Graphics2D) {
             setRenderingHints(RENDERING_HINTS)

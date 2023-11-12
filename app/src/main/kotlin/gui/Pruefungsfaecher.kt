@@ -63,23 +63,26 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
     private val filteredZeilen = fachData.filterWahlzeilen(wahlData.lk1, wahlData.lk2)
     private val filteredFaecherPf5 = fachData.faecherMap.filterValues {
         /* Nach VO-GO Berlin - § 23 Wahl der Prüfungsfächer Nr.8 muss das Fach für die 5. PK lediglich 4
-        Semester belegt werden und bei einer Fremdsprache muss diese in Klasse 10/der E-Phase erlernt
-        worden sein. */
+        Semester belegt werden. */
         // ist als Kurs wählbar
         it.isKurs &&
+                // Fach wird als Grundkurs angeboten oder als LK belegt
+                (!it.nurLk || it != wahlData.lk1 && it != wahlData.lk2) &&
                 // Darf mit der besuchten Klasse gewählt werden
                 it.checkKlasse(wahlData.klasse) &&
-                // ist kein Zusatzkurs & ...
+                // ist kein Zusatzkurs
                 it.aufgabenfeld != -1 &&
                 // Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1
-                (!it.isFremdsprache || it in userFs)
-
+                /* TODO die VO-GO verbietet nicht, eine nichtgewählte Fremdsprache zur 5. PK zu wählen,
+                    wir setzen dies hier jedoch vorraus, weil alles andere Sinnlos scheint. */
+                !it.isFremdsprache || it in userFs
     }
+    // Fächer für PF 3 & 4
     private val filteredFaecher = filteredFaecherPf5.filterValues {
-        // Fach ist kein LK
+        // Fach wurde nicht als LK gewählt
         it != wahlData.lk1 && it != wahlData.lk2 &&
                 // Braucht kein WPF oder Fach ist eins von 1./2. WPF
-                (!it.brauchtWPF || (userWpfs != null && (it == userWpfs.first || it == userWpfs.second)))
+                !it.brauchtWPF || (userWpfs != null && (it == userWpfs.first || it == userWpfs.second))
     }
 
     private val zeilenFuerFuenfte: MutableSet<Pair<Int, Wahlzeile>> = mutableSetOf()
@@ -146,7 +149,7 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
     private fun pf3Faecher(): Collection<Fach> {
         val kuerzel = mutableSetOf<String>()
 
-        val beliebig: () -> List<Fach> = { filteredFaecher.mapNotNull { if (it.value.nurPf4_5) null else it.value } }
+        val beliebig: () -> List<Fach> = { filteredFaecher.mapNotNull { it.value.takeUnless(Fach::nurPf4_5) } }
 
         for ((_, _, pf3, pf4, pf5, linien) in filteredZeilen.values) {
             if (pf3.isAny) return beliebig()
@@ -170,8 +173,7 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
         }
 
         return kuerzel.mapNotNull {
-            val fach = filteredFaecher[it] ?: return@mapNotNull null
-            if (fach.nurPf4_5) null else fach
+            filteredFaecher[it]?.takeUnless(Fach::nurPf4_5)
         }
     }
 
@@ -234,7 +236,7 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
 
         if (selectedPf3.kuerzel in fachData.pf3_4AusschlussFaecher) kuerzel.removeAll(fachData.pf3_4AusschlussFaecher)
         kuerzel.remove(selectedPf3.kuerzel) // Prüfungsfach 3 nicht 2x wählen
-        return kuerzel.mapNotNull { filteredFaecher[it] }
+        return kuerzel.mapNotNull(filteredFaecher::get)
     }
 
     @Suppress("ConvertArgumentToSet")
@@ -306,7 +308,7 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
             )
         }
 
-        return kuerzel.mapNotNull { filteredFaecher[it] }
+        return kuerzel.mapNotNull(filteredFaecher::get)
     }
 
     override fun close(): KurswahlData {

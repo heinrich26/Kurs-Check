@@ -54,6 +54,7 @@ open class ClickableDestionation(
             onExit = { hasFocus = false }
         )
     }
+
     private fun uncompleteAlert() {
         JOptionPane.showMessageDialog(this, "Bitte fülle zuerst die vorherigen Abschnitte aus!", "Der Reihe nach...", JOptionPane.WARNING_MESSAGE)
     }

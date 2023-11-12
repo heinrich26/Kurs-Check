@@ -33,6 +33,5 @@ data class Wahlzeile(
         val String.isAny: Boolean
             get() = this == "*"
     }
-
 }
 
