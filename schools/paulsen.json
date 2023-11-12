@@ -809,6 +809,8 @@
     "maxKurse": 46,
     // Fächer, von denen nur 1 gewählt werden darf (§ 23,6 VO-GO)
     "pf3_4AusschlussFaecher": ["Mu", "Ku", "DS", "Sp"],
+    // Legt fest, dass Schüler auch für Grundkurse/5. PK das Wahlpflichtfach belegt haben müssen.
+    "strikteWPFs": true,
     // Limitiert die Anzahl Kurse die in einem Semester belegt werden können!
     "semesterkurse": [10, 10, 10, 10],
     "klassen": ["Bili"],
