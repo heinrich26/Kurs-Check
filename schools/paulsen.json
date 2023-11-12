@@ -85,6 +85,8 @@
             "kuerzel": "Sw",
             "aufgabenfeld": 2,
             "isLk": true,
+            "nurLk": true,
+            "brauchtWPF": true,
             "lusdId": 3385
         },
         {
