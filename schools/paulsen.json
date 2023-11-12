@@ -2,7 +2,7 @@
     // eindeutiger Identifikator dieser FachDaten; Gleichzeitig der Dateiname dieser Datei!
     "schulId": "paulsen.json",
     // Hauptversion.Subversion
-    "jsonVersion": "1.0",
+    "jsonVersion": "1.1",
     // "aufgabenfeld" -> 0, wenn kein Aufgabenfeld gg. ist (Sport), Zusatzkurse -> -1
     "faecher": [
         {
