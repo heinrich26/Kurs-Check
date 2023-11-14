@@ -71,5 +71,3 @@ jobs:
     #     for %%F in (*.msi) do RENAME %%F "%%~nF_win32.msi"
     #     cd ../full
     #     for %%F in (*.msi) do RENAME %%F "%%~nF_win32.msi"
-
-
