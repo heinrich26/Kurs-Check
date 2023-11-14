@@ -11,7 +11,7 @@
             "aufgabenfeld": 1,
             "isLk": true,
             "lusdId": 3400,
-            "infoText": "Deutsch ist ein Fach in dem man Pau(l)senlos labert und über Bücher redet. (nicht zu empfehlen wenn ihr <ol type='a'><li>introvertiert seid</li><li>nicht lesen könnt</li><li>rechnen könnt</li></ol>.)"
+            "infoText": "Deutsch ist ein Fach in dem man Pau(l)senlos labert und über Bücher redet. (nicht zu empfehlen wenn ihr <ol type='a'><li>introvertiert seid<\/li><li>nicht lesen könnt<\/li><li>rechnen könnt<\/li><\/ol>.)"
         },
         {
             "name": "Englisch",
@@ -82,7 +82,7 @@
             "aufgabenfeld": 2,
             "isLk": true,
             "lusdId": 3395,
-            "infoText": "Politik habe ich nie belegt aber ich bin mir sicher man lernt auch nur das Angelo Mertens die beste Kanzlerin der Welt war und das, was man bereits in <a href='#fach-Ge'>Geschichte</a> gelernt hat!"
+            "infoText": "Politik habe ich nie belegt aber ich bin mir sicher man lernt auch nur das Angelo Mertens die beste Kanzlerin der Welt war und das, was man bereits in <a href='#fach-Ge'>Geschichte<\/a> gelernt hat!"
         },
         {
             "name": "Sozialwissenschaften",
@@ -106,7 +106,7 @@
             "aufgabenfeld": 3,
             "isLk": true,
             "lusdId": 3398,
-            "infoText": "Mathematik ist das beste Fach, denn die Wurzel aus 2 ist irrational.</p><p>Wer den Mathe-LK belegt ist cool und kann danach noch coolere Studiengänge an der TU-Berlin belegen, denn Mathe ist wichtig. Außerdem sind Graphen auch fast annährend so cool wie Grenzwerte eurer Mathelehrer*innen."
+            "infoText": "Mathematik ist das beste Fach, denn die Wurzel aus 2 ist irrational.<\/p><p>Wer den Mathe-LK belegt ist cool und kann danach noch coolere Studiengänge an der TU-Berlin belegen, denn Mathe ist wichtig. Außerdem sind Graphen auch fast annährend so cool wie Grenzwerte eurer Mathelehrer*innen."
         },
         {
             "name": "Physik",
@@ -114,7 +114,7 @@
             "aufgabenfeld": 3,
             "isLk": true,
             "lusdId": 3394,
-            "infoText": "Wenn du Physik nicht magst, versuch einfach tot und lebendig gleichzeitig zu sein, oder auch einfach anwesend und abwesend während des Unterrichts.</p><p>Naa, hats <strike>klick</strike>miau gemacht?"
+            "infoText": "Wenn du Physik nicht magst, versuch einfach tot und lebendig gleichzeitig zu sein, oder auch einfach anwesend und abwesend während des Unterrichts.<\/p><p>Naa, hats <strike>klick<\/strike>miau gemacht?"
         },
         {
             "name": "Chemie",
@@ -223,7 +223,7 @@
             "aufgabenfeld": -1,
             "nurIn": "3-4",
             "lusdId": 33806,
-            "infoText": "Noch mehr Mathematik für alle die noch nicht genug bekommen konnten. In Q3 geht es um <i>Logik</i> und in Q4 um <i>Zahlentheorie</i>."
+            "infoText": "Noch mehr Mathematik für alle die noch nicht genug bekommen konnten. In Q3 geht es um <i>Logik<\/i> und in Q4 um <i>Zahlentheorie<\/i>."
         },
         {
             "name": "Sport",
@@ -256,7 +256,7 @@
             "aufgabenfeld": 2,
             "nurFuer": ["Bili"],
             "lusdId": 3398,
-            "infoText": "Die englisch bilinguale Version von <i>Politikwissenschaft</i>"
+            "infoText": "Die englisch bilinguale Version von <i>Politikwissenschaft<\/i>"
         },
         
         // Fächer, die nur als Fremdsprache/Wahlpflichtfach angezeigt werden sollen
@@ -393,14 +393,14 @@
         {
             "type": "KonfliktRegel",
             "wildcard": "$GE",
-            "desc": "Wähle max. Geschichte <b>oder</b> Geschichte Bili",
-            "errorMsg": "Du kannst nur Geschichte <b>oder</b> Geschichte Bili wählen!"
+            "desc": "Wähle max. Geschichte <b>oder<\/b> Geschichte Bili",
+            "errorMsg": "Du kannst nur Geschichte <b>oder<\/b> Geschichte Bili wählen!"
         },
         {
             "type": "KonfliktRegel",
             "wildcard": "$GE",
-            "desc": "Wähle max. PW <b>oder</b> PW Bili",
-            "errorMsg": "Du kannst nur PW <b>oder</b> PW Bili wählen!"
+            "desc": "Wähle max. PW <b>oder<\/b> PW Bili",
+            "errorMsg": "Du kannst nur PW <b>oder<\/b> PW Bili wählen!"
         }
     ],
     "wahlzeilen": {
