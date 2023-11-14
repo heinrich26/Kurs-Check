@@ -51,7 +51,41 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
     }
 
     @Language("HTML")
-    override fun showHelp(): String = "<h2>$windowName</h2><p>Auf der linken Seite kannst du Kurse auswählen. Kurse die du bereits als Prüfungsfächer hast, sind bereits angeklickt! Auf der rechten Seite findest du alle Regeln, die deine Grundkurse erfüllen müssen! Wähle ein paar Kurse und klicke auf <b>Überprüfen</b> um zu sehen welche Fächer/Kurse dir noch fehlen!</p><p>Die Grundkurse ergeben sich wie folgt:<br><b>Ich bin leider nicht lyrisch begabt, deswegen beschwere dich bitte bei deinem PäKo, dass er/sie keine bessere Hilfe verfasst hat!</b></p>"
+    override fun showHelp(): String {
+        val toc = StringBuilder("<ul>")
+        val body = StringBuilder()
+        var af: Int = Int.MIN_VALUE
+        for (fach in fachData.faecher) {
+            if (!fach.isKurs || fach.infoText == null) continue
+
+            if (af != fach.aufgabenfeld) {
+                // Im ersten Durchlauf nicht die Listen beenden.
+                if (af != Int.MIN_VALUE) toc.append("</ul></li>")
+
+                af = fach.aufgabenfeld
+                when (af) {
+                    0 -> "Weitere"
+                    -1 -> "Zusatzkurse"
+                    else -> "Aufgabenfeld $af"
+                }.let {
+                    body.append("<h2><a name='af$af'>$it</a></h2>")
+                    toc.append("<li><a href='#af$af'>$it</a><ul>")
+                }
+
+            }
+            toc.append("<li><a href='#fach-${fach.kuerzel}'>${fach.name}</a></li>")
+            body.append("<h3><a name='fach-${fach.kuerzel}'>${fach.name}</a></h3><p>${fach.infoText}</p>")
+        }
+        toc.append("</ul></li></ul>")
+
+        if (body.isEmpty()) {
+            body.append("<p>Niemand hat einen Infotext für deine Fächer geschrieben... :(</p><p>Beschwer dich bei deinem/deiner PäKo, damit sich das ändert!</p>")
+            toc.clear()
+        }
+
+        // language=html
+        return "<h1>$windowName</h1>\n<ol>\n    <li><a href='#eingabehilfe'>Eingabe-Hilfe</a></li>\n    <li><a href='#faecher'>Fächer</a></li>\n</ol>\n\n<h2><a name='eingabehilfe'>Eingabe-Hilfe</a></h2>\n<p>Auf der linken Seite kannst du Kurse auswählen. Kurse die du bereits als Prüfungsfächer hast, sind\n    bereits angeklickt! Auf der rechten Seite findest du alle Regeln, die deine Grundkurse erfüllen müssen! Wähle ein\n    paar Kurse und klicke auf <b>Überprüfen</b> um zu sehen welche Fächer/Kurse dir noch fehlen!</p>\n<p>Die Grundkurse ergeben sich wie folgt:<br><b>Ich bin leider nicht lyrisch begabt, deswegen beschwere dich bitte bei\n    deinem PäKo, dass er/sie keine bessere Hilfe verfasst hat!</b></p>\n<h2><a name='faecher'>Fächer</a></h2>$toc$body".also { println(it) }
+    }
 
     companion object {
         @JvmStatic
@@ -135,7 +169,8 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                 margin = Insets(left = 4)
             )
 
-            // TODO Info Button
+            // TODO Info Button machen
+            // vorher die nachfolgenden Checkboxen und den Extra-Backdrop eine Zelle nach rechts verschieben
 //            val infoButton = HoverableIconButton(R.info_outline, 10) { println("hallo") }
 //            add(infoButton, row = 0, column = 1)
 
@@ -168,7 +203,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                 }
 
                 add(
-                    box, row = 0, column = i + 2,
+                    box, row = 0, column = i + 1,
                     anchor = GridBagConstraints.EAST,
                     fill = GridBagConstraints.HORIZONTAL
                 )

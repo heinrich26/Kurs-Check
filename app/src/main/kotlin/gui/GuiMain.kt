@@ -362,6 +362,12 @@ class GuiMain(file: File? = null) : JPanel() {
         content.maximumSize = Dimension(PANEL_WIDTH - pane.verticalScrollBar.preferredSize.width - 2, Int.MAX_VALUE)
         with((content.editorKit as HTMLEditorKit).styleSheet) {
             addRule("a, h1, h2, h3, h4, h5, h6 {color: ${Consts.COLOR_PRIMARY.hexString()}}")
+            addRule("p { margin-top: 15; margin-bottom: 15 }")
+            "{ margin-left-ltr: 25; margin-right-rtl: 25 }".let {
+                addRule("ol $it")
+                addRule("ul $it")
+            }
+            println(this.toString())
         }
         content.addHyperlinkListener {
             if (it.eventType == HyperlinkEvent.EventType.ACTIVATED && it.description != null) {

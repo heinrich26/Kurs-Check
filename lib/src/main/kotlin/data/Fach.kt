@@ -18,6 +18,7 @@
 package com.kurswahlApp.data
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import org.intellij.lang.annotations.Language
 
 /**
  * Beschreibt ein Fach
@@ -37,6 +38,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize
  * @property nurFuer bestimmt welche Klassen das Fach wählen können
  * @property isExtra [Fach] zählt nicht zum maximalen Kurse-pro-Semester Zähler
  * @property lusdId Id des [Fachs][Fach] im LUSD-System
+ * @property infoText über das [Fach], zur Hilfe in der Grundkurs-Übersicht.
  */
 @JsonSerialize(using = FachSerializer::class, keyUsing = FachKeySerializer::class)
 data class Fach(
@@ -52,13 +54,14 @@ data class Fach(
     val nurIn: Wahlmoeglichkeit = Wahlmoeglichkeit.DURCHGEHEND,
     val nurFuer: Set<String>? = null,
     val isExtra: Boolean = false,
-    val lusdId: Int = -1
+    val lusdId: Int = -1,
+    @Language("html") val infoText: String? = null
 ) {
 
     /**
-     * Gibt den Namen des [Fach]s mit, wenn vorhanden, dem Aufgabenfeld zurück
+     * Gibt den Namen des [Fachs][Fach], mit sofern vorhanden, dem Aufgabenfeld zurück.
      *
-     * Nach dem Schema: `<Fach.name> (<Fach.aufgabenfeld>)`
+     * Nach dem Schema: [`Name`][Fach.name]` (`[`Aufgabenfeld`][Fach.aufgabenfeld]`)`
      */
     fun nameFormatted(): String = if (aufgabenfeld < 1) name else "$name ($aufgabenfeld)"
 
