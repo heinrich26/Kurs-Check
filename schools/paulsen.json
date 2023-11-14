@@ -10,7 +10,8 @@
             "kuerzel": "De",
             "aufgabenfeld": 1,
             "isLk": true,
-            "lusdId": 3400
+            "lusdId": 3400,
+            "infoText": "Deutsch ist ein Fach in dem man Pau(l)senlos labert und über Bücher redet. (nicht zu empfehlen wenn ihr <ol type='a'><li>introvertiert seid</li><li>nicht lesen könnt</li><li>rechnen könnt</li></ol>.)"
         },
         {
             "name": "Englisch",
@@ -26,7 +27,8 @@
             "aufgabenfeld": 1,
             "isLk": true,
             "isFremdsprache": true,
-            "lusdId": 3384
+            "lusdId": 3384,
+            "infoText": "Französisch ist diese Sprache die man sprechen muss, wenn man in Frankreich überleben möchte. Man lernt ein Baguette zu kaufen und das Volvic eine grüngewaschene Plastikflasche vermarktet."
         },
         {
             "name": "Spanisch",
@@ -69,16 +71,18 @@
         {
             "name": "Geschichte",
             "kuerzel": "Ge",
-            "aufgabenfeld": 3,
+            "aufgabenfeld": 2,
             "isLk": true,
-            "lusdId": 3396
+            "lusdId": 3396,
+            "infoText": "In Geschichte lernt man etwas über die Großen Kriege der Menschheit (die alle von den Deutschen begonnen wurden, upsalla) und warum die Amerikaner die Russen nicht mögen."
         },
         {
             "name": "Politikwissenschaft",
             "kuerzel": "Pw",
             "aufgabenfeld": 2,
             "isLk": true,
-            "lusdId": 3395
+            "lusdId": 3395,
+            "infoText": "Politik habe ich nie belegt aber ich bin mir sicher man lernt auch nur das Angelo Mertens die beste Kanzlerin der Welt war und das, was man bereits in <a href='#fach-Ge'>Geschichte</a> gelernt hat!"
         },
         {
             "name": "Sozialwissenschaften",
@@ -101,14 +105,16 @@
             "kuerzel": "Ma",
             "aufgabenfeld": 3,
             "isLk": true,
-            "lusdId": 3398
+            "lusdId": 3398,
+            "infoText": "Mathematik ist das beste Fach, denn die Wurzel aus 2 ist irrational.</p><p>Wer den Mathe-LK belegt ist cool und kann danach noch coolere Studiengänge an der TU-Berlin belegen, denn Mathe ist wichtig. Außerdem sind Graphen auch fast annährend so cool wie Grenzwerte eurer Mathelehrer*innen."
         },
         {
             "name": "Physik",
             "kuerzel": "Ph",
             "aufgabenfeld": 3,
             "isLk": true,
-            "lusdId": 3394
+            "lusdId": 3394,
+            "infoText": "Wenn du Physik nicht magst, versuch einfach tot und lebendig gleichzeitig zu sein, oder auch einfach anwesend und abwesend während des Unterrichts.</p><p>Naa, hats <strike>klick</strike>miau gemacht?
         },
         {
             "name": "Chemie",
@@ -122,7 +128,8 @@
             "kuerzel": "Bio",
             "aufgabenfeld": 3,
             "isLk": true,
-            "lusdId": 3392
+            "lusdId": 3392,
+            "infoText": "Biologie ist keine Wissenschaft!"
         },
         {
             "name": "Informatik",
@@ -130,7 +137,8 @@
             "aufgabenfeld": 3,
             "isLk": true,
             "brauchtWPF": true,
-            "lusdId": 3388
+            "lusdId": 3388,
+            "infoText": "Informatik ist die Lehre der Informationstechnik, wobei es darum geht, (abstrakte) (digitale) Probleme mit programmähnlichen, teilweise Computergestützen Abläufen zu vereinfachen oder gar zu lösen. Sie findet sich heutzutage in allen Bereichen der Technik und ist aus der Arbeitswelt nicht mehr wegzudenken, da wir alles (außerhalb von Deutschland) digitalisiert haben."
         },
         {
             "name": "Studium und Beruf",
@@ -198,21 +206,24 @@
             "kuerzel": "Ret",
             "aufgabenfeld": -1,
             "nurIn": "1-2",
-            "lusdId": 33804
+            "lusdId": 33804,
+            "infoText": "Albert Einsteins revolutionäre Ideen von Raum und Zeit stießen das Tor auf zu einem modernen Verständnis unserer Welt. Obwohl einige davon geradezu unglaublich erscheinen, ist seine Relativitätstheorie heute eine der am besten experimentell bestätigten Theorien der Physik.<br>Während die Relativitätstheorie selbst im Physik-Leistungskurs in der Regel nicht oder bestenfalls oberflächlich angerissen werden kann, bietet der Zusatzkurs die Möglichkeit, sich ganz in Ruhe auf diese völlig andere, zunächst fremdartige Sichtweise einzulassen. In kleinen, aber unerbittlich logischen Schritten werfen wir unsere Alltagsvorstellung von Zeit, Raum und Materie und selbst die Idee einer universellen Gegenwart über Bord.<br>Im ersten Semester wird vor allem die spezielle Relativitätstheorie behandelt, die sich mit Objekten beschäftigt, die sich mit hoher Geschwindigkeit bewegen. Dabei stößt man auf zahlreiche scheinbar paradoxe Situationen und philosophische Fragen.<br>Im zweiten Semester kommt die allgemeine Relativitätstheorie hinzu, die ein komplett neues Konzept von Gravitation mit sich bringt, welches es unter anderem ermöglicht, die Energiequelle der Sonne und exotische Objekte wie schwarze Löcher, Gravitationslinsen und Gravitationswellen zu verstehen.<br>Der Kurs steht allen Schülerinnen und Schülern offen, egal ob sie Physik im LK, GK oder gar nicht gewählt haben. Etwas Offenheit für mathematische Betrachtungen ist aber hilfreich."
         },
         {
             "name": "Astronomie",
             "kuerzel": "Astro",
             "aufgabenfeld": -1,
             "nurIn": "3-4",
-            "lusdId": 33805
+            "lusdId": 33805,
+            "infoText": "Nicht das mit der Kaffeetasse"
         },
         {
             "name": "Mathe Zusatz",
-            "kuerzel": "MaZ",
+            "kuerzel": "ma-Z",
             "aufgabenfeld": -1,
             "nurIn": "3-4",
-            "lusdId": 33806
+            "lusdId": 33806,
+            "infoText": "Noch mehr Mathematik für alle die noch nicht genug bekommen konnten. In Q3 geht es um <i>Logik</i> und in Q4 um <i>Zahlentheorie</i>."
         },
         {
             "name": "Sport",
@@ -244,7 +255,8 @@
             "kuerzel": "PwBi",
             "aufgabenfeld": 2,
             "nurFuer": ["Bili"],
-            "lusdId": 3398
+            "lusdId": 3398,
+            "infoText": "Die englisch bilinguale Version von <i>Politikwissenschaft</i>"
         },
         
         // Fächer, die nur als Fremdsprache/Wahlpflichtfach angezeigt werden sollen
