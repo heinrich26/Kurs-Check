@@ -48,6 +48,8 @@ import java.net.URL
 import javax.imageio.ImageIO
 import javax.swing.*
 import javax.swing.border.EmptyBorder
+import javax.swing.event.AncestorEvent
+import javax.swing.event.AncestorListener
 import javax.swing.event.HyperlinkEvent
 import javax.swing.plaf.FontUIResource
 import javax.swing.text.html.HTMLEditorKit
@@ -350,7 +352,7 @@ class GuiMain(file: File? = null) : JPanel() {
      * Zeigt den Hilfedialog jedes Panels an
      */
     private fun showHelp() {
-        val content = JEditorPane("text/html", "<html><body><h1><a name=''>Kurs-Check Hife</a></h1>${curPanel.showHelp()}</body></html>")
+        val content = JEditorPane("text/html", "<html><body><h1><a name='top'>Kurs-Check Hife</a></h1>${curPanel.showHelp()}</body></html>")
         val pane = JScrollPane(content, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER)
 
         content.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, true)
@@ -373,8 +375,17 @@ class GuiMain(file: File? = null) : JPanel() {
 
         pane.preferredSize = Dimension(500, 400)
 
-        pane.viewport.viewPosition = Point(0, 0)
-        pane.verticalScrollBar.value = 0
+        // Wartet dass der Dialog angezeigt wird und scrollt dann nach oben.
+        pane.addAncestorListener(object : AncestorListener {
+            override fun ancestorAdded(event: AncestorEvent) {
+                content.scrollToReference("top")
+                pane.removeAncestorListener(this)
+            }
+
+            override fun ancestorRemoved(event: AncestorEvent) {}
+            override fun ancestorMoved(event: AncestorEvent) {}
+        })
+
         JOptionPane.showMessageDialog(this, pane, R.getString("help"), JOptionPane.PLAIN_MESSAGE)
     }
 
