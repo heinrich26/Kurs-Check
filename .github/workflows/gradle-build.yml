@@ -44,11 +44,24 @@ jobs:
     - name: Build Commandline-Merger with JPackage
       run: gradle :merger:jpackage
 
+    - name: Upload binaries
+      uses: actions/upload-artifact@v3
+      with:
+        name: application
+        path: out/executable/
+
     - name: Build RPMs with JPackage
       if: ${{ matrix.os == 'ubuntu-latest' }}
       run: |
         gradle :app:buildRPM
         gradle :merger:buildRPM
+
+    - name: Upload rpm binaries
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: application
+        path: out/executable/
 
     # - name: Rename win32 Binaries
     #   if: ${{ matrix.arch == 'x86' }}
@@ -59,8 +72,4 @@ jobs:
     #     cd ../full
     #     for %%F in (*.msi) do RENAME %%F "%%~nF_win32.msi"
 
-    - name: Upload build reports
-      uses: actions/upload-artifact@v3
-      with:
-        name: application
-        path: out/executable/
+
