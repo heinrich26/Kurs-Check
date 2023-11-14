@@ -251,6 +251,11 @@
 						"type": "integer",
 						"description": "ID des Fachs im LUSD Formular. Nutzen mehrere Fächer dieselbe ID, dann muss das \"Hauptfach\" zuerst stehen, also bspw.: Geschichte vor Geschichte Bili!",
 						"default": null
+					},
+					"infoText": {
+						"type": "string",
+						"description": "Kurze Beschreibung des Fachs/Kurses, welche in der Grundkursübersicht angezeigt wird. Darf im HTML Format sein! Möchtest du einen neuen Paragraphen beginnen, kannst du im Text </p><p> eingeben. (Der Text wird innerhalb von <p>...</p> eingebettet)",
+						"default": null
 					}
 				},
 				"type": "object",
