@@ -203,7 +203,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                 }
 
                 add(
-                    box, row = 0, column = i + 1,
+                    box, row = 0, column = i + 2,
                     anchor = GridBagConstraints.EAST,
                     fill = GridBagConstraints.HORIZONTAL
                 )
