@@ -10,8 +10,8 @@
             "kuerzel": "De",
             "aufgabenfeld": 1,
             "isLk": true,
-            "lusdId": 3400,
-            "infoText": "Deutsch ist ein Fach in dem man Pau(l)senlos labert und über Bücher redet. (nicht zu empfehlen wenn ihr <ol type='a'><li>introvertiert seid<\/li><li>nicht lesen könnt<\/li><li>rechnen könnt<\/li><\/ol>)."
+            "lusdId": 4509,
+            "infoText": "Deutsch ist ein Fach, in dem man Pau(l)senlos labert und über Bücher redet. (nicht zu empfehlen wenn ihr <ol type='a'><li>introvertiert seid<\/li><li>nicht lesen könnt<\/li><li>rechnen könnt<\/li><\/ol>)."
         },
         {
             "name": "Englisch",
@@ -19,7 +19,7 @@
             "aufgabenfeld": 1,
             "isLk": true,
             "isFremdsprache": true,
-            "lusdId": 3399
+            "lusdId": 4510
         },
         {
             "name": "Französisch",
@@ -27,7 +27,7 @@
             "aufgabenfeld": 1,
             "isLk": true,
             "isFremdsprache": true,
-            "lusdId": 3384,
+            "lusdId": 4525,
             "infoText": "Französisch ist diese Sprache, die man sprechen muss, wenn man in Frankreich überleben möchte. Man lernt ein Baguette zu kaufen und dass Volvic eine grüngewaschene Plastikflasche vermarktet."
         },
         {
@@ -35,7 +35,7 @@
             "kuerzel": "Spa",
             "aufgabenfeld": 1,
             "isFremdsprache": true,
-            "lusdId": 3386
+            "lusdId": 4526
         },
         {
             "name": "Latein",
@@ -43,21 +43,21 @@
             "aufgabenfeld": 1,
             "isLk": true,
             "isFremdsprache": true,
-            "lusdId": 3383
+            "lusdId": 4524
         },
         {
             "name": "Bildende Kunst",
             "kuerzel": "Ku",
             "aufgabenfeld": 1,
             "isLk": true,
-            "lusdId": 3391
+            "lusdId": 4518
         },
         {
             "name": "Musik",
             "kuerzel": "Mu",
             "aufgabenfeld": 1,
             "isLk": true,
-            "lusdId": 3390
+            "lusdId": 4519
         },
         {
             "name": "Darstellendes Spiel",
@@ -66,14 +66,14 @@
             "brauchtWPF": true,
             "nurPf4_5": true,
             "isExtra": true,
-            "lusdId": 3389
+            "lusdId": 4520
         },
         {
             "name": "Geschichte",
             "kuerzel": "Ge",
             "aufgabenfeld": 2,
             "isLk": true,
-            "lusdId": 3396,
+            "lusdId": 4513,
             "infoText": "In Geschichte erzählt man sich (wahre) Geschichten."
         },
         {
@@ -81,7 +81,7 @@
             "kuerzel": "Pw",
             "aufgabenfeld": 2,
             "isLk": true,
-            "lusdId": 3395,
+            "lusdId": 4514,
             "infoText": "Politik habe ich nie belegt, aber ich bin mir sicher man lernt auch nur das Angelo Mertens die beste Kanzlerin der Welt war und das, was man bereits in <a href='#fach-Ge'>Geschichte<\/a> gelernt hat!"
         },
         {
@@ -91,21 +91,28 @@
             "isLk": true,
             "nurLk": true,
             "brauchtWPF": true,
-            "lusdId": 3385
+            "lusdId": 4523
         },
         {
             "name": "Geografie",
             "kuerzel": "Geo",
             "aufgabenfeld": 2,
             "isLk": true,
-            "lusdId": 3397
+            "lusdId": 4512
+        },
+        {
+            "name": "Philosophie",
+            "kuerzel": "Ph",
+            "aufgabenfeld": 2,
+            "isLk": true,
+            "lusdId": 4527
         },
         {
             "name": "Mathematik",
             "kuerzel": "Ma",
             "aufgabenfeld": 3,
             "isLk": true,
-            "lusdId": 3398,
+            "lusdId": 4511,
             "infoText": "Mathematik ist das beste Fach, denn die Wurzel aus 2 ist irrational.<\/p><p>Wer den Mathe-LK belegt ist cool und kann danach noch coolere Studiengänge an der TU-Berlin belegen, denn Mathe ist wichtig. Außerdem sind Graphen auch fast annährend so cool wie Grenzwerte eurer Mathelehrer*innen."
         },
         {
@@ -113,7 +120,7 @@
             "kuerzel": "Ph",
             "aufgabenfeld": 3,
             "isLk": true,
-            "lusdId": 3394,
+            "lusdId": 4515,
             "infoText": "Wenn du Physik nicht magst, versuch einfach tot und lebendig gleichzeitig zu sein, oder auch einfach anwesend und abwesend während des Unterrichts.<\/p><p>Naa, hats <strike>klick<\/strike>miau gemacht?"
         },
         {
@@ -121,14 +128,14 @@
             "kuerzel": "Ch",
             "aufgabenfeld": 3,
             "isLk": true,
-            "lusdId": 3393
+            "lusdId": 4516
         },
         {
             "name": "Biologie",
             "kuerzel": "Bio",
             "aufgabenfeld": 3,
             "isLk": true,
-            "lusdId": 3392,
+            "lusdId": 4517,
             "infoText": "Biologie ist keine Wissenschaft!"
         },
         {
@@ -137,7 +144,7 @@
             "aufgabenfeld": 3,
             "isLk": true,
             "brauchtWPF": true,
-            "lusdId": 3388,
+            "lusdId": 4522,
             "infoText": "Informatik ist die Lehre der Informationstechnik, wobei es darum geht, (abstrakte) (digitale) Probleme mit programmähnlichen, teilweise Computergestützen Abläufen zu vereinfachen oder gar zu lösen. Sie findet sich heutzutage in allen Bereichen der Technik und ist aus der Arbeitswelt nicht mehr wegzudenken, da wir alles (außerhalb von Deutschland) digitalisiert haben."
         },
         {
@@ -145,15 +152,15 @@
             "kuerzel": "StuB",
             "aufgabenfeld": -1,
             "nurIn": "1-2",
-            "lusdId": 3382,
+            "lusdId": 4507,
             "infoText": "Was machst du eigentlich nach dem Abi? – Studium, Ausbildung oder doch ein Gap Year? Hast du schon einmal einen Persönlichkeitstest gemacht, um herauszufinden, was dir auf der Basis von wissenschaftlichen Theorien empfohlen würde? Kennst du die Möglichkeiten, die du hast, um ein Studium zu finanzieren? Glaubst du, dass der Numerus Clausus allein entscheidend für deine Zulassung zum Studium ist? Wusstest du, dass man auch nur mit einem MSA studieren kann? Hast du schon einmal ein Projekt geleitet? Kannst du eine richtige Bewerbungsmappe zusammenstellen?<br>Diesen Fragen gehen wir im Kurs „Studium und Beruf“ nach. Im ersten Semester steht dabei im Fokus, welchen Weg du nach dem Abitur einschlagen könntest. Wir versprechen dir nicht, dass du nach dem Kurs weißt, was du machen möchtest, aber wir zeigen dir die Möglichkeiten auf, die du hast und probieren neue Wege aus, deinen Wünschen und Zielen auf die Spur zu kommen. Deshalb schreiben wir auch keine Klausur, sondern ein Portfolio, in dem du dich vor allem mit dir selbst auseinandersetzt. Im zweiten Semester klären wir alle Fragen um das Thema Bewerbung und erstellen als Prüfungsform eine Bewerbungsmappe. Hast du auch Fragen rund um das Thema „Studium und Beruf“? Dann freuen wir uns, dich nächstes Jahr im Kurs begrüßen zu können! (Ws)"
         },
         {
             "name": "Psychologie",
             "kuerzel": "Psy",
-            "aufgabenfeld": -1,
+            "aufgabenfeld": 4528,
             "nurIn": "1-2",
-            "lusdId": 34031
+            "lusdId": 4528
         },
         {
             "name": "Kreatives Schreiben",
