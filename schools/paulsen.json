@@ -104,7 +104,6 @@
             "name": "Philosophie",
             "kuerzel": "Ph",
             "aufgabenfeld": 2,
-            "isLk": true,
             "lusdId": 4527
         },
         {
@@ -151,31 +150,27 @@
             "name": "Studium und Beruf",
             "kuerzel": "StuB",
             "aufgabenfeld": -1,
-            "nurIn": "1-2",
             "lusdId": 4507,
             "infoText": "Was machst du eigentlich nach dem Abi? – Studium, Ausbildung oder doch ein Gap Year? Hast du schon einmal einen Persönlichkeitstest gemacht, um herauszufinden, was dir auf der Basis von wissenschaftlichen Theorien empfohlen würde? Kennst du die Möglichkeiten, die du hast, um ein Studium zu finanzieren? Glaubst du, dass der Numerus Clausus allein entscheidend für deine Zulassung zum Studium ist? Wusstest du, dass man auch nur mit einem MSA studieren kann? Hast du schon einmal ein Projekt geleitet? Kannst du eine richtige Bewerbungsmappe zusammenstellen?<br>Diesen Fragen gehen wir im Kurs „Studium und Beruf“ nach. Im ersten Semester steht dabei im Fokus, welchen Weg du nach dem Abitur einschlagen könntest. Wir versprechen dir nicht, dass du nach dem Kurs weißt, was du machen möchtest, aber wir zeigen dir die Möglichkeiten auf, die du hast und probieren neue Wege aus, deinen Wünschen und Zielen auf die Spur zu kommen. Deshalb schreiben wir auch keine Klausur, sondern ein Portfolio, in dem du dich vor allem mit dir selbst auseinandersetzt. Im zweiten Semester klären wir alle Fragen um das Thema Bewerbung und erstellen als Prüfungsform eine Bewerbungsmappe. Hast du auch Fragen rund um das Thema „Studium und Beruf“? Dann freuen wir uns, dich nächstes Jahr im Kurs begrüßen zu können! (Ws)"
         },
         {
             "name": "Psychologie",
             "kuerzel": "Psy",
-            "aufgabenfeld": 4528,
-            "nurIn": "1-2",
+            "aufgabenfeld": -1,
             "lusdId": 4528
         },
         {
             "name": "Kreatives Schreiben",
             "kuerzel": "KreS",
             "aufgabenfeld": -1,
-            "nurIn": "1-2",
-            "lusdId": 33822,
+            "lusdId": 4505,
             "infoText": "Erstes Halbjahr<br>Ziele: Schreibhemmungen abbauen, Themen finden, Urteilskraft schärfen; Stilmittel und Schreibtechniken kennen lernen (z.B.: Figurenreden, Beschreibungen, Erzählweise (personal etc.)); einen erweiterten Textbegriff vermitteln (Film, Bild etc.); eigene Texte in verschiedenen Genres schreiben, Foto – Text – Kombinationen suchen; eine lebendige Sprache finden; Schreibentscheidungen reflektieren und begründen<ul><li>Einleitung<\/li><li>Bewertungskriterien<\/li><li>Lyrik: Imitation und Variation; Cut-off-Technik<\/li><li>Prosa: surrealistische Schreibtechniken; Kurze Prosatexte & Romanauszüge: Leerstellen füllen<\/li><li>Schreiblektorat: (gemeinsame) Verbesserungen und Arbeiten an Handlungsführung und Stil<\/li><li>Bilder, Fotos und Filme zu Texten produzieren: Foto- Text- Projekt: Vorstellung verschiedener Verfahren: Barock, Brecht (Kriegsfibel), Tucholsky (Deutschland über alles), Sebald, Shapton...<\/li><li>Einleitung in die Fotografie<\/li><li>„Ich“: Porträt / Selbstporträt und Texte; alternative Themen möglich<\/li><li>Vorbereitung einer Ausstellung mit einzelnen Foto – Text – Produktionen:<\/li><li>Evtl. Besuch der Slam-Poetry-Meisterschaften im Grips-Theater, Lesungen im Literaturhaus, Theaterbesuch<\/li><li>Vorbereitung einer Leseperformance (hier nicht nur Texte, sondern auch Hörproben, Bilder, Filme etc.!) (Klausurersatzleistung)<\/li><\/ul>Zweites Halbjahr<br>Ziele: Literarische Öffentlichkeit kennen lernen, Literatur präsentieren können, Layout, Blogs und Online-Literatur, Autoren kennenlernen<ul><li>Präsentation einer Leseperformance / Auswertung<\/li><li>Gestaltung eines literarischen Buches / Heftes, Blogs (Klausurersatzleistung)<\/li><li>literarische Schreibblogs im Internet, Hypertexte<\/li><li>“Comment”: Online – Blog- und Performanceprojekt (sofern Finanzierung gegeben) s. www.comment.lettretage.de<\/li><\/ul>"
         },
         {
             "name": "LCCI (English for Business 2)",
             "kuerzel": "LCCI",
             "aufgabenfeld": -1,
-            "nurIn": "1-2",
-            "lusdId": 3381,
+            "lusdId": 4502,
             "infoText": "Im LCCI Ergänzungskurs werden Grundkenntnisse im Bereich der Kommunikation in der Wirtschaft in englischer Sprache vermittelt. Am Ende steht die LCCI Prüfung und die Erlangung eines weltweit anerkannten LCCI Zertifikats, das die Bewerbung für vielfältige Studiengänge begünstigt.<\/p><p> Die <b>LCCI (London Chamber of Commerce and Industry)<\/b> ist die größte Industrie- und Handelskammer Großbritanniens und eine weltweit renommierte Einrichtung für fremdsprachliche Weiterbildung. Sie bietet neben Wirtschaftsprüfungen vor allem Fremdsprachenprüfungen mit Zertifikatsabschluss in Englisch an. Es besteht weltweit eine hohe Wertschätzung und Anerkennung der <b>LCCI-Zertifikate<\/b>, welche hauptsächlich darin begründet liegt, dass sie das Sprachniveau der Absolventen deutlich widerspiegeln und anerkannte Zeugnisse darstellen. LCCI-Abschlüsse werden bei der Bewerbung an international renommierten Wirtschaftsunternehmen sowie an Hochschulen, Verbänden, Behörden, vielen Bildungsträgern und kommerziellen Institutionen berücksichtigt. (Veh)"
         },
         {
@@ -183,45 +178,43 @@
             "kuerzel": "Deb",
             "aufgabenfeld": -1,
             "nurIn": "1-2",
-            "lusdId": 33812,
+            "lusdId": 4530,
             "infoText": "Eine Debatte ist ein öffentliches Streitgespräch, bei der man Stellung bezieht, aufmerksam zuhören und vor allem argumentativ überzeugen muss. Das Debattieren ist eine wichtige Voraussetzung für lebendige Demokratie.<br>Der Debating Kurs bietet die Möglichkeit, die in anglophonen Ländern weit verbreitete Form der Debatte in englischer Sprache zu erproben und zu üben und damit das eigene Ausdrucksvermögen zu verbessern und den Wortschatz zu erweitern, u.a. als Vorbereitung für Studien an englischsprachigen Universitäten.<br>In Debating setzt man sich in englischer Sprache inhaltlich intensiv mit Themen auseinanderzusetzen, die den politischen und sozialen Alltag bestimmen. Man lernt hierbei sich in unbekannte Fragestellungen und Positionen hineinzudenken, sich präzise auszudrücken, sein Gegenüber ernst zu nehmen und ausreden zu lassen sowie durch eine geschickte Rhetorik seine Zuhörer zu erreichen und für sich zu gewinnen.<br>Die Klausur gestaltet sich in Form einer Klausurersatzleistung. Diese besteht aus der Teilnahme an einer Debatte sowie einer schriftlichen Ausarbeitung der eigenen Rede. (Jn)"
         },
         {
             "name": "Textiles Gestalten",
             "kuerzel": "TexGe",
             "aufgabenfeld": -1,
-            "nurIn": "1-2",
-            "lusdId": 33813,
+            "lusdId": 4506,
             "infoText": "In dem Kurs <i>Textiles Gestalten<\/i> geht es um die Auseinandersetzung mit dem textilen Material. Dieses wird einerseits von der handwerklichen Seite her betrachtet, andererseits von der künstlerischen Seite.<br>Der Schwerpunkt liegt auf der praktischen Arbeit mit dem Material, es werden aber auch theoretische Kenntnisse vermittelt. Das Erlernen grundlegender textiler Techniken, wie Nähen, Sticken, Häkeln, Stricken usw. ist ein wichtiger Teil des Kurses.<br>Im ersten Semester beschäftigen wir uns mit Mode und Modedesign, den angewandten Bereichen der textilen Gestaltung. Im ersten Semester wird eine zweistündige Klausur geschrieben.<br>Im zweiten Semester geht es um das <i>Textile<\/i> in der bildenden Kunst. Wir untersuchen textile Kunstwerke und setzen eigenständig textile Werke in die Tat um. Innerhalb des zweiten Semesters gibt es ein klausurersetzendes Projekt.<br>Es werden keine vorhandenen Fertigkeiten in den textilen Techniken vorausgesetzt, allerdings sollte der Wille diese zu erlernen und dafür auch etwas Zeit zu investieren, vorhanden sein. (El)"
         },
-        {
+        /*{
             "name": "Ensemblemusik",
             "kuerzel": "Ens",
             "aufgabenfeld": -1,
             "isExtra": true,
-            "lusdId": 3380,
+            "lusdId": -1,
             "infoText": "Im Ensemblekurs liegt der Schwerpunkt auf dem praktischen Musizieren.<br>Neben der Förderung musikalischer Fähigkeiten hat der dreistündige Ensemblekurs vor allem auch die Entwicklung sozialer Kompetenz zum Ziel und verlangt von den Schülerinnen und Schülern darüber hinaus ausgeprägtes Engagement (Teilnahme an Aufführungen auch außerhalb der Unterrichtszeit).<br> Für die Musikpraxis sind zwei Drittel der Unterrichtszeit vorgesehen (Probenteilnahme), das verbleibende Drittel dient der praxisbezogenen theoretischen Auseinandersetzung und bildet die Grundlage der Klausur bzw. einer Klausurersatzleistung in Form von bewertetem Vorspiel plus Reflexion oder auch einer Projektarbeit.<br> Für den Kursunterricht bieten sich inhaltlich an:<ul><li>Fragen der Erarbeitung und Präsentation von Musik (Probentechnik, Aufführungspraxis)<\/li><li>Erstellen eigener Arrangements<\/li><li>melodische Improvisation<\/li><li>Aufbau von Repertoirekenntnis<\/li><li>Planung, Durchführung und Reflexion von Aufführungen (Si)<\/li><\/ul>"
-        },
+        },*/
         {
             "name": "Big Band",
             "kuerzel": "BB",
             "aufgabenfeld": -1,
-            "lusdId": 33801,
+            "lusdId": 4503,
             "infoText": "Im Ensemblekurs liegt der Schwerpunkt auf dem praktischen Musizieren.<br>Neben der Förderung musikalischer Fähigkeiten hat der dreistündige Ensemblekurs vor allem auch die Entwicklung sozialer Kompetenz zum Ziel und verlangt von den Schülerinnen und Schülern darüber hinaus ausgeprägtes Engagement (Teilnahme an Aufführungen auch außerhalb der Unterrichtszeit).<br> Für die Musikpraxis sind zwei Drittel der Unterrichtszeit vorgesehen (Probenteilnahme), das verbleibende Drittel dient der praxisbezogenen theoretischen Auseinandersetzung und bildet die Grundlage der Klausur bzw. einer Klausurersatzleistung in Form von bewertetem Vorspiel plus Reflexion oder auch einer Projektarbeit.<br> Für den Kursunterricht bieten sich inhaltlich an:<ul><li>Fragen der Erarbeitung und Präsentation von Musik (Probentechnik, Aufführungspraxis)<\/li><li>Erstellen eigener Arrangements<\/li><li>melodische Improvisation<\/li><li>Aufbau von Repertoirekenntnis<\/li><li>Planung, Durchführung und Reflexion von Aufführungen (Si)<\/li><\/ul>"
         },
         {
             "name": "Geschichte und Religion",
             "kuerzel": "GeRe",
             "aufgabenfeld": -1,
-            "lusdId": 33802,
+            "lusdId": 4504,
             "infoText": "Wie konnte das Christentum zu einer Religion werden, die 32 Prozent der gesamten Weltbevölkerung ausmacht?<br>Wir begeben uns in diesem Kurs zu den Anfängen des Christentums, werden die zeitgeschichtlichen Ereignisse der Kirche nachvollziehen und uns mit Entscheidungen, Konflikten und Diskursen auseinandersetzen.<br>Wir durchsuchen die Geschichte und die Musik nach christlichen Einflüssen und nähern uns einer Antwort auf die Frage: „Wie konnte das Christentum so erfolgreich sein?“ (Hr)"
         },
         {
             "name": "Relativitätstheorie",
             "kuerzel": "Ret",
             "aufgabenfeld": -1,
-            "nurIn": "1-2",
-            "lusdId": 33804,
+            "lusdId": 4500,
             "infoText": "Albert Einsteins revolutionäre Ideen von Raum und Zeit stießen das Tor auf zu einem modernen Verständnis unserer Welt. Obwohl einige davon geradezu unglaublich erscheinen, ist seine Relativitätstheorie heute eine der am besten experimentell bestätigten Theorien der Physik.<br>Während die Relativitätstheorie selbst im Physik-Leistungskurs in der Regel nicht oder bestenfalls oberflächlich angerissen werden kann, bietet der Zusatzkurs die Möglichkeit, sich ganz in Ruhe auf diese völlig andere, zunächst fremdartige Sichtweise einzulassen. In kleinen, aber unerbittlich logischen Schritten werfen wir unsere Alltagsvorstellung von Zeit, Raum und Materie und selbst die Idee einer universellen Gegenwart über Bord.<br>Im ersten Semester wird vor allem die spezielle Relativitätstheorie behandelt, die sich mit Objekten beschäftigt, die sich mit hoher Geschwindigkeit bewegen. Dabei stößt man auf zahlreiche scheinbar paradoxe Situationen und philosophische Fragen.<br>Im zweiten Semester kommt die allgemeine Relativitätstheorie hinzu, die ein komplett neues Konzept von Gravitation mit sich bringt, welches es unter anderem ermöglicht, die Energiequelle der Sonne und exotische Objekte wie schwarze Löcher, Gravitationslinsen und Gravitationswellen zu verstehen.<br>Der Kurs steht allen Schülerinnen und Schülern offen, egal ob sie Physik im LK, GK oder gar nicht gewählt haben. Etwas Offenheit für mathematische Betrachtungen ist aber hilfreich."
         },
         {
@@ -229,32 +222,40 @@
             "kuerzel": "Astro",
             "aufgabenfeld": -1,
             "nurIn": "3-4",
-            "lusdId": 33805,
+            "lusdId": 4501,
             "infoText": "Fest jeder kennt das Sternbild „großer Wagen“ – sind eigentlich alle Sterne dieses Sternbildes gleich weit von uns entfernt? Wie können wir Sternentfernungen messen und wie die Entfernung von Galaxien, die sich Milliarden von Lichtjahren entfernt befinden. Mit diesen Fragen beschäftigen wir uns und lernen dabei vieles über die Objekte in unserem Universum und über die Entstehung und Entwicklung von Sternen und Galaxien.<br>Zusätzlich besteht die Möglichkeit, mit unseren drei Schulteleskopen selbständig Beobachtungen durchzuführen und gemeinsam an Vorträgen im Planetarium teilzunehmen. Für Schülerinnen und Schüler, die Physik im LK oder GK belegt haben, ist der Kurs eine wunderbare Ergänzung – aber er steht auch Schülerinnen und Schülern offen, die Physik abgewählt haben, sich aber für Astronomie interessieren. (Ga)"
         },
-        {
+        /*{
             "name": "Mathe Zusatz",
             "kuerzel": "ma-Z",
             "aufgabenfeld": -1,
             "nurIn": "3-4",
-            "lusdId": 33806,
+            "lusdId": -1,
             "infoText": "Der Zusatzkurs Mathematik soll euch eine weitere Möglichkeit geben, mit spannenden Themen der Mathematik konfrontiert zu werden, die so im Rahmenlehrplan des Grund- und Leistungskurses nicht zu finden sind.<br>In dem Kurs geht es vor allem um das Erlernen und Anwenden von indirekten und direkten Beweisen, Beweise durch vollständige Induktion sowie die Verwendung der komplexen Zahlen, der Gauß’schen Zahlenebene, Aussagenlogik und Polarkoordinaten. Mathematisch interessierte Schüler*innen kommen hier voll auf Ihre Kosten und lernen bereits Themen, die in den ersten Semestern des Studiums bereits abgehandelt werden.<br>Um euch die komplette Bandbreite des Zusatzkurses einmal vorzustellen, hier noch ein paar Beispielinhalte:<ul><li><b>Logik<\/b>, z.B. Aussagen- und Prädikatenlogik, logische Schlussfolgerungen<\/li><li><b>Zahlentheorie<\/b>, z.B. Kongruenzen, Restklassen, Fermat’scher Satz<\/li><li><b>Grundlagen der Funktionentheorie<\/b>, z.B. Komplexe Zahlen, Körperaxiome, Stetigkeit und Differenzierbarkeit, <b>Kreisbegung<\/b> und Schwingungen<\/li><li><b>Begründen und Beweisen<\/b>, z.B. direkter und indirekter Beweis, vollständige Induktion, Widerspruchsbeweise, rekursive Verfahren (Ws)<\/li><\/ul>"
-        },
+        },*/
+        /*{
+            "name": "Skifahrt",
+            "kuerzel": "Ski",
+            "aufgabenfeld": -1,
+            "isExtra": true,
+            "nurIn": "2", //TODO not Implemented
+            "lusdId": 4508
+        },*/
         {
             "name": "Sport",
             "kuerzel": "Sp",
             "aufgabenfeld": 0,
             "nurPf4_5": true,
             "isExtra": true,
-            "lusdId": 3402
+            "lusdId": 4529
         },
         {
             "name": "Sport Theorie",
             "kuerzel": "SpT",
             "aufgabenfeld": -1,
             // Auf -1, damit es nicht als Prüfungsfach gewählt werden kann!
-            "nurIn": "3-4",
-            "lusdId": 3401
+            "nurIn": "2-3",
+            "lusdId": 4521
         },
         {
             // Alternative für Geschichte
@@ -262,7 +263,8 @@
             "kuerzel": "GeBi",
             "aufgabenfeld": 2,
             "nurFuer": ["Bili"],
-            "lusdId": 3403
+            "lusdId": 4531,
+            "infoText": "Die englisch bilinguale Version von <i>Geschichte<\/i>"
         },
         {
             // Alternative für Politikwissenschaft
@@ -270,7 +272,7 @@
             "kuerzel": "PwBi",
             "aufgabenfeld": 2,
             "nurFuer": ["Bili"],
-            "lusdId": 3398,
+            "lusdId": 4532,
             "infoText": "Die englisch bilinguale Version von <i>Politikwissenschaft<\/i>"
         },
         
@@ -361,7 +363,7 @@
                 }
             },
             "desc": "Geschichte 4 Semester -> zusätzlich PW mind. in Q3 & Q4 oder ein weiteres Fach aus AF2 durchgängig",
-            "errorMsg": "Wähle PW in Q3 & Q4 oder Geografie bzw. Sozialwissenschaften durchgängig!"
+            "errorMsg": "Wähle PW in Q3 & Q4 oder Geografie, Philosophie bzw. Sozialwissenschaften durchgängig!"
         },
         {
             "type": "IfThenRegel",
@@ -378,7 +380,7 @@
                 "anzahl": 2,
                 "wann": "3-4"
             },
-            "desc": "Geographie, SW oder PW 4 Semester -> zusätzlich Ge mind. in Q3 & Q4",
+            "desc": "Geographie, SW oder PW, Philo 4 Semester -> zusätzlich Ge mind. in Q3 & Q4",
             "errorMsg": "Wähle Geschichte in Q3 & Q4!"
         },
         {
@@ -805,7 +807,7 @@
         }
     },
     "wildcards": {
-        "$AF2": ["Ge", "Pw", "Geo", "GeBi", "PwBi", "Sw"],
+        "$AF2": ["Ge", "Pw", "Geo", "GeBi", "PwBi", "Sw", "Pl"],
         // Kurse aus dem Aufgabenfeld 2
         "$FS": ["E", "Fr", "Spa", "Lat"],
         "$NW": ["Ch", "Ph", "Bio"],
@@ -813,7 +815,7 @@
         // Andere Wildcards (z.B. f. Regeln)
         "$KF": ["Mu", "Ku", "DS"],
         // alle fächer aus AF2, außer Geschichte
-        "$AF2ohneGE": ["Pw", "PwBi", "Geo", "Sw"],
+        "$AF2ohneGE": ["Pw", "PwBi", "Geo", "Sw", "Pl"],
         "$GE": ["Ge", "GeBi"],
         "$PW": ["Pw", "PwBi"]
     },
