@@ -182,6 +182,13 @@
             "infoText": "Eine Debatte ist ein öffentliches Streitgespräch, bei der man Stellung bezieht, aufmerksam zuhören und vor allem argumentativ überzeugen muss. Das Debattieren ist eine wichtige Voraussetzung für lebendige Demokratie.<br>Der Debating Kurs bietet die Möglichkeit, die in anglophonen Ländern weit verbreitete Form der Debatte in englischer Sprache zu erproben und zu üben und damit das eigene Ausdrucksvermögen zu verbessern und den Wortschatz zu erweitern, u.a. als Vorbereitung für Studien an englischsprachigen Universitäten.<br>In Debating setzt man sich in englischer Sprache inhaltlich intensiv mit Themen auseinanderzusetzen, die den politischen und sozialen Alltag bestimmen. Man lernt hierbei sich in unbekannte Fragestellungen und Positionen hineinzudenken, sich präzise auszudrücken, sein Gegenüber ernst zu nehmen und ausreden zu lassen sowie durch eine geschickte Rhetorik seine Zuhörer zu erreichen und für sich zu gewinnen.<br>Die Klausur gestaltet sich in Form einer Klausurersatzleistung. Diese besteht aus der Teilnahme an einer Debatte sowie einer schriftlichen Ausarbeitung der eigenen Rede. (Jn)"
         },
         {
+            "name": "Politikwissenschaft Debating",
+            "kuerzel": "PwDeb",
+            "aufgabenfeld": -1,
+            "nurIn": "3-4",
+            "lusdId": 453
+        },
+        {
             "name": "Textiles Gestalten",
             "kuerzel": "TexGe",
             "aufgabenfeld": -1,
