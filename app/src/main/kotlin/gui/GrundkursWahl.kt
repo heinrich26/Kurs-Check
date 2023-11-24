@@ -438,7 +438,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
             if (!fach.isKurs
                 || fach.isFremdsprache && fach !in fs
                 || !fach.checkKlasse(wahlData.klasse)
-                || fach.nurLk && fach !in fachData.lks
+                || fach.nurLk && fach !in wahlData.lks
             ) continue
 
             // Unterteilung anhand des Aufgabenfelds vornehmen, neue Überschriften hinzufügen
