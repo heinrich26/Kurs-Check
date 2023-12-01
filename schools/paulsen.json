@@ -822,7 +822,7 @@
         // Andere Wildcards (z.B. f. Regeln)
         "$KF": ["mu", "ku", "ds"],
         // alle fächer aus AF2, außer Geschichte
-        "$AF2ohneGE": ["pw", "pb", "ek", "sw", "pl"],
+        "$AF2ohneGE": ["pw", "pe", "ek", "sw", "pl"],
         "$GE": ["ge", "gb"],
         "$PW": ["pw", "pb"]
     },
