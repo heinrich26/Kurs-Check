@@ -814,7 +814,7 @@
         }
     },
     "wildcards": {
-        "$AF2": ["ge", "pw", "ek", "gb", "pb", "sw", "pl"],
+        "$AF2": ["ge", "pw", "ek", "gb", "pe", "sw", "pl"],
         // Kurse aus dem Aufgabenfeld 2
         "$FS": ["e1", "f2", "l2", "s3"],
         "$NW": ["ch", "ph", "bi"],
@@ -824,7 +824,7 @@
         // alle fächer aus AF2, außer Geschichte
         "$AF2ohneGE": ["pw", "pe", "ek", "sw", "pl"],
         "$GE": ["ge", "gb"],
-        "$PW": ["pw", "pb"]
+        "$PW": ["pw", "pe"]
     },
     // Grundkurse und Leistungskurse zusammen
     "minKurse": 40,
