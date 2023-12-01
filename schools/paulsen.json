@@ -3,11 +3,11 @@
     "schulId": "paulsen.json",
     // Hauptversion.Subversion
     "jsonVersion": "1.2",
-    // "aufgabenfeld" -> 0, wenn kein Aufgabenfeld gg. ist (Sport), Zusatzkurse -> -1
     "faecher": [
+        // Sprachlich-literarisch-künstlerisches Aufgabenfeld
         {
             "name": "Deutsch",
-            "kuerzel": "De",
+            "kuerzel": "de",
             "aufgabenfeld": 1,
             "isLk": true,
             "lusdId": 4509,
@@ -15,7 +15,7 @@
         },
         {
             "name": "Englisch",
-            "kuerzel": "E",
+            "kuerzel": "e1",
             "aufgabenfeld": 1,
             "isLk": true,
             "isFremdsprache": true,
@@ -23,7 +23,7 @@
         },
         {
             "name": "Französisch",
-            "kuerzel": "Fr",
+            "kuerzel": "f2",
             "aufgabenfeld": 1,
             "isLk": true,
             "isFremdsprache": true,
@@ -32,14 +32,14 @@
         },
         {
             "name": "Spanisch",
-            "kuerzel": "Spa",
+            "kuerzel": "s3",
             "aufgabenfeld": 1,
             "isFremdsprache": true,
             "lusdId": 4526
         },
         {
             "name": "Latein",
-            "kuerzel": "Lat",
+            "kuerzel": "l2",
             "aufgabenfeld": 1,
             "isLk": true,
             "isFremdsprache": true,
@@ -47,30 +47,32 @@
         },
         {
             "name": "Bildende Kunst",
-            "kuerzel": "Ku",
+            "kuerzel": "ku",
             "aufgabenfeld": 1,
             "isLk": true,
             "lusdId": 4518
         },
         {
             "name": "Musik",
-            "kuerzel": "Mu",
+            "kuerzel": "mu",
             "aufgabenfeld": 1,
             "isLk": true,
             "lusdId": 4519
         },
         {
             "name": "Darstellendes Spiel",
-            "kuerzel": "DS",
+            "kuerzel": "ds",
             "aufgabenfeld": 1,
             "brauchtWPF": true,
             "nurPf4_5": true,
             "isExtra": true,
             "lusdId": 4520
         },
+
+        // Gesellschaftswissenschaftliches Aufgabenfeld
         {
             "name": "Geschichte",
-            "kuerzel": "Ge",
+            "kuerzel": "ge",
             "aufgabenfeld": 2,
             "isLk": true,
             "lusdId": 4513,
@@ -78,7 +80,7 @@
         },
         {
             "name": "Politikwissenschaft",
-            "kuerzel": "Pw",
+            "kuerzel": "pw",
             "aufgabenfeld": 2,
             "isLk": true,
             "lusdId": 4514,
@@ -86,29 +88,38 @@
         },
         {
             "name": "Sozialwissenschaften",
-            "kuerzel": "Sw",
+            "kuerzel": "sw",
             "aufgabenfeld": 2,
             "isLk": true,
-            "nurLk": true,
+            "isGk": false,
             "brauchtWPF": true,
             "lusdId": 4523
         },
         {
             "name": "Geografie",
-            "kuerzel": "Geo",
+            "kuerzel": "ek",
             "aufgabenfeld": 2,
             "isLk": true,
             "lusdId": 4512
         },
         {
             "name": "Philosophie",
-            "kuerzel": "Pl",
+            "kuerzel": "pl",
             "aufgabenfeld": 2,
             "lusdId": 4527
         },
         {
+            "name": "Psychologie",
+            "kuerzel": "ps",
+            "aufgabenfeld": 2,
+            "isPf": false,
+            "lusdId": 4528
+        },
+
+        // Mathematisch-naturwissenschaftlich-technisches Aufgabenfeld
+        {
             "name": "Mathematik",
-            "kuerzel": "Ma",
+            "kuerzel": "ma",
             "aufgabenfeld": 3,
             "isLk": true,
             "lusdId": 4511,
@@ -116,7 +127,7 @@
         },
         {
             "name": "Physik",
-            "kuerzel": "Ph",
+            "kuerzel": "ph",
             "aufgabenfeld": 3,
             "isLk": true,
             "lusdId": 4515,
@@ -124,14 +135,14 @@
         },
         {
             "name": "Chemie",
-            "kuerzel": "Ch",
+            "kuerzel": "ch",
             "aufgabenfeld": 3,
             "isLk": true,
             "lusdId": 4516
         },
         {
             "name": "Biologie",
-            "kuerzel": "Bio",
+            "kuerzel": "bi",
             "aufgabenfeld": 3,
             "isLk": true,
             "lusdId": 4517,
@@ -139,43 +150,39 @@
         },
         {
             "name": "Informatik",
-            "kuerzel": "Inf",
+            "kuerzel": "in",
             "aufgabenfeld": 3,
             "isLk": true,
             "brauchtWPF": true,
             "lusdId": 4522,
             "infoText": "Informatik ist die Lehre der Informationstechnik, wobei es darum geht, (abstrakte) (digitale) Probleme mit programmähnlichen, teilweise Computergestützen Abläufen zu vereinfachen oder gar zu lösen. Sie findet sich heutzutage in allen Bereichen der Technik und ist aus der Arbeitswelt nicht mehr wegzudenken, da wir alles (außerhalb von Deutschland) digitalisiert haben."
         },
+
+        // Zusatzkurse
         {
             "name": "Studium und Beruf",
-            "kuerzel": "StuB",
+            "kuerzel": "be",
             "aufgabenfeld": -1,
             "lusdId": 4507,
             "infoText": "Was machst du eigentlich nach dem Abi? – Studium, Ausbildung oder doch ein Gap Year? Hast du schon einmal einen Persönlichkeitstest gemacht, um herauszufinden, was dir auf der Basis von wissenschaftlichen Theorien empfohlen würde? Kennst du die Möglichkeiten, die du hast, um ein Studium zu finanzieren? Glaubst du, dass der Numerus Clausus allein entscheidend für deine Zulassung zum Studium ist? Wusstest du, dass man auch nur mit einem MSA studieren kann? Hast du schon einmal ein Projekt geleitet? Kannst du eine richtige Bewerbungsmappe zusammenstellen?<br>Diesen Fragen gehen wir im Kurs „Studium und Beruf“ nach. Im ersten Semester steht dabei im Fokus, welchen Weg du nach dem Abitur einschlagen könntest. Wir versprechen dir nicht, dass du nach dem Kurs weißt, was du machen möchtest, aber wir zeigen dir die Möglichkeiten auf, die du hast und probieren neue Wege aus, deinen Wünschen und Zielen auf die Spur zu kommen. Deshalb schreiben wir auch keine Klausur, sondern ein Portfolio, in dem du dich vor allem mit dir selbst auseinandersetzt. Im zweiten Semester klären wir alle Fragen um das Thema Bewerbung und erstellen als Prüfungsform eine Bewerbungsmappe. Hast du auch Fragen rund um das Thema „Studium und Beruf“? Dann freuen wir uns, dich nächstes Jahr im Kurs begrüßen zu können! (Ws)"
         },
         {
-            "name": "Psychologie",
-            "kuerzel": "Psy",
-            "aufgabenfeld": -1,
-            "lusdId": 4528
-        },
-        {
             "name": "Kreatives Schreiben",
-            "kuerzel": "KreS",
+            "kuerzel": "ks",
             "aufgabenfeld": -1,
             "lusdId": 4505,
             "infoText": "Erstes Halbjahr<br>Ziele: Schreibhemmungen abbauen, Themen finden, Urteilskraft schärfen; Stilmittel und Schreibtechniken kennen lernen (z.B.: Figurenreden, Beschreibungen, Erzählweise (personal etc.)); einen erweiterten Textbegriff vermitteln (Film, Bild etc.); eigene Texte in verschiedenen Genres schreiben, Foto – Text – Kombinationen suchen; eine lebendige Sprache finden; Schreibentscheidungen reflektieren und begründen<ul><li>Einleitung<\/li><li>Bewertungskriterien<\/li><li>Lyrik: Imitation und Variation; Cut-off-Technik<\/li><li>Prosa: surrealistische Schreibtechniken; Kurze Prosatexte & Romanauszüge: Leerstellen füllen<\/li><li>Schreiblektorat: (gemeinsame) Verbesserungen und Arbeiten an Handlungsführung und Stil<\/li><li>Bilder, Fotos und Filme zu Texten produzieren: Foto- Text- Projekt: Vorstellung verschiedener Verfahren: Barock, Brecht (Kriegsfibel), Tucholsky (Deutschland über alles), Sebald, Shapton...<\/li><li>Einleitung in die Fotografie<\/li><li>„Ich“: Porträt / Selbstporträt und Texte; alternative Themen möglich<\/li><li>Vorbereitung einer Ausstellung mit einzelnen Foto – Text – Produktionen:<\/li><li>Evtl. Besuch der Slam-Poetry-Meisterschaften im Grips-Theater, Lesungen im Literaturhaus, Theaterbesuch<\/li><li>Vorbereitung einer Leseperformance (hier nicht nur Texte, sondern auch Hörproben, Bilder, Filme etc.!) (Klausurersatzleistung)<\/li><\/ul>Zweites Halbjahr<br>Ziele: Literarische Öffentlichkeit kennen lernen, Literatur präsentieren können, Layout, Blogs und Online-Literatur, Autoren kennenlernen<ul><li>Präsentation einer Leseperformance / Auswertung<\/li><li>Gestaltung eines literarischen Buches / Heftes, Blogs (Klausurersatzleistung)<\/li><li>literarische Schreibblogs im Internet, Hypertexte<\/li><li>“Comment”: Online – Blog- und Performanceprojekt (sofern Finanzierung gegeben) s. www.comment.lettretage.de<\/li><\/ul>"
         },
         {
             "name": "Englisch TOEFL",
-            "kuerzel": "TOEFL",
+            "kuerzel": "tl",
             "aufgabenfeld": -1,
             "lusdId": 4502,
             "infoText": "Im Englisch TOEFL Ergänzungskurs werden Grundkenntnisse im Bereich der Kommunikation in der Wirtschaft in englischer Sprache vermittelt. Am Ende steht die LCCI Prüfung und die Erlangung eines weltweit anerkannten LCCI Zertifikats, das die Bewerbung für vielfältige Studiengänge begünstigt.<\/p><p> Die <b>LCCI (London Chamber of Commerce and Industry)<\/b> ist die größte Industrie- und Handelskammer Großbritanniens und eine weltweit renommierte Einrichtung für fremdsprachliche Weiterbildung. Sie bietet neben Wirtschaftsprüfungen vor allem Fremdsprachenprüfungen mit Zertifikatsabschluss in Englisch an. Es besteht weltweit eine hohe Wertschätzung und Anerkennung der <b>LCCI-Zertifikate<\/b>, welche hauptsächlich darin begründet liegt, dass sie das Sprachniveau der Absolventen deutlich widerspiegeln und anerkannte Zeugnisse darstellen. LCCI-Abschlüsse werden bei der Bewerbung an international renommierten Wirtschaftsunternehmen sowie an Hochschulen, Verbänden, Behörden, vielen Bildungsträgern und kommerziellen Institutionen berücksichtigt. (Veh)"
         },
         {
             "name": "Debating",
-            "kuerzel": "Deb",
+            "kuerzel": "db",
             "aufgabenfeld": -1,
             "nurIn": "1-2",
             "lusdId": 4530,
@@ -183,21 +190,21 @@
         },
         {
             "name": "Politikwissenschaft Debating",
-            "kuerzel": "PwDeb",
+            "kuerzel": "pd",
             "aufgabenfeld": -1,
             "nurIn": "3-4",
             "lusdId": 453
         },
         {
             "name": "Textiles Gestalten",
-            "kuerzel": "TexGe",
+            "kuerzel": "zr",
             "aufgabenfeld": -1,
             "lusdId": 4506,
             "infoText": "In dem Kurs <i>Textiles Gestalten<\/i> geht es um die Auseinandersetzung mit dem textilen Material. Dieses wird einerseits von der handwerklichen Seite her betrachtet, andererseits von der künstlerischen Seite.<br>Der Schwerpunkt liegt auf der praktischen Arbeit mit dem Material, es werden aber auch theoretische Kenntnisse vermittelt. Das Erlernen grundlegender textiler Techniken, wie Nähen, Sticken, Häkeln, Stricken usw. ist ein wichtiger Teil des Kurses.<br>Im ersten Semester beschäftigen wir uns mit Mode und Modedesign, den angewandten Bereichen der textilen Gestaltung. Im ersten Semester wird eine zweistündige Klausur geschrieben.<br>Im zweiten Semester geht es um das <i>Textile<\/i> in der bildenden Kunst. Wir untersuchen textile Kunstwerke und setzen eigenständig textile Werke in die Tat um. Innerhalb des zweiten Semesters gibt es ein klausurersetzendes Projekt.<br>Es werden keine vorhandenen Fertigkeiten in den textilen Techniken vorausgesetzt, allerdings sollte der Wille diese zu erlernen und dafür auch etwas Zeit zu investieren, vorhanden sein. (El)"
         },
         /*{
             "name": "Ensemblemusik",
-            "kuerzel": "Ens",
+            "kuerzel": "en",
             "aufgabenfeld": -1,
             "isExtra": true,
             "lusdId": -1,
@@ -205,41 +212,41 @@
         },*/
         {
             "name": "Big Band",
-            "kuerzel": "BB",
+            "kuerzel": "ba",
             "aufgabenfeld": -1,
             "lusdId": 4503,
             "infoText": "Im Ensemblekurs liegt der Schwerpunkt auf dem praktischen Musizieren.<br>Neben der Förderung musikalischer Fähigkeiten hat der dreistündige Ensemblekurs vor allem auch die Entwicklung sozialer Kompetenz zum Ziel und verlangt von den Schülerinnen und Schülern darüber hinaus ausgeprägtes Engagement (Teilnahme an Aufführungen auch außerhalb der Unterrichtszeit).<br> Für die Musikpraxis sind zwei Drittel der Unterrichtszeit vorgesehen (Probenteilnahme), das verbleibende Drittel dient der praxisbezogenen theoretischen Auseinandersetzung und bildet die Grundlage der Klausur bzw. einer Klausurersatzleistung in Form von bewertetem Vorspiel plus Reflexion oder auch einer Projektarbeit.<br> Für den Kursunterricht bieten sich inhaltlich an:<ul><li>Fragen der Erarbeitung und Präsentation von Musik (Probentechnik, Aufführungspraxis)<\/li><li>Erstellen eigener Arrangements<\/li><li>melodische Improvisation<\/li><li>Aufbau von Repertoirekenntnis<\/li><li>Planung, Durchführung und Reflexion von Aufführungen (Si)<\/li><\/ul>"
         },
         {
             "name": "Geschichte und Religion",
-            "kuerzel": "GeRe",
+            "kuerzel": "zr",
             "aufgabenfeld": -1,
             "lusdId": 4504,
             "infoText": "Wie konnte das Christentum zu einer Religion werden, die 32 Prozent der gesamten Weltbevölkerung ausmacht?<br>Wir begeben uns in diesem Kurs zu den Anfängen des Christentums, werden die zeitgeschichtlichen Ereignisse der Kirche nachvollziehen und uns mit Entscheidungen, Konflikten und Diskursen auseinandersetzen.<br>Wir durchsuchen die Geschichte und die Musik nach christlichen Einflüssen und nähern uns einer Antwort auf die Frage: „Wie konnte das Christentum so erfolgreich sein?“ (Hr)"
         },
         {
             "name": "Relativitätstheorie",
-            "kuerzel": "Ret",
+            "kuerzel": "pr",
             "aufgabenfeld": -1,
             "lusdId": 4500,
             "infoText": "Albert Einsteins revolutionäre Ideen von Raum und Zeit stießen das Tor auf zu einem modernen Verständnis unserer Welt. Obwohl einige davon geradezu unglaublich erscheinen, ist seine Relativitätstheorie heute eine der am besten experimentell bestätigten Theorien der Physik.<br>Während die Relativitätstheorie selbst im Physik-Leistungskurs in der Regel nicht oder bestenfalls oberflächlich angerissen werden kann, bietet der Zusatzkurs die Möglichkeit, sich ganz in Ruhe auf diese völlig andere, zunächst fremdartige Sichtweise einzulassen. In kleinen, aber unerbittlich logischen Schritten werfen wir unsere Alltagsvorstellung von Zeit, Raum und Materie und selbst die Idee einer universellen Gegenwart über Bord.<br>Im ersten Semester wird vor allem die spezielle Relativitätstheorie behandelt, die sich mit Objekten beschäftigt, die sich mit hoher Geschwindigkeit bewegen. Dabei stößt man auf zahlreiche scheinbar paradoxe Situationen und philosophische Fragen.<br>Im zweiten Semester kommt die allgemeine Relativitätstheorie hinzu, die ein komplett neues Konzept von Gravitation mit sich bringt, welches es unter anderem ermöglicht, die Energiequelle der Sonne und exotische Objekte wie schwarze Löcher, Gravitationslinsen und Gravitationswellen zu verstehen.<br>Der Kurs steht allen Schülerinnen und Schülern offen, egal ob sie Physik im LK, GK oder gar nicht gewählt haben. Etwas Offenheit für mathematische Betrachtungen ist aber hilfreich."
         },
         {
             "name": "Astronomie",
-            "kuerzel": "Astro",
+            "kuerzel": "pa",
             "aufgabenfeld": -1,
             "nurIn": "3-4",
             "lusdId": 4501,
             "infoText": "Fest jeder kennt das Sternbild „großer Wagen“ – sind eigentlich alle Sterne dieses Sternbildes gleich weit von uns entfernt? Wie können wir Sternentfernungen messen und wie die Entfernung von Galaxien, die sich Milliarden von Lichtjahren entfernt befinden. Mit diesen Fragen beschäftigen wir uns und lernen dabei vieles über die Objekte in unserem Universum und über die Entstehung und Entwicklung von Sternen und Galaxien.<br>Zusätzlich besteht die Möglichkeit, mit unseren drei Schulteleskopen selbständig Beobachtungen durchzuführen und gemeinsam an Vorträgen im Planetarium teilzunehmen. Für Schülerinnen und Schüler, die Physik im LK oder GK belegt haben, ist der Kurs eine wunderbare Ergänzung – aber er steht auch Schülerinnen und Schülern offen, die Physik abgewählt haben, sich aber für Astronomie interessieren. (Ga)"
         },
-        /*{
+        {
             "name": "Mathe Zusatz",
-            "kuerzel": "ma-Z",
+            "kuerzel": "zm",
             "aufgabenfeld": -1,
             "nurIn": "3-4",
             "lusdId": -1,
             "infoText": "Der Zusatzkurs Mathematik soll euch eine weitere Möglichkeit geben, mit spannenden Themen der Mathematik konfrontiert zu werden, die so im Rahmenlehrplan des Grund- und Leistungskurses nicht zu finden sind.<br>In dem Kurs geht es vor allem um das Erlernen und Anwenden von indirekten und direkten Beweisen, Beweise durch vollständige Induktion sowie die Verwendung der komplexen Zahlen, der Gauß’schen Zahlenebene, Aussagenlogik und Polarkoordinaten. Mathematisch interessierte Schüler*innen kommen hier voll auf Ihre Kosten und lernen bereits Themen, die in den ersten Semestern des Studiums bereits abgehandelt werden.<br>Um euch die komplette Bandbreite des Zusatzkurses einmal vorzustellen, hier noch ein paar Beispielinhalte:<ul><li><b>Logik<\/b>, z.B. Aussagen- und Prädikatenlogik, logische Schlussfolgerungen<\/li><li><b>Zahlentheorie<\/b>, z.B. Kongruenzen, Restklassen, Fermat’scher Satz<\/li><li><b>Grundlagen der Funktionentheorie<\/b>, z.B. Komplexe Zahlen, Körperaxiome, Stetigkeit und Differenzierbarkeit, <b>Kreisbegung<\/b> und Schwingungen<\/li><li><b>Begründen und Beweisen<\/b>, z.B. direkter und indirekter Beweis, vollständige Induktion, Widerspruchsbeweise, rekursive Verfahren (Ws)<\/li><\/ul>"
-        },*/
+        },
         /*{
             "name": "Skifahrt",
             "kuerzel": "Ski",
@@ -248,9 +255,11 @@
             "nurIn": "2", //TODO not Implemented
             "lusdId": 4508
         },*/
+
+        // Aufgabenfeld 0: Keinem aufgabenfeld zugeordnert
         {
             "name": "Sport",
-            "kuerzel": "Sp",
+            "kuerzel": "sp",
             "aufgabenfeld": 0,
             "nurPf4_5": true,
             "isExtra": true,
@@ -258,16 +267,17 @@
         },
         {
             "name": "Sport Theorie",
-            "kuerzel": "SpT",
-            "aufgabenfeld": -1,
-            // Auf -1, damit es nicht als Prüfungsfach gewählt werden kann!
+            "kuerzel": "st",
+            "aufgabenfeld": 0,
+            "isPf": false,
             "nurIn": "2-3",
             "lusdId": 4521
         },
+        
         {
             // Alternative für Geschichte
             "name": "Geschichte Bili",
-            "kuerzel": "GeBi",
+            "kuerzel": "gb",
             "aufgabenfeld": 2,
             "nurFuer": ["Bili"],
             "lusdId": 4531,
@@ -276,7 +286,7 @@
         {
             // Alternative für Politikwissenschaft
             "name": "Politikwissenschaft Bili",
-            "kuerzel": "PwBi",
+            "kuerzel": "pe",
             "aufgabenfeld": 2,
             "nurFuer": ["Bili"],
             "lusdId": 4532,
@@ -298,14 +308,14 @@
         }
     ],
     "pflichtfaecher": {
-        "De": "1-4",
-        "Ma": "1-4",
-        "Sp": "1-4"
+        "de": "1-4",
+        "ma": "1-4",
+        "sp": "1-4"
     },
     "zweiWPFs": true,
     // Legt fest, dass Schüler auch für Grundkurse/5. PK das Wahlpflichtfach belegt haben müssen.
     "strikteWPFs": true,
-    "wpfs": ["Inf", "Spa", "GeErd", "DS", "BioCh", "Ma", "Deb", "Sw"],
+    "wpfs": ["in", "s3", "GeErd", "ds", "BioCh", "ma", "db", "sw"],
     "regeln": [
         {
             "type": "WildcardRegel",
@@ -325,19 +335,19 @@
             "type": "IfThenRegel",
             "regel1": {
                 "type": "KuerzelRegel",
-                "kuerzel": "Bio",
+                "kuerzel": "bi",
                 "anzahl": 4
             },
             "regel2": {
                 "type": "OrRegel",
                 "regel1": {
                     "type": "KuerzelRegel",
-                    "kuerzel": "Ch",
+                    "kuerzel": "ch",
                     "anzahl": 2
                 },
                 "regel2": {
                     "type": "KuerzelRegel",
-                    "kuerzel": "Ph",
+                    "kuerzel": "ph",
                     "anzahl": 2
                 }
             },
@@ -370,24 +380,14 @@
                 }
             },
             "desc": "Geschichte 4 Semester -> zusätzlich PW mind. in Q3 & Q4 oder ein weiteres Fach aus AF2 durchgängig",
-            "errorMsg": "Wähle PW in Q3 & Q4 oder Geografie, Philosophie bzw. Sozialwissenschaften durchgängig!"
+            "errorMsg": "Wähle PW in Q3 & Q4 oder ein weiteres Fach aus AF2 durchgängig!"
         },
         {
-            "type": "IfThenRegel",
-            "regel1": {
-                // Fach aus AF2 außer Geschichte
-                "type": "WildcardRegel",
-                "wildcard": "$AF2ohneGE",
-                "anzahl": 4,
-                "scope": "1-5"
-            },
-            "regel2": {
-                "type": "WildcardRegel",
-                "wildcard": "$GE",
-                "anzahl": 2,
-                "wann": "3-4"
-            },
-            "desc": "Geographie, SW oder PW, Philo 4 Semester -> zusätzlich Ge mind. in Q3 & Q4",
+            "type": "WildcardRegel",
+            "wildcard": "$GE",
+            "anzahl": 2,
+            "wann": "3-4",
+            "desc": "Geschichte muss in Q3 & Q4 belegt werden.",
             "errorMsg": "Wähle Geschichte in Q3 & Q4!"
         },
         {
@@ -401,18 +401,18 @@
             "type": "IfThenRegel",
             "regel1": {
                 "type": "KuerzelRegel",
-                "kuerzel": "Sp",
+                "kuerzel": "sp",
                 "anzahl": 4,
                 "scope": "1-5"
             },
             "regel2": {
                 "type": "KuerzelRegel",
-                "kuerzel": "SpT",
+                "kuerzel": "st",
                 "anzahl": 2,
-                "wann": "3-4"
+                "wann": "2-3"
             },
-            "desc": "Sport als PF -> zusätzlich Sport Theorie mind. in Q3 & Q4",
-            "errorMsg": "Wähle Sport Theorie in Q3 & Q4!"
+            "desc": "Sport als PF -> zusätzlich Sport Theorie mind. in Q2 & Q3",
+            "errorMsg": "Wähle Sport Theorie in Q2 & Q3!"
         },
         {
             "type": "KonfliktRegel",
@@ -422,7 +422,7 @@
         },
         {
             "type": "KonfliktRegel",
-            "wildcard": "$GE",
+            "wildcard": "$PW",
             "desc": "Wähle max. PW <b>oder<\/b> PW Bili",
             "errorMsg": "Du kannst nur PW <b>oder<\/b> PW Bili wählen!"
         }
@@ -430,15 +430,15 @@
     "wahlzeilen": {
         "1": {
             "lk1": "$FS",
-            "lk2": "De",
+            "lk2": "de",
             "pf3": "$AF2",
-            "pf4": "Ma",
+            "pf4": "ma",
             "pf5": "*",
             "linien": "keine"
         },
         "2": {
             "lk1": "$FS",
-            "lk2": "De",
+            "lk2": "de",
             "pf3": "$AF2",
             "pf4": "$NW",
             "pf5": "*",
@@ -446,16 +446,16 @@
         },
         "3": {
             "lk1": "$FS",
-            "lk2": "De",
+            "lk2": "de",
             "pf3": "$AF2",
-            "pf4": "Inf",
+            "pf4": "in",
             "pf5": "*",
             "linien": "keine"
         },
         "4": {
             "lk1": "$FS",
             "lk2": "$FS",
-            "pf3": "De",
+            "pf3": "de",
             "pf4": "$AF2",
             "pf5": "$NW",
             "linien": "gestrichelt"
@@ -463,15 +463,15 @@
         "5": {
             "lk1": "$FS",
             "lk2": "$FS",
-            "pf3": "De",
+            "pf3": "de",
             "pf4": "$AF2",
-            "pf5": "Inf",
+            "pf5": "in",
             "linien": "gestrichelt"
         },
         "6": {
             "lk1": "$FS",
             "lk2": "$FS",
-            "pf3": "Ma",
+            "pf3": "ma",
             "pf4": "$AF2",
             "pf5": "*",
             "linien": "gestrichelt"
@@ -479,7 +479,7 @@
         "7": {
             "lk1": "$FS",
             "lk2": "$Mu/Ku",
-            "pf3": "De",
+            "pf3": "de",
             "pf4": "$AF2",
             "pf5": "$NW",
             "linien": "gestrichelt"
@@ -487,15 +487,15 @@
         "8": {
             "lk1": "$FS",
             "lk2": "$Mu/Ku",
-            "pf3": "De",
+            "pf3": "de",
             "pf4": "$AF2",
-            "pf5": "Inf",
+            "pf5": "in",
             "linien": "gestrichelt"
         },
         "9": {
             "lk1": "$FS",
             "lk2": "$Mu/Ku",
-            "pf3": "Ma",
+            "pf3": "ma",
             "pf4": "$AF2",
             "pf5": "*",
             "linien": "gestrichelt"
@@ -503,7 +503,7 @@
         "10": {
             "lk1": "$FS",
             "lk2": "$AF2",
-            "pf3": "De",
+            "pf3": "de",
             "pf4": "$NW",
             "pf5": "*",
             "linien": "gestrichelt"
@@ -511,22 +511,22 @@
         "11": {
             "lk1": "$FS",
             "lk2": "$AF2",
-            "pf3": "De",
-            "pf4": "Inf",
+            "pf3": "de",
+            "pf4": "in",
             "pf5": "*",
             "linien": "gestrichelt"
         },
         "12": {
             "lk1": "$FS",
             "lk2": "$AF2",
-            "pf3": "Ma",
+            "pf3": "ma",
             "pf4": "*",
             "pf5": "*",
             "linien": "gestrichelt"
         },
         "13": {
             "lk1": "$FS",
-            "lk2": "Ma",
+            "lk2": "ma",
             "pf3": "$AF2",
             "pf4": "*",
             "pf5": "*",
@@ -535,7 +535,7 @@
         "14": {
             "lk1": "$FS",
             "lk2": "$NW",
-            "pf3": "De",
+            "pf3": "de",
             "pf4": "$AF2",
             "pf5": "*",
             "linien": "gestrichelt"
@@ -543,45 +543,45 @@
         "15": {
             "lk1": "$FS",
             "lk2": "$NW",
-            "pf3": "Ma",
+            "pf3": "ma",
             "pf4": "$AF2",
             "pf5": "*",
             "linien": "gestrichelt"
         },
         "16": {
             "lk1": "$FS",
-            "lk2": "Inf",
-            "pf3": "De",
+            "lk2": "in",
+            "pf3": "de",
             "pf4": "AF2",
             "pf5": "*",
             "linien": "gestrichelt"
         },
         "17": {
             "lk1": "$FS",
-            "lk2": "Inf",
-            "pf3": "Ma",
+            "lk2": "in",
+            "pf3": "ma",
             "pf4": "$AF2",
             "pf5": "*",
             "linien": "gestrichelt"
         },
         "21": {
-            "lk1": "Ma",
-            "lk2": "De",
+            "lk1": "ma",
+            "lk2": "de",
             "pf3": "$AF2",
             "pf4": "*",
             "pf5": "*",
             "linien": "gestrichelt"
         },
         "22": {
-            "lk1": "Ma",
+            "lk1": "ma",
             "lk2": "$Mu/Ku",
-            "pf3": "De",
+            "pf3": "de",
             "pf4": "$AF2",
             "pf5": "*",
             "linien": "gestrichelt"
         },
         "23": {
-            "lk1": "Ma",
+            "lk1": "ma",
             "lk2": "$Mu/Ku",
             "pf3": "$FS",
             "pf4": "$AF2",
@@ -589,15 +589,15 @@
             "linien": "gestrichelt"
         },
         "24": {
-            "lk1": "Ma",
+            "lk1": "ma",
             "lk2": "$AF2",
-            "pf3": "De",
+            "pf3": "de",
             "pf4": "*",
             "pf5": "*",
             "linien": "gestrichelt"
         },
         "25": {
-            "lk1": "Ma",
+            "lk1": "ma",
             "lk2": "$AF2",
             "pf3": "$FS",
             "pf4": "*",
@@ -605,15 +605,15 @@
             "linien": "gestrichelt"
         },
         "26": {
-            "lk1": "Ma",
+            "lk1": "ma",
             "lk2": "$NW",
-            "pf3": "De",
+            "pf3": "de",
             "pf4": "$AF2",
             "pf5": "*",
             "linien": "gestrichelt"
         },
         "27": {
-            "lk1": "Ma",
+            "lk1": "ma",
             "lk2": "$NW",
             "pf3": "$FS",
             "pf4": "$AF2",
@@ -621,16 +621,16 @@
             "linien": "gestrichelt"
         },
         "28": {
-            "lk1": "Ma",
-            "lk2": "Inf",
-            "pf3": "De",
+            "lk1": "ma",
+            "lk2": "in",
+            "pf3": "de",
             "pf4": "$AF2",
             "pf5": "*",
             "linien": "gestrichelt"
         },
         "29": {
-            "lk1": "Ma",
-            "lk2": "Inf",
+            "lk1": "ma",
+            "lk2": "in",
             "pf3": "$FS",
             "pf4": "$AF2",
             "pf5": "*",
@@ -638,7 +638,7 @@
         },
         "32": {
             "lk1": "$NW",
-            "lk2": "De",
+            "lk2": "de",
             "pf3": "$FS",
             "pf4": "$AF2",
             "pf5": "*",
@@ -646,8 +646,8 @@
         },
         "33": {
             "lk1": "$NW",
-            "lk2": "De",
-            "pf3": "Ma",
+            "lk2": "de",
+            "pf3": "ma",
             "pf4": "$AF2",
             "pf5": "*",
             "linien": "gestrichelt"
@@ -656,7 +656,7 @@
             "lk1": "$NW",
             "lk2": "$Mu/Ku",
             "pf3": "$FS",
-            "pf4": "De",
+            "pf4": "de",
             "pf5": "$AF2",
             "linien": "keine|durchgezogen"
         },
@@ -664,15 +664,15 @@
             "lk1": "$NW",
             "lk2": "$Mu/Ku",
             "pf3": "$FS",
-            "pf4": "Ma",
+            "pf4": "ma",
             "pf5": "$AF2",
             "linien": "keine|durchgezogen"
         },
         "36": {
             "lk1": "$NW",
             "lk2": "$Mu/Ku",
-            "pf3": "Ma",
-            "pf4": "De",
+            "pf3": "ma",
+            "pf4": "de",
             "pf5": "$AF2",
             "linien": "keine|durchgezogen"
         },
@@ -680,7 +680,7 @@
             "lk1": "$NW",
             "lk2": "$AF2",
             "pf3": "$FS",
-            "pf4": "De",
+            "pf4": "de",
             "pf5": "*",
             "linien": "keine|durchgezogen"
         },
@@ -688,15 +688,15 @@
             "lk1": "$NW",
             "lk2": "$AF2",
             "pf3": "$FS",
-            "pf4": "Ma",
+            "pf4": "ma",
             "pf5": "*",
             "linien": "keine|durchgezogen"
         },
         "39": {
             "lk1": "$NW",
             "lk2": "$AF2",
-            "pf3": "Ma",
-            "pf4": "De",
+            "pf3": "ma",
+            "pf4": "de",
             "pf5": "*",
             "linien": "keine|durchgezogen"
         },
@@ -704,7 +704,7 @@
             "lk1": "$NW",
             "lk2": "$NW",
             "pf3": "$FS",
-            "pf4": "De",
+            "pf4": "de",
             "pf5": "$AF2",
             "linien": "keine|durchgezogen"
         },
@@ -712,44 +712,44 @@
             "lk1": "$NW",
             "lk2": "$NW",
             "pf3": "$FS",
-            "pf4": "Ma",
+            "pf4": "ma",
             "pf5": "$AF2",
             "linien": "keine|durchgezogen"
         },
         "42": {
             "lk1": "$NW",
             "lk2": "$NW",
-            "pf3": "Ma",
-            "pf4": "De",
+            "pf3": "ma",
+            "pf4": "de",
             "pf5": "$AF2",
             "linien": "keine|durchgezogen"
         },
         "43": {
             "lk1": "$NW",
-            "lk2": "Inf",
+            "lk2": "in",
             "pf3": "$FS",
-            "pf4": "De",
+            "pf4": "de",
             "pf5": "$AF2",
             "linien": "keine|durchgezogen"
         },
         "44": {
             "lk1": "$NW",
-            "lk2": "Inf",
+            "lk2": "in",
             "pf3": "$FS",
-            "pf4": "Ma",
+            "pf4": "ma",
             "pf5": "$AF2",
             "linien": "keine|durchgezogen"
         },
         "45": {
             "lk1": "$NW",
-            "lk2": "Inf",
-            "pf3": "Ma",
-            "pf4": "De",
+            "lk2": "in",
+            "pf3": "ma",
+            "pf4": "de",
             "pf5": "$AF2",
             "linien": "keine|durchgezogen"
         },
         "49": {
-            "lk1": "De",
+            "lk1": "de",
             "lk2": "$Mu/Ku",
             "pf3": "$FS",
             "pf4": "$AF2",
@@ -757,23 +757,23 @@
             "linien": "gestrichelt"
         },
         "50": {
-            "lk1": "De",
+            "lk1": "de",
             "lk2": "$Mu/Ku",
             "pf3": "$FS",
             "pf4": "$AF2",
-            "pf5": "Inf",
+            "pf5": "in",
             "linien": "gestrichelt"
         },
         "51": {
-            "lk1": "De",
+            "lk1": "de",
             "lk2": "$Mu/Ku",
-            "pf3": "Ma",
+            "pf3": "ma",
             "pf4": "$AF2",
             "pf5": "*",
             "linien": "gestrichelt"
         },
         "52": {
-            "lk1": "De",
+            "lk1": "de",
             "lk2": "$AF2",
             "pf3": "$FS",
             "pf4": "$NW",
@@ -781,61 +781,61 @@
             "linien": "gestrichelt"
         },
         "53": {
-            "lk1": "De",
+            "lk1": "de",
             "lk2": "$AF2",
             "pf3": "$FS",
-            "pf4": "Inf",
+            "pf4": "in",
             "pf5": "*",
             "linien": "gestrichelt"
         },
         "54": {
-            "lk1": "De",
+            "lk1": "de",
             "lk2": "$AF2",
-            "pf3": "Ma",
+            "pf3": "ma",
             "pf4": "*",
             "pf5": "*",
             "linien": "gestrichelt"
         },
         "55": {
-            "lk1": "De",
-            "lk2": "Inf",
+            "lk1": "de",
+            "lk2": "in",
             "pf3": "$FS",
             "pf4": "$AF2",
             "pf5": "*",
             "linien": "gestrichelt"
         },
         "56": {
-            "lk1": "De",
-            "lk2": "Inf",
-            "pf3": "Ma",
+            "lk1": "de",
+            "lk2": "in",
+            "pf3": "ma",
             "pf4": "$AF2",
             "pf5": "*",
             "linien": "gestrichelt"
         }
     },
     "wildcards": {
-        "$AF2": ["Ge", "Pw", "Geo", "GeBi", "PwBi", "Sw", "Pl"],
+        "$AF2": ["ge", "pw", "ek", "gb", "pb", "sw", "pl"],
         // Kurse aus dem Aufgabenfeld 2
-        "$FS": ["E", "Fr", "Spa", "Lat"],
-        "$NW": ["Ch", "Ph", "Bio"],
-        "$Mu/Ku": ["Mu", "Ku"],
+        "$FS": ["e1", "f2", "l2", "s3"],
+        "$NW": ["ch", "ph", "bi"],
+        "$Mu/Ku": ["mu", "ku"],
         // Andere Wildcards (z.B. f. Regeln)
-        "$KF": ["Mu", "Ku", "DS"],
+        "$KF": ["mu", "ku", "ds"],
         // alle fächer aus AF2, außer Geschichte
-        "$AF2ohneGE": ["Pw", "PwBi", "Geo", "Sw", "Pl"],
-        "$GE": ["Ge", "GeBi"],
-        "$PW": ["Pw", "PwBi"]
+        "$AF2ohneGE": ["pw", "pb", "ek", "sw", "pl"],
+        "$GE": ["ge", "gb"],
+        "$PW": ["pw", "pb"]
     },
     // Grundkurse und Leistungskurse zusammen
     "minKurse": 40,
     // Grundkurse und Leistungskurse zusammen
     "maxKurse": 46,
     // Fächer, von denen nur 1 gewählt werden darf (§ 23,6 VO-GO)
-    "pf3_4AusschlussFaecher": ["Mu", "Ku", "DS", "Sp"],
+    "pf3_4AusschlussFaecher": ["mu", "ku", "ds", "sp"],
     // Limitiert die Anzahl Kurse die in einem Semester belegt werden können!
     "semesterkurse": [10, 10, 10, 10],
     "klassen": ["Bili"],
     "schultyp": "Gymnasium",
-    "nutztLusd": false,
+    "nutztLusd": true,
     "fnamePattern": ".+?_Kurswahl_Abitur_\\d{4}_\\d{2}_GYM_SEK_II_%vname%_%nname%_(\\d+).*"
 }
