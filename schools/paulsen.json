@@ -2,7 +2,7 @@
     // eindeutiger Identifikator dieser FachDaten; Gleichzeitig der Dateiname dieser Datei!
     "schulId": "paulsen.json",
     // Hauptversion.Subversion
-    "jsonVersion": "1.2",
+    "jsonVersion": "1.3",
     "faecher": [
         // Sprachlich-literarisch-künstlerisches Aufgabenfeld
         {
