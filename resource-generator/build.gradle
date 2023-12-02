@@ -3,10 +3,7 @@ plugins {
     id 'application'
 }
 
-ext {
-    javaMainClass = "SvgProcessorKt"
-}
-
+def javaMainClass = "SvgProcessorKt"
 def appDir = rootProject.project("app").projectDir.absolutePath
 
 jar {
@@ -17,12 +14,12 @@ jar {
 }
 
 tasks.register('processVectors', JavaExec) {
-    dependsOn jar
+    dependsOn tasks.jar
     jvmArgs('-Duser.language=en', '-Duser.country=US')
     args(appDir + '/assets', appDir + '/src/main/resources', rootProject.project("app").buildDir.absolutePath + "/generated/sources/vectors/main")
     group = "Execution"
     description = "Erstellt Shape Objekte für alle .svg Dateien"
-    main = javaMainClass
+    mainClass = javaMainClass
     classpath = sourceSets.main.runtimeClasspath
 }
 
@@ -31,11 +28,5 @@ repositories {
 }
 
 dependencies {
-//    implementation("javax.annotation:javax.annotation-api:1.3.2")
-//    implementation("com.google.auto.service:auto-service-annotations:1.0.1")
     implementation("com.squareup:kotlinpoet:1.10.0")
-}
-
-test {
-    useJUnitPlatform()
 }

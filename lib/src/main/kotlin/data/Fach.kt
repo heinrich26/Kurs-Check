@@ -23,40 +23,46 @@ import org.intellij.lang.annotations.Language
 /**
  * Beschreibt ein Fach
  *
- * @constructor Erstellt ein Fach
- * @property name der Anzeigename des Fachs
- * @property kuerzel eindeutiges Schlüsselattribut für dieses Fachs;
- * Wird verwendet um Instanzen zu vergleichen
- * @property aufgabenfeld das Aufgabenfeld, dem das Fach angehört
- * @property isLk ob das [Fach] als LK gewählt werden kann
- * @property isFremdsprache ob das [Fach] eine Fremdsprache ist
- * @property isKurs ob das Fach als Kurs gewählt werden kann
- * @property brauchtWPF ob SuS das [Fach] as WPF belegt haben müssen
- * @property nurLk ob das [Fach] lediglich als Leistungskurs angeboten wird.
- * @property nurPf4_5 ob das [Fach] nur als 4./5. PF gewählt werden kann
- * @property nurIn beschränkt, in welchen Semestern das Fach gewählt werden kann
- * @property nurFuer bestimmt welche Klassen das Fach wählen können
- * @property isExtra [Fach] zählt nicht zum maximalen Kurse-pro-Semester Zähler
- * @property lusdId Id des [Fachs][Fach] im LUSD-System
+ * @constructor Erstellt ein [Fach]
+ * @property name Anzeigename des [Fachs][Fach].
+ * @property kuerzel eindeutiges Schlüsselattribut für dieses [Fachs][Fach];
+ * Wird verwendet um Instanzen zu vergleichen.
+ * @property aufgabenfeld das Aufgabenfeld, dem das [Fach] angehört.
+ * @property isLk ob das [Fach] als LK gewählt werden kann.
+ * @property isGk ob das [Fach] als Grundkurs angeboten wird.
+ * @property isFremdsprache ob das [Fach] eine Fremdsprache ist.
+ * @property isKurs ob das [Fach] als Kurs gewählt werden kann .
+ * @property isPf ob das [Fach] als Prüfungsfach (3/4) gewählt werden.
+ * @property isExtra ob das [Fach] nicht zum maximalen Kurse-pro-Semester Zähler zählt.
+ * @property brauchtWPF ob SuS das [Fach] as WPF belegt haben müssen.
+ * @property nurPf4_5 ob das [Fach] nur als 4./5. PF gewählt werden kann.
+ * @property nurIn beschränkt, in welchen Semestern das [Fach] gewählt werden kann.
+ * @property nurFuer bestimmt welche Klassen dieses [Fach] wählen können.
+ * @property lusdId Id des [Fachs][Fach] im LUSD-System.
  * @property infoText über das [Fach], zur Hilfe in der Grundkurs-Übersicht.
  */
 @JsonSerialize(using = FachSerializer::class, keyUsing = FachKeySerializer::class)
-data class Fach(
+class Fach(
     val name: String,
     val kuerzel: String,
     val aufgabenfeld: Int,
     val isLk: Boolean = false,
+    val isGk: Boolean = true,
     val isFremdsprache: Boolean = false,
-    val isKurs: Boolean = true,
+    isKurs: Boolean = true,
+    isPf: Boolean = true,
+    val isExtra: Boolean = false,
     val brauchtWPF: Boolean = false,
-    val nurLk: Boolean = false,
     val nurPf4_5: Boolean = false,
     val nurIn: Wahlmoeglichkeit = Wahlmoeglichkeit.DURCHGEHEND,
     val nurFuer: Set<String>? = null,
-    val isExtra: Boolean = false,
     val lusdId: Int = -1,
     @Language("html") val infoText: String? = null
 ) {
+    // Stellt sicher, dass Zusatzkurse nicht als Prüfungsfächer belegt werden können.
+    val isPf = isPf && aufgabenfeld >= 0
+
+    val isKurs = isKurs && (isLk || isGk)
 
     /**
      * Gibt den Namen des [Fachs][Fach], mit sofern vorhanden, dem Aufgabenfeld zurück.
@@ -69,6 +75,12 @@ data class Fach(
 
     override fun hashCode(): Int = kuerzel.hashCode() // nimmt an, dass das selbe Kürzel nur 1x vorkommt
 
-    /** Überprüft ob das Fach mit der gegebenen Klasse gewählt werden kann */
+    override fun toString(): String =
+        "Fach(name='$name', kuerzel='$kuerzel', aufgabenfeld=$aufgabenfeld, isLk=$isLk, isGk=$isGk, isFremdsprache=$isFremdsprache, isKurs=$isKurs, isPf=$isPf, isExtra=$isExtra, brauchtWPF=$brauchtWPF, nurPf4_5=$nurPf4_5, nurIn=$nurIn, nurFuer=$nurFuer, lusdId=$lusdId, infoText=$infoText)"
+
+    /** Überprüft ob das Fach mit der gegebenen Klasse gewählt werden kann. */
     fun checkKlasse(klasse: String?) = nurFuer?.contains(klasse) != false
+
+    /** Überprüft, ob dieses Fach mit den gegebenen Wahlpflichfächern gewählt werden kann. */
+    fun checkWpf(wpfs: WPFs) = !brauchtWPF || (wpfs != null && this in wpfs)
 }

@@ -7,8 +7,10 @@ plugins {
 
 group 'com.kurswahlApp'
 
-tasks.withType(JavaCompile).configureEach {
-    targetCompatibility = JavaVersion.VERSION_16
+def javaVersion = JavaVersion.VERSION_18
+
+kotlin {
+    jvmToolchain(javaVersion.majorVersion.toInteger())
 }
 
 repositories {
@@ -18,8 +20,8 @@ repositories {
 dependencies {
     implementation platform('org.jetbrains.kotlin:kotlin-bom') // <4>
 
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.10' // <5>
-    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.8.10'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.20' // <5>
+    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.9.20'
 
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
 }
@@ -46,12 +48,5 @@ tasks.register('downloadSchoolsData') {
         Files.createDirectories(f.parentFile.toPath())
         new URL('https://raw.githubusercontent.com/heinrich26/Kurs-Check/data/per-school-settings.json')
                 .withInputStream { i -> f.withOutputStream { it << i }}
-    }
-}
-
-// verwendete Java Version für Kotlin Kompilation setzen
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
-    kotlinOptions {
-        jvmTarget = "16"
     }
 }

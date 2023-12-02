@@ -18,12 +18,7 @@ dependencies {
     implementation 'org.apache.commons:commons-csv:1.9.0'
 }
 
-
-//tasks.register('prepInstallerRes', Delete) {
-//    delete layout.buildDirectory.dir(resDirName), layout.buildDirectory.dir('temp')
-//}
-
-copyInstallerResources.dependsOn(downloadSchoolsData/*, prepInstallerRes*/)
+copyInstallerResources.dependsOn(downloadSchoolsData)
 jpackageImage.dependsOn copyInstallerResources
 
 def (osPrefix, iconExt, packageType) =
@@ -32,8 +27,6 @@ def (osPrefix, iconExt, packageType) =
                     ['linux', 'png', 'deb']
 
 
-//String osPrefix = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'win' : ((Os.isFamily(Os.FAMILY_MAC)) ? 'mac' : 'linux')
-//String iconExt = (Os.isFamily(Os.FAMILY_WINDOWS)) ? 'ico' : ((Os.isFamily(Os.FAMILY_MAC)) ? 'icns' : 'png')
 runtime {
     addOptions '--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages'
 

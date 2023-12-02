@@ -20,6 +20,7 @@ const val PF_5_TYP_FIELD = "RadioGroupAcroFormField_Pruefungskomponente"
 
 fun main(args: Array<String>) {
     val fname = args.getOrElse(0) { "res/formular.pdf" }
+    println(fname)
     val doc = PDDocument.load(File(fname))
     val catalog = doc.documentCatalog
     val acroForm = catalog.acroForm
@@ -39,6 +40,6 @@ fun main(args: Array<String>) {
             return@mapNotNull null
         }
     }
-    felder.groupBy { it.id }.mapKeys { (k, v) ->  "${v[0].name} ($k)" }.mapValues { (_, v) -> v.map { it.value } }.forEach { println(it) }
+    felder.groupBy(Feld::id).mapKeys { (k, v) ->  "${v[0].name} ($k)" }.mapValues { (_, v) -> v.map(Feld::value) }.forEach(::println)
 
 }

@@ -54,8 +54,6 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
     private val pf3: FachComboBox
     private val pf4: FachComboBox
     private val pf5: FachComboBox
-
-
     private val pf5Typ = JComboBox(Pf5Typ.values())
 
     private val userFs = wahlData.fremdsprachen.map { it.first }
@@ -100,10 +98,6 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
         val pf5Model = AwareFachComboBoxModel(pf3, pf4) { pf5Faecher() }
         pf5 = FachComboBox(pf5Model)
 
-
-        pf3.renderer = FachRenderer
-        pf4.renderer = FachRenderer
-        pf5.renderer = FachRenderer
         pf5Typ.renderer = Pf5Typ.Renderer
 
 

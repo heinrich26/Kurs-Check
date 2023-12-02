@@ -18,18 +18,37 @@
 package com.kurswahlApp.gui
 
 import com.kurswahlApp.data.Fach
-import javax.swing.ComboBoxModel
-import javax.swing.JComboBox
+import java.awt.Component
+import javax.swing.*
 import kotlin.math.max
 
 class FachComboBox(model: ComboBoxModel<Fach?>) : JComboBox<Fach?>(model) {
     override fun getSelectedIndex(): Int = max(super.getSelectedIndex(), 0)
 
-    override fun getSelectedItem(): Fach? {
-        return super.getSelectedItem() as Fach?
-    }
+    override fun getSelectedItem(): Fach? = super.getSelectedItem() as Fach?
 
-    override fun getModel(): ComboBoxModel<Fach?> {
-        return super.getModel() as ComboBoxModel<Fach?>
+    override fun getModel(): ComboBoxModel<Fach?> = super.getModel() as ComboBoxModel<Fach?>
+
+    override fun getRenderer(): ListCellRenderer<in Fach?> = FachRenderer
+
+    val selected
+        get() = getSelectedItem()
+
+    private object FachRenderer : DefaultListCellRenderer() {
+        private fun readResolve(): Any = FachRenderer
+
+        override fun getListCellRendererComponent(
+            list: JList<*>?,
+            value: Any?,
+            index: Int,
+            isSelected: Boolean,
+            cellHasFocus: Boolean
+        ): Component? = super.getListCellRendererComponent(
+            list,
+            if (value is Fach) value.name else "Ungesetzt",
+            index,
+            isSelected,
+            cellHasFocus
+        )
     }
 }

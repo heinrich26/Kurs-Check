@@ -38,7 +38,7 @@ class KursanzahlInfo(private val semesterkurse: Array<Int>) : JLabel("", RegelLa
     /** Überprüfen, dass pro Semester die maximale Kurszahl nicht überschritten wird */
     fun match(semesterkurseUser: IntArray): Boolean = semesterkurseUser.zip(semesterkurse).map { it.first - it.second }
         .mapIndexedNotNull { i, n -> if (n > 0) "in Q${i + 1} $n" else null }.let {
-            return@let (it.isEmpty()).also { valid ->
+            return@let it.isEmpty().also { valid ->
                 if (valid) {
                     icon = RegelLabel.validIcon
                     text = validText

@@ -22,24 +22,23 @@ import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.JsonDeserializer
 import javax.management.InvalidAttributeValueException
 
+typealias JsonVersion = Pair<Int, Int>
+private const val INVALID_VERSION_ERROR_MSG = "Ungültige Versionsbezeichnung! Eine Version besteht aus einer numerischen " +
+        "Haupt- und Subversion, getrennt durch einen „.“!"
 /**
  * Zerlegt einen Versions String bestehend aus numerischer Major- und Subversion,
  * getrennt durch einen Punkt
  */
-class VersionDeserializer : JsonDeserializer<Pair<Int, Int>>() {
+class VersionDeserializer : JsonDeserializer<JsonVersion>() {
     @Throws(InvalidAttributeValueException::class)
-    override fun deserialize(p: JsonParser, ctxt: DeserializationContext): Pair<Int, Int> {
-        val str = p.valueAsString
+    override fun deserialize(p: JsonParser, ctx: DeserializationContext): JsonVersion {
+        val (first, second) = p.valueAsString.split('.').takeIf { it.size == 2 } ?:
+            throw InvalidAttributeValueException(INVALID_VERSION_ERROR_MSG)
 
-        if (str.count { it == '.' } != 1)
-            throw InvalidAttributeValueException("Ungültige Versionsbezeichnung! Eine Version besteht aus einer numerischen Haupt- und Subversion, getrennt durch einen \".\"!")
-
-        return str.split(".", ignoreCase = true).let {
-            try {
-                it[0].toInt() to it[1].toInt()
-            } catch (e: NumberFormatException) {
-                throw InvalidAttributeValueException("Ungültige Versionsbezeichnung! Eine Version besteht aus einer numerischen Haupt- und Subversion, getrennt durch einen \".\"!")
-            }
+        return try {
+            first.toInt() to second.toInt()
+        } catch (e: NumberFormatException) {
+            throw InvalidAttributeValueException(INVALID_VERSION_ERROR_MSG)
         }
     }
 

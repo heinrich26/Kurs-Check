@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.DatabindException
 import com.fasterxml.jackson.databind.InjectableValues
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import java.io.File
 import java.io.IOException
 
@@ -67,7 +68,7 @@ import java.io.IOException
 )
 class FachData(
     val schulId: String,
-    val jsonVersion: Pair<Int, Int>,
+    val jsonVersion: JsonVersion,
     val faecherMap: Map<String, Fach>,
     val pflichtfaecher: Map<Fach, Wahlmoeglichkeit>,
     val wpfs: List<Fach>,
@@ -89,11 +90,11 @@ class FachData(
     val faecher: List<Fach> = faecherMap.values.toList()
     val fremdsprachen: List<Fach> = faecher.filter(Fach::isFremdsprache)
 
-    val lk1Moeglichkeiten = LinkedHashSet<String>().apply {
+    val lk1Moeglichkeiten = buildSet {
         for ((lk1) in wahlzeilen.values) {
             if (lk1.startsWith("$"))
-                this.addAll(wzWildcards[lk1]!!)
-            else this.add(lk1)
+                addAll(wzWildcards[lk1]!!)
+            else add(lk1)
         }
     }.mapNotNull { faecherMap[it]!!.takeIf(Fach::isLk) }
 
@@ -111,10 +112,10 @@ class FachData(
         get() = faecher.filter(Fach::isLk)
 
     private val wildcardMapping =
-        faecher.associateWith { wildcards.filter { wCard -> it in wCard.value }.keys + it.kuerzel }
+        faecher.associateWith { wildcards.filterValues { v -> it in v }.keys + it.kuerzel }
 
     val wzWildcardMapping =
-        faecher.associateWith { (wzWildcards.filterValues { value -> it.kuerzel in value }.keys + it.kuerzel) + "*" }
+        faecher.associateWith { (wzWildcards.filterValues { v -> it.kuerzel in v }.keys + it.kuerzel) + "*" }
 
     /**
      * Gibt alle möglichen Wahlzeilen für die gegebenen LKs zurück
@@ -141,7 +142,7 @@ class FachData(
         val injectables = InjectableValues.Std()
         injectables.addValue(FachDataMirror::class.java, FachDataMirror(this))
         mapper.injectableValues = injectables
-        return mapper.readValue(file, KurswahlData::class.java)
+        return mapper.readValue<KurswahlData>(file)
     }
 
     /** Erstellt eine leere Kurswahl mit Standardwerten gesetzt! */
@@ -149,7 +150,7 @@ class FachData(
         KurswahlData(
             gks = this.pflichtfaecher,
             pflichtfaecher = this.pflichtfaecher,
-            readJsonVersion = jsonVersion,
+            readJsonVersion = this.jsonVersion,
             schulId = schulId
         )
 
@@ -183,12 +184,12 @@ class FachData(
         /**
          * Helferklasse um Version einer FachData-JSON zu bestimmen, ohne sie komplett laden zu müssen
          */
-        class FachDataInfo(@JsonDeserialize(using = VersionDeserializer::class) @JsonProperty val jsonVersion: Pair<Int, Int>)
+        class FachDataInfo(@JsonDeserialize(using = VersionDeserializer::class) @JsonProperty val jsonVersion: JsonVersion)
 
         @JvmStatic
         @JsonCreator
         fun fromJson(
-            @JsonDeserialize(using = VersionDeserializer::class) @JsonProperty jsonVersion: Pair<Int, Int>,
+            @JsonDeserialize(using = VersionDeserializer::class) @JsonProperty jsonVersion: JsonVersion,
             @JsonProperty schulId: String,
             @JsonProperty faecher: List<Fach>,
             @JsonProperty pflichtfaecher: Map<String, Wahlmoeglichkeit>,
@@ -223,7 +224,7 @@ class FachData(
                 schulId = schulId,
                 jsonVersion = jsonVersion,
                 faecherMap = faecherMap,
-                pflichtfaecher = pflichtfaecher.mapKeys { faecherMap[it.key]!! },
+                pflichtfaecher = pflichtfaecher.mapKeys { faecherMap.getValue(it.key) },
                 wpfs = wpfs.map(faecherMap::getValue),
                 regeln = regeln,
                 wahlzeilen = wahlzeilen,
@@ -243,8 +244,9 @@ class FachData(
         }
     }
 
-    /* Außer verwendung, denn Hashcodes sind Buildabhängig und deswegen nicht als
-    Versionsindikator tauglich */
+    /* TODO Hashcode implementieren:
+        Außer Verwendung, denn Hashcodes sind Buildabhängig und deswegen nicht als
+        Versionsindikator tauglich */
     /*override fun hashCode(): Int {
         var result = faecher.toSet().hashCode()
         result = 31 * result + pflichtfaecher.hashCode()

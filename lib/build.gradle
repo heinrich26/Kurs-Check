@@ -7,3 +7,14 @@ dependencies {
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.3'
     implementation 'org.apache.pdfbox:pdfbox:2.0.27'
 }
+
+ext {
+    javaMainClass = "com.kurswahlApp.data.lusd_pdf.MainKt"
+}
+
+tasks.register('extractLusdIds', JavaExec) {
+    group = "Execution"
+    description = "Run the main class with JavaExecTask"
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = javaMainClass
+}

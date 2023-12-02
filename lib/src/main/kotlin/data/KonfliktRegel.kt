@@ -31,11 +31,6 @@ class KonfliktRegel(private val wildcard: String, desc: String? = null, errorMsg
                 if (wmoegl1.intersects(wmoegl2)) return false
         }
 
-//        for (fach1 in candidates) for (fach2 in candidates) {
-//            if (fach1 == fach2) continue
-//
-//            if (fach1.value.intersects(fach2.value)) return true
-//        }
         return true
     }
 

@@ -32,27 +32,7 @@ import javax.xml.parsers.DocumentBuilder
 import javax.xml.parsers.DocumentBuilderFactory
 
 
-/*@AutoService(Processor::class)
-@SupportedOptions("kapt.kotlin.generated", "resourcesDir")
-class SvgProcessor : AbstractProcessor() {
-    override fun init(processingEnv: ProcessingEnvironment?) {
-        super.init(processingEnv)
-
-        File("C:\\Users\\Hendrik\\Desktop\\kurswahlApp\\imHere.txt").createNewFile()
-    }
-
-    override fun getSupportedAnnotationTypes(): MutableSet<String> = mutableSetOf()
-
-    override fun process(annotations: MutableSet<out TypeElement>?, roundEnv: RoundEnvironment?): Boolean {
-        process(processingEnv.options["resourcesDir"]!!, processingEnv.filer)
-
-        return false
-    }
-}*/
-
-typealias AnyNull = Any?
-
-fun process(resourcesDir: String, translateableDir: File, dest: Any) {
+fun process(resourcesDir: String, dest: Any) {
     val resources = File(resourcesDir).listFiles { _, name -> name.endsWith(".svg") }
     // Generate the Kotlin file for the resources
     val className = "R"
@@ -66,7 +46,7 @@ fun process(resourcesDir: String, translateableDir: File, dest: Any) {
                             .initializer(
                                 "%T().apply {\n" +
                                         "\t${
-                                            GeneralPath().fromSVG(data, sx /* nur einen Faktor nutzen, ist einfacher*/)
+                                            GeneralPath().fromSVG(data, sx /* nur einen Faktor nutzen, ist einfacher */)
                                                 .joinToString("\n\t")
                                         }\n" +
                                         "}", GeneralPath::class
@@ -76,11 +56,6 @@ fun process(resourcesDir: String, translateableDir: File, dest: Any) {
                 }
 
             }
-            /*val bundle = ResourceBundle.getBundle(
-                "kursCheckStrings",
-                Locale.getDefault(),
-                URLClassLoader(arrayOf(translateableDir.toURI().toURL()))
-            )*/
             addProperty(
                 PropertySpec.builder("bundle", ResourceBundle::class, KModifier.PRIVATE)
                     .initializer("ResourceBundle.getBundle(%S)", "kursCheckStrings")
@@ -100,19 +75,7 @@ fun process(resourcesDir: String, translateableDir: File, dest: Any) {
                     .addStatement("val value: String = bundle.getString(key)")
                     .addStatement("return if (params.isNotEmpty()) %T.format(value, *params) else value", MessageFormat::class)
                     .build()
-
             )
-            /*addType(
-                TypeSpec.objectBuilder("strings").apply {
-                    for (key in bundle.keys) {
-                        addProperty(
-                            PropertySpec.builder(key, String::class).getter(
-                                FunSpec.getterBuilder().addStatement("return bundle.getString(%S)", key).build()
-                            ).build()
-                        )
-                    }
-                }.build()
-            )*/
         }.build()
     ).build()
 
@@ -125,7 +88,7 @@ fun process(resourcesDir: String, translateableDir: File, dest: Any) {
 }
 
 fun main(args: Array<String>) {
-    process(args[0] + "/drawables", File(args[1]), File(args[2]))
+    process(args[0] + "/drawables", File(args[2]))
 }
 
 fun getPathData(f: File): Triple<String, Double, Double>? {

@@ -2,9 +2,9 @@
 <project version="4">
   <component name="RemoteTargetsManager">
     <targets>
-      <target name="WSL - Ubuntu-20.04" type="wsl" uuid="ae49b177-8d23-41e9-a161-be8f6b1f7424">
+      <target name="WSL - Ubuntu" type="wsl" uuid="ae49b177-8d23-41e9-a161-be8f6b1f7424">
         <config>
-          <option name="distributionMsId" value="Ubuntu-20.04" />
+          <option name="distributionMsId" value="Ubuntu" />
           <option name="projectRootOnTarget" value="/mnt/e/Program Files (x86)/JetBrains/apps/IDEA-U/ch-0/222.3739.54/jbr/bin&#10;/Kurs-Check" />
         </config>
         <ContributedStateBase type="GradleRuntime">

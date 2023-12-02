@@ -23,10 +23,6 @@ sourceSets {
 }
 idea.module.settings.packagePrefix["src/main/kotlin"] = group
 
-kotlin {
-    jvmToolchain(18)
-}
-
 application {
     mainClass = "${group}.gui.GuiMain"
 }

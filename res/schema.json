@@ -231,6 +231,16 @@
 						"default": false,
 						"description": "Ob das Fach als LK gewählt werden kann."
 					},
+					"isGk": {
+						"type": "boolean",
+						"default": true,
+						"description": "Ob das Fach als GK gewählt werden kann."
+					},
+					"isPf": {
+						"type": "boolean",
+						"default": true,
+						"description": "Ob das Fach als PF3/4 gewählt werden kann."
+					},
 					"brauchtWPF": {
 						"type": "boolean",
 						"default": false,
@@ -239,7 +249,8 @@
 					"isKurs": {
 						"type": "boolean",
 						"default": true,
-						"description": "Ob das Fach gewählt werden kann oder nur als WPF/FS angezeigt wird."
+						"description": "Ob das Fach gewählt werden kann oder nur als WPF/FS angezeigt wird.",
+						"deprecationMessage": "Überflüssig, denn das kann durch isLk=false und isGk=false ersetzt werden!"
 					},
 					"nurIn": {
 						"description": "Limitiert, in welchen Semestern dieses Fach gewählt werden kann.",

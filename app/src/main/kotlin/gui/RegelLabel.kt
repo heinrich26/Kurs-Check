@@ -21,8 +21,6 @@ import com.kurswahlApp.R
 import com.kurswahlApp.data.Consts
 import com.kurswahlApp.data.KurswahlData
 import com.kurswahlApp.data.Regel
-import java.awt.*
-import javax.swing.Icon
 import javax.swing.JLabel
 import javax.swing.border.EmptyBorder
 
@@ -35,9 +33,7 @@ class RegelLabel(private val regel: Regel) : JLabel(regel.desc?.wrappable(), val
     /**
      * Überprüft die Regel, ändert ggf. das Aussehen das Labels und gibt das Ergebnis zurück
      */
-    fun match(data: KurswahlData): Boolean = regel.match(data).also {
-        setAppearance(it)
-    }
+    fun match(data: KurswahlData): Boolean = regel.match(data).also(::valid::set)
 
     init {
         border = validBorder
@@ -45,24 +41,23 @@ class RegelLabel(private val regel: Regel) : JLabel(regel.desc?.wrappable(), val
         foreground = Consts.COLOR_VALID
     }
 
-    private var apprearance = true
-
-    private fun setAppearance(valid: Boolean) {
-        if (apprearance != valid) {
-            if (valid) {
-                border = validBorder
-                icon = validIcon
-                text = validText
-                foreground = Consts.COLOR_VALID
-            } else {
-                border = errorBorder
-                icon = errorIcon
-                text = invalidText
-                foreground = Consts.COLOR_ERROR
+    private var valid = true
+        private set(value) {
+            if (field != value) {
+                if (value) {
+                    border = validBorder
+                    icon = validIcon
+                    text = validText
+                    foreground = Consts.COLOR_VALID
+                } else {
+                    border = errorBorder
+                    icon = errorIcon
+                    text = invalidText
+                    foreground = Consts.COLOR_ERROR
+                }
+                field = value
             }
-            apprearance = valid
         }
-    }
 
     companion object {
         val validIcon = ShapeIcon(R.task_check, 24)

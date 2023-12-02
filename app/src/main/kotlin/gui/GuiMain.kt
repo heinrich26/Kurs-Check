@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.DatabindException
 import com.fasterxml.jackson.databind.InjectableValues
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import com.kurswahlApp.*
 import com.kurswahlApp.data.*
 import com.kurswahlApp.data.Consts.APP_ICONS
@@ -350,21 +351,10 @@ class GuiMain(file: File? = null) : JPanel() {
         add(chooseSchoolButton, row = 2, column = 2, anchor = GridBagConstraints.WEST, margin = Insets(4))
     }
 
-
-    private fun layoutComponent(component: Component) {
-        synchronized(component.treeLock) {
-            component.doLayout()
-            if (component is Container) {
-                for (child in component.components) {
-                    layoutComponent(child)
-                }
-            }
-        }
-    }
-
     /**
      * Zeigt den Hilfedialog jedes Panels an
      */
+    @Suppress("CssUnknownProperty", "CssInvalidPropertyValue")
     private fun showHelp() {
         val content = JEditorPane("text/html", "<html><body><h1><a name='top'>Kurs-Check Hife</a></h1>${curPanel.showHelp()}</body></html>")
         val pane = JScrollPane(content, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER)
@@ -375,12 +365,9 @@ class GuiMain(file: File? = null) : JPanel() {
         content.font = JLabel().font
         content.maximumSize = Dimension(PANEL_WIDTH - pane.verticalScrollBar.preferredSize.width - 2, Int.MAX_VALUE)
         with((content.editorKit as HTMLEditorKit).styleSheet) {
-            addRule("a, h1, h2, h3, h4, h5, h6 {color: ${Consts.COLOR_PRIMARY.hexString()}}")
-            addRule("p { margin-top: 15; margin-bottom: 15 }")
-            "{ margin-left-ltr: 25; margin-right-rtl: 25 }".let {
-                addRule("ol $it")
-                addRule("ul $it")
-            }
+            addRule(/*language=css*/ "a, h1, h2, h3, h4, h5, h6 {color: ${Consts.COLOR_PRIMARY.hexString()}}")
+            addRule(/*language=css*/ "p { margin-top: 15; margin-bottom: 15 }")
+            addRule(/*language=css*/ "ol, ul { margin-left-ltr: 25; margin-right-rtl: 25 }")
         }
         content.addHyperlinkListener {
             if (it.eventType == HyperlinkEvent.EventType.ACTIVATED && it.description != null) {
@@ -434,7 +421,7 @@ class GuiMain(file: File? = null) : JPanel() {
             mapper.injectableValues = InjectableValues.Std().addValue(FachDataMirror::class.java, mirror)
 
             try {
-                val data = mapper.readValue(file, KurswahlData::class.java)
+                val data = mapper.readValue<KurswahlData>(file)
                 val newFachData: FachData = mirror.fachData!!
                 when {
                     data.readJsonVersion.first != newFachData.jsonVersion.first -> {

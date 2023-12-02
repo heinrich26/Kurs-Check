@@ -214,7 +214,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                     SolidFiller(extraFachColor),
                     row = 0,
                     column = 0,
-                    columnspan = 5,
+                    columnspan = 6,
                     fill = GridBagConstraints.BOTH
                 )
 
@@ -439,15 +439,17 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         var offset = 1
 
         for ((i, fach) in fachData.faecher.withIndex()) {
-            /* VO-GO Berlin - § 20 Kurse und Kursfolgen, Nr.2
+            /* TODO Umsetzen:
+                VO-GO Berlin - § 20 Kurse und Kursfolgen, Nr.2
                 Daraus geht hervor, dass SuS jegliche Fächer zum Grundkurs wählen können,
                 mit der Ausnahme von Fremdsprachen, welche mind. in JG 10/E-Phase begonnen
-                worden sein müssen. (schlussfolgerung, da Satz 1 nicht definiert, wvl. Wochenstunden eine
-                neue Fremdsprache in Sek II hätte) */
+                worden sein müssen. (Schlussfolgerung aus Satz 1, da nicht definiert, wvl.
+                Wochenstunden eine neue Fremdsprache in Sek II hätte) */
             if (!fach.isKurs
                 || fach.isFremdsprache && fach !in fs
                 || !fach.checkKlasse(wahlData.klasse)
-                || fach.nurLk && fach !in wahlData.lks
+                || (!fach.isGk && fach !in wahlData.lks)
+                || (fachData.strikteWPFs && !fach.checkWpf(wahlData.wpfs) && !fach.isFremdsprache)
             ) continue
 
             // Unterteilung anhand des Aufgabenfelds vornehmen, neue Überschriften hinzufügen

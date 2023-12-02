@@ -167,9 +167,7 @@ object Consts {
     const val MIN_ALTER = 12
 
 
-    /*
-    Konstanten für den LUSD Import/Export
-     */
+    // Konstanten für den LUSD Import/Export
     const val SCHUELER_ID_FIELD = "SchuelerId"
     const val JAHRGANG_ID_FIELD = "AbiturJahrgangId"
 

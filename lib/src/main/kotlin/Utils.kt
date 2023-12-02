@@ -26,7 +26,6 @@ import com.kurswahlApp.data.Consts.FILETYPE_EXTENSION
 import com.kurswahlApp.data.FachData
 import java.io.File
 import java.net.URL
-import javax.swing.ImageIcon
 import javax.swing.filechooser.FileFilter
 
 
@@ -54,18 +53,6 @@ fun fachdataObjectMapper() = jacksonObjectMapper().apply {
  * Ließt die `dataStruct.json` als [FachData] Objekt ein
  */
 @Deprecated("Läd die gehardcodedte FachData und keine Schulspezifischen Daten, TESTING ONLY")
-
-
-/** Erstellt ein [ImageIcon] mit dem gegebenen [path] und einer optionalen [description]. */
-fun createImageIcon(path: String, description: String? = null): ImageIcon? {
-    val imgURL: URL? = getResourceURL(path)
-    return if (imgURL != null) {
-        ImageIcon(imgURL, description)
-    } else {
-        System.err.println("Couldn't find file: $path")
-        null
-    }
-}
 fun readDataStruct(): FachData = fachdataObjectMapper().readValue(getResourceURL("dataStruct.json")!!)
 
 object KurswahlFileFilter : FileFilter() {
