@@ -36,7 +36,7 @@ jobs:
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
       with:
-        gradle-version: 7.4
+        gradle-version: 7.6
 
     - name: Build Application with JPackage
       run: gradle :app:jpackage
