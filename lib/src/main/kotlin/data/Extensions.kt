@@ -19,6 +19,8 @@ package com.kurswahlApp.data
 
 import org.apache.pdfbox.pdmodel.interactive.form.PDField
 import java.awt.Color
+import kotlin.reflect.KCallable
+import kotlin.reflect.KProperty
 
 var PDField.checked: Boolean
     get() = this.valueAsString == "Yes"
@@ -31,3 +33,10 @@ fun Color.transparentise(value: Int): Color = Color(red, green, blue, value)
  * Returns a String like "[name]=`name.value`" or `null` if [name] is `null`
  */
 fun Any?.named(name: String): String? = this?.let { "$name=$it" }
+
+
+operator fun Pair<*, *>.contains(other: Any): Boolean = this.first == other || this.second == other
+
+operator fun <R> KCallable<R>.getValue(thisRef: Any?, property: KProperty<*>): R {
+    return this.call()
+}

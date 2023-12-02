@@ -18,11 +18,9 @@
 package com.kurswahlApp.gui
 
 import com.kurswahlApp.data.*
-import com.kurswahlApp.data.Wahlzeile.Companion.isWildcard
 import org.intellij.lang.annotations.Language
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
-import java.awt.event.ActionEvent
 import java.awt.event.ItemEvent
 import javax.swing.Box
 import javax.swing.JLabel
@@ -38,86 +36,37 @@ class Leistungskurse(wahlData: KurswahlData, fachData: FachData, notifier: (Bool
         fun main(args: Array<String>) {
             runTest { Leistungskurse(testKurswahl, testFachdata) }
         }
-
-        class LKComboBoxModel(data: Collection<Fach>, other: FachComboBox) : FachComboBoxModel(data) {
-            private var excludedItem: Pair<Fach, Int>? = null
-
-            init {
-                other.addItemListener {
-                    if (it.stateChange == ItemEvent.SELECTED) {
-                        if (excludedItem != null) {
-                            insertElementAt(excludedItem!!.first, excludedItem!!.second)
-                            excludedItem = null
-                        }
-                        val item = (it.item ?: return@addItemListener) as Fach
-
-                        if (selectedItem == item)
-                            selectedItem = null
-
-                        excludedItem = with(getIndexOf(item)) {
-                            if (this == -1) return@with null
-                            removeElementAt(this)
-                            item to this
-                        }
-                    }
-                }
-            }
-        }
     }
 
     private val lk1ComboBox: FachComboBox
     private val lk2ComboBox: FachComboBox
+    private val helper: LeistungskurseLogik
 
     init {
         add(Box.createHorizontalStrut(50), column = 2)
 
+        helper = LeistungskurseLogik(fachData, wahlData)
 
-        // Eine Fremdsprache, die erst in der Jahrgangsstufe 10 oder in der Einführungsphase begonnen wurde,
-        // darf nur als 3. oder 4. Prüfungsfach oder als Referenzfach der 5. PK gewählt werden.
-        val fs = wahlData.fremdsprachen.mapNotNull { (fach, jahr) -> fach.takeIf { (jahr < fachData.schultyp.ePhase) } }
-        val wpfs = wahlData.wpfs
+        lk1ComboBox = FachComboBox(FachComboBoxModel(helper.lk1Moeglichkeiten))
 
-        val model1 = FachComboBoxModel(fachData.lk1Moeglichkeiten.filter {
-            (if (it.isFremdsprache) it in fs
-             else !it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second)))
-                    && it.checkKlasse(wahlData.klasse)
-        })
-        lk1ComboBox = FachComboBox(model1)
-
-        val model2 = LKComboBoxModel(emptyList(), lk1ComboBox)
+        val model2 = FachComboBoxModel(emptyList())
         lk2ComboBox = FachComboBox(model2)
         val listener: (Any) -> Unit = { notifier.invoke(isDataValid()) }
         lk1ComboBox.addActionListener(listener)
         lk2ComboBox.addActionListener(listener)
 
-        lk1ComboBox.addActionListener {
+        lk1ComboBox.addItemListener {
+            if (it.stateChange != ItemEvent.SELECTED) return@addItemListener
+
+            lk2ComboBox.selectedItem = null
+
             model2.clear()
-            model2.addAll(buildSet {
-                for ((lk1, lk2) in fachData.wahlzeilen.values) {
-                    if (lk1.isWildcard && lk1ComboBox.selectedItem != null
-                        && lk1ComboBox.selectedItem!!.kuerzel in fachData.wzWildcards[lk1]!!
-                        || lk1 == lk1ComboBox.selectedItem?.kuerzel) {
-                        if (lk2.isWildcard) addAll(fachData.wzWildcards[lk2]!!)
-                        else add(lk2)
-                    }
-                }
-            }.mapNotNull { k ->
-                fachData.faecherMap[k]!!.takeIf {
-                    it.isLk && it != lk1ComboBox.selectedItem
-                            /* Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1 */
-                            && (if (it.isFremdsprache) it in fs
-                            /* Hat keine WPF or Fach ist weder 1./2. WPF */
-                            else (!it.brauchtWPF || (wpfs != null && (it == wpfs.first || it == wpfs.second))))
-                            && it.checkKlasse(wahlData.klasse)
-                }
-            })
+            model2.addAll(helper.getLk2Moeglichkeiten(it.item as Fach?))
         }
-        // ActionListener ausführen, damit man LK2 auswählen kann
-        lk1ComboBox.actionListeners.last()!!.actionPerformed(ActionEvent(0, -1, ""))
-
-        lk1ComboBox.renderer = FachRenderer
-        lk2ComboBox.renderer = FachRenderer
-
+        // Sicherstellen, dass man LK2 auswählen kann
+        if (wahlData.lk1 != null) {
+            model2.addAll(helper.getLk2Moeglichkeiten(wahlData.lk1))
+        }
 
         // Daten einsetzen
         lk1ComboBox.selectedItem = wahlData.lk1
@@ -143,9 +92,9 @@ class Leistungskurse(wahlData: KurswahlData, fachData: FachData, notifier: (Bool
     }
 
 
-    override fun close(): KurswahlData = wahlData.updateLKs(lk1 = lk1ComboBox.selectedItem!!, lk2 = lk2ComboBox.selectedItem!!)
+    override fun close(): KurswahlData = helper.save(lk1ComboBox.selectedItem!!, lk2ComboBox.selectedItem!!)
 
-    override fun isDataValid(): Boolean = lk1ComboBox.selectedItem != null && lk2ComboBox.selectedItem != null
+    override fun isDataValid(): Boolean = helper.validate(lk1ComboBox.selectedItem, lk2ComboBox.selectedItem)
 
     @Language("HTML")
     override fun showHelp(): String = "<h2>$windowName</h2><p>Die Leistungskurse ergeben sich wie folgt:<br><b>Ich bin leider nicht lyrisch begabt, deswegen beschwere dich bitte bei deinem/deiner PäKo, dass er/sie keine Hilfe verfasst hat!</b></p>"

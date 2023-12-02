@@ -25,6 +25,8 @@ import java.awt.geom.AffineTransform
 import java.awt.geom.Path2D
 import java.io.File
 import java.net.URL
+import javax.swing.ImageIcon
+import javax.swing.JComboBox
 import javax.swing.JComponent
 import kotlin.system.measureNanoTime
 
@@ -161,3 +163,18 @@ fun img(src: String, width: Int, height: Int, alt: String? = null) =
         "<img src='${getResourceURL(src)}' alt='$alt' width='$width' height='$height'/>"
     else
         "<img src='${getResourceURL(src)}' width='$width' height='$height'/>"
+
+@Suppress("UNCHECKED_CAST")
+val <E> JComboBox<E>.selectedItem: E?
+    get() = this.getSelectedItem() as E?
+
+/** Erstellt ein [ImageIcon] mit dem gegebenen [path] und einer optionalen [description]. */
+fun createImageIcon(path: String, description: String? = null): ImageIcon? {
+    val imgURL: URL? = getResourceURL(path)
+    return if (imgURL != null) {
+        ImageIcon(imgURL, description)
+    } else {
+        System.err.println("Couldn't find file: $path")
+        null
+    }
+}

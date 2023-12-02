@@ -120,11 +120,6 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
             container1.add(JLabel("$i."), row = i, column = 0)
         }
 
-        fs1.renderer = FachRenderer
-        fs2.renderer = FachRenderer
-        fs3.renderer = FachRenderer
-        fs4.renderer = FachRenderer
-
         // Daten einsetzen
         wahlData.fremdsprachen.let { fs ->
             val nFS = fs.size
@@ -159,9 +154,6 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
 
         val wpfModel1 = ExclusiveComboBoxModel(fachData.wpfs, wpf2)
         wpf1 = FachComboBox(wpfModel1)
-
-        wpf1.renderer = FachRenderer
-        wpf2.renderer = FachRenderer
 
 
         if (!fachData.zweiWPFs) {
