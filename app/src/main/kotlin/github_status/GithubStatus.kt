@@ -20,6 +20,7 @@ package com.kurswahlApp.github_status
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import java.io.IOException
 import java.net.URL
 import java.nio.charset.StandardCharsets
@@ -65,7 +66,7 @@ data class GithubStatus(
                     scanner.useDelimiter("\\A")
 
                     if (scanner.hasNext())
-                        jacksonObjectMapper().readValue(scanner.next(), GithubStatus::class.java)
+                        jacksonObjectMapper().readValue<GithubStatus>(scanner.next())
                     else null
                 }
             } catch (e: IOException) {

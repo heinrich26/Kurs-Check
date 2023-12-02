@@ -18,6 +18,8 @@
 package com.kurswahlApp
 
 import com.fasterxml.jackson.core.JsonParser
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.kurswahlApp.data.Consts.FILETYPE_EXTENSION
@@ -41,14 +43,17 @@ fun getResource(fileName: String): String? = {}.javaClass.classLoader.getResourc
 fun getResourceURL(fileName: String): URL? = {}.javaClass.classLoader.getResource(fileName)
 
 /**
+ * [ObjectMapper] für das laden von [FachData], welcher Kommentare erlaubt und unbekannte Properties zulässt.
+ */
+fun fachdataObjectMapper() = jacksonObjectMapper().apply {
+    factory.enable(JsonParser.Feature.ALLOW_COMMENTS)
+    configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+}
+
+/**
  * Ließt die `dataStruct.json` als [FachData] Objekt ein
  */
 @Deprecated("Läd die gehardcodedte FachData und keine Schulspezifischen Daten, TESTING ONLY")
-fun readDataStruct(): FachData {
-    val mapper = jacksonObjectMapper()
-    mapper.factory.enable(JsonParser.Feature.ALLOW_COMMENTS)
-    return mapper.readValue(getResourceURL("dataStruct.json")!!)
-}
 
 
 /** Erstellt ein [ImageIcon] mit dem gegebenen [path] und einer optionalen [description]. */
@@ -61,6 +66,7 @@ fun createImageIcon(path: String, description: String? = null): ImageIcon? {
         null
     }
 }
+fun readDataStruct(): FachData = fachdataObjectMapper().readValue(getResourceURL("dataStruct.json")!!)
 
 object KurswahlFileFilter : FileFilter() {
     override fun accept(f: File): Boolean = f.isDirectory || f.extension == FILETYPE_EXTENSION

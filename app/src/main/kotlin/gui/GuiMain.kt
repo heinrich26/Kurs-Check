@@ -17,7 +17,6 @@
 
 package com.kurswahlApp.gui
 
-import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DatabindException
 import com.fasterxml.jackson.databind.InjectableValues
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
@@ -70,7 +69,13 @@ class GuiMain(file: File? = null) : JPanel() {
         if (file == null) {
             val lastSchool = SchoolConfig.loadLastSchool()
             if (lastSchool != null) {
-                val data = SchoolConfig.getSchool(lastSchool)
+                val data = try {
+                    SchoolConfig.getSchool(lastSchool)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    null
+                }
+
                 if (data != null) {
                     updateFachData(data)
                     wahlData = data.createKurswahl(lastSchool)
@@ -91,22 +96,31 @@ class GuiMain(file: File? = null) : JPanel() {
      */
     private fun showSchoolChooser(initial: Boolean = true) {
         chooseSchool()?.let {
-            if (it != currentSchool) {
-                val data = SchoolConfig.getSchool(it.schulId)
-                if (data != null) {
-                    currentSchool = it
-                    fachData = data
-                    wahlData = data.createKurswahl(it.schulId)
-                    thread { SchoolConfig.writeLastSchool(it.schulId) }
+            // die Auswahl hat sich nicht geändert
+            if (it == currentSchool) return
 
-                    if (!initial) {
-                        reloadToStart()
-                    }
-                } else {
-                    showLoadingError()
-                    exitProcess(0)
-                }
-            } // die Auswahl hat sich nicht geändert
+            val data = try {
+            SchoolConfig.getSchool(it.schulId)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                // Die Konfiguration war inkompatibel mit der Version von Kurs-Check/ist ungültig.
+                showLoadingError()
+                showSchoolChooser(false)
+                return
+            }
+
+            if (data != null) {
+                currentSchool = it
+                fachData = data
+                wahlData = data.createKurswahl(it.schulId)
+                thread { SchoolConfig.writeLastSchool(it.schulId) }
+
+                if (!initial) reloadToStart()
+            } else {
+                showLoadingError()
+                exitProcess(0)
+            }
+
         } // der Nutzer hat die Auswahl abgebrochen
     }
 
@@ -410,10 +424,13 @@ class GuiMain(file: File? = null) : JPanel() {
         if (file.extension != FILETYPE_EXTENSION) return false
 
         if (file.exists() && file.canRead()) {
-            val mirror = FachDataMirror(if (this::fachData.isInitialized) fachData else null, SchoolConfig::getSchool)
+            val mirror = try {
+                FachDataMirror(if (this::fachData.isInitialized) fachData else null, SchoolConfig::getSchool)
+            } catch (e: Exception) {
+                return false
+            }
 
             val mapper = jacksonObjectMapper()
-            mapper.factory.enable(JsonParser.Feature.ALLOW_COMMENTS)
             mapper.injectableValues = InjectableValues.Std().addValue(FachDataMirror::class.java, mirror)
 
             try {

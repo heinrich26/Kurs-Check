@@ -17,9 +17,10 @@
 
 package com.kurswahlApp.data
 
-import com.fasterxml.jackson.core.JsonParser
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.core.JsonProcessingException
+import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.module.kotlin.readValue
+import com.kurswahlApp.fachdataObjectMapper
 import com.kurswahlApp.getResource
 import java.io.FileInputStream
 import java.io.IOException
@@ -90,8 +91,7 @@ object SchoolConfig {
     lateinit var schools: List<School>
 
     fun updateConfig() {
-        val mapper = jacksonObjectMapper()
-        mapper.factory.enable(JsonParser.Feature.ALLOW_COMMENTS)
+        val mapper = fachdataObjectMapper()
         schools = try {
             mapper.readValue(fetchConfig())
         } catch (e: IOException) {
@@ -143,16 +143,12 @@ object SchoolConfig {
      * Läd die Schule mit der gebenen [schulId] entweder aus dem Cache oder vom Server
      * @return Die angeforderte [School] oder `null`
      */
-    fun getSchool(schulId: String): FachData? {
-        val mapper = jacksonObjectMapper()
-        mapper.factory.enable(JsonParser.Feature.ALLOW_COMMENTS)
-
-        return try {
-            fetchSchool(schulId)
-        } catch (e: IOException) {
-            loadSchool(schulId)
-        }?.let { mapper.readValue(it, FachData::class.java) }
-    }
+    @Throws(JsonProcessingException::class, JsonMappingException::class)
+    fun getSchool(schulId: String): FachData? = try {
+        fetchSchool(schulId)
+    } catch (e: IOException) {
+        loadSchool(schulId)
+    }?.let { fachdataObjectMapper().readValue<FachData>(it) }
 
     /**
      * Lädt die lokale Konfigurationsdatei, wenn z.B. kein Internet vorhanden ist

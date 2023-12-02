@@ -33,6 +33,10 @@ import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException
 import java.io.File
 import java.io.IOException
 import java.time.LocalDate
+import kotlin.reflect.full.declaredMemberProperties
+import kotlin.reflect.full.hasAnnotation
+
+typealias WPFs = Pair<Fach, Fach?>?
 
 /**
  * Beinhaltet die Daten der Kurswahl
@@ -41,7 +45,7 @@ import java.time.LocalDate
  *
  * @property readJsonVersion Version der bei der Erstellung verwendeten [FachData], um einen Mix von Formaten vorzubeugen.
  */
-@Suppress("PropertyName", "PrivatePropertyName")
+@Suppress("PropertyName")
 @JsonAppend(attrs = [JsonAppend.Attr(value = "jsonVersion")], prepend = true)
 @JsonIncludeProperties(
     "jsonVersion", "lk1", "lk2", "pf3", "pf4", "pf5", "pf5_typ", "gks", "fremdsprachen", "wpfs", "klasse",
@@ -54,9 +58,9 @@ data class KurswahlData(
     var pf4: Fach? = null,
     var pf5: Fach? = null,
     var pf5_typ: Pf5Typ = Pf5Typ.PRAESENTATION,
-    var gks: Map<Fach, Wahlmoeglichkeit> = emptyMap(),
+    var gks: Map<Fach, Wahlmoeglichkeit>,
     @get:JsonSerialize(using = ListOfPairSerializer::class) var fremdsprachen: List<Pair<Fach, Int>> = emptyList(),
-    var wpfs: Pair<Fach, Fach?>? = null,
+    var wpfs: WPFs = null,
     var wahlzeile: Int = -1,
     val klasse: String? = null,
     val pflichtfaecher: Map<Fach, Wahlmoeglichkeit>,
@@ -107,15 +111,15 @@ data class KurswahlData(
 
 
             return KurswahlData(
-                lk1 = fachData.faecherMap[lk1].takeIf{ it != null && it.isLk },
-                lk2 = fachData.faecherMap[lk2].takeIf { it != null && it.isLk },
+                lk1 = fachData.faecherMap[lk1]?.takeIf(Fach::isLk),
+                lk2 = fachData.faecherMap[lk2]?.takeIf(Fach::isLk),
                 pf3 = fachData.faecherMap[pf3],
                 pf4 = fachData.faecherMap[pf4],
                 pf5 = fachData.faecherMap[pf5],
                 pf5_typ = pf5_typ,
-                gks = gks.mapKeys { fachData.faecherMap[it.key]!! },
-                fremdsprachen = fremdsprachen.map { fachData.faecherMap[it.key]!! to it.value },
-                wpfs = if (wpfs.first !in fachData.faecherMap.keys) null else fachData.faecherMap[wpfs.first]!! to fachData.faecherMap[wpfs.second],
+                gks = gks.mapKeys { fachData.faecherMap.getValue(it.key) },
+                fremdsprachen = fremdsprachen.map { fachData.faecherMap.getValue(it.key) to it.value },
+                wpfs = fachData.faecherMap[wpfs.first]?.let { it to fachData.faecherMap[wpfs.second] },
                 wahlzeile = wahlzeile,
                 klasse = klasse,
                 pflichtfaecher = fachData.pflichtfaecher,
@@ -131,55 +135,7 @@ data class KurswahlData(
             )
         }
 
-        /**
-         * Läd eine Kurswahl aus einer LUSD PDF
-         * Achtung: Wahlpflichtfächer, Fremdsprachen und die Klasse gehen dabei verloren!
-         */
-        /*@JvmStatic
-        fun fromPDF(file: File, fachData: FachData, kurswahlData: KurswahlData? = null): KurswahlData {
-            println("ThreadID: ${Thread.currentThread().id}")
-
-            // Fächer umkehren, da associateBy das letzte Vorkommen nutzt, wir aber das 1. brauchen
-            val fachIdMap = fachData.faecher.reversed().associateBy { it.lusdId }
-
-            lateinit var pk5TypFeld: PDField
-
-            val doc = PDDocument.load(file)
-
-            val felder = fachIdMap.values.associateWith { FeldZeile() }
-            doc.documentCatalog.acroForm.fields.forEach {
-                when (val name = it.fullyQualifiedName) {
-                    SCHUELER_ID_FIELD, JAHRGANG_ID_FIELD -> {}
-
-                    PF_5_TYP_FIELD -> {
-                        pk5TypFeld = it
-                    }
-
-                    else -> {
-                        val parts = name.split('$')
-                        val id = parts[3].toInt()
-                        val zeile = felder[fachIdMap[id]]!!
-                        when (parts.last()) {
-                            "LK1_0" -> zeile.lk1 = it
-                            "LK2_0" -> zeile.lk2 = it
-                            "LK3_0" -> zeile.lk3 = it
-                            "PF3_0" -> zeile.pf3 = it
-                            "PF4_0" -> zeile.pf4 = it
-                            "PK5_0" -> zeile.pk5 = it
-                            "Q1_0" -> zeile.q1 = it
-                            "Q2_0" -> zeile.q2 = it
-                            "Q3_0" -> zeile.q3 = it
-                            "Q4_0" -> zeile.q4 = it
-                        }
-                    }
-                }
-            }
-
-            val ref = PDFReference(doc, felder, pk5TypFeld)
-
-
-            return kurswahlData.copy(lusdPdfReference = ref)
-        }*/
+        private val lockables = KurswahlData::class.declaredMemberProperties.filter { it.hasAnnotation<Locked>() }
     }
 
     /**
@@ -236,22 +192,35 @@ data class KurswahlData(
      */
     fun weeklyCourses() = countCourses().map { it * 3 + 3 } // 3h p. GK + 5h p. Lk (um auf 10 für LKs zu kommen fehlen 4, Sport sind nur 2, dh. +3)
 
-    private var _pfs: List<Fach?>? = null
-
     /**
      * Alle 5 Prüfungsfächer
      */
-    val pfs: List<Fach?>
-        get() = if (locked) _pfs!! else listOf(lk1, lk2, pf3, pf4, pf5)
-
-
-    private var _pf1_4: List<Fach?>? = null
+    @Locked
+    var pfs: List<Fach?> = emptyList()
+        get() {
+            if (!locked) field = listOf(lk1, lk2, pf3, pf4, pf5)
+            return field
+        }
+        private set
 
     /**
      * Prüfungsfächer 1 bis 4
      */
-    val pf1_4: List<Fach?>
-        get() = if (locked) _pf1_4!! else listOf(lk1, lk2, pf3, pf4)
+    @Locked
+    var pf1_4: List<Fach?> = emptyList()
+        get() {
+            if (!locked) field = listOf(lk1, lk2, pf3, pf4)
+            return field
+        }
+        private set
+
+    @Locked
+    var pf3_5: List<Fach?> = emptyList()
+        get() {
+            if (!locked) field = listOf(pf3, pf4, pf5)
+            return field
+        }
+        private set
 
     /**
      * Beide Leistungskurse
@@ -259,13 +228,16 @@ data class KurswahlData(
     val lks: List<Fach?>
         get() = listOf(lk1, lk2)
 
-    private var _kurse: Map<Fach, Wahlmoeglichkeit>? = null
-
     /**
      * Alle gewählten Kurse, einschließlich Prüfungsfächern
      */
-    val kurse: Map<Fach, Wahlmoeglichkeit>
-        get() = if (locked) _kurse!! else (gks + pfs.filterNotNull().associateWith { DURCHGEHEND })
+    @Locked
+    var kurse: Map<Fach, Wahlmoeglichkeit> = emptyMap()
+        get() {
+            if (!locked) field = (gks + pfs.filterNotNull().associateWith { DURCHGEHEND })
+            return field
+        }
+        private set
 
     private var locked = false
 
@@ -273,9 +245,10 @@ data class KurswahlData(
      * Verhindert eine Neuberechnung verschiedener Properties während das Objekt gelockt ist
      */
     fun lock() {
-        _kurse = kurse
-        _pfs = pfs
-        _pf1_4 = pf1_4
+        if (locked) return
+
+        // Values updaten
+        lockables.forEach { it.call(this) }
         locked = true
     }
 
@@ -283,9 +256,6 @@ data class KurswahlData(
      * Hebt den gelockten Zustand wieder auf
      */
     fun unlock() {
-        _kurse = null
-        _pfs = null
-        _pf1_4 = null
         locked = false
     }
 
@@ -400,7 +370,7 @@ data class KurswahlData(
     fun updatePflichtfaecher() {
         lock()
         gks =
-            gks + pflichtfaecher.filter { (key, value) -> key !in _pfs!! && gks[key].let { it == null || it in value } }
+            gks + pflichtfaecher.filter { (key, value) -> key !in pfs && gks[key].let { it == null || it in value } }
         unlock()
     }
 
@@ -473,4 +443,8 @@ data class KurswahlData(
     fun toFilename(): String = "${vorname}_$nachname"
         .replace(Regex("[\\\\/:*?\"<>|.&$]"), "")
         .replace(' ', '_')
+
+    // Annotation um Lockbare Props zu finden und beim locken zu aktualisieren.
+    @Target(AnnotationTarget.PROPERTY)
+    private annotation class Locked
 }
