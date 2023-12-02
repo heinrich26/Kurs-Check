@@ -243,7 +243,15 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         val data = close()
         data.lock()
         // Muss komplett evaluiert werden! (List.all() wäre Lazy -> würde nicht alle Regeln updaten)
-        return regelLabelArray.map { it.match(data) }.all { it } and kursanzahlInfoLabel.match(semesterkurse)
+        var first: Int
+        return regelLabelArray
+            .map { it.match(data) }
+            .apply { first = indexOf(false) }
+            .all { it } and kursanzahlInfoLabel.match(semesterkurse).also { b ->
+                if (first == -1 && !b) first = regelLabelArray.size
+                // Scrollt zur ersten, nicht erfüllten Regel
+                if (first != -1) regelPanel.scrollRectToVisible(regelPanel.getComponent(first).bounds)
+            }
     }
 
 
@@ -329,6 +337,8 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
 
     private val checkButton = JButton("Überprüfen")
 
+    private val regelPanel = ScrollablePanel(null)
+
     init {
         add(anzahlLabel, row = 1)
         add(anzahlInfoLabel, row = 1, column = 0, columnspan = 3)
@@ -376,7 +386,6 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
 
 
         // Regeln darstellen
-        val regelPanel = ScrollablePanel(null)
         regelPanel.layout = BoxLayout(regelPanel, BoxLayout.PAGE_AXIS)
         regelPanel.setScrollableWidth(ScrollablePanel.ScrollableSizeHint.FIT)
         regelLabelArray.forEach(regelPanel::add)
