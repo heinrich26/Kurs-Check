@@ -7,10 +7,15 @@ plugins {
 
 group 'com.kurswahlApp'
 
-def javaVersion = JavaVersion.VERSION_18
+tasks.withType(JavaCompile).configureEach {
+    targetCompatibility = JavaVersion.VERSION_16
+}
 
-kotlin {
-    jvmToolchain(javaVersion.majorVersion.toInteger())
+// verwendete Java Compatibility-Version für Kotlin Kompilation setzen
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = "16"
+    }
 }
 
 repositories {

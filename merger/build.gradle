@@ -21,6 +21,7 @@ dependencies {
 copyInstallerResources.dependsOn(downloadSchoolsData)
 jpackageImage.dependsOn copyInstallerResources
 
+def buildDir = layout.buildDirectory
 def (osPrefix, iconExt, packageType) =
     Os.isFamily(Os.FAMILY_WINDOWS) ? ['win', 'ico', 'msi'] :
             Os.isFamily(Os.FAMILY_MAC) ? ['mac', 'icns', 'pkg'] :
@@ -41,14 +42,14 @@ runtime {
         installerName = rootProject.name + '-full'
         installerOutputDir = file("$rootDir/out/executable/full")
         installerType = packageType
-        installerOptions = ['--file-associations', "$buildDir/$resDirName/kurswahl-${osPrefix}.properties",
+        installerOptions = ['--file-associations', buildDir.file("$resDirName/kurswahl-${osPrefix}.properties").get().toString(),
                             '--vendor', '"Willi-Graf-Gymnasium"',
                             '--description', "\"$description\"",
                             '--copyright', "\"Copyright Hendrik Horstmann ${Calendar.instance.get(Calendar.YEAR)}, Alle Rechte vorbehalten\"",
                             '--about-url', 'https://github.com/heinrich26/kurswahlApp',
                             '--license-file', "$rootDir/COPYRIGHT",
                             "@$rootDir/app/res/$osPrefix-opts.txt"]
-        resourceDir = file("$buildDir/$resDirName")
+        resourceDir = buildDir.dir(resDirName).get().asFile
     }
 }
 
@@ -67,14 +68,14 @@ tasks.register('buildRPM', JPackageTask) {
             installerName = rootProject.name + '-full'
             installerOutputDir = file("$rootDir/out/executable/full")
             installerType = 'rpm'
-            installerOptions = ['--file-associations', "$buildDir/$resDirName/kurswahl-linux.properties",
+            installerOptions = ['--file-associations', buildDir.file("$resDirName/kurswahl-linux.properties").get().toString(),
                                 '--vendor', '"Willi-Graf-Gymnasium"',
                                 '--description', "\"$description\"",
                                 '--copyright', "\"Copyright Hendrik Horstmann ${Calendar.instance.get(Calendar.YEAR)}, Alle Rechte vorbehalten\"",
                                 '--about-url', 'https://github.com/heinrich26/kurswahlApp',
                                 '--license-file', "$rootDir/COPYRIGHT",
                                 "@$rootDir/app/res/linux-opts.txt"]
-            resourceDir = file("$buildDir/$resDirName")
+            resourceDir = buildDir.dir(resDirName).get().asFile
         }
     }
 }
