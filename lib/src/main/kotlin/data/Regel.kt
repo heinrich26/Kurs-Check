@@ -18,6 +18,7 @@
 package com.kurswahlApp.data
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo
+import com.kurswahlApp.data.Wahlmoeglichkeit.DURCHGEHEND
 
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
@@ -33,4 +34,30 @@ sealed class Regel(var desc: String?, var errorMsg: String?) {
      * erhalten können.
      */
     open fun fillData(data: FachData) {}
+
+    /**
+     * Erstellt ein Scope für
+     */
+    protected fun getScope(scope: RegelScope?): (KurswahlData) -> Map<Fach, Wahlmoeglichkeit> =
+        when (scope) {
+            null -> { it -> it.kurse }
+            RegelScope.LK1_2 -> { it -> it.lks.filterNotNull().associateWith { DURCHGEHEND } }
+            RegelScope.PF1_4 -> { it -> it.pf1_4.filterNotNull().associateWith { DURCHGEHEND } }
+            RegelScope.PF1_5 -> { it -> it.pfs.filterNotNull().associateWith { DURCHGEHEND } }
+            RegelScope.PF3 -> { w -> w.pf3?.let { mapOf(it to DURCHGEHEND) } ?: emptyMap() }
+            RegelScope.PF3_4 -> { w ->
+                buildMap { w.pf3?.let { put(it, DURCHGEHEND) }; w.pf4?.let { put(it, DURCHGEHEND) } }
+            }
+            RegelScope.PF3_5 -> { it -> it.pf3_5.filterNotNull().associateWith { DURCHGEHEND } }
+            RegelScope.PF4 -> { w -> w.pf4?.let { mapOf(it to DURCHGEHEND) } ?: emptyMap() }
+            RegelScope.PF4_5 -> { w ->
+                buildMap { w.pf4?.let { put(it, DURCHGEHEND) }; w.pf5?.let { put(it, DURCHGEHEND) } }
+            }
+            RegelScope.PF5 -> { w -> w.pf3?.let { mapOf(it to DURCHGEHEND) } ?: emptyMap() }
+        }
+
+    protected fun toString(vararg fields: String?) =
+        fields.asList().plus(arrayOf(desc.named("desc"), errorMsg.named("errorMsg"))).filterNotNull().joinToString(prefix = "${this::class.simpleName}(", postfix = ")")
+
+    override fun toString(): String = toString(null)
 }

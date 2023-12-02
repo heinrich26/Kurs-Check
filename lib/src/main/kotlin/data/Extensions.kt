@@ -26,3 +26,8 @@ var PDField.checked: Boolean
 
 fun Color.transparentise(value: Float): Color = Color(red, green, blue, (255*value).toInt())
 fun Color.transparentise(value: Int): Color = Color(red, green, blue, value)
+
+/**
+ * Returns a String like "[name]=`name.value`" or `null` if [name] is `null`
+ */
+fun Any?.named(name: String): String? = this?.let { "$name=$it" }

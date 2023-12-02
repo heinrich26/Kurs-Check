@@ -23,7 +23,7 @@ package com.kurswahlApp.data
 @Suppress("unused")
 class KonfliktRegel(private val wildcard: String, desc: String? = null, errorMsg: String? = null): Regel(desc, errorMsg) {
     override fun match(data: KurswahlData): Boolean {
-        val wmoegls = (data.kurse.mapNotNull { if (it.key in wCardScope) it.value else null }).toMutableList()
+        val wmoegls = data.kurse.mapNotNull { if (it.key in wildcardMembers) it.value else null }.toMutableList()
         while (wmoegls.size > 1) {
             val wmoegl1 = wmoegls.removeFirst()
 
@@ -39,9 +39,11 @@ class KonfliktRegel(private val wildcard: String, desc: String? = null, errorMsg
         return true
     }
 
-    private lateinit var wCardScope: List<Fach>
+    private lateinit var wildcardMembers: List<Fach>
 
     override fun fillData(data: FachData) {
-        wCardScope = data.wildcards[wildcard]!!
+        wildcardMembers = data.wildcards[wildcard]!!
     }
+
+    override fun toString(): String = toString(wildcard.named("wildcard"))
 }

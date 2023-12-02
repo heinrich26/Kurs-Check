@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022  Hendrik Horstmann
+ * Copyright (c) 2023  Hendrik Horstmann
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,26 +15,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.kurswahlApp.gui
+package com.kurswahlApp.data
 
-import com.kurswahlApp.data.Fach
-import java.awt.Component
-import javax.swing.DefaultListCellRenderer
-import javax.swing.JList
+/**
+ * Regel die erfüllt ist, sofern [regel] nicht erfüllt wird. (inverse)
+ *
+ * **Wichtig:** es ist nicht gesagt, dass diese Regel besonders gut mit den (komplexeren) anderen funktioniert.
+ */
+@Suppress("unused")
+class NotRegel(private val regel: Regel, desc: String?, errorMsg: String?) : Regel(desc, errorMsg) {
+    override fun match(data: KurswahlData): Boolean = !regel.match(data)
 
+    override fun fillData(data: FachData) = regel.fillData(data)
 
-object FachRenderer : DefaultListCellRenderer() {
-    override fun getListCellRendererComponent(
-        list: JList<*>?,
-        value: Any?,
-        index: Int,
-        isSelected: Boolean,
-        cellHasFocus: Boolean
-    ): Component? = super.getListCellRendererComponent(
-        list,
-        if (value is Fach) value.name else "Ungesetzt",
-        index,
-        isSelected,
-        cellHasFocus
-    )
+    override fun toString(): String = toString(regel.named("regel"))
 }

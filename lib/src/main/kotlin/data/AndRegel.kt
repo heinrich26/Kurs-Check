@@ -17,10 +17,10 @@
 
 package com.kurswahlApp.data
 
-@Suppress("unused")
 /**
- * Regel, die erfüllt wird beiden der assoziierten Regeln erfüllt sind.
+ * Regel, die erfüllt wird, wenn beide der assoziierten Regeln erfüllt sind.
  */
+@Suppress("unused")
 class AndRegel(private val regel1: Regel, private val regel2: Regel, desc: String? = null, errorMsg: String? = null) : Regel(desc, errorMsg) {
     override fun match(data: KurswahlData): Boolean = regel1.match(data) && regel2.match(data)
 
@@ -29,5 +29,5 @@ class AndRegel(private val regel1: Regel, private val regel2: Regel, desc: Strin
         regel2.fillData(data)
     }
 
-    override fun toString(): String = "AndRegel(regel1=${regel1}, regel2=${regel2})"
+    override fun toString(): String = toString(regel1.named("regel1"), regel2.named("regel2"))
 }

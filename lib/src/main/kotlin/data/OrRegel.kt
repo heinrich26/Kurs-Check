@@ -29,5 +29,5 @@ class OrRegel(private val regel1: Regel, private val regel2: Regel, desc: String
         regel2.fillData(data)
     }
 
-    override fun toString(): String = "OrRegel(regel1=${regel1}, regel2=${regel2})"
+    override fun toString(): String = toString(regel1.named("regel1"), regel2.named("regel2"))
 }

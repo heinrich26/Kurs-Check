@@ -23,5 +23,10 @@ enum class RegelScope {
     @JsonProperty("1-2") LK1_2,
     @JsonProperty("1-4") PF1_4,
     @JsonProperty("1-5") PF1_5,
+    @JsonProperty("3") PF3,
+    @JsonProperty("3-4") PF3_4,
+    @JsonProperty("3-5") PF3_5,
+    @JsonProperty("4") PF4,
+    @JsonProperty("4-5") PF4_5,
     @JsonProperty("5") PF5
 }

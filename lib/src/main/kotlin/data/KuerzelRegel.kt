@@ -30,14 +30,7 @@ class KuerzelRegel(
     private val predicate: (Wahlmoeglichkeit) -> Boolean =
         if (wann == null) { it -> (it.n >= anzahl) } else { it -> (it.n >= anzahl && wann in it) }
 
-    private val dataScope: (KurswahlData) -> Map<Fach, Wahlmoeglichkeit> =
-        when (scope) {
-            null -> { it -> it.kurse }
-            RegelScope.PF1_4 -> { it -> it.pf1_4.filterNotNull().associateWith { Wahlmoeglichkeit.DURCHGEHEND } }
-            RegelScope.PF1_5 -> { it -> it.pfs.filterNotNull().associateWith { Wahlmoeglichkeit.DURCHGEHEND } }
-            RegelScope.PF5 -> { it -> if (it.pf5 == null) emptyMap() else mapOf(it.pf5!! to Wahlmoeglichkeit.DURCHGEHEND) }
-            RegelScope.LK1_2 -> { it -> it.lks.filterNotNull().associateWith { Wahlmoeglichkeit.DURCHGEHEND } }
-        }
+    private val dataScope: (KurswahlData) -> Map<Fach, Wahlmoeglichkeit> = super.getScope(scope)
 
     private lateinit var target: Fach
 
@@ -58,5 +51,5 @@ class KuerzelRegel(
     }
 
     override fun toString(): String =
-        "KürzelRegel(kürzel=$kuerzel, anzahl=$anzahl${if (wann != null) ", wann=$wann" else ""}${if (scope != null) ", scope=$scope" else ""}${if (desc != null) ", desc=$desc" else ""}${if (errorMsg != null) ", errorMsg=$errorMsg" else ""})"
+        toString(kuerzel.named("kuerzel"), anzahl.named("anzahl"), wann.named("wann"), scope.named("scope"))
 }
