@@ -35,6 +35,7 @@
             "kuerzel": "s3",
             "aufgabenfeld": 1,
             "isFremdsprache": true,
+            "isLk": true,
             "lusdId": 4526
         },
         {
@@ -170,6 +171,7 @@
             "name": "Kreatives Schreiben",
             "kuerzel": "ks",
             "aufgabenfeld": -1,
+            "isExtra": true,
             "lusdId": 4505,
             "infoText": "Erstes Halbjahr<br>Ziele: Schreibhemmungen abbauen, Themen finden, Urteilskraft schärfen; Stilmittel und Schreibtechniken kennen lernen (z.B.: Figurenreden, Beschreibungen, Erzählweise (personal etc.)); einen erweiterten Textbegriff vermitteln (Film, Bild etc.); eigene Texte in verschiedenen Genres schreiben, Foto – Text – Kombinationen suchen; eine lebendige Sprache finden; Schreibentscheidungen reflektieren und begründen<ul><li>Einleitung<\/li><li>Bewertungskriterien<\/li><li>Lyrik: Imitation und Variation; Cut-off-Technik<\/li><li>Prosa: surrealistische Schreibtechniken; Kurze Prosatexte & Romanauszüge: Leerstellen füllen<\/li><li>Schreiblektorat: (gemeinsame) Verbesserungen und Arbeiten an Handlungsführung und Stil<\/li><li>Bilder, Fotos und Filme zu Texten produzieren: Foto- Text- Projekt: Vorstellung verschiedener Verfahren: Barock, Brecht (Kriegsfibel), Tucholsky (Deutschland über alles), Sebald, Shapton...<\/li><li>Einleitung in die Fotografie<\/li><li>„Ich“: Porträt / Selbstporträt und Texte; alternative Themen möglich<\/li><li>Vorbereitung einer Ausstellung mit einzelnen Foto – Text – Produktionen:<\/li><li>Evtl. Besuch der Slam-Poetry-Meisterschaften im Grips-Theater, Lesungen im Literaturhaus, Theaterbesuch<\/li><li>Vorbereitung einer Leseperformance (hier nicht nur Texte, sondern auch Hörproben, Bilder, Filme etc.!) (Klausurersatzleistung)<\/li><\/ul>Zweites Halbjahr<br>Ziele: Literarische Öffentlichkeit kennen lernen, Literatur präsentieren können, Layout, Blogs und Online-Literatur, Autoren kennenlernen<ul><li>Präsentation einer Leseperformance / Auswertung<\/li><li>Gestaltung eines literarischen Buches / Heftes, Blogs (Klausurersatzleistung)<\/li><li>literarische Schreibblogs im Internet, Hypertexte<\/li><li>“Comment”: Online – Blog- und Performanceprojekt (sofern Finanzierung gegeben) s. www.comment.lettretage.de<\/li><\/ul>"
         },
@@ -193,12 +195,13 @@
             "kuerzel": "pd",
             "aufgabenfeld": -1,
             "nurIn": "3-4",
-            "lusdId": 453
+            "lusdId": 4597
         },
         {
             "name": "Textiles Gestalten",
-            "kuerzel": "zr",
+            "kuerzel": "zk",
             "aufgabenfeld": -1,
+            "isExtra": true,
             "lusdId": 4506,
             "infoText": "In dem Kurs <i>Textiles Gestalten<\/i> geht es um die Auseinandersetzung mit dem textilen Material. Dieses wird einerseits von der handwerklichen Seite her betrachtet, andererseits von der künstlerischen Seite.<br>Der Schwerpunkt liegt auf der praktischen Arbeit mit dem Material, es werden aber auch theoretische Kenntnisse vermittelt. Das Erlernen grundlegender textiler Techniken, wie Nähen, Sticken, Häkeln, Stricken usw. ist ein wichtiger Teil des Kurses.<br>Im ersten Semester beschäftigen wir uns mit Mode und Modedesign, den angewandten Bereichen der textilen Gestaltung. Im ersten Semester wird eine zweistündige Klausur geschrieben.<br>Im zweiten Semester geht es um das <i>Textile<\/i> in der bildenden Kunst. Wir untersuchen textile Kunstwerke und setzen eigenständig textile Werke in die Tat um. Innerhalb des zweiten Semesters gibt es ein klausurersetzendes Projekt.<br>Es werden keine vorhandenen Fertigkeiten in den textilen Techniken vorausgesetzt, allerdings sollte der Wille diese zu erlernen und dafür auch etwas Zeit zu investieren, vorhanden sein. (El)"
         },
@@ -214,6 +217,7 @@
             "name": "Big Band",
             "kuerzel": "ba",
             "aufgabenfeld": -1,
+            "isExtra": true,
             "lusdId": 4503,
             "infoText": "Im Ensemblekurs liegt der Schwerpunkt auf dem praktischen Musizieren.<br>Neben der Förderung musikalischer Fähigkeiten hat der dreistündige Ensemblekurs vor allem auch die Entwicklung sozialer Kompetenz zum Ziel und verlangt von den Schülerinnen und Schülern darüber hinaus ausgeprägtes Engagement (Teilnahme an Aufführungen auch außerhalb der Unterrichtszeit).<br> Für die Musikpraxis sind zwei Drittel der Unterrichtszeit vorgesehen (Probenteilnahme), das verbleibende Drittel dient der praxisbezogenen theoretischen Auseinandersetzung und bildet die Grundlage der Klausur bzw. einer Klausurersatzleistung in Form von bewertetem Vorspiel plus Reflexion oder auch einer Projektarbeit.<br> Für den Kursunterricht bieten sich inhaltlich an:<ul><li>Fragen der Erarbeitung und Präsentation von Musik (Probentechnik, Aufführungspraxis)<\/li><li>Erstellen eigener Arrangements<\/li><li>melodische Improvisation<\/li><li>Aufbau von Repertoirekenntnis<\/li><li>Planung, Durchführung und Reflexion von Aufführungen (Si)<\/li><\/ul>"
         },
@@ -222,6 +226,7 @@
             "kuerzel": "zr",
             "aufgabenfeld": -1,
             "lusdId": 4504,
+            "isExtra": true,
             "infoText": "Wie konnte das Christentum zu einer Religion werden, die 32 Prozent der gesamten Weltbevölkerung ausmacht?<br>Wir begeben uns in diesem Kurs zu den Anfängen des Christentums, werden die zeitgeschichtlichen Ereignisse der Kirche nachvollziehen und uns mit Entscheidungen, Konflikten und Diskursen auseinandersetzen.<br>Wir durchsuchen die Geschichte und die Musik nach christlichen Einflüssen und nähern uns einer Antwort auf die Frage: „Wie konnte das Christentum so erfolgreich sein?“ (Hr)"
         },
         {
