@@ -132,18 +132,28 @@ class FachData(
     }
 
     /**
+     * Bereitet einen [ObjectMapper][com.fasterxml.jackson.databind.ObjectMapper]
+     * für's laden von [KurswahlData]-JSON vor.
+     */
+    private fun getMapper() = jacksonObjectMapper().also {
+        it.injectableValues = InjectableValues.Std().addValue(FachDataMirror::class.java, FachDataMirror(this))
+    }
+
+    /**
      * Läd eine Kurswahl-Datei als [KurswahlData]
-     * Die kompatibilität beider Dateiein kann nicht garantiert werden,
-     * bei unübereinstimmung der [schulId] wird eine [IllegalArgumentException] ausgegeben!
+     * Die Kompatibilität beider Dateiein kann nicht garantiert werden,
+     * bei Unübereinstimmen der [schulId] wird eine [IllegalArgumentException] ausgegeben!
      */
     @Throws(IOException::class, StreamReadException::class, DatabindException::class, IllegalArgumentException::class)
-    fun loadKurswahl(file: File): KurswahlData {
-        val mapper = jacksonObjectMapper()
-        val injectables = InjectableValues.Std()
-        injectables.addValue(FachDataMirror::class.java, FachDataMirror(this))
-        mapper.injectableValues = injectables
-        return mapper.readValue<KurswahlData>(file)
-    }
+    fun loadKurswahl(file: File): KurswahlData = getMapper().readValue<KurswahlData>(file)
+
+    /**
+     * Läd einen String als [KurswahlData]
+     * Die Kompatibilität beider Dateiein kann nicht garantiert werden,
+     * bei Unübereinstimmen der [schulId] wird eine [IllegalArgumentException] ausgegeben!
+     */
+    @Throws(IOException::class, StreamReadException::class, DatabindException::class, IllegalArgumentException::class)
+    fun loadKurswahl(s: String): KurswahlData = getMapper().readValue<KurswahlData>(s)
 
     /** Erstellt eine leere Kurswahl mit Standardwerten gesetzt! */
     fun createKurswahl(schulId: String): KurswahlData =

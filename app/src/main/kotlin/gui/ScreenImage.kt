@@ -21,8 +21,6 @@ import java.awt.Component
 import java.awt.Container
 import java.awt.Rectangle
 import java.awt.image.BufferedImage
-import java.io.File
-import java.io.IOException
 import javax.imageio.ImageIO
 import javax.swing.JComponent
 
@@ -62,9 +60,8 @@ import javax.swing.JComponent
  *
  *  See: [Original Source](https://tips4java.wordpress.com/2008/10/13/screen-image/)
  */
-@Suppress("MemberVisibilityCanBePrivate", "unused")
+@Suppress("MemberVisibilityCanBePrivate")
 object ScreenImage {
-    private val types = ImageIO.getWriterFileSuffixes().toList()
 
     /**
      *  Create a [BufferedImage] for Swing components.
@@ -117,37 +114,11 @@ object ScreenImage {
         return image
     }
 
-    /**
-     * Write a [BufferedImage] to a File.
-     *
-     * @param     image image to be written
-     * @param     fileName name of file to be created
-     * @exception IOException if an error occurs during writing
-     */
-    @Throws(IOException::class)
-    fun writeImage(image: BufferedImage?, fileName: String?) {
-        if (fileName == null) return
-        val offset = fileName.lastIndexOf(".")
-        if (offset == -1) {
-            val message = "file suffix was not specified"
-            throw IOException(message)
-        }
-        val type = fileName.substring(offset + 1)
-        if (types.contains(type)) {
-            ImageIO.write(image, type, File(fileName))
-        } else {
-            val message = "unknown writer file suffix ($type)"
-            throw IOException(message)
-        }
-    }
-
     private fun layoutComponent(component: Component) {
         synchronized(component.treeLock) {
             component.doLayout()
             if (component is Container) {
-                for (child in component.components) {
-                    layoutComponent(child)
-                }
+                component.components.forEach(::layoutComponent)
             }
         }
     }

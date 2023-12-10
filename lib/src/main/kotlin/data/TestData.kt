@@ -18,7 +18,9 @@
 package com.kurswahlApp.data
 
 val testFachdata: FachData
-    get() = SchoolConfig.getSchool("wgg.json")!!
+    get() = SchoolConfig.getSchool("paulsen.json")!!
+
+const val testJsonString = """{"jsonVersion":"1.3","lk1":"ma","lk2":"in","pf3":"e1","pf4":"ek","pf5":"ph","pf5_typ":"praes","gks":{"de":"1-4","ku":"1-3","ge":"3-4","ch":"1-3","sp":"1-4","be":"1-2","tl":"1-2"},"fremdsprachen":{"e1":3,"f2":7},"wpfs":{"first":"in","second":"BioCh"},"klasse":null,"wahlzeile":29,"vorname":"Hendrik Sven","nachname":"Horstmann","geburtsdatum":"2005-09-27","geburtsort":"Berlin","staatsangehoerigkeit":"DE","schulId":"paulsen.json"}"""
 
 val testKurswahl: KurswahlData
-    get() = testFachdata.createKurswahl("wgg.json")
+    get() = testFachdata.loadKurswahl(testJsonString)

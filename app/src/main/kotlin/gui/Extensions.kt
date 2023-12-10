@@ -78,7 +78,13 @@ else "<$tag style=\"${styles.joinToString(";", postfix = ";")}\">$this</$tag>"
  */
 fun String.wrapTags(vararg tags: String): String = if (tags.isEmpty()) this
 else if (tags.size == 1) this.wrapHtml(tags[0])
-else this.wrapTags(*tags.takeLast(tags.size - 1).toTypedArray()).wrapHtml(tags[0])
+else this.wrapTags(*tags.drop(1).toTypedArray()).wrapHtml(tags[0])
+
+/** Wrapped einen String in `<b>...</b>` */
+fun String.bold() = "<b>$this</b>"
+
+/** Wrapped einen String in `<i>...</i>` */
+fun String.italic() = "<i>$this</i>"
 
 fun JComponent.addMouseListener(
     onClick: (e: MouseEvent) -> Unit = {},
@@ -127,6 +133,16 @@ fun Insets(x: Int = 0, y: Int = 0) = Insets(y, x, y, x)
  * @param       right   the inset from the right.
  */
 fun Insets(top: Int = 0, left: Int = 0, bottom: Int = 0, right: Int = 0) = java.awt.Insets(top, left, bottom, right)
+
+operator fun Insets.component1() = top
+operator fun Insets.component2() = left
+operator fun Insets.component3() = bottom
+operator fun Insets.component4() = right
+
+@Suppress("SSBasedInspection")
+infix fun Int.by(y: Int): Dimension = Dimension(this, y)
+operator fun Dimension.component1() = width
+operator fun Dimension.component2() = height
 
 fun Path2D.scale(sx: Double, sy: Double): Shape = createTransformedShape(AffineTransform.getScaleInstance(sx, sy))
 

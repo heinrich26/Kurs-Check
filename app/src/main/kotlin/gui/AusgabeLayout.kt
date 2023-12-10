@@ -19,11 +19,9 @@ package com.kurswahlApp.gui
 
 
 import com.kurswahlApp.R
-import com.kurswahlApp.data.Fach
-import com.kurswahlApp.data.FachData
-import com.kurswahlApp.data.KurswahlData
+import com.kurswahlApp.data.*
 import java.awt.Color
-import java.awt.Dimension
+import java.awt.Font
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.time.LocalDate
@@ -37,18 +35,16 @@ import javax.swing.border.MatteBorder
 import javax.swing.border.TitledBorder
 
 class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBagLayout()) {
-    /* TODO Ausgabe sicher machen, sodass es keinen Overflow gibt!
-    class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) :
-        JPanel(VerticalLayout(alignment = VerticalLayout.LEFT)) {*/
     private val checkboxMap = mutableMapOf<Fach, Array<AusgabeCheckBox>>()
 
     init {
-        preferredSize = Dimension(614, 874) // Din A4
+        preferredSize = 614 by 874 // Din A4
         minimumSize = preferredSize
-        add(JLabel(R.getString("overview").wrapTags("html", "h2")), row = 0, column = 0, columnspan = 2)
+        add(JLabel(R.getString("overview")).apply { font = font.deriveFont(Font.BOLD, 18f) }, margin = Insets(left = 5, top = 5), anchor = GridBagConstraints.WEST)
 
 
-        val checkboxPanel = JPanel(GridBagLayout())
+        val checkboxPanel = JPanel(VerticalLayout(alignment = VerticalLayout.EQUAL))
+
         // fremdsprachen & wpfs holen
         val fs = wahlData.fremdsprachen.map { it.first }
         val wpfs = wahlData.wpfs
@@ -62,11 +58,11 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
             if (feld > 0 && feld != fach.aufgabenfeld) {
                 if (feldPanel != null)
                     checkboxPanel.add(
-                        feldPanel,
+                        feldPanel/*,
                         row = feld - 1,
                         column = 0,
                         fill = GridBagConstraints.BOTH,
-                        weightx = 1.0
+                        weightx = 1.0*/
                     )
                 feld = fach.aufgabenfeld
                 feldPanel = JPanel(GridBagLayout())
@@ -77,7 +73,7 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
             // if A: B else true == !A or B
             val cond: Boolean =
                 if (fach.isFremdsprache) fach in fs
-                else (!fach.brauchtWPF || (wpfs != null && (fach == wpfs.first || fach == wpfs.second)))
+                else (!fach.brauchtWPF || (wpfs != null && fach in wpfs))
             // cond == true -> wählbar, sonst versteckt
 
 
@@ -94,14 +90,21 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
                     }
             }
         }
-        checkboxPanel.add(feldPanel!!, row = 5, column = 0, fill = GridBagConstraints.BOTH, weightx = 1.0)
+        checkboxPanel.add(feldPanel!!/*, row = 5, column = 0, fill = GridBagConstraints.BOTH, weightx = 1.0*/)
 
         for ((gk, choice) in wahlData.gks) { // auch für wahlData.pfs
             val row = checkboxMap[gk]!!
             for ((k, isActive) in choice.bools.withIndex()) {
                 if (isActive) {
-                    row[k].style = AusgabeCheckBox.STYLE.NORMAL
+                    row[k].style = AusgabeCheckBox.STYLE.CHECKED
                 }
+            }
+        }
+
+        for ((fach, boxes) in checkboxMap.entries) {
+            if (fach.nurIn != Wahlmoeglichkeit.DURCHGEHEND) {
+                for ((box, b) in boxes.zip(fach.nurIn.bools))
+                    if (!b) box.style = AusgabeCheckBox.STYLE.UNAVAILABLE
             }
         }
 
@@ -122,78 +125,46 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
             box.style = AusgabeCheckBox.STYLE.PF5
         }
 
-        add(checkboxPanel, row = 1, column = 1, margin = Insets(4, 4, 4, 4))
+        add(checkboxPanel, row = 1, column = 0, margin = Insets(4, 4, 4, 4), fill = GridBagConstraints.BOTH, weightx = 1.0, weighty = 1.0)
 
 
         // Extrainformationen
         // Panel mit allen anderen Infos
-        feldPanel = JPanel(GridBagLayout())
-        feldPanel.border =
-            TitledBorder(RoundedBorder(8), R.getString("your_infos"))
+        feldPanel = JPanel().apply {
+            layout = BoxLayout(this, BoxLayout.Y_AXIS)
+            alignmentX = 0f
+            border = TitledBorder(RoundedBorder(8), R.getString("your_infos"))
+        }
+        feldPanel.add(JLabel("${R.getString("type_of_pk5")}: <b>${wahlData.pf5_typ.repr}</b>".wrapHtml()))
 
-        feldPanel.add(
-            JLabel("${R.getString("type_of_pk5")}: <b>${wahlData.pf5_typ.repr}</b> ".wrapHtml()),
-            row = 0,
-            column = 0,
-            anchor = GridBagConstraints.LINE_START
-        )
+        // Wahlzeile
+        feldPanel.add(JLabel("${R.getString("wahlzeile")}: <b>${wahlData.wahlzeile}</b>".wrapHtml()))
 
         // Eintrittsjahr
         Calendar.getInstance().let {
             val year = it[Calendar.YEAR].let { year ->
                 if (it.before(Calendar.Builder().setDate(year, Calendar.JULY, 1).build())) year else year + 1
             }
-            feldPanel!!.add(
-                JLabel(
-                    (year.toString().wrapHtml("h3", "text-align: center") +
-                            R.getString("entry_year_sek2")).wrapHtml()
-                ), row = 0, column = 1, rowspan = 2, margin = Insets(0, 8, 0, 0)
-            )
+            feldPanel!!.add(JLabel("${R.getString("entry_year_sek2")}: ${year.toString().bold()}".wrapHtml()))
         }
 
-        // Wahlzeile
+        feldPanel.add(JLabel("${R.getString("first_name")}: <b>${wahlData.vorname}</b>".wrapHtml()))
+
+        feldPanel.add(JLabel("${R.getString("last_name")}: <b>${wahlData.nachname}</b>".wrapHtml()))
+
         feldPanel.add(
-            JLabel("${R.getString("wahlzeile")}: <b>${wahlData.wahlzeile}</b>".wrapHtml()),
-            row = 1,
-            column = 0,
-            anchor = GridBagConstraints.LINE_START
+            JLabel("${R.getString("born")}: <b>${wahlData.geburtsdatum!!.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))}</b> in <b>${wahlData.geburtsort}</b>".wrapHtml())
         )
 
         feldPanel.add(
-            JLabel("${R.getString("first_name")}: <b>${wahlData.vorname}</b>".wrapHtml()),
-            row = 2,
-            column = 0,
-            anchor = GridBagConstraints.LINE_START
+            JLabel("${R.getString("nationality")}: <b>${wahlData.staatsangehoerigkeit}</b>".wrapHtml())
         )
 
-        feldPanel.add(
-            JLabel("${R.getString("last_name")}: <b>${wahlData.nachname}</b>".wrapHtml()),
-            row = 3,
-            column = 0,
-            anchor = GridBagConstraints.LINE_START
-        )
-
-        feldPanel.add(
-            JLabel("${R.getString("born")}: <b>${wahlData.geburtsdatum!!.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))}</b> in <b>${wahlData.geburtsort}</b>".wrapHtml()),
-            row = 4,
-            column = 0,
-            anchor = GridBagConstraints.LINE_START
-        )
-
-        feldPanel.add(
-            JLabel("${R.getString("nationality")}: <b>${wahlData.staatsangehoerigkeit}</b>".wrapHtml()),
-            row = 5,
-            column = 0,
-            anchor = GridBagConstraints.LINE_START
-        )
-
-
-        val infoPanel = JPanel()
-        infoPanel.layout = BoxLayout(infoPanel, BoxLayout.Y_AXIS)
-        infoPanel.add(feldPanel)
+        checkboxPanel.add(feldPanel)
 
         feldPanel = JPanel(GridBagLayout())
         feldPanel.border = TitledBorder(RoundedBorder(8), R.getString("course_count"))
+
 
         // Kursanzahlen
         val anzahlen = wahlData.countCourses()
@@ -202,12 +173,13 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
             feldPanel.add(JLabel("Q${i + 1}", JLabel.LEFT), row = i, column = 1, anchor = GridBagConstraints.WEST)
             feldPanel.add(JLabel("$n".wrapHtml("b", "font-size: 10px").wrapHtml()), row = i, column = 2)
         }
+
         feldPanel.add(JLabel("${R.getString("total")}   ", JLabel.LEFT), row = 4, column = 1, anchor = GridBagConstraints.WEST)
         feldPanel.add(JLabel("${anzahlen.sum()}".wrapHtml("b", "font-size: 10px").wrapHtml()), row = 4, column = 2)
+        checkboxPanel.add(feldPanel)
 
-        infoPanel.add(feldPanel)
 
-
+        // Unterschriftfeld
         feldPanel = JPanel(GridBagLayout())
         feldPanel.border = TitledBorder(RoundedBorder(8), R.getString("signature"))
         feldPanel.add(JLabel(LocalDate.now().format(DateTimeFormatter.ofPattern("d.M.yyyy"))).also {
@@ -216,11 +188,16 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
                 it.foreground = gray
             }
             it.font = it.font.deriveFont(12f)
-        }, fill = GridBagConstraints.HORIZONTAL, margin = Insets(8, 0, 0, 0), weightx = 1.0)
+        }, fill = GridBagConstraints.HORIZONTAL, margin = Insets(0, 0, 0, 0), weightx = 1.0)
 
-        infoPanel.add(Box.createVerticalStrut(24))
-        infoPanel.add(feldPanel)
+        checkboxPanel.add(Box.createVerticalStrut(4))
+        checkboxPanel.add(feldPanel)
+    }
 
-        add(infoPanel, row = 1, column = 2, anchor = GridBagConstraints.NORTH, margin = Insets(4, 0, 0, 0))
+    companion object {
+        @JvmStatic
+        fun main(args: Array<String>) {
+            KurswahlPanel.runTest(614, 874) { AusgabeLayout(testFachdata, testKurswahl) }
+        }
     }
 }

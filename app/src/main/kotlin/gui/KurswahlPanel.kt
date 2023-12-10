@@ -22,11 +22,9 @@ import com.kurswahlApp.data.Consts.PANEL_WIDTH
 import com.kurswahlApp.data.FachData
 import com.kurswahlApp.data.KurswahlData
 import org.intellij.lang.annotations.Language
-import java.awt.Dimension
 import java.awt.GridBagLayout
 import javax.swing.JFrame
 import javax.swing.JPanel
-import javax.swing.UIManager
 
 /**
  * Ein Panel mit Funktionalität für die KurswahlApp
@@ -46,25 +44,24 @@ abstract class KurswahlPanel(val wahlData: KurswahlData, val fachData: FachData,
     abstract val windowName: String
 
     init {
-        preferredSize = Dimension(PANEL_WIDTH, PANEL_HEIGHT)
+        preferredSize = PANEL_WIDTH by PANEL_HEIGHT
         isOpaque = false
     }
 
     companion object {
         @JvmStatic
-        fun runTest(gen: () -> KurswahlPanel) {
+        fun runTest(width: Int = PANEL_WIDTH, height: Int = PANEL_HEIGHT, gen: () -> JPanel) {
             try {
-                UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel")
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-            }
+                prepareUI()
+            } catch (_: Exception) {}
 
             val frame = JFrame()
             frame.contentPane = gen()
 
             frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-            frame.setSize(300, 300)
+            frame.setSize(width, height)
             frame.setLocationRelativeTo(null)
+            frame.isResizable = true
             frame.isVisible = true
         }
     }

@@ -20,28 +20,27 @@ package com.kurswahlApp.gui
 import com.kurswahlApp.gui.VerticalLayout.Companion.BOTH
 import com.kurswahlApp.gui.VerticalLayout.Companion.BOTTOM
 import com.kurswahlApp.gui.VerticalLayout.Companion.CENTER
+import com.kurswahlApp.gui.VerticalLayout.Companion.EQUAL
 import com.kurswahlApp.gui.VerticalLayout.Companion.LEFT
 import com.kurswahlApp.gui.VerticalLayout.Companion.RIGHT
 import com.kurswahlApp.gui.VerticalLayout.Companion.TOP
 import java.awt.*
 import kotlin.math.max
+import kotlin.math.roundToInt
 
 /**
  *
  * A vertical layout manager similar to [java.awt.FlowLayout].
- * Like [FlowLayout] components do not expand to fill available space except when the horizontal alignment
- * is [BOTH]
- * in which case components are stretched horizontally. Unlike [FlowLayout], components will not wrap to form another
- * column if there isn't enough space vertically. [VerticalLayout] can optionally anchor components to the top or bottom
+ * Like [FlowLayout] components do not expand to fill available space except
+ * when the horizontal alignment is [BOTH] or [EQUAL] in which case components
+ * are stretched horizontally. Unlike [FlowLayout]. Components will wrap to
+ * form another column if there isn't enough space vertically.
+ * [VerticalLayout] can optionally anchor components to the top or bottom
  * of the display area or center them between the top and bottom.
  *
- * Revision date 12th July 2001
- *
- * @author Colin Mummery  e-mail: colin_mummery@yahoo.com Homepage:www.kagi.com/equitysoft -
- * Based on `FlexLayout` in Java class libraries Vol 2 Chan/Lee Addison-Wesley 1998
  *
  * @property vgap An int value indicating the vertical seperation of the components
- * @property alignment An int value which is one of [RIGHT], [LEFT], [CENTER], [BOTH] for the horizontal alignment.
+ * @property alignment An int value which is one of [RIGHT], [LEFT], [CENTER], [BOTH], [EQUAL] for the horizontal alignment.
  * @property anchor An int value which is one of [TOP], [BOTTOM], [CENTER] indicating where the components are
  * to appear if the display area exceeds the minimum necessary.
  */
@@ -51,70 +50,152 @@ class VerticalLayout(
     private val anchor: Int = TOP
 ) : LayoutManager {
 
-    private fun layoutSize(parent: Container): Dimension {
-        val dim = Dimension(0, 0)
-        var d: Dimension
-        synchronized(parent.treeLock) {
-            val n = parent.componentCount
-            for (i in 0 until n) {
-                val c = parent.getComponent(i)
-                if (c.isVisible) {
-                    d = c.preferredSize
-                    dim.width = max(dim.width, d.width)
-                    dim.height += d.height
-                    if (i > 0) dim.height += vgap
-                }
-            }
+    private fun moveComponents(
+        target: Container, x: Int, y: Int, width: Int, height: Int,
+        rowStart: Int, rowEnd: Int
+    ): Int {
+        var curY = y
+        when (anchor) {
+            TOP -> curY += 0
+            CENTER -> curY += height / 2
+            BOTTOM -> curY += height
         }
-        val insets = parent.insets
-        dim.width += insets.left + insets.right
-        dim.height += insets.top + insets.bottom + vgap + vgap
-        return dim
+        for (m in (rowStart until rowEnd).map(target::getComponent).filter { it.isVisible }) {
+            val cx: Int = x + (width - m.width) / 2
+
+            m.setLocation(cx, curY)
+
+            curY += m.height + vgap
+        }
+        return width
     }
 
-    /**
-     * Lays out the container.
-     */
-    override fun layoutContainer(parent: Container) {
-        val insets = parent.insets
-        synchronized(parent.treeLock) {
-            val n = parent.componentCount
-            val pd = parent.size
-            var y = 0
-            //work out the total size
-            for (i in 0 until n) {
-                val c = parent.getComponent(i)
-                val d = c.preferredSize
-                y += d.height + vgap
-            }
-            y -= vgap //otherwise there's a vgap too many
-            //Work out the anchor paint
-            y =
-                if (anchor == TOP) insets.top else if (anchor == CENTER) (pd.height - y) / 2 else pd.height - y - insets.bottom
-            //do layout
-            for (i in 0 until n) {
-                val c = parent.getComponent(i)
-                val d = c.preferredSize
-                var x = insets.left
-                var wid = d.width
-                when (alignment) {
-                    CENTER -> x =
-                        (pd.width - d.width) / 2
-                    RIGHT -> x =
-                        pd.width - d.width - insets.right
-                    BOTH -> wid =
-                        pd.width - insets.left - insets.right
+    private fun columns(target: Container): Map<Int, Int> = buildMap {
+        synchronized(target.treeLock) {
+            val maxHeight = target.height - (target.insets.let { it.top + it.bottom })
+            var x = 0
+            val y0 = target.insets.top
+            var y = y0
+            var colW = 0
+            var start = 0
+            for ((i, m) in target.components.withIndex().filter { it.value.isVisible }) {
+                val d = m.preferredSize
+                if (y == y0 || y + d.height <= maxHeight) {
+                    if (y > 0) {
+                        y += vgap
+                    }
+                    y += d.height
+                    colW = max(colW, d.width)
+                } else {
+                    put(start, colW)
+                    start = i
+                    x += vgap + colW
+                    y = d.height
+                    colW = d.width
                 }
-                c.setBounds(x, y, wid, d.height)
-                y += d.height + vgap
             }
+            put(start, colW)
         }
     }
 
+    override fun layoutContainer(target: Container) {
+        synchronized(target.treeLock) {
+            val (top, left, bottom, right) = target.insets
+            var x = 0
+            var y = top
+            if (alignment == BOTH || alignment == EQUAL) {
+                val columns = columns(target).let {
+                    if (alignment == BOTH) {
+                        val f = (target.size.width - left - right - (it.size - 1) * vgap).toDouble() / (it.values.sum())
+                        it.mapValues { (_, v) -> (v * f).roundToInt() }
+                    } else {
+                        val w = (target.size.width - left - right - (it.size - 1) * vgap) / it.size
+                        it.mapValues { w }
+                    }
+                }
 
-    override fun minimumLayoutSize(parent: Container): Dimension = layoutSize(parent)
+                var colW = 0
+                for ((i, c) in target.components.withIndex().filter { it.value.isVisible }) {
+                    if (i in columns) {
+                        x += colW
+                        if (i != 0) x += vgap
+                        y = top
+                        colW = columns[i]!!
+                    }
+                    val prefHeight = c.preferredSize.height
+                    c.setBounds(x, y, colW, prefHeight)
+                    y += prefHeight + vgap
+                }
 
-    override fun preferredLayoutSize(parent: Container): Dimension = layoutSize(parent)
+
+                return
+            }
+            val maxheight = target.height - (top + bottom + vgap * 2)
+            var colw = 0
+            var start = 0
+            for ((i, m) in target.components.withIndex().filter { it.value.isVisible }) {
+                val d = m.preferredSize
+                m.setSize(d.width, d.height)
+                if (y == top || y + d.height <= maxheight) {
+                    if (y > 0) {
+                        y += vgap
+                    }
+                    y += d.height
+                    colw = max(colw, d.width)
+                } else {
+                    colw = moveComponents(
+                        target, x, top,
+                        colw, maxheight - y, start, i
+                    )
+                    x += vgap + colw
+                    y = d.height
+                    colw = d.width
+                    start = i
+                }
+            }
+            moveComponents(
+                target, x, top, colw, maxheight - y,
+                start, target.componentCount
+            )
+        }
+    }
+
+    override fun minimumLayoutSize(target: Container): Dimension {
+        synchronized(target.treeLock) {
+            val dim = 0 by 0
+            for (m in target.components.filter { it.isVisible }) {
+                val d = m.minimumSize
+                dim.width = max(dim.width, d.width)
+                dim.height = max(dim.height, d.height)
+
+            }
+            val insets = target.insets
+            dim.width += insets.left + insets.right
+            dim.height += insets.top + insets.bottom + vgap * 2
+            return dim
+        }
+    }
+
+    override fun preferredLayoutSize(target: Container): Dimension {
+        synchronized(target.treeLock) {
+            val dim = 0 by 0
+            var firstVisibleComponent = true
+            for (m in target.components.filter { it.isVisible }) {
+                val d = m.preferredSize
+                dim.width = max(dim.width, d.width)
+                if (firstVisibleComponent) {
+                    firstVisibleComponent = false
+                } else {
+                    dim.height += vgap
+                }
+                dim.height += d.height
+            }
+            val insets = target.insets
+            dim.width += insets.left + insets.right
+            dim.height += insets.top + insets.bottom + vgap * 2
+            return dim
+        }
+    }
 
     /**
      * Not used by this class
@@ -146,9 +227,16 @@ class VerticalLayout(
         const val LEFT = 2
 
         /**
-         * The horizontal alignment constant that designates stretching the component horizontally.
+         * The horizontal alignment constant that designates stretching
+         * the components horizontally.
          */
         const val BOTH = 3
+
+        /**
+         * The horizontal alignment constant that designats the stretching of all
+         * components equally along the horizontal axis.
+         */
+        const val EQUAL = 4
 
         /**
          * The anchoring constant that designates anchoring to the top of the display area

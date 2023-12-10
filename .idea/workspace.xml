@@ -15,24 +15,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="wahl-merger kann nun auch PDFs ausfüllen">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/app/Kurs-Check.app.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/drawables/error.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/drawables/reset.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/drawables/task_check.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/FilledRoundedBorder.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/ShapeIcon.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resource-generator/src/main/kotlin/a2c.kt" afterDir="false" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Ausgabelayout verschönert/repariert.">
+      <change afterPath="$PROJECT_DIR$/app/assets/drawables/checkbox_unavailable.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/common.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/kotlinScripting.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/remote-targets.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/remote-targets.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/assets/drawables/help.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/drawables/help.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GrundkursWahl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/AusgabeCheckBox.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/AusgabeCheckBox.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/AusgabeLayout.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/AusgabeLayout.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/ClickableDestionation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/ClickableDestionation.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Extensions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Extensions.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Overview.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Overview.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/RegelLabel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/RegelLabel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/resources/icons/check.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/resources/icons/cross.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource-generator/src/main/kotlin/SvgGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/resource-generator/src/main/kotlin/SvgGenerator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/HoverableIconButton.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/HoverableIconButton.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/KurswahlPanel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/KurswahlPanel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/ScreenImage.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/ScreenImage.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/VerticalLayout.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/VerticalLayout.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/resources/kursCheckStrings.properties" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/resources/kursCheckStrings.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/Consts.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/Consts.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/FachData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/SchoolConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/SchoolConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/data/TestData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/data/TestData.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,17 +65,7 @@
         </task>
         <projects_view>
           <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Kurs-Check" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Kurs-Check" type="f1a62948:ProjectNode" />
-                <item name="resource-generator" type="2d1252cf:ModuleNode" />
-              </path>
-            </expand>
+            <expand />
             <select />
           </tree_state>
         </projects_view>
@@ -122,6 +116,12 @@
   <component name="KotlinCodeInsightWorkspaceSettings">
     <option name="optimizeImportsOnTheFly" value="true" />
   </component>
+  <component name="KotlinScriptingSettings" supportWarning="false">
+    <scriptDefinition className="org.jetbrains.kotlin.idea.core.script.StandardIdeScriptDefinition" definitionName="Kotlin Script">
+      <order>2147483647</order>
+      <autoReloadConfigurations>true</autoReloadConfigurations>
+    </scriptDefinition>
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -136,6 +136,9 @@
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5
+}]]></component>
   <component name="ProjectId" id="296po7uV0AJaZ4AMNRrxxq4a7lI" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -155,8 +158,9 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-18&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Hendrik/Desktop/kurswahlApp/app/src/main/resources&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/Work Bloat/Kurs-Check&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -166,7 +170,7 @@
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.kotlinCompiler&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -252,7 +256,7 @@
   </component>
   <component name="RunManager" selected="Gradle.Run App (Win)">
     <configuration name="App Build (WSL)" type="GradleRunConfiguration" factoryName="Gradle">
-      <target name="WSL - Ubuntu-20.04" />
+      <target name="WSL - Ubuntu" />
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -271,7 +275,7 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="App Build (Win)" type="GradleRunConfiguration" factoryName="Gradle">
@@ -293,11 +297,11 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="Full Build (WSL)" type="GradleRunConfiguration" factoryName="Gradle">
-      <target name="WSL - Ubuntu-20.04" />
+      <target name="WSL - Ubuntu" />
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -316,7 +320,7 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="Full Build (Win)" type="GradleRunConfiguration" factoryName="Gradle">
@@ -338,11 +342,11 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="Full rpm Build (WSL)" type="GradleRunConfiguration" factoryName="Gradle">
-      <target name="WSL - Ubuntu-20.04" />
+      <target name="WSL - Ubuntu" />
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -361,7 +365,7 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="Project Build" type="GradleRunConfiguration" factoryName="Gradle">
@@ -383,11 +387,11 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="Run App (WSL)" type="GradleRunConfiguration" factoryName="Gradle">
-      <target name="WSL - Ubuntu-20.04" />
+      <target name="WSL - Ubuntu" />
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -406,7 +410,7 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="Run App (Win)" type="GradleRunConfiguration" factoryName="Gradle">
@@ -428,7 +432,7 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="generateResources" type="GradleRunConfiguration" factoryName="Gradle">
@@ -450,52 +454,17 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="kurswahlApp [:resource-generator:processVectors]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":resource-generator:processVectors" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
-      <method v="2" />
-    </configuration>
-    <configuration name="kurswahlApp [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="clean" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
-      <method v="2" />
+    <configuration name="AusgabeLayout" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.kurswahlApp.gui.AusgabeLayout" />
+      <module name="Kurs-Check.app.main" />
+      <target name="WSL - Ubuntu" />
+      <shortenClasspath name="NONE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration name="GeneratorKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.kurswahlApp.GeneratorKt" />
@@ -559,6 +528,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestingKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.kurswahlApp.gui.TestingKt" />
+      <module name="Kurs-Check.app.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Gradle.App Build (Win)" />
       <item itemvalue="Gradle.App Build (WSL)" />
@@ -569,27 +545,41 @@
       <item itemvalue="Gradle.Project Build" />
       <item itemvalue="Gradle.Run App (WSL)" />
       <item itemvalue="Gradle.generateResources" />
-      <item itemvalue="Gradle.kurswahlApp [clean]" />
-      <item itemvalue="Gradle.kurswahlApp [:resource-generator:processVectors]" />
       <item itemvalue="Kotlin.Main w. testData" />
       <item itemvalue="Kotlin.Main w. testData (WSL)" />
       <item itemvalue="Kotlin.Main" />
       <item itemvalue="Kotlin.Main (WSL)" />
+      <item itemvalue="Kotlin.AusgabeLayout" />
+      <item itemvalue="Kotlin.TestingKt" />
       <item itemvalue="Kotlin.GeneratorKt" />
       <item itemvalue="Kotlin.GuiMain" />
       <item itemvalue="Kotlin.MainKt" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Kotlin.AusgabeLayout" />
+        <item itemvalue="Kotlin.TestingKt" />
         <item itemvalue="Kotlin.GeneratorKt" />
         <item itemvalue="Kotlin.MainKt" />
         <item itemvalue="Kotlin.GuiMain" />
-        <item itemvalue="Gradle.kurswahlApp [:resource-generator:processVectors]" />
-        <item itemvalue="Gradle.kurswahlApp [clean]" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="StructuralSearchPlugin">
+    <replaceConfiguration name="$Type$($Parameter1$, $Parameter2$)" created="1702213196483" uuid="17513432-9de1-3705-8708-4b1302e84a3a" text="$Type$($Parameter1$, $Parameter2$)" recursive="false" caseInsensitive="false" type="Kotlin" pattern_context="default" reformatAccordingToStyle="true" shortenFQN="true" replacement="$Parameter1$ ExtensionsKt.by $Parameter2$" history="1">
+      <constraint name="__context__" within="" contains="" />
+      <constraint name="Parameter1" within="" contains="" />
+      <constraint name="Parameter2" within="" contains="" />
+      <constraint name="Type" regexp="java.awt.Dimension" within="" contains="" />
+    </replaceConfiguration>
+    <replaceConfiguration name="$Type$($Parameter1$, $Parameter2$)" created="1702213196484" uuid="17513432-9de1-3705-8708-4b1302e84a3a" text="$Type$($Parameter1$, $Parameter2$)" recursive="false" caseInsensitive="false" type="Kotlin" pattern_context="default" reformatAccordingToStyle="true" shortenFQN="true" replacement="$Parameter1$ by $Parameter2$" history="1">
+      <constraint name="__context__" within="" contains="" />
+      <constraint name="Parameter1" within="" contains="" />
+      <constraint name="Parameter2" within="" contains="" />
+      <constraint name="Type" regexp="java.awt.Dimension" within="" contains="" />
+    </replaceConfiguration>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="anfang mit visualizer für kurswahl" />
@@ -683,6 +673,10 @@
       <workItem from="1684341162043" duration="4988000" />
       <workItem from="1684354160052" duration="483000" />
       <workItem from="1684354657504" duration="7142000" />
+      <workItem from="1701546138015" duration="1055000" />
+      <workItem from="1701558574857" duration="260000" />
+      <workItem from="1701895824394" duration="17781000" />
+      <workItem from="1702213184636" duration="10000000" />
     </task>
     <task id="LOCAL-00078" summary="icon als vektorgrafik hinzugefügt">
       <created>1656254711192</created>
@@ -1027,7 +1021,7 @@
       <option name="project" value="LOCAL" />
       <updated>1679240251580</updated>
     </task>
-    <option name="localTasksCounter" value="127" />
+    <option name="localTasksCounter" value="128" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1035,6 +1029,16 @@
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.wxs" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -1049,8 +1053,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Code-Cleanup bei den MouseListenern" />
-    <MESSAGE value="Maximalzahl Kurse/Semester hinzugefügt, Bugs beim Speichern behoben und Kurse, die nicht zusammen gewählt werden können in der KurswahlData.kt implementiert - TODO: Visualisierung" />
     <MESSAGE value="Versuch die Nutzung von TLSv1 zu erlauben, damit die Software im Schulnetzwerk läuft" />
     <MESSAGE value="Anpassung des 5.PFs an Regeln u. Limitierung von Kursen pro Semester" />
     <MESSAGE value="Svg nach Swing-GeneralPath Converter hinzugefügt und Hilfe-Icon erstellt" />
@@ -1074,7 +1076,9 @@
     <MESSAGE value="Merge remote-tracking branch 'origin/master'" />
     <MESSAGE value="Hoffentlicher Build für openSUSE" />
     <MESSAGE value="wahl-merger kann nun auch PDFs ausfüllen" />
-    <option name="LAST_COMMIT_MESSAGE" value="wahl-merger kann nun auch PDFs ausfüllen" />
+    <MESSAGE value="Gradle Build repariert" />
+    <MESSAGE value="Ausgabelayout verschönert/repariert." />
+    <option name="LAST_COMMIT_MESSAGE" value="Ausgabelayout verschönert/repariert." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

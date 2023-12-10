@@ -73,11 +73,14 @@ object SchoolConfig {
     private const val CONFIG_FOLDER_URL = CONFIG_SERVER_URL + "schools/"
     private val CONFIG_FILE_URL = URL(CONFIG_SERVER_URL + "per-school-settings.json")
 
-    private val LOCAL_CONFIG_DIR = when (val os = System.getProperty("os.name").lowercase()) {
-        in os -> System.getenv("AppData")
-        in os -> System.getProperty("user.home") + "/Library/Preferences"
-        else -> System.getProperty("user.home")
-    }!! + "/.kurs-check"
+    private val LOCAL_CONFIG_DIR = System.getProperty("os.name").lowercase().let {
+        when {
+            "win" in it -> System.getenv("AppData")
+            "nix" in it || "nux" in it || "aix" in it -> System.getProperty("user.home")
+            "mac" in it -> System.getProperty("user.home") + "/Library/Preferences"
+            else -> System.getProperty("user.home")
+        }!! + "/.kurs-check"
+    }
 
     private val LOCAL_SCHOOLS_DIR = "$LOCAL_CONFIG_DIR/schools/"
     private val LOCAL_MAIN_CONFIG = "$LOCAL_CONFIG_DIR/per-school-settings.json"

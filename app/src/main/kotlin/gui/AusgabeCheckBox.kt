@@ -17,13 +17,17 @@
 
 package com.kurswahlApp.gui
 
+import com.kurswahlApp.R
 import com.kurswahlApp.data.Consts.CHECKBOX_CHECKED
 import com.kurswahlApp.data.Consts.CHECKBOX_LK
 import com.kurswahlApp.data.Consts.CHECKBOX_PF3
 import com.kurswahlApp.data.Consts.CHECKBOX_PF4
 import com.kurswahlApp.data.Consts.CHECKBOX_PF5
 import com.kurswahlApp.data.Consts.RENDERING_HINTS
-import java.awt.*
+import java.awt.BasicStroke
+import java.awt.Color
+import java.awt.Graphics
+import java.awt.Graphics2D
 import java.awt.geom.RoundRectangle2D
 import javax.swing.JComponent
 
@@ -36,7 +40,7 @@ class AusgabeCheckBox(style: STYLE = STYLE.UNCHECKED) : JComponent() {
 
     init {
         isOpaque = false
-        preferredSize = Dimension(24, 24)
+        preferredSize = 24 by 24
         minimumSize = preferredSize
     }
 
@@ -46,17 +50,18 @@ class AusgabeCheckBox(style: STYLE = STYLE.UNCHECKED) : JComponent() {
         g2.addRenderingHints(RENDERING_HINTS)
 
         if (style == STYLE.UNCHECKED) {
-            g2.color = Color(139, 139, 139)
+            g2.color = UNCHECKED_COLOR
             g2.stroke = BasicStroke(1.5f)
             g2.draw(RoundRectangle2D.Double(1.0, 1.0, 22.0, 22.0, 9.0, 9.0))
         } else {
-            g2.color = Color(0, 103, 192)
+            g2.color = if (style == STYLE.UNAVAILABLE) UNCHECKED_COLOR else CHECKED_COLOR
             g2.fill(
                 when (style) {
-                    STYLE.NORMAL -> CHECKBOX_CHECKED
+                    STYLE.CHECKED -> CHECKBOX_CHECKED
                     STYLE.LK -> CHECKBOX_LK
                     STYLE.PF3 -> CHECKBOX_PF3
                     STYLE.PF4 -> CHECKBOX_PF4
+                    STYLE.UNAVAILABLE -> R.checkbox_unavailable
                     else /*PF5*/ -> CHECKBOX_PF5
                 }
             )
@@ -64,6 +69,11 @@ class AusgabeCheckBox(style: STYLE = STYLE.UNCHECKED) : JComponent() {
     }
 
     enum class STYLE {
-        UNCHECKED, NORMAL, LK, PF3, PF4, PF5
+        UNCHECKED, UNAVAILABLE, CHECKED, LK, PF3, PF4, PF5
+    }
+
+    companion object {
+        private val UNCHECKED_COLOR = Color(139, 139, 139)
+        private val CHECKED_COLOR = Color(0, 103, 192)
     }
 }

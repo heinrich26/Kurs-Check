@@ -27,7 +27,6 @@ import com.kurswahlApp.data.*
 import com.kurswahlApp.data.Consts.APP_ICONS
 import com.kurswahlApp.data.Consts.APP_NAME
 import com.kurswahlApp.data.Consts.FILETYPE_EXTENSION
-import com.kurswahlApp.data.Consts.FONT_NAME
 import com.kurswahlApp.data.Consts.HOME_POLY
 import com.kurswahlApp.data.Consts.PANEL_WIDTH
 import com.kurswahlApp.data.Consts.PERSON_ICON
@@ -38,7 +37,9 @@ import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
 import kotlinx.cli.default
 import kotlinx.cli.optional
-import java.awt.*
+import java.awt.Dimension
+import java.awt.GridBagConstraints
+import java.awt.GridBagLayout
 import java.awt.event.ComponentAdapter
 import java.awt.event.ComponentEvent
 import java.awt.event.ComponentListener
@@ -51,7 +52,6 @@ import javax.swing.border.EmptyBorder
 import javax.swing.event.AncestorEvent
 import javax.swing.event.AncestorListener
 import javax.swing.event.HyperlinkEvent
-import javax.swing.plaf.FontUIResource
 import javax.swing.text.html.HTMLEditorKit
 import kotlin.concurrent.thread
 import kotlin.reflect.KClass
@@ -146,34 +146,7 @@ class GuiMain(file: File? = null) : JPanel() {
 
             // System UI verwenden
             try {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
-
-                val ge = GraphicsEnvironment.getLocalGraphicsEnvironment()
-                arrayOf("Bold", "BoldItalic", "Italic", "Regular").forEach {
-                    ge.registerFont(
-                        Font.createFont(
-                            Font.TRUETYPE_FONT,
-                            getResourceURL("FiraSans-$it.ttf")!!.openStream()
-                        )
-                    )
-                }
-
-                val defaults = UIManager.getLookAndFeelDefaults()
-                // Font Hack
-                for ((key, value) in defaults) {
-                    if (key is String && key.endsWith(".font")) {
-                        // Hack für WindowsLookAndFeel
-                        if (value is UIDefaults.ActiveValue) {
-                            val val2 = value.createValue(defaults)
-                            if (val2 is FontUIResource) {
-                                defaults[key] = FontUIResource(FONT_NAME, val2.style, 13)
-                            }
-                        } else if (value is FontUIResource) {
-                            // Hack für den Standard LookAndFeel
-                            defaults[key] = FontUIResource(FONT_NAME, value.style, 13)
-                        }
-                    }
-                }
+                prepareUI()
             } catch (_: Exception) {}
 
             SwingUtilities.invokeLater { createAndShowGUI(input, useTestData) }
@@ -191,7 +164,7 @@ class GuiMain(file: File? = null) : JPanel() {
             else if (file != null) GuiMain(File(file))
             else GuiMain()
 
-            frame.minimumSize = Dimension(720, 640)
+            frame.minimumSize = 720 by 640
             // Anzeigen.
             frame.pack()
             frame.setLocationRelativeTo(null)
@@ -213,7 +186,7 @@ class GuiMain(file: File? = null) : JPanel() {
 
     // Nav Bar Logik
     private val sidebar = JPanel(GridBagLayout()).apply {
-        this.preferredSize = Dimension(SIDEBAR_SIZE, 0)
+        this.preferredSize = SIDEBAR_SIZE by 0
     }
 
     private val sidebarBtns = arrayOf(
@@ -379,7 +352,7 @@ class GuiMain(file: File? = null) : JPanel() {
             }
         }
 
-        pane.preferredSize = Dimension(500, 400)
+        pane.preferredSize = 500 by 400
 
         // Wartet dass der Dialog angezeigt wird und scrollt dann nach oben.
         pane.addAncestorListener(object : AncestorListener {
@@ -686,7 +659,7 @@ class GuiMain(file: File? = null) : JPanel() {
 
         schoolList.cellRenderer = SchoolRenderer()
         val pane = JScrollPane(schoolList)
-        pane.preferredSize = Dimension(242, 298)
+        pane.preferredSize = 242 by 298
 
         schoolList.fixedCellHeight = 56
 
@@ -707,7 +680,7 @@ class GuiMain(file: File? = null) : JPanel() {
         var result = -1
 
         val okBtn = JButton(R.getString("ok"))
-        val btnDim = Dimension(100, 25)
+        val btnDim = 100 by 25
         okBtn.preferredSize = btnDim
         okBtn.addActionListener {
             result = JOptionPane.OK_OPTION

@@ -18,7 +18,6 @@
 package com.kurswahlApp.gui
 
 import com.kurswahlApp.data.Consts
-import java.awt.Dimension
 import javax.swing.JComponent
 import javax.swing.JOptionPane
 
@@ -41,7 +40,7 @@ open class ClickableDestionation(
         }
 
     init {
-        Dimension(Consts.SIDEBAR_SIZE, Consts.SIDEBAR_SIZE).let {
+        (Consts.SIDEBAR_SIZE by Consts.SIDEBAR_SIZE).let {
             minimumSize = it
             preferredSize = it
         }

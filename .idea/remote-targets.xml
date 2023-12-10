@@ -15,6 +15,7 @@
         <ContributedStateBase type="JavaLanguageRuntime">
           <config>
             <option name="homePath" value="/usr" />
+            <option name="javaVersionString" value="17" />
           </config>
         </ContributedStateBase>
       </target>

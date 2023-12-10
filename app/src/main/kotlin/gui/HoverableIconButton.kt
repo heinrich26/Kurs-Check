@@ -18,7 +18,10 @@
 package com.kurswahlApp.gui
 
 import com.kurswahlApp.data.Consts
-import java.awt.*
+import java.awt.Color
+import java.awt.Graphics
+import java.awt.Graphics2D
+import java.awt.Shape
 import java.awt.geom.AffineTransform
 import javax.swing.JComponent
 
@@ -47,7 +50,7 @@ class HoverableIconButton(shape: Shape,
     private val realSize = targetSize ?: iconSize
     private val shape = (realSize / iconSize.toDouble()).let { AffineTransform.getScaleInstance(it, it).createTransformedShape(shape) }
     init {
-        Dimension(realSize, realSize).let {
+        (realSize by realSize).let {
             minimumSize = it
             preferredSize = it
         }
