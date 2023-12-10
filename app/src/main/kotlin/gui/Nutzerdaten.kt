@@ -20,8 +20,6 @@ package com.kurswahlApp.gui
 import com.github.lgooddatepicker.components.DatePicker
 import com.github.lgooddatepicker.components.DatePickerSettings
 import com.kurswahlApp.data.Consts
-import com.kurswahlApp.data.Consts.MAX_ALTER
-import com.kurswahlApp.data.Consts.MIN_ALTER
 import com.kurswahlApp.data.FachData
 import com.kurswahlApp.data.KurswahlData
 import org.intellij.lang.annotations.Language
@@ -74,9 +72,12 @@ class Nutzerdaten(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean
             setFormatForDatesBeforeCommonEra("dd.MM.uuuu")
             LocalDate.now().let {
                 geburtsdatumPicker.date = LocalDate.of(it.year - 15, 1, 1)
-                it.year.let { year -> if (it.isBefore(LocalDate.of(year, 7, 1))) year else year + 1 }
+                if (it.isBefore(LocalDate.of(it.year, 7, 1))) it.year else it.year + 1
             }.let {
-                setDateRangeLimits(LocalDate.of(it - MAX_ALTER, 7, 1), LocalDate.of(it - MIN_ALTER, 6, 30))
+                setDateRangeLimits(
+                    LocalDate.of(it - Consts.MAX_ALTER, 7, 1),
+                    LocalDate.of(it - Consts.MIN_ALTER, 6, 30)
+                )
             }
         }
 
@@ -115,7 +116,11 @@ class Nutzerdaten(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean
         nachnameEntry.document.addDocumentListener(docListener)
         geburtsortEntry.document.addDocumentListener(docListener)
         geburtsdatumPicker.componentDateTextField.document.addDocumentListener(docListener)
-        staatsangehoerigkeitPicker.addItemListener { if (it.stateChange == ItemEvent.SELECTED) notifier.invoke(isDataValid())}
+        staatsangehoerigkeitPicker.addItemListener {
+            if (it.stateChange == ItemEvent.SELECTED) notifier.invoke(
+                isDataValid()
+            )
+        }
 
         add(container)
 
@@ -136,7 +141,8 @@ class Nutzerdaten(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean
     }
 
     @Language("HTML")
-    override fun showHelp(): String ="<h2>$windowName</h2><p>Hier musst du deine eigenen Daten eingeben! Das kriegst du doch hin, oder?</p>"
+    override fun showHelp(): String =
+        "<h2>$windowName</h2><p>Hier musst du deine eigenen Daten eingeben! Das kriegst du doch hin, oder?</p>"
 
     override val windowName: String
         get() = "Persönliche Daten"
@@ -211,7 +217,12 @@ class Nutzerdaten(wahlData: KurswahlData, fachData: FachData, notifier: (Boolean
 
 
         object CountryRenderer : DefaultListCellRenderer() {
-            private val names = Locale.getISOCountries().associateWith { Locale("", it).displayCountry }
+            private fun readResolve(): Any = CountryRenderer
+
+            private val names = Locale.getDefault().language.let { lang ->
+                COUNTRY_CODES.associateWith { Locale(lang, it).displayCountry }
+            }
+
             override fun getListCellRendererComponent(
                 list: JList<*>?, value: Any?, index: Int, isSelected: Boolean, cellHasFocus: Boolean
             ): Component = super.getListCellRendererComponent(
