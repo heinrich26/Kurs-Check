@@ -13,6 +13,10 @@ on:
         required: true
         # The data type of the input
         type: string
+      commit:
+        description: 'Commit SHA des Runs mit den hochzuladenen Artefakten'
+        default: "${{github.event.pull_request.head.sha}}"
+        type: string
 
 jobs:
   # This workflow contains a single job called "greet"
@@ -28,6 +32,7 @@ jobs:
           workflow: gradle-build.yml
           workflow_conclusion: success
           name: application
+          commit: ${{inputs.commit}}
       - name: Release erstellen
         uses: marvinpinto/action-automatic-releases@v1.2.1
         with:
@@ -35,7 +40,7 @@ jobs:
           automatic_release_tag: "latest"
           prerelease: false
           draft: true
-          title: "${{ inputs.title || null }}"
+          title: ${{ inputs.title || null }}
           files: |
             full/*.*
             basic/*.*
