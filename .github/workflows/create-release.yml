@@ -1,35 +1,39 @@
-# This is a basic workflow that is manually triggered
-
-name: Manual workflow
+name: Draft-Release erstellen
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
 on:
   workflow_dispatch:
-    # Inputs the workflow accepts.
     inputs:
-      name:
-        # Friendly description to be shown in the UI instead of 'name'
-        description: 'Person to greet'
+      title:
+        description: 'Release Titel'
         # Default value if no value is explicitly provided
-        default: 'World'
+        default: ''
         # Input has to be provided for the workflow to run
         required: true
         # The data type of the input
         type: string
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "greet"
-  greet:
+  release:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Runs a single command using the runners shell
-    - name: Send greeting
-      run: echo "Hello ${{ inputs.name }}"
-              - name: Automatic Releases
-                uses: marvinpinto/action-automatic-releases@v1.2.1
+      - uses: actions/download-artifact@v3
+        with:
+          name: application
+      - name: Release erstellen
+        uses: marvinpinto/action-automatic-releases@v1.2.1
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: false
+          draft: true
+          title: "${{ inputs.title || null }}"
+          files: |
+            full/*.*
+            basic/*.*
             
