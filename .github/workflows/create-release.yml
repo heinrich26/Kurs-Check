@@ -22,8 +22,11 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: dawidd6/action-download-artifact@v3
         with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          workflow: gradle-build.yml
+          workflow_conclusion: success
           name: application
       - name: Release erstellen
         uses: marvinpinto/action-automatic-releases@v1.2.1
