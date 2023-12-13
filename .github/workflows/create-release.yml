@@ -15,7 +15,7 @@ on:
         type: string
       commit:
         description: 'Commit SHA des Runs mit den hochzuladenen Artefakten'
-        default: "${{github.event.pull_request.head.sha}}"
+        default: ${{github.event.pull_request.head.sha}}
         type: string
 
 jobs:
