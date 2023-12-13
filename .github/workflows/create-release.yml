@@ -15,7 +15,7 @@ on:
         type: string
       commit:
         description: 'Commit SHA des Runs mit den hochzuladenen Artefakten'
-        default: ${{github.event.pull_request.head.sha}}
+        default: ''
         type: string
 
 jobs:
@@ -28,11 +28,11 @@ jobs:
     steps:
       - uses: dawidd6/action-download-artifact@v3
         with:
-          github_token: ${{secrets.GITHUB_TOKEN}}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           workflow: gradle-build.yml
           workflow_conclusion: success
           name: application
-          commit: ${{inputs.commit}}
+          commit: ${{ inputs.commit || github.event.pull_request.head.sha }}
       - name: Release erstellen
         uses: marvinpinto/action-automatic-releases@v1.2.1
         with:
