@@ -354,7 +354,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
             )
-        scrollPane.preferredSize = Dimension(275, 350)
+        scrollPane.preferredSize = 275 by 350
         scrollPane.verticalScrollBar.unitIncrement = 16
         add(scrollPane, row = 0, column = 0, columnspan = 2, margin = Insets(bottom = 6))
 
@@ -394,7 +394,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         regelPanel.add(kursanzahlInfoLabel)
 
         val scrollPane2 = JScrollPane(regelPanel)
-        scrollPane2.preferredSize = Dimension(200, 350)
+        scrollPane2.preferredSize = 200 by 350
 
         add(scrollPane2, row = 0, column = 2, margin = Insets(left = 8, bottom = 6))
 
@@ -421,7 +421,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                 margin = Insets(left = 4)
             )
 
-            Dimension(JCheckBox().preferredSize.width, q1AnzahlLabel.preferredSize.height).let {
+            (JCheckBox().preferredSize.width by q1AnzahlLabel.preferredSize.height).let {
                 q1AnzahlLabel.preferredSize = it
                 q2AnzahlLabel.preferredSize = it
                 q3AnzahlLabel.preferredSize = it
@@ -496,16 +496,17 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         }
 
         // Blockt Fremdsprachen die in Klasse 9+ begonnen wurden
-        for ((sprache, jahr) in wahlData.fremdsprachen) {
+
+        wahlData.fremdsprachen[1].let { (sprache, jahr) ->
             if (jahr >= 9) {
-                // TODO bei Klasse 10 Belegungsverpflichtung für künstlerisches Fach entfernen
                 checkboxRows[fachPos(sprache)]!!.apply(
-                    if (fachData.schultyp.jahre - 2 == jahr) DURCHGEHEND else ERSTES_ZWEITES,
+                    if (fachData.schultyp == Schultyp.GYMNASIUM || jahr != 9) DURCHGEHEND else ERSTES_ZWEITES,
                     true
                 )
-
             }
         }
+        // TODO korrekte Bedingungen für Sekundarschulen implementieren (§10 Fremdsprachenunterricht)
+        // TODO bei Klasse 10 Belegungsverpflichtung für künstlerisches Fach entfernen
     }
 
     private fun fachPos(fach: Fach) = fachData.faecher.indexOf(fach)

@@ -18,7 +18,10 @@
 package com.kurswahlApp.gui
 
 import com.kurswahlApp.R
-import com.kurswahlApp.data.*
+import com.kurswahlApp.data.FachData
+import com.kurswahlApp.data.KurswahlData
+import com.kurswahlApp.data.testFachdata
+import com.kurswahlApp.data.testKurswahl
 import org.intellij.lang.annotations.Language
 import java.awt.Component
 import java.awt.GridBagConstraints
@@ -230,26 +233,24 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
     }
 
 
-    override fun close(): KurswahlData {
-        val sprachen: MutableList<Pair<Fach, Int>> =
-            mutableListOf(fs1.selectedItem!! to fsJahr1.number as Int, fs2.selectedItem!! to fsJahr2.number as Int)
-        fs3.selectedItem.let { sel ->
-            if (sel != null) {
-                sprachen.add(sel to fsJahr3.number as Int)
-                fs4.selectedItem.let { if (it != null) sprachen.add(it to fsJahr4.number as Int) }
+    override fun close(): KurswahlData = wahlData.updateWahlfaecher(
+        fremdsprachenNew = buildList(4) {
+            add(fs1.selectedItem!! to fsJahr1.number as Int)
+            add(fs2.selectedItem!! to fsJahr2.number as Int)
+            fs3.selectedItem?.let { fach ->
+                add(fach to fsJahr3.number as Int)
+                fs4.selectedItem?.let { add(it to fsJahr4.number as Int) }
             }
-        }
+        },
+        wpfsNew = wpf1.selectedItem!! to wpf2.selectedItem,
+        klasse = klasse.selectedItem as String?
+    )
 
-        return wahlData.updateWahlfaecher(
-            fremdsprachenNew = sprachen,
-            wpfsNew = wpf1.selectedItem!! to wpf2.selectedItem,
-            klasse = klasse.selectedItem as String?
-        )
-    }
-
-    override fun isDataValid(): Boolean {
-        return (fs1.selectedItem != null && fs2.selectedItem != null && wpf1.selectedItem != null && (!fachData.zweiWPFs || wpf2.selectedItem != null))
-    }
+    override fun isDataValid(): Boolean =
+        fs1.selectedItem != null &&
+                fs2.selectedItem != null &&
+                wpf1.selectedItem != null &&
+                (!fachData.zweiWPFs || wpf2.selectedItem != null)
 
     @Language("HTML")
     override fun showHelp(): String =
