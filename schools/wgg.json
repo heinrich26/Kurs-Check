@@ -696,37 +696,14 @@
 		}
 	},
 	"wildcards": {
-		"$AF2": [
-			"Ge",
-			"PW",
-			"Geo"
-		],
+		"$AF2": [ "Ge", "PW", "Geo" ],
 		// Kurse aus dem Aufgabenfeld 2
-		"$FS": [
-			"Fr",
-			"Spa",
-			"Lat",
-			"En"
-		],
-		"$NW": [
-			"Che",
-			"Phy",
-			"Bio"
-		],
-		"$Mu/Ku": [
-			"Mu",
-			"Ku"
-		],
+		"$FS": [ "Fr", "Spa", "Lat", "En" ],
+		"$NW": [ "Che", "Phy", "Bio" ],
+		"$Mu/Ku": [ "Mu", "Ku" ],
 		// Andere Wildcards (z.B. f. Regeln)
-		"$KF": [
-			"Mu",
-			"Ku",
-			"DS"
-		],
-		"$AF2ohneGE": [
-			"PW",
-			"Geo"
-		]
+		"$KF": [ "Mu", "Ku", "DS" ],
+		"$AF2ohneGE": [ "PW", "Geo" ]
 		// alle fächer aus AF2, außer Geschichte
 	},
 	// Grundkurse und Leistungskurse zusammen
