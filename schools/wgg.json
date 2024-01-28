@@ -310,13 +310,13 @@
 			"errorMsg": "Wähle Sport Theorie in Q3 & Q4!"
 		},
 		{
-			"type": "KonflikRegel",
+			"type": "KonfliktRegel",
 			"wildcard": "$Spa",
 			"desc": "Wähle höchstens Spanisch oder Spanisch Bili",
 			"errorMsg": "Wähle nur Spanisch oder Spanisch Bili!"
 		},
 		{
-			"type": "KonflikRegel",
+			"type": "KonfliktRegel",
 			"wildcard": "$PW",
 			"desc": "Wähle höchstens PW oder PW Bili",
 			"errorMsg": "Wähle nur PW oder PW Bili!"
