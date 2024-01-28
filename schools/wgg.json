@@ -253,8 +253,8 @@
 				"type": "OrRegel",
 				"regel1": {
 					// PW in Q3/Q4
-					"type": "KuerzelRegel",
-					"kuerzel": "PW",
+					"type": "WildcardRegel",
+					"kuerzel": "$PW",
 					"anzahl": 2,
 					"wann": "3-4"
 				},
