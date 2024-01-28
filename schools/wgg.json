@@ -78,6 +78,11 @@
 			"isLk": true
 		},
 		{
+			"name": "Politikwissenschaft Bili",
+			"kuerzel": "PWBi",
+			"aufgabenfeld": 2
+		},
+		{
 			"name": "Geografie",
 			"kuerzel": "Geo",
 			"aufgabenfeld": 2,
@@ -320,6 +325,19 @@
 			"wildcard": "$PW",
 			"desc": "Wähle höchstens PW oder PW Bili",
 			"errorMsg": "Wähle nur PW oder PW Bili!"
+		},
+		{
+			"type": "IfThenRegel",
+			"regel1": {
+				"type": "KuerzelRegel",
+				"kuerzel": "PWBi"
+			},
+			"regel2": {
+				"type": "KuerzelRegel",
+				"kuerzel": "SpaBi"
+			},
+			"desc": "PW Bili kann nur in Kombination mit Spanisch LK belegt werden",
+			"errorMsg": "Du musst Spanisch LK belegen, wenn du PW Bili wählen möchtest!"
 		}
 	],
 	"wahlzeilen": {
