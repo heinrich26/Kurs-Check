@@ -25,6 +25,14 @@
 			"isFremdsprache": true
 		},
 		{
+			"name": "Spanisch",
+			"kuerzel": "SpaBi",
+			"aufgabenfeld": 1,
+			"isLk": true,
+			"isGk": false,
+			"nurFuer": ["Bili"]
+		},
+		{
 			"name": "Französisch",
 			"kuerzel": "Fr",
 			"aufgabenfeld": 1,
@@ -188,18 +196,11 @@
 		"Sp": "1-4"
 	},
 	"zweiWPFs": false,
-	"wpfs": [
-		"Inf",
-		"Lat",
-		"Fr",
-		"DS",
-		"GGP",
-		"BPC"
-	],
+	"wpfs": [ "Inf", "Lat", "Fr", "DS", "GGP", "BPC" ],
 	"regeln": [
 		{
 			"type": "WildcardRegel",
-			"wildcard": "$FS",
+			"wildcard": "$FSmBili",
 			"anzahl": 4,
 			"desc": "Eine Fremdsprache muss 4 Semester belegt werden",
 			"errorMsg": "Wähle eine Fremdsprache durchgehend!"
@@ -307,11 +308,23 @@
 			},
 			"desc": "Sport als PF -> zusätzlich Sport Theorie min. in Q3 & Q4",
 			"errorMsg": "Wähle Sport Theorie in Q3 & Q4!"
+		},
+		{
+			"type": "KonflikRegel",
+			"wildcard": "$Spa",
+			"desc": "Wähle höchstens Spanisch oder Spanisch Bili",
+			"errorMsg": "Wähle nur Spanisch oder Spanisch Bili!"
+		},
+		{
+			"type": "KonflikRegel",
+			"wildcard": "$PW",
+			"desc": "Wähle höchstens PW oder PW Bili",
+			"errorMsg": "Wähle nur PW oder PW Bili!"
 		}
 	],
 	"wahlzeilen": {
 		"1": {
-			"lk1": "$FS",
+			"lk1": "$FSohneSpa",
 			"lk2": "De",
 			"pf3": "$AF2",
 			"pf4": "Ma",
@@ -319,7 +332,7 @@
 			"linien": "keine"
 		},
 		"2": {
-			"lk1": "$FS",
+			"lk1": "$FSohneSpa",
 			"lk2": "De",
 			"pf3": "$AF2",
 			"pf4": "$NW",
@@ -327,7 +340,7 @@
 			"linien": "keine"
 		},
 		"3": {
-			"lk1": "$FS",
+			"lk1": "$FSohneSpa",
 			"lk2": "De",
 			"pf3": "$AF2",
 			"pf4": "Inf",
@@ -335,31 +348,31 @@
 			"linien": "keine"
 		},
 		"4": {
-			"lk1": "$FS",
-			"lk2": "$FS",
+			"lk1": "$FSohneSpa",
+			"lk2": "$FSohneSpa",
 			"pf3": "De",
 			"pf4": "$AF2",
 			"pf5": "$NW",
 			"linien": "gestrichelt"
 		},
 		"5": {
-			"lk1": "$FS",
-			"lk2": "$FS",
+			"lk1": "$FSohneSpa",
+			"lk2": "$FSohneSpa",
 			"pf3": "De",
 			"pf4": "$AF2",
 			"pf5": "Inf",
 			"linien": "gestrichelt"
 		},
 		"6": {
-			"lk1": "$FS",
-			"lk2": "$FS",
+			"lk1": "$FSohneSpa",
+			"lk2": "$FSohneSpa",
 			"pf3": "Ma",
 			"pf4": "$AF2",
 			"pf5": "*",
 			"linien": "gestrichelt"
 		},
 		"7": {
-			"lk1": "$FS",
+			"lk1": "$FSohneSpa",
 			"lk2": "$Mu/Ku",
 			"pf3": "De",
 			"pf4": "$AF2",
@@ -367,7 +380,7 @@
 			"linien": "gestrichelt"
 		},
 		"8": {
-			"lk1": "$FS",
+			"lk1": "$FSohneSpa",
 			"lk2": "$Mu/Ku",
 			"pf3": "De",
 			"pf4": "$AF2",
@@ -375,7 +388,7 @@
 			"linien": "gestrichelt"
 		},
 		"9": {
-			"lk1": "$FS",
+			"lk1": "$FSohneSpa",
 			"lk2": "$Mu/Ku",
 			"pf3": "Ma",
 			"pf4": "$AF2",
@@ -383,7 +396,7 @@
 			"linien": "gestrichelt"
 		},
 		"10": {
-			"lk1": "$FS",
+			"lk1": "$FSohneSpa",
 			"lk2": "$AF2",
 			"pf3": "De",
 			"pf4": "$NW",
@@ -391,7 +404,7 @@
 			"linien": "gestrichelt"
 		},
 		"11": {
-			"lk1": "$FS",
+			"lk1": "$FSohneSpa",
 			"lk2": "$AF2",
 			"pf3": "De",
 			"pf4": "Inf",
@@ -399,7 +412,7 @@
 			"linien": "gestrichelt"
 		},
 		"12": {
-			"lk1": "$FS",
+			"lk1": "$FSohneSpa",
 			"lk2": "$AF2",
 			"pf3": "Ma",
 			"pf4": "*",
@@ -407,7 +420,7 @@
 			"linien": "gestrichelt"
 		},
 		"13": {
-			"lk1": "$FS",
+			"lk1": "$FSohneSpa",
 			"lk2": "Ma",
 			"pf3": "$AF2",
 			"pf4": "*",
@@ -415,7 +428,7 @@
 			"linien": "gestrichelt"
 		},
 		"14": {
-			"lk1": "$FS",
+			"lk1": "$FSohneSpa",
 			"lk2": "$NW",
 			"pf3": "De",
 			"pf4": "$AF2",
@@ -423,7 +436,7 @@
 			"linien": "gestrichelt"
 		},
 		"15": {
-			"lk1": "$FS",
+			"lk1": "$FSohneSpa",
 			"lk2": "$NW",
 			"pf3": "Ma",
 			"pf4": "$AF2",
@@ -431,7 +444,7 @@
 			"linien": "gestrichelt"
 		},
 		"16": {
-			"lk1": "$FS",
+			"lk1": "$FSohneSpa",
 			"lk2": "Inf",
 			"pf3": "De",
 			"pf4": "AF2",
@@ -439,7 +452,7 @@
 			"linien": "gestrichelt"
 		},
 		"17": {
-			"lk1": "$FS",
+			"lk1": "$FSohneSpa",
 			"lk2": "Inf",
 			"pf3": "Ma",
 			"pf4": "$AF2",
@@ -693,18 +706,190 @@
 			"pf4": "$AF2",
 			"pf5": "*",
 			"linien": "gestrichelt"
+		},
+
+		// zusätzliche zu den Fremdsprachen
+		"513": {
+			"lk1": "SpaBi",
+			"lk2": "De",
+			"pf3": "PWBi",
+			"pf4": "Ma",
+			"pf5": "*",
+			"linien": "keine|durchgezogen"
+		},
+		"514": {
+			"lk1": "SpaBi",
+			"lk2": "De",
+			"pf3": "PWBi",
+			"pf4": "$NW",
+			"pf5": "*",
+			"linien": "keine|durchgezogen"
+		},
+		"515": {
+			"lk1": "SpaBi",
+			"lk2": "De",
+			"pf3": "PWBi",
+			"pf4": "Inf",
+			"pf5": "*",
+			"linien": "keine|durchgezogen"
+		},
+
+		"1025": {
+			"lk1": "SpaBi",
+			"lk2": "De",
+			"pf3": "PWBi",
+			"pf4": "*",
+			"pf5": "Ma",
+			"linien": "keine|durchgezogen"
+		},
+		"1026": {
+			"lk1": "SpaBi",
+			"lk2": "De",
+			"pf3": "PWBi",
+			"pf4": "*",
+			"pf5": "$NW",
+			"linien": "keine|durchgezogen"
+		},
+		"1027": {
+			"lk1": "SpaBi",
+			"lk2": "De",
+			"pf3": "PWBi",
+			"pf4": "*",
+			"pf5": "Inf",
+			"linien": "keine|durchgezogen"
+		},
+
+
+
+		"516": {
+			"lk1": "SpaBi",
+			"lk2": "$FSohneSpa",
+			"pf3": "De",
+			"pf4": "PWBi",
+			"pf5": "$NW",
+			"linien": "keine|durchgezogen"
+		},
+		"517": {
+			"lk1": "SpaBi",
+			"lk2": "$FSohneSpa",
+			"pf3": "De",
+			"pf4": "PWBi",
+			"pf5": "Inf",
+			"linien": "keine|durchgezogen"
+		},
+		"518": {
+			"lk1": "SpaBi",
+			"lk2": "$FSohneSpa",
+			"pf3": "Ma",
+			"pf4": "PWBi",
+			"pf5": "*",
+			"linien": "keine|durchgezogen"
+		},
+		"519": {
+			"lk1": "SpaBi",
+			"lk2": "$Mu/Ku",
+			"pf3": "De",
+			"pf4": "PWBi",
+			"pf5": "$NW",
+			"linien": "keine|durchgezogen"
+		},
+		"520": {
+			"lk1": "SpaBi",
+			"lk2": "$Mu/Ku",
+			"pf3": "De",
+			"pf4": "PWBi",
+			"pf5": "Inf",
+			"linien": "keine|durchgezogen"
+		},
+		"521": {
+			"lk1": "SpaBi",
+			"lk2": "$Mu/Ku",
+			"pf3": "Ma",
+			"pf4": "PWBi",
+			"pf5": "*",
+			"linien": "keine|durchgezogen"
+		},
+		"522": {
+			"lk1": "SpaBi",
+			"lk2": "$AF2ohnePW",
+			"pf3": "De",
+			"pf4": "PWBi",
+			"pf5": "$NW",
+			"linien": "keine|durchgezogen"
+		},
+		"523": {
+			"lk1": "SpaBi",
+			"lk2": "$AF2ohnePW",
+			"pf3": "De",
+			"pf4": "PWBi",
+			"pf5": "Inf",
+			"linien": "keine|durchgezogen"
+		},
+		"524": {
+			"lk1": "SpaBi",
+			"lk2": "$AF2ohnePW",
+			"pf3": "Ma",
+			"pf4": "PWBi",
+			"pf5": "*",
+			"linien": "keine|durchgezogen"
+		},
+		"525": {
+			"lk1": "SpaBi",
+			"lk2": "Ma",
+			"pf3": "PWBi",
+			"pf4": "*",
+			"pf5": "*",
+			"linien": "keine|durchgezogen"
+		},
+		"526": {
+			"lk1": "SpaBi",
+			"lk2": "$NW",
+			"pf3": "De",
+			"pf4": "PWBi",
+			"pf5": "*",
+			"linien": "keine|durchgezogen"
+		},
+		"527": {
+			"lk1": "SpaBi",
+			"lk2": "$NW",
+			"pf3": "Ma",
+			"pf4": "PWBi",
+			"pf5": "*",
+			"linien": "keine|durchgezogen"
+		},
+		"528": {
+			"lk1": "SpaBi",
+			"lk2": "Inf",
+			"pf3": "De",
+			"pf4": "PWBi",
+			"pf5": "*",
+			"linien": "keine|durchgezogen"
+		},
+		"529": {
+			"lk1": "SpaBi",
+			"lk2": "Inf",
+			"pf3": "Ma",
+			"pf4": "PWBi",
+			"pf5": "*",
+			"linien": "keine|durchgezogen"
 		}
 	},
 	"wildcards": {
-		"$AF2": [ "Ge", "PW", "Geo" ],
 		// Kurse aus dem Aufgabenfeld 2
+		"$AF2": [ "Ge", "PW", "PWBi", "Geo" ],
+		"$AF2ohnePW": [ "Ge", "Geo" ],
 		"$FS": [ "Fr", "Spa", "Lat", "En" ],
+		"$FSohneSpa": [ "Fr", "Lat", "En" ],
 		"$NW": [ "Che", "Phy", "Bio" ],
 		"$Mu/Ku": [ "Mu", "Ku" ],
+		
 		// Andere Wildcards (z.B. f. Regeln)
 		"$KF": [ "Mu", "Ku", "DS" ],
-		"$AF2ohneGE": [ "PW", "Geo" ]
 		// alle fächer aus AF2, außer Geschichte
+		"$AF2ohneGE": [ "PW", "PWBi", "Geo" ],
+		"$Spa": [ "Spa", "SpaBi" ],
+		"$PW": [ "PW", "PWBi" ],
+		"$FSmBili": [ "Fr", "Spa", "SpaBi", "Lat", "En" ]
 	},
 	// Grundkurse und Leistungskurse zusammen
 	"minKurse": 40,
