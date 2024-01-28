@@ -254,15 +254,13 @@
 				"regel1": {
 					// PW in Q3/Q4
 					"type": "WildcardRegel",
-					"kuerzel": "$PW",
+					"wildcard": "$PW",
 					"anzahl": 2,
 					"wann": "3-4"
 				},
 				"regel2": {
 					// ein anderes Fach aus AF2 für 4 Semester
-					/* es gibt nur ein weiteres Fach aus AF2: Erdkunde, deshalb kann die Wildcard Regel durch die KürzelRegel ersetzt werden
-					"type": "WildcardRegel",
-					"wildcard": "$AF2ohneGE",*/
+					// es gibt nur ein weiteres Fach aus AF2: Erdkunde, deshalb kann die Wildcard Regel durch die KürzelRegel ersetzt werden
 					"type": "KuerzelRegel",
 					"kuerzel": "Geo",
 					"anzahl": 4
