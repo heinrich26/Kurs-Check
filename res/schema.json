@@ -220,8 +220,8 @@
 						"description": "Zu welchem Aufgabenfeld das Fach gehört. 0, wenn kein Aufgabenfeld gegeben ist (Sport), -1 bei Zusatzkursen",
 						"examples": [ ]
 					},
-					// Optionale Parameter
-					// Muss nur gesetzt werden wenn ein anderer Wert als der default Wert gewünscht ist!
+
+					
 					"isFremdsprache": {
 						"type": "boolean",
 						"default": false,
