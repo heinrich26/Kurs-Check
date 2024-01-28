@@ -19,17 +19,15 @@ package com.kurswahlApp.gui
 
 import com.fasterxml.jackson.databind.DatabindException
 import com.fasterxml.jackson.databind.InjectableValues
-import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.kurswahlApp.*
+import com.kurswahlApp.R
 import com.kurswahlApp.data.*
 import com.kurswahlApp.data.Consts.APP_ICONS
 import com.kurswahlApp.data.Consts.APP_NAME
 import com.kurswahlApp.data.Consts.FILETYPE_EXTENSION
-import com.kurswahlApp.data.Consts.HOME_POLY
 import com.kurswahlApp.data.Consts.PANEL_WIDTH
-import com.kurswahlApp.data.Consts.PERSON_ICON
 import com.kurswahlApp.data.Consts.SIDEBAR_SIZE
 import com.kurswahlApp.data.Consts.TEST_FILE_NAME
 import com.kurswahlApp.github_status.GithubStatus
@@ -95,7 +93,7 @@ class GuiMain(file: File? = null) : JPanel() {
     /**
      * Fordert den Nutzer auf eine Schule zu wählen
      */
-    private fun showSchoolChooser(initial: Boolean = true) {
+    private fun showSchoolChooser(@Suppress("SameParameterValue") initial: Boolean = true) {
         chooseSchool()?.let {
             // die Auswahl hat sich nicht geändert
             if (it == currentSchool) return
@@ -105,9 +103,7 @@ class GuiMain(file: File? = null) : JPanel() {
             } catch (e: Exception) {
                 e.printStackTrace()
                 // Die Konfiguration war inkompatibel mit der Version von Kurs-Check/ist ungültig.
-                showLoadingError()
-                showSchoolChooser(false)
-                return
+                null
             }
 
             if (data != null) {
@@ -119,7 +115,7 @@ class GuiMain(file: File? = null) : JPanel() {
                 if (!initial) reloadToStart()
             } else {
                 showLoadingError()
-                exitProcess(0)
+                if (initial) exitProcess(0)
             }
 
         } // der Nutzer hat die Auswahl abgebrochen
@@ -190,12 +186,12 @@ class GuiMain(file: File? = null) : JPanel() {
     }
 
     private val sidebarBtns = arrayOf(
-        PolyIcon(PERSON_ICON, false) { navTo(Nutzerdaten::class, 0) },
+        PolyIcon(R.person, false) { navTo(Nutzerdaten::class, 0) },
         FsWpfIcon { navTo(Fremdsprachen::class, 1) },
         SidebarLabel("LKs") { navTo(Leistungskurse::class, 2) },
         PfPkIcon { navTo(Pruefungsfaecher::class, 3) },
         SidebarLabel("GKs") { navTo(GrundkursWahl::class, 4) },
-        PolyIcon(HOME_POLY, true) { navTo(Overview::class, 5) }).apply {
+        PolyIcon(R.home, true) { navTo(Overview::class, 5) }).apply {
         this.forEachIndexed { i, dest ->
             sidebar.add(dest, row = i, anchor = GridBagConstraints.SOUTH, weighty = if (i == 5) 1.0 else 0.0)
         }
@@ -288,23 +284,6 @@ class GuiMain(file: File? = null) : JPanel() {
 
         add(unvollstaendigeEingabeLabel, row = 2, column = 2, anchor = GridBagConstraints.CENTER)
 
-//        val resetButton = JButton(R.getString("reset"))
-//        resetButton.isFocusable = false
-//        resetButton.addActionListener {
-//            if (JOptionPane.showConfirmDialog(
-//                    this,
-//                    R.getString("ask_reset"),
-//                    "${R.getString("reset")}?",
-//                    JOptionPane.YES_NO_OPTION
-//                ) == JOptionPane.YES_OPTION
-//            ) {
-//                wahlData = fachData.createKurswahl(currentSchool!!.schulId)
-//                reloadToStart()
-//            }
-//        }
-//
-//        add(resetButton, row = 2, column = 2, anchor = GridBagConstraints.EAST, margin = Insets(4))
-
 
         chooseSchoolButton.addMouseListener(onEnter = { chooseSchoolButton.text = "\u2190 Schule wechseln" },
             onExit = { chooseSchoolButton.text = currentSchool!!.name })
@@ -329,7 +308,7 @@ class GuiMain(file: File? = null) : JPanel() {
      */
     @Suppress("CssUnknownProperty", "CssInvalidPropertyValue")
     private fun showHelp() {
-        val content = JEditorPane("text/html", "<html><body><h1><a name='top'>Kurs-Check Hife</a></h1>${curPanel.showHelp()}</body></html>")
+        val content = JEditorPane("text/html", /*language=html*/ "<html><body><h1><a name='top'>Kurs-Check Hife</a></h1>${curPanel.showHelp()}</body></html>")
         val pane = JScrollPane(content, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER)
 
         content.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, true)
@@ -432,7 +411,7 @@ class GuiMain(file: File? = null) : JPanel() {
                     R.getString("bad_file"),
                     JOptionPane.ERROR_MESSAGE
                 )
-            } catch (e: MissingKotlinParameterException) {
+            } catch (e: MismatchedInputException) {
                 JOptionPane.showMessageDialog(
                     this,
                     R.getString("cannot_read_alert"),

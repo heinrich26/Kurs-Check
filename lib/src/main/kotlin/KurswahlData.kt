@@ -48,7 +48,7 @@ typealias WPFs = Pair<Fach, Fach?>?
 @Suppress("PropertyName")
 @JsonAppend(attrs = [JsonAppend.Attr(value = "jsonVersion")], prepend = true)
 @JsonIncludeProperties(
-    "jsonVersion", "lk1", "lk2", "pf3", "pf4", "pf5", "pf5_typ", "gks", "fremdsprachen", "wpfs", "klasse",
+    "jsonVersion", "lk1", "lk2", "pf3", "pf4", "pf5", "pf5Typ", "gks", "fremdsprachen", "wpfs", "klasse",
     "wahlzeile", "vorname", "nachname", "geburtsdatum", "geburtsort", "staatsangehoerigkeit", "schulId"
 )
 data class KurswahlData(
@@ -57,11 +57,11 @@ data class KurswahlData(
     var pf3: Fach? = null,
     var pf4: Fach? = null,
     var pf5: Fach? = null,
-    var pf5_typ: Pf5Typ = Pf5Typ.PRAESENTATION,
+    var pf5Typ: Pf5Typ = Pf5Typ.PRAESENTATION,
     var gks: Map<Fach, Wahlmoeglichkeit>,
     @get:JsonSerialize(using = ListOfPairSerializer::class) var fremdsprachen: List<Pair<Fach, Int>> = emptyList(),
     var wpfs: WPFs = null,
-    var wahlzeile: Int = -1,
+    var wahlzeile: WahlzeileNummer = WahlzeileNummer(-1),
     val klasse: String? = null,
     val pflichtfaecher: Map<Fach, Wahlmoeglichkeit>,
 
@@ -89,12 +89,12 @@ data class KurswahlData(
             @JsonProperty pf3: String,
             @JsonProperty pf4: String,
             @JsonProperty pf5: String,
-            @JsonProperty pf5_typ: Pf5Typ,
+            @JsonProperty @JsonAlias("pf5_typ") pf5Typ: Pf5Typ,
             @JsonProperty gks: Map<String, Wahlmoeglichkeit>,
             @JsonProperty fremdsprachen: Map<String, Int>,
             @JsonProperty wpfs: Pair<String, String?>,
             @JsonProperty klasse: String?,
-            @JsonProperty wahlzeile: Int,
+            @JsonProperty wahlzeile: WahlzeileNummer,
             @JsonProperty vorname: String,
             @JsonProperty nachname: String,
             @JsonProperty
@@ -116,7 +116,7 @@ data class KurswahlData(
                 pf3 = fachData.faecherMap[pf3],
                 pf4 = fachData.faecherMap[pf4],
                 pf5 = fachData.faecherMap[pf5],
-                pf5_typ = pf5_typ,
+                pf5Typ = pf5Typ,
                 gks = gks.mapKeys { fachData.faecherMap.getValue(it.key) },
                 fremdsprachen = fremdsprachen.map { fachData.faecherMap.getValue(it.key) to it.value },
                 wpfs = fachData.faecherMap[wpfs.first]?.let { it to fachData.faecherMap[wpfs.second] },
@@ -255,9 +255,7 @@ data class KurswahlData(
     /**
      * Hebt den gelockten Zustand wieder auf
      */
-    fun unlock() {
-        locked = false
-    }
+    fun unlock() { locked = false }
 
     /**
      * Überprüft ob die Wahl exportiert werden kann und wenn nicht,
@@ -287,15 +285,15 @@ data class KurswahlData(
         this.copy(lk1 = lk1, lk2 = lk2, gks = gks.filterKeys { it != lk1 && it != lk1 }).apply {
             if (pf3 == lk1 || pf3 == lk2) {
                 this.pf3 = null
-                this.wahlzeile = -1
+                this.wahlzeile.unset()
             }
             if (pf4 == lk1 || pf4 == lk2) {
                 this.pf4 = null
-                this.wahlzeile = -1
+                this.wahlzeile.unset()
             }
             if (pf5 == lk1 || pf5 == lk2) {
                 this.pf5 = null
-                this.wahlzeile = -1
+                this.wahlzeile.unset()
             }
 
             updatePflichtfaecher()
@@ -304,13 +302,13 @@ data class KurswahlData(
     /**
      * Entfernt PFs aus den GKs
      */
-    fun updatePFs(pf3: Fach, pf4: Fach, pf5: Fach, pf5_typ: Pf5Typ, wahlzeile: Int): KurswahlData =
+    fun updatePFs(pf3: Fach, pf4: Fach, pf5: Fach, pf5Typ: Pf5Typ, wahlzeile: WahlzeileNummer): KurswahlData =
         this.copy(
             pf3 = pf3,
             pf4 = pf4,
             pf5 = pf5,
             gks = gks.filterKeys { it != pf3 && it != pf4 && it != pf5 },
-            pf5_typ = pf5_typ,
+            pf5Typ = pf5Typ,
             wahlzeile = wahlzeile
         ).apply {
             updatePflichtfaecher()
@@ -342,19 +340,19 @@ data class KurswahlData(
             .apply {
                 if (lk1 in fachDif || !checkKlasse(lk1)) {
                     this.lk1 = null
-                    this.wahlzeile = -1
+                    this.wahlzeile.unset()
                 }
                 if (lk2 in fachDif || !checkKlasse(lk2)) {
                     this.lk2 = null
-                    this.wahlzeile = -1
+                    this.wahlzeile.unset()
                 }
                 if (pf3 in fachDif || !checkKlasse(pf3)) {
                     this.pf3 = null
-                    this.wahlzeile = -1
+                    this.wahlzeile.unset()
                 }
                 if (pf4 in fachDif || !checkKlasse(pf4)) {
                     this.pf4 = null
-                    this.wahlzeile = -1
+                    this.wahlzeile.unset()
                 }
                 if (pf5 in fachDif || !checkKlasse(pf5)) {
                     this.pf5 = null
@@ -369,8 +367,7 @@ data class KurswahlData(
      */
     fun updatePflichtfaecher() {
         lock()
-        gks =
-            gks + pflichtfaecher.filter { (key, value) -> key !in pfs && gks[key].let { it == null || it in value } }
+        gks += pflichtfaecher.filter { (k, v) -> k !in pfs && gks[k].let { it == null || it in v } }
         unlock()
     }
 
@@ -384,17 +381,15 @@ data class KurswahlData(
 
         val doc = PDDocument.load(`in`)
 
-//        val felder = fachData.faecher.reversed().associate { it.lusdId to FeldZeile() }
         for (feld in doc.documentCatalog.acroForm.fields) {
             when (val name = feld.fullyQualifiedName) {
                 SCHUELER_ID_FIELD, JAHRGANG_ID_FIELD -> {}
-                PF_5_TYP_FIELD -> feld.setValue(pf5_typ.lusdId)
+                PF_5_TYP_FIELD -> feld.setValue(pf5Typ.lusdId)
                 else -> {
                     feld.checked = false
                     val parts = name.split('$')
                     val id = parts[3].toInt()
                     val zeile = felder[fachIdMap[id]]!!
-//                    val zeile = felder[id]!!
                     when (parts.last()) {
                         "LK1_0" -> zeile.lk1 = feld
                         "LK2_0" -> zeile.lk2 = feld
@@ -414,30 +409,16 @@ data class KurswahlData(
 
         felder[lk1]!!.checkLK1()
         felder[lk2]!!.checkLK2()
-//            felder[lk3]!!.checkLK3()
+        // felder[lk3]!!.checkLK3()
         felder[pf3]!!.checkPF3()
         felder[pf4]!!.checkPF4()
         felder[pf5]!!.checkPK5()
-
-        /* ChatGPT hat gesagt, dass sei langsamer als andersherum
-        felder.forEach { (fach, zeile) ->
-            zeile.clear()
-            gks[fach]?.let {
-                zeile.wahlmoeglichkeit = it
-            }
-        }*/
 
         for ((fach, wm) in gks) {
             felder[fach]!!.wahlmoeglichkeit = wm
         }
 
-        try {
-            doc.save(out)
-        } catch (e: Exception) {
-            throw e
-        } finally {
-            doc.close()
-        }
+        doc.use { it.save(out) }
     }
 
     fun toFilename(): String = "${vorname}_$nachname"

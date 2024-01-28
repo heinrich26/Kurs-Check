@@ -20,7 +20,7 @@ package com.kurswahlApp.data
 @Suppress("unused")
 class KuerzelRegel(
     private val kuerzel: String,
-    private val anzahl: Int,
+    private val anzahl: Int = 1,
     private val wann: Wahlmoeglichkeit? = null,
     private val scope: RegelScope? = null,
     desc: String? = null,

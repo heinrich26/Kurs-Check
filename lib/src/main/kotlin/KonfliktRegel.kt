@@ -21,9 +21,13 @@ package com.kurswahlApp.data
  * Legt fest, dass nur 1 der gegebenen Fächer gewählt werden kann
  */
 @Suppress("unused")
-class KonfliktRegel(private val wildcard: String, desc: String? = null, errorMsg: String? = null): Regel(desc, errorMsg) {
+class KonfliktRegel(
+    val wildcard: String,
+    desc: String? = null,
+    errorMsg: String? = null
+) : Regel(desc, errorMsg) {
     override fun match(data: KurswahlData): Boolean {
-        val wmoegls = data.kurse.mapNotNull { if (it.key in wildcardMembers) it.value else null }.toMutableList()
+        val wmoegls = data.kurse.mapNotNull { (k, v) -> v.takeIf { k in wildcardMembers } }.toMutableList()
         while (wmoegls.size > 1) {
             val wmoegl1 = wmoegls.removeFirst()
 
@@ -34,7 +38,7 @@ class KonfliktRegel(private val wildcard: String, desc: String? = null, errorMsg
         return true
     }
 
-    private lateinit var wildcardMembers: List<Fach>
+    lateinit var wildcardMembers: List<Fach>
 
     override fun fillData(data: FachData) {
         wildcardMembers = data.wildcards[wildcard]!!

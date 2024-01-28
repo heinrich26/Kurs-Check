@@ -75,7 +75,7 @@ class Pruefungsfaecher(wahlData: KurswahlData, fachData: FachData, notifier: (Bo
         pf3.selectedItem = wahlData.pf3
         pf4.selectedItem = wahlData.pf4
         pf5.selectedItem = wahlData.pf5
-        pf5Typ.selectedItem = wahlData.pf5_typ
+        pf5Typ.selectedItem = wahlData.pf5Typ
 
         pf3.addActionListener { notifier.invoke(pf3.selectedItem != null && pf4.selectedItem != null && pf5.selectedItem != null) }
         pf4.addActionListener { notifier.invoke(pf4.selectedItem != null && pf5.selectedItem != null) }

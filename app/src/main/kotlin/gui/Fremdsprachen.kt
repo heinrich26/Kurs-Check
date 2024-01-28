@@ -42,6 +42,7 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         }
     }
 
+    //#region Selection Components
     private val fsJahr1: SpinnerNumberModel
     private val fsJahr2: SpinnerNumberModel
     private val fsJahr3: SpinnerNumberModel
@@ -55,6 +56,7 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
     private val wpf2: FachComboBox
 
     private val klasse: JComboBox<String?>
+    //#endregion
 
     init {
         val container1 = JPanel(GridBagLayout())
@@ -228,7 +230,8 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
 
         add(container1, row = 0, fill = GridBagConstraints.BOTH)
         add(container2, row = 1, fill = GridBagConstraints.BOTH)
-        add(container3, row = 2, fill = GridBagConstraints.BOTH)
+
+        if (fachData.klassen.isNotEmpty()) add(container3, row = 2, fill = GridBagConstraints.BOTH)
         add(Box.createHorizontalStrut(200), row = 0, column = 0)
     }
 

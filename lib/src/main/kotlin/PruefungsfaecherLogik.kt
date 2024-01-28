@@ -21,11 +21,13 @@ import com.kurswahlApp.data.Wahlzeile.Companion.isAny
 import com.kurswahlApp.data.Wahlzeile.Companion.isWildcard
 import kotlin.reflect.KCallable
 
+@Suppress("PropertyName")
 class PruefungsfaecherLogik(
     private val fachData: FachData,
     private val wahlData: KurswahlData,
 ) {
-    // Referenzen zu gettern von Eingabewerten
+
+    //region Referenzen zu gettern von Eingabewerten
     lateinit var _pf3: KCallable<Fach?>
     lateinit var _pf4: KCallable<Fach?>
     lateinit var _pf5: KCallable<Fach?>
@@ -39,24 +41,35 @@ class PruefungsfaecherLogik(
         get() = _pf5.call()
     private val pf5Typ
         get() = _pf5Typ.call()
+    //endregion
 
     private val userFs = wahlData.fremdsprachen.map { it.first }
     private val userWpfs = wahlData.wpfs
-    private val filteredZeilen = fachData.filterWahlzeilen(wahlData.lk1, wahlData.lk2)
-    private val filteredFaecherPf5 = fachData.faecherMap.filterValues {
-        /* Nach VO-GO Berlin - § 23 Wahl der Prüfungsfächer Nr.8 muss das Fach für die 5. PK lediglich 4
-        Semester belegt werden. */
-        // ist als Kurs wählbar
-        it.isPf && it.isKurs &&
-                // Fach wird als Grundkurs angeboten oder als LK belegt
-                (it.isGk || (it.isLk && it in wahlData.lks)) &&
-                // Darf mit der besuchten Klasse gewählt werden
-                it.checkKlasse(wahlData.klasse) &&
-                // Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1
-                /* TODO die VO-GO verbietet nicht, eine nichtgewählte Fremdsprache zur 5. PK zu wählen,
-                    wir setzen dies hier jedoch vorraus, weil alles andere Sinnlos scheint. */
-                // Schule hat keine strikten WPFs oder Fach ist kein WPF bzw. Schüler hatte es in Sek 1 oder
-                (if (it.isFremdsprache) it in userFs else !fachData.strikteWPFs || it.checkWpf(userWpfs))
+    private val filteredZeilen = filterWahlzeilen()
+    private val filteredFaecherPf5: Map<String, Fach>
+
+    init {
+        @Suppress("ConvertArgumentToSet")
+        val conflicts: List<String> = wahlData.lks.mapNotNull { it?.kuerzel }.let { lks ->
+            fachData.conflictGroups.filter { group -> lks.any { it in group } }.flatten() - lks
+        }
+        filteredFaecherPf5 = fachData.faecherMap.filterValues {
+            /* Nach VO-GO Berlin - § 23 Wahl der Prüfungsfächer Nr.8 muss das Fach für die 5. PK lediglich 4
+            Semester belegt werden. */
+            // ist als Kurs wählbar
+            it.isPf && it.isKurs &&
+                    // Fach wird als Grundkurs angeboten oder als LK belegt
+                    (it.isGk || (it.isLk && it in wahlData.lks)) &&
+                    // Darf mit der besuchten Klasse gewählt werden
+                    it.checkKlasse(wahlData.klasse) &&
+                    // Fach ist keine Fremdsprache bzw. Schüler hatte sie in Sek 1
+                    /* TODO die VO-GO verbietet nicht, eine nichtgewählte Fremdsprache zur 5. PK zu wählen,
+                        wir setzen dies hier jedoch vorraus, weil alles andere Sinnlos scheint. */
+                    // Schule hat keine strikten WPFs oder Fach ist kein WPF bzw. Schüler hatte es in Sek 1 oder
+                    (if (it.isFremdsprache) it in userFs else !fachData.strikteWPFs || it.checkWpf(userWpfs)) &&
+                    // KonfliktRegel beachten
+                    it.kuerzel !in conflicts
+        }
     }
     // Fächer für PF 3 & 4
     private val filteredFaecher = filteredFaecherPf5.filterValues {
@@ -73,7 +86,7 @@ class PruefungsfaecherLogik(
     fun pf3Faecher(): Collection<Fach> {
         val kuerzel = mutableSetOf<String>()
 
-        val beliebig: () -> List<Fach> = { filteredFaecher.mapNotNull { it.value.takeUnless(Fach::nurPf4_5) } }
+        fun beliebig() = filteredFaecher.mapNotNull { it.value.takeUnless(Fach::nurPf4_5) }
 
         for ((_, _, pf3, pf4, pf5, linien) in filteredZeilen.values) {
             if (pf3.isAny) return beliebig()
@@ -101,15 +114,15 @@ class PruefungsfaecherLogik(
         }
     }
 
+
+    private val pf4ConflictGroups = fachData.conflictGroups + listOf(fachData.pf3_4AusschlussFaecher.toList())
     fun pf4Faecher(): List<Fach> {
         val selectedPf3 = pf3 ?: return emptyList()
         val pf3Groups = fachData.wzWildcardMapping[selectedPf3]!!
 
-        val beliebig: () -> List<Fach> = {
-            if (selectedPf3.kuerzel in fachData.pf3_4AusschlussFaecher)
-                filteredFaecher.values.filter { it.kuerzel !in fachData.pf3_4AusschlussFaecher }
-            else filteredFaecher.values.filter { it != selectedPf3 }
-        }
+        val conflicts = pf4ConflictGroups.filter { selectedPf3.kuerzel in it }.flatten().toSet()
+
+        fun beliebig(): List<Fach> = filteredFaecher.values.filter { it != selectedPf3 && it.kuerzel !in conflicts }
 
         val kuerzel = mutableSetOf<String>()
         for ((_, _, pf3, pf4, pf5, linien) in filteredZeilen.values) {
@@ -158,7 +171,7 @@ class PruefungsfaecherLogik(
             }
         }
 
-        if (selectedPf3.kuerzel in fachData.pf3_4AusschlussFaecher) kuerzel.removeAll(fachData.pf3_4AusschlussFaecher)
+        kuerzel.removeAll(conflicts)
         kuerzel.remove(selectedPf3.kuerzel) // Prüfungsfach 3 nicht 2x wählen
         return kuerzel.mapNotNull(filteredFaecher::get)
     }
@@ -166,20 +179,17 @@ class PruefungsfaecherLogik(
     @Suppress("ConvertArgumentToSet")
     fun pf5Faecher(): List<Fach> {
         val selectedPf3 = pf3 ?: return emptyList()
-        val selectedPf4 = pf4  ?: return emptyList()
+        val selectedPf4 = pf4 ?: return emptyList()
 
         val pf3Groups = fachData.wzWildcardMapping[selectedPf3]!!
         val pf4Groups = fachData.wzWildcardMapping[selectedPf4]!!
 
 
         // bei Präsentation bereits gewählte entfernen!
-        val beliebig: () -> List<Fach> = {
-            if (pf5Typ == Pf5Typ.PRAESENTATION)
-                filteredFaecherPf5.values.toMutableList().apply {
-                    removeAll(arrayOf(wahlData.lk1!!, wahlData.lk2!!, selectedPf3, selectedPf4))
-                }.toList()
-            else filteredFaecherPf5.values.toList()
-        }
+        fun beliebig(): List<Fach> =
+            (if (pf5Typ == Pf5Typ.PRAESENTATION)
+                filteredFaecherPf5.values - arrayOf(wahlData.lk1!!, wahlData.lk2!!, selectedPf3, selectedPf4)
+            else filteredFaecherPf5.values.toList()).removeConflicts2(selectedPf3, selectedPf4)
 
         val kuerzel = mutableSetOf<String>()
 
@@ -228,30 +238,42 @@ class PruefungsfaecherLogik(
         // bei Präsentation bereits gewählte entfernen!
         if (pf5Typ == Pf5Typ.PRAESENTATION) {
             kuerzel.removeAll(
-                arrayOf(wahlData.lk1!!.kuerzel, wahlData.lk2!!.kuerzel, selectedPf3.kuerzel, selectedPf4.kuerzel)
+                listOf(wahlData.lk1!!.kuerzel, wahlData.lk2!!.kuerzel, selectedPf3.kuerzel, selectedPf4.kuerzel)
             )
         }
 
-        return kuerzel.mapNotNull(filteredFaecher::get)
+        return kuerzel.removeConflicts(selectedPf3, selectedPf4).mapNotNull(filteredFaecher::get)
     }
 
-    fun getWahlzeile(): Int {
+    /**
+     * Gibt alle möglichen Wahlzeilen für die gegebenen LKs zurück
+     */
+    private fun filterWahlzeilen(): Map<Int, Wahlzeile> {
+        val lk1Wildcard = fachData.wzWildcardMapping.getValue(wahlData.lk1!!)
+        val lk2Wildcard = fachData.wzWildcardMapping.getValue(wahlData.lk2!!)
+
+        return fachData.wahlzeilen.filterValues {
+            (it.lk1 in lk1Wildcard && it.lk2 in lk2Wildcard) || (it.lk2 in lk1Wildcard && it.lk1 in lk2Wildcard)
+        }
+    }
+
+    private fun getWahlzeile(): WahlzeileNummer {
         val selectedPf5 = pf5
         val pf5Groups = fachData.wzWildcardMapping[selectedPf5]!!
-        var zeile: Int = -1
-        for ((field, wz) in zeilenFuerFuenfte) {
+        var n: Int = -1
+        for ((field, zeile) in zeilenFuerFuenfte) {
             val fieldVal = when (field) {
-                3 -> wz.pf3
-                4 -> wz.pf4
-                else /* 5 */ -> wz.pf5
+                3 -> zeile.pf3
+                4 -> zeile.pf4
+                else /* 5 */ -> zeile.pf5
             }
             if (fieldVal in pf5Groups) {
-                zeile = filteredZeilen.firstNotNullOf { if (it.value == wz) it.key else null }
+                n = filteredZeilen.firstNotNullOf { (k, v) -> k.takeIf { v == zeile } }
                 break
             }
         }
 
-        return zeile
+        return WahlzeileNummer(n)
     }
 
     fun validate(): Boolean = (pf3 != null && pf4 != null && pf5 != null)
@@ -266,8 +288,15 @@ class PruefungsfaecherLogik(
             pf3 = pf3!!,
             pf4 = pf4!!,
             pf5 = pf5!!,
-            pf5_typ = pf5Typ!!,
+            pf5Typ = pf5Typ!!,
             wahlzeile = getWahlzeile()
         )
     }
+
+    @Suppress("ConvertArgumentToSet")
+    private fun Iterable<String>.removeConflicts(fach: Fach, fach2: Fach): List<String> =
+        this - fachData.conflictGroups.filter { fach.kuerzel in it || fach2.kuerzel in it }.flatten()
+
+    private fun Iterable<Fach>.removeConflicts2(fach: Fach, fach2: Fach): List<Fach> =
+        this.filter { it.kuerzel !in fachData.conflictGroups.filter { g -> fach.kuerzel in g || fach2.kuerzel in g }.flatten() }
 }

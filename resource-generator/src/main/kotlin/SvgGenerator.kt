@@ -54,9 +54,7 @@ fun GeneralPath.fromSVG(path: String, scale: Double = 1.0): MutableList<String> 
     moveTo(.0, .0)
 
     val calls = mutableListOf<String>()
-    fun addCall(name: String, vararg nums: Double) = calls.add(nums.joinToString(", ", "$name(", ")") { "%.2f".format(it)})
-
-
+    fun addCall(name: String, vararg nums: Double) = calls.add(nums.joinToString(", ", "$name(", ")") { "%.4f".format(it)})
 
     for ((instruction, coords) in gen) {
         when (instruction) {
@@ -175,11 +173,13 @@ fun GeneralPath.fromSVG(path: String, scale: Double = 1.0): MutableList<String> 
 
         prevInstruction = instruction.lowercaseChar()
     }
+
+    calls.add("trimToSize()")
     return calls
 }
 
 /**
- * Returns 6st *element* from the array.
+ * Returns 6th *element* from the array.
  *
  * If the size of this array is less than 6, throws an [IndexOutOfBoundsException] except in Kotlin/JS
  * where the behavior is unspecified.
@@ -189,14 +189,14 @@ private inline operator fun <T> Array<T>.component6(): T = get(5)
 /**
  * Returns 6th *element* from the list.
  *
- * Throws an [IndexOutOfBoundsException] if the size of this list is less than 5.
+ * Throws an [IndexOutOfBoundsException] if the size of this list is less than 6.
  */
 private inline operator fun <T> List<T>.component6(): T = get(5)
 
 /**
  * Returns 7th *element* from the list.
  *
- * Throws an [IndexOutOfBoundsException] if the size of this list is less than 5.
+ * Throws an [IndexOutOfBoundsException] if the size of this list is less than 7.
  */
 private inline operator fun <E> List<E>.component7(): E = get(6)
 private inline operator fun Point2D.component1() = this.x

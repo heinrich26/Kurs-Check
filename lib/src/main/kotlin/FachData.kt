@@ -90,46 +90,18 @@ class FachData(
     val faecher: List<Fach> = faecherMap.values.toList()
     val fremdsprachen: List<Fach> = faecher.filter(Fach::isFremdsprache)
 
-    val lk1Moeglichkeiten = buildSet {
-        for ((lk1) in wahlzeilen.values) {
-            if (lk1.startsWith("$"))
-                addAll(wzWildcards[lk1]!!)
-            else add(lk1)
-        }
-    }.mapNotNull { faecherMap[it]!!.takeIf(Fach::isLk) }
-
-
     init {
         // Regeln initialisieren
         regeln.forEach { it.fillData(this) }
     }
 
-
-    /**
-     * Gibt die die LKs zurück
-     */
-    val lks: List<Fach>
-        get() = faecher.filter(Fach::isLk)
-
     private val wildcardMapping =
         faecher.associateWith { wildcards.filterValues { v -> it in v }.keys + it.kuerzel }
 
     val wzWildcardMapping =
-        faecher.associateWith { (wzWildcards.filterValues { v -> it.kuerzel in v }.keys + it.kuerzel) + "*" }
+        faecher.associateWith { wzWildcards.filterValues { v -> it.kuerzel in v }.keys + it.kuerzel + "*" }
 
-    /**
-     * Gibt alle möglichen Wahlzeilen für die gegebenen LKs zurück
-     */
-    fun filterWahlzeilen(
-        lk1: Fach?,
-        lk2: Fach?
-    ): Map<Int, Wahlzeile> {
-        if (lk1 == null || lk2 == null) return wahlzeilen
-
-        return wahlzeilen.filterValues {
-            (it.lk1 in wzWildcardMapping[lk1]!! && it.lk2 in wzWildcardMapping[lk2]!!) || (it.lk2 in wzWildcardMapping[lk1]!! && it.lk1 in wzWildcardMapping[lk2]!!)
-        }
-    }
+    val conflictGroups = regeln.filterIsInstance<KonfliktRegel>().map { wzWildcards[it.wildcard]!! }
 
     /**
      * Bereitet einen [ObjectMapper][com.fasterxml.jackson.databind.ObjectMapper]
@@ -222,9 +194,9 @@ class FachData(
                 throw IllegalArgumentException("Die Länge von 'semesterkurse' muss exakt 4 sein")
             }
 
-            val wzWildcards = wahlzeilen.flatMap { (_, value) ->
+            val wzWildcards = (wahlzeilen.flatMap { (_, value) ->
                 listOf(value.lk1, value.lk2, value.pf3, value.pf4, value.pf5).filter { it.startsWith('$') }
-            }.toSet().associateWith(wildcards::getValue)
+            } + regeln.filterIsInstance<KonfliktRegel>().map { it.wildcard }).toSet().associateWith(wildcards::getValue)
 
             // Fächer zusätzlich sortieren um auf Aufgabenfelder aufzuteilen
             val faecherMap: Map<String, Fach> =

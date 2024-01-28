@@ -29,8 +29,8 @@ import javax.swing.JComponent
  */
 class SolidFiller(color: Color) : JComponent() {
     companion object {
-        val minSize = Dimension(0,0)
-        val maxSize = Dimension(Short.MAX_VALUE.toInt(), Short.MAX_VALUE.toInt())
+        val minSize = 0 by 0
+        val maxSize = Short.MAX_VALUE.toInt() by Short.MAX_VALUE.toInt()
     }
 
     init {

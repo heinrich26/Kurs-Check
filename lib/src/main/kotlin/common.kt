@@ -15,18 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.kurswahlApp
+package com.kurswahlApp.data
 
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.kurswahlApp.data.Consts.FILETYPE_EXTENSION
-import com.kurswahlApp.data.FachData
-import java.io.File
 import java.net.URL
-import javax.swing.filechooser.FileFilter
 
 
 /**
@@ -54,31 +50,6 @@ fun fachdataObjectMapper() = jacksonObjectMapper().apply {
  */
 @Deprecated("Läd die gehardcodedte FachData und keine Schulspezifischen Daten, TESTING ONLY")
 fun readDataStruct(): FachData = fachdataObjectMapper().readValue(getResourceURL("dataStruct.json")!!)
-
-object KurswahlFileFilter : FileFilter() {
-    override fun accept(f: File): Boolean = f.isDirectory || f.extension == FILETYPE_EXTENSION
-
-    override fun getDescription(): String = "Kurswahl Dateien (.$FILETYPE_EXTENSION)"
-}
-
-object PngFileFilter : FileFilter() {
-    override fun accept(f: File): Boolean = f.isDirectory || f.extension == "png"
-
-    override fun getDescription(): String = "Png Dateien (.png)"
-}
-
-object PdfFileFilter : FileFilter() {
-    override fun accept(f: File): Boolean = f.isDirectory || (f.extension == "pdf" && (!f.exists() || f.canWrite()))
-
-    override fun getDescription(): String = "LUSD Formulare (.pdf)"
-}
-
-class ExclusivePdfFileFilter(private val exclude: File) : FileFilter() {
-    override fun accept(f: File): Boolean = f.isDirectory  || (f != exclude && f.extension == "pdf" && (!f.exists() || f.canWrite()))
-
-    override fun getDescription(): String = "Pdf-Dateien (.pdf)"
-}
-
 
 /**
  * Returns a list of `null`s of the given type with the given [size].

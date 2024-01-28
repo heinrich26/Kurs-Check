@@ -19,14 +19,18 @@
 
 package com.kurswahlApp.data
 
-import java.awt.*
-import java.awt.geom.*
+import java.awt.Color
+import java.awt.Font
+import java.awt.RenderingHints
+import java.awt.geom.Area
+import java.awt.geom.GeneralPath
+import java.awt.geom.RoundRectangle2D
 import javax.swing.JLabel
 
 object Consts {
 
     val COLOR_PRIMARY = Color(96, 2, 238)
-    val COLOR_PRIMARY_FOCUS = COLOR_PRIMARY.brighter()
+    val COLOR_PRIMARY_FOCUS = COLOR_PRIMARY.brighter()!!
     val COLOR_ON_PRIMARY: Color = Color.WHITE
     val COLOR_ON_PRIMARY_FOCUS = Color(190, 190, 190)
     val COLOR_CONTROL = COLOR_PRIMARY.transparentise(.1f)
@@ -49,21 +53,6 @@ object Consts {
     // Checkbox Consts
     const val CHECKBOX_WIDTH = 56
     const val CHECKBOX_HEIGHT = 40
-
-    // Poly Graphics
-    val HOME_POLY = Polygon(
-        intArrayOf(12, 20, 18, 18, 15, 15, 9, 9, 6, 6, 4), intArrayOf(4, 11, 11, 19, 19, 13, 13, 19, 19, 11, 11), 11
-    )
-
-    val PERSON_ICON: Shape = GeneralPath().apply {
-        append(Ellipse2D.Float(12.5f, 4f, 11.5f, 11.5f), false)
-        moveTo(6.05, 32.0)
-        lineTo(29.95, 32.0)
-        curveTo(29.95, 27.9, 26.2, 23.6, 21.5, 23.6)
-        lineTo(14.5, 23.6)
-        curveTo(9.8, 23.6, 6.05, 27.9, 6.05, 32.0)
-        closePath()
-    }.createTransformedShape(AffineTransform(20 / 36.0, .0, .0, 20 / 36.0, 2.0, 2.0))
 
     val CHECKBOX_CHECKED = Area(RoundRectangle2D.Float(0f, 0f, 24f, 24f, 10f, 10f)).apply {
         subtract(Area(GeneralPath().apply {
@@ -92,8 +81,8 @@ object Consts {
                 subtract(
                     Area(
                         vector.getOutline(
-                            ((24 - vector.logicalBounds.width) / 2.0).toFloat(),
-                            ((24 + vector.visualBounds.height) / 2.0).toFloat()
+                            (24 - vector.logicalBounds.width).toFloat() / 2f,
+                            (24 + vector.visualBounds.height).toFloat() / 2f
                         )
                     )
                 )
@@ -103,9 +92,7 @@ object Consts {
                 vector.visualBounds.let {
                     subtract(
                         Area(
-                            vector.getOutline(
-                                ((24 - it.width) / 2.0).toFloat(), ((24 + it.height) / 2.0).toFloat()
-                            )
+                            vector.getOutline((24 - it.width).toFloat() / 2f, (24 + it.height).toFloat() / 2f)
                         )
                     )
                 }
@@ -116,9 +103,7 @@ object Consts {
                 vector.visualBounds.let {
                     subtract(
                         Area(
-                            vector.getOutline(
-                                ((24 - it.width) / 2.0).toFloat(), ((24 + it.height) / 2.0).toFloat()
-                            )
+                            vector.getOutline((24 - it.width).toFloat() / 2f, (24 + it.height).toFloat() / 2f)
                         )
                     )
                 }
@@ -129,9 +114,7 @@ object Consts {
                 vector.visualBounds.let {
                     subtract(
                         Area(
-                            vector.getOutline(
-                                ((24 - it.width) / 2.0).toFloat(), ((24 + it.height) / 2.0).toFloat()
-                            )
+                            vector.getOutline((24 - it.width).toFloat() / 2f, (24 + it.height).toFloat() / 2f)
                         )
                     )
                 }

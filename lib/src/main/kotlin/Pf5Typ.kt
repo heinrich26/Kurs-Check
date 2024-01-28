@@ -31,6 +31,8 @@ enum class Pf5Typ(val repr: String, val lusdId: String) {
     @JsonProperty("wettbewerb") WETTBEWERB("Wettbewerb", PF_5_VAL_BLL);
 
     object Renderer : DefaultListCellRenderer() {
+        private fun readResolve(): Any = Renderer
+
         override fun getListCellRendererComponent(
             list: JList<*>?,
             value: Any?,

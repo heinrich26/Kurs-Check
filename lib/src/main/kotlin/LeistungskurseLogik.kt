@@ -29,22 +29,30 @@ class LeistungskurseLogik(
         wahlData.fremdsprachen.mapNotNull { (fach, jahr) -> fach.takeIf { (jahr < fachData.schultyp.ePhase) } }
     private val wpfs = wahlData.wpfs
 
-    val lk1Moeglichkeiten = fachData.lk1Moeglichkeiten.filter {
-        (if (it.isFremdsprache) it in fs
-        else !it.brauchtWPF || (wpfs != null && it in wpfs)) && it.checkKlasse(wahlData.klasse)
-    }
+    val lk1Moeglichkeiten = buildSet {
+        for ((lk1) in fachData.wahlzeilen.values) {
+            if (lk1.startsWith("$"))
+                addAll(fachData.wzWildcards[lk1]!!)
+            else add(lk1)
+        }
+    }.mapNotNull { fachData.faecherMap[it]!!.takeIf { f ->
+        f.isLk &&
+                f.checkKlasse(wahlData.klasse) &&
+                (if (f.isFremdsprache) f in fs else !f.brauchtWPF || (wpfs != null && it in wpfs))
+    } }
 
-    fun getLk2Moeglichkeiten(first: Fach?) =
-        buildSet {
+    fun getLk2Moeglichkeiten(first: Fach?): List<Fach> {
+        first ?: return emptyList()
+        val conflicts = fachData.conflictGroups.filter { first.kuerzel in it }.flatten()
+        return buildSet {
             for ((lk1, lk2) in fachData.wahlzeilen.values) {
-                if (lk1.isWildcard && first != null
-                    && first.kuerzel in fachData.wzWildcards[lk1]!!
-                    || lk1 == first?.kuerzel) {
+                if (lk1.isWildcard && first.kuerzel in fachData.wzWildcards[lk1]!! || lk1 == first.kuerzel) {
                     if (lk2.isWildcard) addAll(fachData.wzWildcards[lk2]!!)
                     else add(lk2)
                 }
             }
-        }.mapNotNull { k -> fachData.faecherMap[k]!!.takeIf { it.isLk && it != first && checkFach(it) } }
+        }.mapNotNull { k -> fachData.faecherMap[k]!!.takeIf { it.isLk /* enthalten im letzten: it != first */ && checkFach(it) && (k !in conflicts) } }
+    }
 
     /**
      * Prüft ob das Fach in Hinblick auf Fremdsprachen und Wahlpflichtfächer als LK gewält werden kann.

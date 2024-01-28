@@ -99,7 +99,7 @@ class Toolbar(text: String, private val shadowSize: Int = 8) : JPanel(GridBagLay
                 }
 
             init {
-                preferredSize = Dimension(TOOLBAR_ICON_SIZE, TOOLBAR_ICON_SIZE)
+                preferredSize = TOOLBAR_ICON_SIZE by TOOLBAR_ICON_SIZE
                 minimumSize = preferredSize
 
                 toolTipText = tooltip

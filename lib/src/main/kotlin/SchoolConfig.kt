@@ -20,8 +20,6 @@ package com.kurswahlApp.data
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.kurswahlApp.fachdataObjectMapper
-import com.kurswahlApp.getResource
 import java.io.FileInputStream
 import java.io.IOException
 import java.io.StringWriter

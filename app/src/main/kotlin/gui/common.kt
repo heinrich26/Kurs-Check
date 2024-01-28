@@ -18,12 +18,18 @@
 package com.kurswahlApp.gui
 
 import com.kurswahlApp.data.Consts
-import com.kurswahlApp.getResourceURL
+import com.kurswahlApp.data.getResourceURL
+import java.awt.Desktop
 import java.awt.Font
 import java.awt.GraphicsEnvironment
+import java.io.File
+import java.net.URL
+import javax.swing.ImageIcon
 import javax.swing.UIDefaults
 import javax.swing.UIManager
+import javax.swing.filechooser.FileFilter
 import javax.swing.plaf.FontUIResource
+import kotlin.system.measureNanoTime
 
 fun prepareUI() {
     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
@@ -53,5 +59,69 @@ fun prepareUI() {
                 defaults[key] = FontUIResource(Consts.FONT_NAME, value.style, 13)
             }
         }
+    }
+}
+
+object KurswahlFileFilter : FileFilter() {
+    override fun accept(f: File): Boolean = f.isDirectory || f.extension == Consts.FILETYPE_EXTENSION
+
+    override fun getDescription(): String = "Kurswahl Dateien (.${Consts.FILETYPE_EXTENSION})"
+}
+
+object PngFileFilter : FileFilter() {
+    override fun accept(f: File): Boolean = f.isDirectory || f.extension == "png"
+
+    override fun getDescription(): String = "Png Dateien (.png)"
+}
+
+object PdfFileFilter : FileFilter() {
+    override fun accept(f: File): Boolean = f.isDirectory || (f.extension == "pdf" && (!f.exists() || f.canWrite()))
+
+    override fun getDescription(): String = "LUSD Formulare (.pdf)"
+}
+
+class ExclusivePdfFileFilter(private val exclude: File) : FileFilter() {
+    override fun accept(f: File): Boolean = f.isDirectory  || (f != exclude && f.extension == "pdf" && (!f.exists() || f.canWrite()))
+
+    override fun getDescription(): String = "Pdf-Dateien (.pdf)"
+}
+
+fun <R> measureNanos(block: () -> R): R {
+    val result: R
+    println(measureNanoTime { result = block() })
+    return result
+}
+
+/**
+ * Öffnet eine Webseite im Browser
+ */
+fun openWebpage(url: URL): Boolean {
+    val desktop = if (Desktop.isDesktopSupported()) Desktop.getDesktop() else null
+    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+        try {
+            desktop.browse(url.toURI())
+            return true
+        } catch (_: Exception) {}
+    }
+    return false
+}
+
+fun img(src: String, alt: String? = null) =
+    if (alt != null) "<img src='${getResourceURL(src)}' alt='$alt'/>" else "<img src='${getResourceURL(src)}'/>"
+
+fun img(src: String, width: Int, height: Int, alt: String? = null) =
+    if (alt != null)
+        "<img src='${getResourceURL(src)}' alt='$alt' width='$width' height='$height'/>"
+    else
+        "<img src='${getResourceURL(src)}' width='$width' height='$height'/>"
+
+/** Erstellt ein [ImageIcon] mit dem gegebenen [path] und einer optionalen [description]. */
+fun createImageIcon(path: String, description: String? = null): ImageIcon? {
+    val imgURL: URL? = getResourceURL(path)
+    return if (imgURL != null) {
+        ImageIcon(imgURL, description)
+    } else {
+        System.err.println("Couldn't find file: $path")
+        null
     }
 }

@@ -135,7 +135,7 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
             alignmentX = 0f
             border = TitledBorder(RoundedBorder(8), R.getString("your_infos"))
         }
-        feldPanel.add(JLabel("${R.getString("type_of_pk5")}: <b>${wahlData.pf5_typ.repr}</b>".wrapHtml()))
+        feldPanel.add(JLabel("${R.getString("type_of_pk5")}: <b>${wahlData.pf5Typ.repr}</b>".wrapHtml()))
 
         // Wahlzeile
         feldPanel.add(JLabel("${R.getString("wahlzeile")}: <b>${wahlData.wahlzeile}</b>".wrapHtml()))
@@ -157,7 +157,7 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
         )
 
         feldPanel.add(
-            JLabel("${R.getString("nationality")}: <b>${wahlData.staatsangehoerigkeit}</b>".wrapHtml())
+            JLabel("${R.getString("nationality")}: <b>${Locale(Locale.getDefault().language, wahlData.staatsangehoerigkeit).displayCountry}</b>".wrapHtml())
         )
 
         checkboxPanel.add(feldPanel)

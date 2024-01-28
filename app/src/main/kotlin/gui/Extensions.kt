@@ -17,18 +17,14 @@
 
 package com.kurswahlApp.gui
 
-import com.kurswahlApp.getResourceURL
 import java.awt.*
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 import java.awt.geom.AffineTransform
 import java.awt.geom.Path2D
 import java.io.File
-import java.net.URL
-import javax.swing.ImageIcon
 import javax.swing.JComboBox
 import javax.swing.JComponent
-import kotlin.system.measureNanoTime
 
 /**
  * Fügt den [Component] zu dem [Container] mit [GridBagLayout] hinzu
@@ -146,51 +142,11 @@ operator fun Dimension.component2() = height
 
 fun Path2D.scale(sx: Double, sy: Double): Shape = createTransformedShape(AffineTransform.getScaleInstance(sx, sy))
 
-fun <R> measureNanos(block: () -> R): R {
-    val result: R
-    println(measureNanoTime { result = block() })
-    return result
-}
-
 fun File.withExtension(ext: String): File = File(this.parentFile, "$nameWithoutExtension.$ext")
-
-/**
- * Öffnet eine Webseite im Browser
- */
-fun openWebpage(url: URL): Boolean {
-    val desktop = if (Desktop.isDesktopSupported()) Desktop.getDesktop() else null
-    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
-        try {
-            desktop.browse(url.toURI())
-            return true
-        } catch (_: Exception) {
-        }
-    }
-    return false
-}
 
 fun Color.hexString() = "#${Integer.toHexString(rgb and 0x00ffffff)}"
 
-fun img(src: String, alt: String? = null) =
-    if (alt != null) "<img src='${getResourceURL(src)}' alt='$alt'/>" else "<img src='${getResourceURL(src)}'/>"
-
-fun img(src: String, width: Int, height: Int, alt: String? = null) =
-    if (alt != null)
-        "<img src='${getResourceURL(src)}' alt='$alt' width='$width' height='$height'/>"
-    else
-        "<img src='${getResourceURL(src)}' width='$width' height='$height'/>"
-
-@Suppress("UNCHECKED_CAST")
+@Suppress("UNCHECKED_CAST", "UsePropertyAccessSyntax")
 val <E> JComboBox<E>.selectedItem: E?
     get() = this.getSelectedItem() as E?
 
-/** Erstellt ein [ImageIcon] mit dem gegebenen [path] und einer optionalen [description]. */
-fun createImageIcon(path: String, description: String? = null): ImageIcon? {
-    val imgURL: URL? = getResourceURL(path)
-    return if (imgURL != null) {
-        ImageIcon(imgURL, description)
-    } else {
-        System.err.println("Couldn't find file: $path")
-        null
-    }
-}

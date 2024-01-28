@@ -95,7 +95,7 @@ class WahlVisualizer(val data: KurswahlData) : JPanel(GridBagLayout()) {
                         margin = Insets(top = 2)
                     )
                     add(
-                        JLabel("(${data.pf5_typ.repr})"),
+                        JLabel("(${data.pf5Typ.repr})"),
                         row = 7,
                         column = 1,
                         columnspan = 2,

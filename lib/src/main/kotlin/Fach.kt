@@ -41,6 +41,7 @@ import org.intellij.lang.annotations.Language
  * @property lusdId Id des [Fachs][Fach] im LUSD-System.
  * @property infoText über das [Fach], zur Hilfe in der Grundkurs-Übersicht.
  */
+@Suppress("PropertyName")
 @JsonSerialize(using = FachSerializer::class, keyUsing = FachKeySerializer::class)
 class Fach(
     val name: String,
@@ -79,8 +80,8 @@ class Fach(
         "Fach(name='$name', kuerzel='$kuerzel', aufgabenfeld=$aufgabenfeld, isLk=$isLk, isGk=$isGk, isFremdsprache=$isFremdsprache, isKurs=$isKurs, isPf=$isPf, isExtra=$isExtra, brauchtWPF=$brauchtWPF, nurPf4_5=$nurPf4_5, nurIn=$nurIn, nurFuer=$nurFuer, lusdId=$lusdId, infoText=$infoText)"
 
     /** Überprüft ob das Fach mit der gegebenen Klasse gewählt werden kann. */
-    fun checkKlasse(klasse: String?) = nurFuer?.contains(klasse) != false
+    fun checkKlasse(klasse: String?): Boolean = nurFuer?.contains(klasse) != false
 
     /** Überprüft, ob dieses Fach mit den gegebenen Wahlpflichfächern gewählt werden kann. */
-    fun checkWpf(wpfs: WPFs) = !brauchtWPF || (wpfs != null && this in wpfs)
+    fun checkWpf(wpfs: WPFs): Boolean = !brauchtWPF || (wpfs != null && this in wpfs)
 }

@@ -150,6 +150,8 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                             }
                     }
                 }
+
+                checkAndNotify()
             })
 
             label.addComponentListener(object : ComponentAdapter() {
@@ -200,6 +202,8 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                         invalidRows++
                         label.foreground = Consts.COLOR_ERROR
                     }
+
+                    checkAndNotify()
                 }
 
                 add(
@@ -237,6 +241,13 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         fun toWahlmoeglichkeit(): Wahlmoeglichkeit? = Wahlmoeglichkeit.fromBools(selection())
 
         fun count(): Int = toWahlmoeglichkeit()?.n ?: 0
+    }
+
+    private fun checkAndNotify(invalidate: Boolean = false) {
+        notifier.invoke((invalidRows == 0) and checkData())
+        if (invalidate) {
+            regelLabelArray.forEach { invalidate() }
+        }
     }
 
     private fun checkData(): Boolean {
@@ -335,16 +346,11 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
 
     private val checkboxPanel = ScrollablePanel(GridBagLayout()).apply { setScrollableWidth(ScrollablePanel.ScrollableSizeHint.FIT) }
 
-    private val checkButton = JButton("Überprüfen")
-
     private val regelPanel = ScrollablePanel(null)
 
     init {
         add(anzahlLabel, row = 1)
         add(anzahlInfoLabel, row = 1, column = 0, columnspan = 3)
-
-        checkButton.addActionListener { notifier.invoke((invalidRows == 0) and checkData()) }
-        add(checkButton, row = 1, column = 2, anchor = GridBagConstraints.EAST)
 
         buildCheckboxes()
 
@@ -405,7 +411,9 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
     /**
      * Erstellt Checkboxen mit Labels und versteckt jene, die der Schüler nicht wählen kann
      */
+    @Suppress("ConvertArgumentToSet")
     private fun buildCheckboxes() {
+        wahlData.lock()
         // fremdsprachen & wpfs holen
         val fs = wahlData.fremdsprachen.map(Pair<Fach, *>::first)
 
@@ -438,6 +446,10 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         var af = Int.MIN_VALUE
         var offset = 1
 
+        val versteckte = fachData.regeln.filterIsInstance<KonfliktRegel>().mapNotNull {
+            it.wildcardMembers.takeIf { m -> m.any { f -> f in wahlData.pfs } }
+        }.flatten().minus(wahlData.pfs)
+
         for ((i, fach) in fachData.faecher.withIndex()) {
             /* TODO Umsetzen:
                 VO-GO Berlin - § 20 Kurse und Kursfolgen, Nr.2
@@ -446,6 +458,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                 worden sein müssen. (Schlussfolgerung aus Satz 1, da nicht definiert, wvl.
                 Wochenstunden eine neue Fremdsprache in Sek II hätte) */
             if (!fach.isKurs
+                || fach in versteckte
                 || fach.isFremdsprache && fach !in fs
                 || !fach.checkKlasse(wahlData.klasse)
                 || (!fach.isGk && fach !in wahlData.lks)
@@ -480,6 +493,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                 weightx = 1.0
             )
         }
+        wahlData.unlock()
     }
 
     /**

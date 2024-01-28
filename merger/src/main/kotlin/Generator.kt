@@ -17,10 +17,7 @@
 
 package com.kurswahlApp
 
-import com.kurswahlApp.data.Consts
-import com.kurswahlApp.data.FachData
-import com.kurswahlApp.data.KurswahlData
-import com.kurswahlApp.data.SchoolConfig
+import com.kurswahlApp.data.*
 import com.kurswahlApp.gui.wrapHtml
 import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
@@ -71,9 +68,7 @@ val CSV_HEADER = arrayOf(
     // ...faecher
 )
 
-enum class TYP {
-    CSV, PDF
-}
+enum class TYP { CSV, PDF }
 
 /**
  * Runnable, die KursWahl-Dateien in eine große CSV-Tabelle zusammenfasst.
@@ -235,7 +230,7 @@ private fun mergeToCSV(fachData: FachData, files: Array<out File>, outputFile: F
     }
 
     val f = if (outputFile == null || !outputFile.isFile || !outputFile.extension.equals("csv", true)) {
-        out.println("Ungültiger Pfad für die Output-Datei, nutze Default: $FILE_NAME im Ordner ${files[0].parentFile}!")
+        out.println("Ungültiger Pfad für die Output-Datei, nutze Default: $FILE_NAME im Ordner ${files[0].parentFile} !")
         File(files[0].parentFile, FILE_NAME)
     } else outputFile
 
@@ -304,7 +299,7 @@ private fun mergeToCSV(fachData: FachData, files: Array<out File>, outputFile: F
                 *mappedSprachen, // fs1 - fs4
                 wpfs!!.first.kuerzel, // wpf1
                 wpfs!!.second?.kuerzel, // wpf2
-                pf5_typ.toString(), //pf5_typ
+                pf5Typ.toString(), //pf5_typ
                 *row // faecher p. Semester
             )
             filesProcessed++

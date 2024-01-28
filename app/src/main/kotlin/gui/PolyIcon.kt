@@ -23,7 +23,6 @@ import com.kurswahlApp.data.Consts.COLOR_ON_BACKGROUND_DISABLED
 import com.kurswahlApp.data.Consts.COLOR_PRIMARY
 import com.kurswahlApp.data.Consts.RENDERING_HINTS
 import com.kurswahlApp.data.Consts.SIDEBAR_SIZE
-import java.awt.BasicStroke
 import java.awt.Graphics
 import java.awt.Graphics2D
 import java.awt.Shape
@@ -54,8 +53,6 @@ class PolyIcon(poly: Shape, defaultSelected: Boolean, clickEvent: () -> Unit) :
         else if (isEnabled) COLOR_ON_BACKGROUND
         else COLOR_ON_BACKGROUND_DISABLED
 
-        g2D.stroke = BasicStroke(5.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND)
-        g2D.draw(shape)
         g2D.fill(shape)
 
         g2D.dispose()
