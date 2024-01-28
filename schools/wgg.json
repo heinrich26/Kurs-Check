@@ -21,7 +21,6 @@
 			"name": "Spanisch",
 			"kuerzel": "Spa",
 			"aufgabenfeld": 1,
-			"isLk": true,
 			"isFremdsprache": true
 		},
 		{
@@ -80,7 +79,8 @@
 		{
 			"name": "Politikwissenschaft Bili",
 			"kuerzel": "PWBi",
-			"aufgabenfeld": 2
+			"aufgabenfeld": 2,
+			"nurFuer": ["Bili"]
 		},
 		{
 			"name": "Geografie",
