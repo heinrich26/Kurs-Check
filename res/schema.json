@@ -12,8 +12,9 @@
 		"RegelAnzahl": {
 			"type": "integer",
 			"description": "Mindestanzahl an Kursen die benötigt wird, um die Regel zu erfüllen",
-			"minimum": 2,
-			"maximum": 4
+			"minimum": 1,
+			"maximum": 4,
+			"default": 1
 		},
 		"RegelScope": {
 			"description": "Art von Kursen, auf die sich diese Regel beschränkt",
@@ -65,7 +66,7 @@
 							"anzahl": { "$ref": "#/definitions/RegelAnzahl"},
 							"scope": { "$ref": "#/definitions/RegelScope"},
 							"wann": { "$ref": "#/definitions/RegelWann" }
-						}, "required": [ "anzahl", "kuerzel" ], "additionalProperties": false
+						}, "required": [ "kuerzel" ], "additionalProperties": false
 					}
 				}, {
 					"if": {
@@ -81,17 +82,17 @@
 								"pattern": "^\\$[^$]+$",
 								"description": "Wildcard von Fächern die diese Regel erfüllen"
 							},
-							"anzahl": { "$ref": "#/definitions/RegelAnzahl"},
-							"scope": { "$ref": "#/definitions/RegelScope"},
+							"anzahl": { "$ref": "#/definitions/RegelAnzahl" },
+							"scope": { "$ref": "#/definitions/RegelScope" },
 							"wann": { "$ref": "#/definitions/RegelWann" }
-						}, "required": [ "wildcard","anzahl" ], "additionalProperties": false
+						}, "required": [ "wildcard" ], "additionalProperties": false
 					}
 				}, {
 					"if": {
 						"properties": { "type": { "const": "KonfliktRegel" } }
 					},
 					"then": {
-						"description": "KonfliktRegel - ergibt: Wähle maximal eins von Fach A, B, ... gleichzeitig",
+						"description": "KonfliktRegel - ergibt: Wähle maximal eins von Fach A, B, ... gleichzeitig. Wird auch bei der Prüfungsfach-Wahl angewand.",
 						"properties": {
 							"type": true,
 							"desc": true,
@@ -318,7 +319,7 @@
 			"items": { "$ref": "#/definitions/Regel" }
 		},
 		"wahlzeilen": {
-			"description": "Wahlzeilen beschreiben die möglichen Kombinationen von Prüfungsfächern, die gewählt werden können! Jede Nummer sollte optimalerweise nur ein Mal vorkommen!",
+			"description": "Wahlzeilen beschreiben die möglichen Kombinationen von Prüfungsfächern, die gewählt werden können! Jede Nummer darf nur ein Mal vorkommen! Eine Nummer kann aber durch mehrere Einträge beschrieben werden! Durch das addieren eines Vielfachen von 512 kann eine Zeile so weiter spezifiziert werden.",
 			"type": "object",
 			"examples": [
 				{

@@ -8,6 +8,7 @@ on:
     - '**.md'
     - '.idea/**'
     - '**.py'
+    - 'schema.json'
   workflow_dispatch:
 
 jobs:   
