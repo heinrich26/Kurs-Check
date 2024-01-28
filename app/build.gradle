@@ -41,7 +41,7 @@ runtime {
     addOptions '--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages'
 
     additive = true
-    modules.set(['jdk.crypto.cryptoki'])
+    modules.set(['jdk.crypto.cryptoki', 'java.net.http', 'java.management'])
 
     jpackage {
         imageName = rootProject.name
@@ -67,7 +67,7 @@ tasks.register('buildRPM', JPackageTask) {
         addOptions '--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages'
 
         additive = true
-        modules.set(['jdk.crypto.cryptoki'])
+        modules.set(['jdk.crypto.cryptoki', 'java.net.http', 'java.management'])
 
         jpackage {
             imageName = rootProject.name
