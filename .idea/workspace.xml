@@ -14,47 +14,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Belegungsverpflichtung von Fremdsprachen angepasst, sodass eine in Klasse 9 belegte, 2. Fremdsprache nicht mehr in Q1 &amp; Q2 erzwungen wird.">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/kurswahlApp.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/resource-generator/Kurs-Check.resource-generator.test.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/drawables/calendar.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/drawables/home.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/drawables/person.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/main/kotlin/WahlzeileNummer.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/test/kotlin/com/kurswahlApp/data/WahlzeileNummerTest.kt" afterDir="false" />
+    <list default="true" id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="Fehlende Module hinzugefügt">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/assets/drawables/info_outline.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/drawables/info_outline.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/assets/drawables/task_check.svg" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/drawables/task_check.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/AusgabeLayout.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/AusgabeLayout.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Extensions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Extensions.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Fremdsprachen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Fremdsprachen.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/GuiMain.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Nutzerdaten.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Nutzerdaten.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/PolyIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/PolyIcon.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Pruefungsfaecher.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Pruefungsfaecher.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/SolidFiller.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/SolidFiller.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/Toolbar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/Toolbar.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/WahlVisualizer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/WahlVisualizer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/gui/common.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/gui/common.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/groovy/myproject.java-conventions.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/lib/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/Consts.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/Consts.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/Fach.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/Fach.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/FachData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/FachData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/KonfliktRegel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/KonfliktRegel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/KurswahlData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/KurswahlData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/LeistungskurseLogik.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/LeistungskurseLogik.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/Pf5Typ.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/Pf5Typ.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/PruefungsfaecherLogik.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/PruefungsfaecherLogik.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/SchoolConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/SchoolConfig.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/kotlin/common.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/kotlin/common.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/merger/src/main/kotlin/Generator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/merger/src/main/kotlin/Generator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/icons/app_icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/res/icons/app_icon.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource-generator/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/resource-generator/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource-generator/src/main/kotlin/SvgGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/resource-generator/src/main/kotlin/SvgGenerator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/merger/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/merger/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -150,7 +116,7 @@
     </order>
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
@@ -187,9 +153,9 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Facets",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
+    "project.structure.side.proportion": "0.42068964",
     "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "watcher.settings",
     "vue.rearranger.settings.migration": "true"
@@ -275,9 +241,13 @@
       <command value="gradle :resource-generator:processVectors" />
       <command value="gradle merger:jpackage clean" />
       <command value="gradle clean" />
+      <command value="gradle app:suggestModules" />
+      <command value="gradle merger:suggestModules" />
+      <command value="gradle dependencies --scan" />
+      <command value="gradle app:jpackageImage --scan" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.Run App (Win)">
+  <component name="RunManager" selected="Gradle.generateResources">
     <configuration name="App Build (WSL)" type="GradleRunConfiguration" factoryName="Gradle">
       <target name="WSL - Ubuntu" />
       <ExternalSystemSettings>
@@ -480,67 +450,6 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="Scratch" type="Java Scratch" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Scratch" />
-      <option name="SCRATCH_FILE_URL" value="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_1.java" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AusgabeLayout" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.kurswahlApp.gui.AusgabeLayout" />
-      <module name="Kurs-Check.app.main" />
-      <target name="WSL - Ubuntu" />
-      <shortenClasspath name="NONE" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Main (WSL)" type="JetRunConfigurationType">
-      <option name="MAIN_CLASS_NAME" value="gui.GuiMain" />
-      <module name="Kurs-Check.app.main" />
-      <target name="WSL - Ubuntu-20.04" />
-      <shortenClasspath name="NONE" />
-      <option name="VM_PARAMETERS" value="-Dsun.java2d.dpiaware=false -Dsun.java2d.uiScale=1.25" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Main w. testData (WSL)" type="JetRunConfigurationType">
-      <option name="MAIN_CLASS_NAME" value="gui.GuiMain" />
-      <module name="Kurs-Check.app.main" />
-      <option name="PROGRAM_PARAMETERS" value="--useTestData" />
-      <target name="WSL - Ubuntu-20.04" />
-      <shortenClasspath name="NONE" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Main w. testData" type="JetRunConfigurationType">
-      <option name="MAIN_CLASS_NAME" value="gui.GuiMain" />
-      <module name="Kurs-Check.app.main" />
-      <option name="PROGRAM_PARAMETERS" value="--useTestData" />
-      <shortenClasspath name="NONE" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Main" type="JetRunConfigurationType">
-      <option name="MAIN_CLASS_NAME" value="gui.GuiMain" />
-      <module name="Kurs-Check.app.main" />
-      <shortenClasspath name="NONE" />
-      <option name="VM_PARAMETERS" value="-Dsun.java2d.dpiaware=false -Dsun.java2d.uiScale=1.25" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestingKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.kurswahlApp.gui.TestingKt" />
-      <module name="Kurs-Check.app.main" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="Gradle.App Build (Win)" />
       <item itemvalue="Gradle.App Build (WSL)" />
@@ -551,31 +460,17 @@
       <item itemvalue="Gradle.Project Build" />
       <item itemvalue="Gradle.Run App (WSL)" />
       <item itemvalue="Gradle.generateResources" />
-      <item itemvalue="Java Scratch.Scratch" />
-      <item itemvalue="Kotlin.Main w. testData" />
-      <item itemvalue="Kotlin.Main w. testData (WSL)" />
-      <item itemvalue="Kotlin.Main" />
-      <item itemvalue="Kotlin.Main (WSL)" />
-      <item itemvalue="Kotlin.AusgabeLayout" />
-      <item itemvalue="Kotlin.TestingKt" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Java Scratch.Scratch" />
-        <item itemvalue="Kotlin.AusgabeLayout" />
-        <item itemvalue="Kotlin.TestingKt" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="StructuralSearchPlugin">
-    <replaceConfiguration name="$Type$($Parameter1$, $Parameter2$)" created="1706441419197" uuid="17513432-9de1-3705-8708-4b1302e84a3a" text="$Type$($Parameter1$, $Parameter2$)" recursive="false" caseInsensitive="false" type="Kotlin" pattern_context="default" reformatAccordingToStyle="true" shortenFQN="true" replacement="$Parameter1$ ExtensionsKt.by $Parameter2$" history="1">
+    <replaceConfiguration name="$Type$($Parameter1$, $Parameter2$)" created="1706625273438" uuid="17513432-9de1-3705-8708-4b1302e84a3a" text="$Type$($Parameter1$, $Parameter2$)" recursive="false" caseInsensitive="false" type="Kotlin" pattern_context="default" reformatAccordingToStyle="true" shortenFQN="true" replacement="$Parameter1$ ExtensionsKt.by $Parameter2$" history="1">
       <constraint name="__context__" within="" contains="" />
       <constraint name="Parameter1" within="" contains="" />
       <constraint name="Parameter2" within="" contains="" />
       <constraint name="Type" regexp="java.awt.Dimension" within="" contains="" />
     </replaceConfiguration>
-    <replaceConfiguration name="$Type$($Parameter1$, $Parameter2$)" created="1706441419197" uuid="17513432-9de1-3705-8708-4b1302e84a3a" text="$Type$($Parameter1$, $Parameter2$)" recursive="false" caseInsensitive="false" type="Kotlin" pattern_context="default" reformatAccordingToStyle="true" shortenFQN="true" replacement="$Parameter1$ by $Parameter2$" history="1">
+    <replaceConfiguration name="$Type$($Parameter1$, $Parameter2$)" created="1706625273478" uuid="17513432-9de1-3705-8708-4b1302e84a3a" text="$Type$($Parameter1$, $Parameter2$)" recursive="false" caseInsensitive="false" type="Kotlin" pattern_context="default" reformatAccordingToStyle="true" shortenFQN="true" replacement="$Parameter1$ by $Parameter2$" history="1">
       <constraint name="__context__" within="" contains="" />
       <constraint name="Parameter1" within="" contains="" />
       <constraint name="Parameter2" within="" contains="" />
@@ -585,7 +480,6 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="daaedbbe-eba0-4de2-a906-869dd051df89" name="Changes" comment="anfang mit visualizer für kurswahl" />
-      <changelist id="" name="Update Copyright" comment="" />
       <created>1652443574971</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -684,7 +578,8 @@
       <workItem from="1704921706220" duration="2690000" />
       <workItem from="1704989000837" duration="913000" />
       <workItem from="1706261778239" duration="668000" />
-      <workItem from="1706441390824" duration="15558000" />
+      <workItem from="1706441390824" duration="30681000" />
+      <workItem from="1706625260007" duration="8487000" />
     </task>
     <task id="LOCAL-00078" summary="icon als vektorgrafik hinzugefügt">
       <created>1656254711192</created>
@@ -1029,7 +924,7 @@
       <option name="project" value="LOCAL" />
       <updated>1679240251580</updated>
     </task>
-    <option name="localTasksCounter" value="134" />
+    <option name="localTasksCounter" value="138" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1061,9 +956,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Fächeralternativen sind nun Möglich (z.B. Mathe und Mathe CAS)" />
-    <MESSAGE value="Fächeralternativen funktionieren nun Richtig, Klassensystem eingebaut" />
-    <MESSAGE value="wahl-merger verbessert, Fehler werden nun richtig kommuniziert" />
     <MESSAGE value="Copyright Notice für die GitHub Page hinzugefügt" />
     <MESSAGE value="falsche Hauptklasse gefixt" />
     <MESSAGE value="Copyright und Programmversion Hochgesetzt" />
@@ -1086,7 +978,10 @@
     <MESSAGE value="Nutzerdaten-Eingabe zeigt Ländernamen jetzt in der Systemsprache an." />
     <MESSAGE value="Belegungsverpflichtung von Fremdsprachen angepasst, sodass eine in Klasse 9 belegte, 2. Fremdsprache nicht mehr in Q1 &amp; Q2 erzwungen wird." />
     <MESSAGE value="Update Copyright" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update Copyright" />
+    <MESSAGE value="Einige Verbesserungen und die Möglichkeit, Wahlzeilen mehrfach zu definieren. KonfliktRegeln werden nun auch in der Leistungs-/Prüfungsfach-Auswahl angewandt." />
+    <MESSAGE value="Schema geupdated und Einheitlichkeit bei `anzahl` in WildcardRegel und KuerzelRegel hergestellt." />
+    <MESSAGE value="Fehlende Module hinzugefügt" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fehlende Module hinzugefügt" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

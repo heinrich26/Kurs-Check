@@ -1,3 +1,4 @@
+//file:noinspection GroovyAccessibility
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.beryx.runtime.JPackageTask
 
@@ -13,8 +14,8 @@ dependencies {
 
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.16.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-cli:0.3.4'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
+    implementation 'org.jetbrains.kotlinx:kotlinx-cli:0.3.6'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'
     implementation 'com.github.lgooddatepicker:LGoodDatePicker:11.2.1'
 }
 
@@ -36,12 +37,11 @@ def (osPrefix, iconExt, packageType) =
 Os.isFamily(Os.FAMILY_WINDOWS) ? ['win', 'ico', 'msi'] :
         Os.isFamily(Os.FAMILY_MAC) ? ['mac', 'icns', 'pkg'] :
                 ['linux', 'png', 'deb']
+def javaModules = ['java.base', 'java.datatransfer', 'java.desktop', 'java.logging', 'java.management','java.net.http', 'java.prefs', 'java.xml', 'jdk.crypto.cryptoki', 'jdk.crypto.ec']
 
 runtime {
     addOptions '--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages'
-
-    additive = true
-    modules.set(['jdk.crypto.cryptoki', 'java.net.http', 'java.management'])
+    modules.set(javaModules)
 
     jpackage {
         imageName = rootProject.name
@@ -66,8 +66,7 @@ tasks.register('buildRPM', JPackageTask) {
     runtime {
         addOptions '--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages'
 
-        additive = true
-        modules.set(['jdk.crypto.cryptoki', 'java.net.http', 'java.management'])
+        modules.set(javaModules)
 
         jpackage {
             imageName = rootProject.name

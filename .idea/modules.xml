@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/resource-generator/Kurs-Check.resource-generator.test.iml" filepath="$PROJECT_DIR$/.idea/modules/resource-generator/Kurs-Check.resource-generator.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/kurswahlApp.iml" filepath="$PROJECT_DIR$/.idea/kurswahlApp.iml" />
     </modules>
   </component>
 </project>
