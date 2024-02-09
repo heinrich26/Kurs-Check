@@ -51,7 +51,7 @@ class LeistungskurseLogik(
                     else add(lk2)
                 }
             }
-        }.mapNotNull { k -> fachData.faecherMap[k]!!.takeIf { it.isLk /* enthalten im letzten: it != first */ && checkFach(it) && (k !in conflicts) } }
+        }.mapNotNull { k -> fachData.faecherMap[k]!!.takeIf { it.isLk && it != first && checkFach(it) && (k !in conflicts) } }
     }
 
     /**
