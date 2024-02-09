@@ -892,7 +892,7 @@
 	},
 	"wildcards": {
 		// Kurse aus dem Aufgabenfeld 2
-		"$AF2": [ "Ge", "PW", "PWBi", "Geo" ],
+		"$AF2": [ "Ge", "PW", "Geo" ],
 		"$AF2ohnePW": [ "Ge", "Geo" ],
 		"$FS": [ "Fr", "Spa", "Lat", "En" ],
 		"$FSohneSpa": [ "Fr", "Lat", "En" ],
