@@ -22,5 +22,13 @@
 		"y": 13.31459,
 		"config": "paulsen.json",
 		"version": "1.3"
+	},
+	{
+		"name": "OSZ Banken, Immobilien und Versicherungen",
+		"adresse": "Alt Moabit 10",
+		"x": 52.52470705888721,  
+		"y": 13.358615524813388,
+		"config": "osz_banken.json",
+		"version": "1.0"
 	}
 ]
