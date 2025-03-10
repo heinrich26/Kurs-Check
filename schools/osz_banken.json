@@ -253,7 +253,8 @@
             "pf4": "*",
             "pf5": "*",
             "linien": "gestrichelt"
-        },
+        }
+    },
     "wildcards": {
         "$AF3": [
             "Ma",
