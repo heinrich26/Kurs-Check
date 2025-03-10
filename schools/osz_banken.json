@@ -1,0 +1,303 @@
+{
+    // eindeutiger Identifikator dieser FachDaten; Gleichzeitig der Dateiname dieser Datei!
+    "schulId": "osz_banken.json",
+    // Hauptversion.Subversion
+    "jsonVersion": "1.0",
+    // "aufgabenfeld" -> 0, wenn kein Aufgabenfeld gg. ist (Sport), Zusatzkurse -> -1
+    "faecher": [
+        {
+            "name": "Deutsch",
+            "kuerzel": "De",
+            "aufgabenfeld": 1,
+            "isLk": true
+        },
+        {
+            "name": "Englisch",
+            "kuerzel": "En",
+            "aufgabenfeld": 1,
+            "isLk": true,
+            "isFremdsprache": true
+        },
+        {
+            "name": "Französisch",
+            "kuerzel": "Fra",
+            "aufgabenfeld": 1,
+            "isFremdsprache": true
+        },
+        {
+            "name": "Spanisch",
+            "kuerzel": "Spa",
+            "aufgabenfeld": 1,
+            "isFremdsprache": true
+        },
+        {
+            "name": "Bildende Kunst",
+            "kuerzel": "Ku",
+            "aufgabenfeld": 1,
+            "brauchtWPF": true
+        },
+        {
+            "name": "Darstellendes Spiel",
+            "kuerzel": "DS",
+            "aufgabenfeld": 1,
+            "brauchtWPF": true,
+            "nurPf4_5": true
+        },
+        {
+            "name": "Geschichte",
+            "kuerzel": "Ge",
+            "aufgabenfeld": 2,
+            "isLk": true
+        },
+        {
+            "name": "Politikwissenschaft",
+            "kuerzel": "Pw",
+            "aufgabenfeld": 2
+        },
+        {
+            "name": "Wirtschaft",
+            "kuerzel": "VWL/BWL",
+            "aufgabenfeld": 2
+        },
+        {
+            "name": "Rechnungswesen",
+            "kuerzel": "RW",
+            "aufgabenfeld": 2
+        },
+        {
+            "name": "Recht",
+            "kuerzel": "Re",
+            "aufgabenfeld": 2
+        },
+        {
+            "name": "Mathematik",
+            "kuerzel": "Ma",
+            "aufgabenfeld": 3,
+            "isLk": true
+        },
+        {
+            "name": "Physik",
+            "kuerzel": "Ph",
+            "aufgabenfeld": 3
+        },
+        {
+            "name": "Chemie",
+            "kuerzel": "Ch",
+            "aufgabenfeld": 3
+        },
+        {
+            "name": "Informatik",
+            "kuerzel": "Inf",
+            "aufgabenfeld": 3,
+            "brauchtWPF": true // Fach muss für PF 3/4/5 in der E-Phase belegt werden muss
+        },
+        {
+            "name": "Sport",
+            "kuerzel": "Sp",
+            "aufgabenfeld": 0,
+            "nurPf4_5": true,
+            "isExtra": true
+        },
+        {
+            "name": "Sport Theorie",
+            "kuerzel": "SpT",
+            "aufgabenfeld": -1,
+            // Auf -1, damit es nicht als Prüfungsfach gewählt werden kann!
+            "nurIn": "3-4"
+        },
+        // Fächer, die nur als Fremdsprache/Wahlpflichtfach angezeigt werden sollen
+        {
+            "name": "Altgriechisch",
+            "kuerzel": "AGr",
+            "aufgabenfeld": 1,
+            "isKurs": false,
+            "isFremdsprache": true
+        },
+        {
+            "name": "Griechisch",
+            "kuerzel": "Gr",
+            "aufgabenfeld": 1,
+            "isKurs": false,
+            "isFremdsprache": true
+        },
+        {
+            "name": "Italienisch",
+            "kuerzel": "I",
+            "aufgabenfeld": 1,
+            "isKurs": false,
+            "isFremdsprache": true
+        },
+        {
+            "name": "Latein",
+            "kuerzel": "Lat",
+            "aufgabenfeld": 1,
+            "isKurs": false,
+            "isFremdsprache": true
+        },
+        // dummy Kurs für die WPF Auswahl
+        {
+            "name": "keins",
+            "kuerzel": "--",
+            "aufgabenfeld": 0,
+            "isKurs": false
+        }
+    ],
+    "pflichtfaecher": {
+        "De": "1-4",
+        "Ma": "1-4",
+        "Sp": "1-4",
+        "RW": "1-2",
+        "Ge": "3-4"
+    },
+    "zweiWPFs": false,
+    "wpfs": ["--"],
+    "regeln": [
+        {
+            "type": "WildcardRegel",
+            "wildcard": "$FS",
+            "anzahl": 4,
+            "desc": "Eine Fremdsprache muss 4 Semester belegt werden",
+            "errorMsg": "Wähle eine Fremdsprache durchgehend!"
+        },
+        {
+            "type": "IfThenRegel", 
+            "desc": "Wird die 3./4. Fremdsprache fortgesetzt, muss eine weitere Fremdsprache in Q1 & Q2 belegt werden.",
+            "errorMsg": "Belege eine weitere Fremdsprache in Q1 & Q2 (Spreche mit deinem PäKo, wenn hier Probleme auftreten)",
+            "regel1": {
+                "type": "FremdsprachenRegel",
+                "ohneFs2": true
+            },
+            "regel2": {
+                "type": "KuerzelRegel",
+                "anzahl": 4,
+                "kuerzel": "En",
+                "wann": "1-2"
+            }
+        },
+        {
+            "type": "WildcardRegel",
+            "wildcard": "$NW",
+            "anzahl": 4,
+            "desc": "Eine Naturwissenschaft muss 4 Semester belegt werden",
+            "errorMsg": "Wähle eine Naturwissenschaft durchgehend!"
+        },
+        {
+            "type": "KonfliktRegel",
+            "wildcard": "$KF",
+            "desc": "Kunst und Darstellendes Spiel können nicht gleichzeitig belegt werden",
+            "errorMsg": "Du kannst zur gleichen Zeit nur Kunst <b>oder</b> Darstellendes Spiel belegen!"
+        },
+        {
+            "type": "IfThenRegel",
+            "regel1": {
+                "type": "KuerzelRegel",
+                "kuerzel": "Sp",
+                "anzahl": 4,
+                "scope": "1-5"
+            },
+            "regel2": {
+                "type": "KuerzelRegel",
+                "kuerzel": "SpT",
+                "anzahl": 2,
+                "wann": "3-4"
+            },
+            "desc": "Sport als PF -> zusätzlich Sport Theorie min. in Q3 & Q4",
+            "errorMsg": "Wähle Sport Theorie in Q3 & Q4!"
+        }
+    ],
+    "wahlzeilen": {
+        "1": {
+            "lk1": "De",
+            "lk2": "Wt",
+            "pf3": "Ma",
+            "pf4": "*",
+            "pf5": "*",
+            "linien": "gestrichelt"
+        },
+        "2": {
+            "lk1": "De",
+            "lk2": "Wt",
+            "pf3": "$FS",
+            "pf4": "$AF3",
+            "pf5": "*",
+            "linien": "gestrichelt"
+        },
+        "3": {
+            "lk1": "$FS",
+            "lk2": "Wt",
+            "pf3": "De",
+            "pf4": "$AF3",
+            "pf5": "*",
+            "linien": "gestrichelt"
+        },
+        "4": {
+            "lk1": "$FS",
+            "lk2": "Wt",
+            "pf3": "Ma",
+            "pf4": "*",
+            "pf5": "*",
+            "linien": "gestrichelt"
+        },
+        "5": {
+            "lk1": "Ma",
+            "lk2": "Wt",
+            "pf3": "De",
+            "pf4": "*",
+            "pf5": "*",
+            "linien": "gestrichelt"
+        },
+        "6": {
+            "lk1": "Ma",
+            "lk2": "Wt",
+            "pf3": "$FS",
+            "pf4": "*",
+            "pf5": "*",
+            "linien": "gestrichelt"
+        }
+    },
+    "wildcards": {
+        "$AF3": [
+            "Ma",
+            "Inf",
+            "Ph",
+            "Ch"
+        ],
+        // Kurse aus dem Aufgabenfeld 2
+        "$FS": [
+            "E",
+            "Fr",
+            "Spa",
+            "Lat",
+            "I"
+        ],
+        "$NW": [
+            "Ch",
+            "Ph"
+        ],
+        // Andere Wildcards (z.B. f. Regeln)
+        "$KF": [
+            "Ku",
+            "DS"
+        ]
+    },
+    // Grundkurse und Leistungskurse zusammen
+    "minKurse": 34,
+    // Grundkurse und Leistungskurse zusammen
+    "maxKurse": 36,
+    // Fächer, von denen nur 1 gewählt werden darf (§ 23,6 VO-GO)
+    "pf3_4AusschlussFaecher": [
+        "Ku",
+        "DS",
+        "Sp"
+    ],
+    // Limitiert die Anzahl Kurse die in einem Semester belegt werden können!
+    "semesterkurse": [
+        8,
+        8,
+        8,
+        8
+    ],
+    "schultyp": "Sekundarschule", // kann nach Softwareupdate zu "Berufsschule13" geändert werden
+    "nutztLusd": false,
+    "fnamePattern": ".+?_Kurswahl_Abitur_\\d{4}_\\d{2}_OSZ_SEK_II_%vname%_%nname%_(\\d+).*"
+}
