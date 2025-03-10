@@ -131,7 +131,7 @@ fun main(args: Array<String>) {
             output = chooser.selectedFile.absolutePath
         }
 
-        action = TYP.values().getOrElse(JOptionPane.showOptionDialog(null, "Aktion auswählen", "Auswählen", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, TYP.values(), TYP.CSV)
+        action = TYP.entries.toTypedArray().getOrElse(JOptionPane.showOptionDialog(null, "Aktion auswählen", "Auswählen", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, TYP.values(), TYP.CSV)
         ) { TYP.CSV }
 
         try {

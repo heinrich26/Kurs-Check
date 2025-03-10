@@ -6,6 +6,8 @@ plugins {
     id 'org.beryx.runtime' version '1.12.7'
 }
 
+project.description = 'Fügt mehrere Kurswahlen in eine CSV Tabelle zusammen!'
+
 application {
     mainClass = "${group}.gui.GuiMain"
 }
