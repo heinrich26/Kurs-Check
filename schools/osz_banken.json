@@ -89,8 +89,7 @@
         {
             "name": "Informatik",
             "kuerzel": "Inf",
-            "aufgabenfeld": 3,
-            "brauchtWPF": true // Fach muss für PF 3/4/5 in der E-Phase belegt werden muss
+            "aufgabenfeld": 3
         },
         {
             "name": "Sport",
