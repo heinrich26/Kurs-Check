@@ -59,22 +59,24 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
     //#endregion
 
     init {
+        val ePhase = fachData.schultyp.ePhase
+
         val container1 = JPanel(GridBagLayout())
         val container2 = JPanel(GridBagLayout())
         val container3 = JPanel(GridBagLayout())
         RoundedBorder(12).let {
             container1.border = TitledBorder(it, "Fremdsprachen".wrapTags("html", "b"))
-            container2.border = TitledBorder(it, "Wahlpflichtfächer (Kl. 10)".wrapTags("html", "b"))
+            container2.border = TitledBorder(it, "Wahlpflichtfächer (Kl. $ePhase)".wrapTags("html", "b"))
             container3.border = TitledBorder(it, "Klasse".wrapTags("html", "b"))
         }
 
 
         container1.add(JLabel("ab Kl.:"), column = 3, anchor = GridBagConstraints.NORTHWEST)
 
-        fsJahr4 = SpinnerNumberModel(1, 1, 10, 1)
-        fsJahr3 = SpinnerNumberModel(1, 1, 10, 1)
-        fsJahr2 = SpinnerNumberModel(1, 1, 10, 1)
-        fsJahr1 = SpinnerNumberModel(1, 1, 10, 1)
+        fsJahr4 = SpinnerNumberModel(1, 1, ePhase, 1)
+        fsJahr3 = SpinnerNumberModel(1, 1, ePhase, 1)
+        fsJahr2 = SpinnerNumberModel(1, 1, ePhase, 1)
+        fsJahr1 = SpinnerNumberModel(1, 1, ePhase, 1)
 
         val spinner3 = JSpinner(fsJahr3)
         val spinner4 = JSpinner(fsJahr4)
@@ -259,6 +261,5 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
     override fun showHelp(): String =
         "<h2>$windowName</h2><p>Hier musst du deine Fremdsprachen, deine Wahlpflichtfächer der 10. Klasse und eventuell deine Klasse auswählen.<br><b>Ich bin leider nicht lyrisch begabt, deswegen beschwere dich bitte bei deinem PäKo, dass er/sie keine hilfreichere Hilfe verfasst hat!</b></p>"
 
-    override val windowName: String
-        get() = "Fremdsprachen & Wahlpflichtfächer"
+    override val windowName: String = "Fremdsprachen & Wahlpflichtfächer"
 }

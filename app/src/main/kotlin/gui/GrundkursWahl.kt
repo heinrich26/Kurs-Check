@@ -44,7 +44,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         if (invalidRows != 0) return false
 
         // Überprüfen, dass pro Semester die maximale Kurszahl nicht überschritten wird
-        if (!close().countCourses(true).zip(fachData.semesterkurse).all { it.first <= it.second }) return false
+        if (close().countCourses(true).zip(fachData.semesterkurse).any { it.first > it.second }) return false
 
         // Überprüfen, dass die maximale Kurszahl nicht überschritten wird
         return checkboxRows.sumOf { it?.count() ?: 0 } in fachData.minKurse..fachData.maxKurse
@@ -243,12 +243,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         fun count(): Int = toWahlmoeglichkeit()?.n ?: 0
     }
 
-    private fun checkAndNotify(invalidate: Boolean = false) {
-        notifier.invoke((invalidRows == 0) and checkData())
-        if (invalidate) {
-            regelLabelArray.forEach { invalidate() }
-        }
-    }
+    private fun checkAndNotify(): Unit = notifier.invoke((invalidRows == 0) and checkData())
 
     private fun checkData(): Boolean {
         val data = close()
@@ -344,7 +339,9 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
     }
 
 
-    private val checkboxPanel = ScrollablePanel(GridBagLayout()).apply { setScrollableWidth(ScrollablePanel.ScrollableSizeHint.FIT) }
+    private val checkboxPanel = ScrollablePanel(GridBagLayout()).apply {
+        setScrollableWidth(ScrollablePanel.ScrollableSizeHint.FIT)
+    }
 
     private val regelPanel = ScrollablePanel(null)
 
@@ -500,27 +497,37 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
      * Blockt Prüfungs- und Pflichtfächer, damit der Nutzer nichts an der auswahl verändern kann
      */
     private fun faecherBlocken() {
-        // Blockt Prüfungsfächer
-        for (pos in wahlData.pfs.mapNotNull { it?.let { fachPos(it) } }) {
-            checkboxRows[pos]!!.apply(DURCHGEHEND, true)
-        }
+        // TODO bei ::apply() nicht überschreiben sondern nur neues Blocken/Ankreuzen
+
         // Blockt Pflichtfächer
         for ((pf, wm) in fachData.pflichtfaecher) {
             checkboxRows[fachPos(pf)]!!.apply(wm, true)
         }
 
         // Blockt Fremdsprachen die in Klasse 9+ begonnen wurden
-
-        wahlData.fremdsprachen[1].let { (sprache, jahr) ->
-            if (jahr >= 9) {
-                checkboxRows[fachPos(sprache)]!!.apply(
-                    if (fachData.schultyp == Schultyp.GYMNASIUM || jahr != 9) DURCHGEHEND else ERSTES_ZWEITES,
+        val jahrEPhase = fachData.schultyp.ePhase
+        wahlData.fremdsprachen[1].let { (fach, jahr) ->
+            if (jahr >= 9 && fach.isKurs) { // nur Fächer blocken, die man auch wählen kann
+                checkboxRows[fachPos(fach)]!!.apply(
+                    if (jahrEPhase == 12 || jahr >= 10) DURCHGEHEND else ERSTES_ZWEITES,
                     true
                 )
+                // wird eine Fremdsprache in Klasse 10/E-Phase begonnen,
+                // muss die 1. FS zusätzlich in Q1/2 belegt werden (§10.4)
+                val fs1Fach = wahlData.fremdsprachen[0].first
+                if (fs1Fach.isKurs && jahr >= 10) { // sanity check, dass die 1. FS wählbar ist
+                    checkboxRows[fachPos(fs1Fach)]!!.apply(ERSTES_ZWEITES, true)
+                }
             }
         }
-        // TODO korrekte Bedingungen für Sekundarschulen implementieren (§10 Fremdsprachenunterricht)
-        // TODO bei Klasse 10 Belegungsverpflichtung für künstlerisches Fach entfernen
+        /* TODO: Regel für 3./4. Fremdsprache aus Jahr 10/E-Phase implementieren (§10.4)
+        *   Sollte durch FremdsprachenRegel abgedeckt sein */
+
+
+        // Blockt Prüfungsfächer
+        for (pos in wahlData.pfs.mapNotNull { it?.let { fachPos(it) } }) {
+            checkboxRows[pos]!!.apply(DURCHGEHEND, true)
+        }
     }
 
     private fun fachPos(fach: Fach) = fachData.faecher.indexOf(fach)

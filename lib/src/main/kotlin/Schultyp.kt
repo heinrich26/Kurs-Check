@@ -26,7 +26,8 @@ import com.fasterxml.jackson.annotation.JsonProperty
 enum class Schultyp(val jahre: Int) {
     @JsonProperty("Gymnasium") GYMNASIUM(12),
     @JsonProperty("Sekundarschule") SEKUNDARSCHULE(13),
-    @JsonProperty("Berufsschule") BERUFSSCHULE(12); // FIXME je nach System gibt es 2/3 Jahre
+    @JsonProperty("Berufsschule12") BERUFSSCHULE12(12),
+    @JsonProperty("Berufsschule13") BERUFSSCHULE13(13);
 
     val ePhase: Int = jahre - 2
 }

@@ -1,4 +1,6 @@
 import java.nio.file.Files
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     id 'org.jetbrains.kotlin.jvm'
@@ -11,10 +13,10 @@ tasks.withType(JavaCompile).configureEach {
     targetCompatibility = JavaVersion.VERSION_18
 }
 
-// verwendete Java Compatibility-Version für Kotlin Kompilation setzen
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
-    kotlinOptions {
-        jvmTarget = "18"
+tasks.withType(KotlinCompilationTask).configureEach {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_18
+        freeCompilerArgs.add("-Xmulti-dollar-interpolation")
     }
 }
 
@@ -25,10 +27,11 @@ repositories {
 dependencies {
     implementation platform('org.jetbrains.kotlin:kotlin-bom') // <4>
 
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.20' // <5>
-    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.9.20'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.1.10' // <5>
+    implementation 'org.jetbrains.kotlin:kotlin-reflect:2.1.10'
 
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.1'
 }
 
 test {

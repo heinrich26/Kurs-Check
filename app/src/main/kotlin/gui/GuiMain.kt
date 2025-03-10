@@ -77,7 +77,7 @@ class GuiMain(file: File? = null) : JPanel() {
 
                 if (data != null) {
                     updateFachData(data)
-                    wahlData = data.createKurswahl(lastSchool)
+                    wahlData = data.createKurswahl()
                 } else {
                     showLoadingError()
                     showSchoolChooser()
@@ -109,7 +109,7 @@ class GuiMain(file: File? = null) : JPanel() {
             if (data != null) {
                 currentSchool = it
                 fachData = data
-                wahlData = data.createKurswahl(it.schulId)
+                wahlData = data.createKurswahl()
                 thread { SchoolConfig.writeLastSchool(it.schulId) }
 
                 if (!initial) reloadToStart()
@@ -178,7 +178,7 @@ class GuiMain(file: File? = null) : JPanel() {
         it.font = font.deriveFont(12f)
     }
 
-    private val chooseSchoolButton = JButton(currentSchool!!.name)
+    private val chooseSchoolButton = JButton(currentSchool!!.shortname)
 
     // Nav Bar Logik
     private val sidebar = JPanel(GridBagLayout()).apply {
@@ -256,7 +256,7 @@ class GuiMain(file: File? = null) : JPanel() {
 
         unvollstaendigeEingabeLabel.isVisible = !curPanel.isDataValid()
 
-        chooseSchoolButton.text = currentSchool!!.name
+        chooseSchoolButton.text = currentSchool!!.shortname
 
         validate()
     }
@@ -286,7 +286,7 @@ class GuiMain(file: File? = null) : JPanel() {
 
 
         chooseSchoolButton.addMouseListener(onEnter = { chooseSchoolButton.text = "\u2190 Schule wechseln" },
-            onExit = { chooseSchoolButton.text = currentSchool!!.name })
+            onExit = { chooseSchoolButton.text = currentSchool!!.shortname })
 
         chooseSchoolButton.isFocusable = false
         chooseSchoolButton.foreground = Consts.COLOR_PRIMARY
@@ -589,7 +589,7 @@ class GuiMain(file: File? = null) : JPanel() {
                 JOptionPane.YES_NO_OPTION
             ) == JOptionPane.YES_OPTION
         ) {
-            wahlData = fachData.createKurswahl(currentSchool!!.schulId)
+            wahlData = fachData.createKurswahl()
             reloadToStart()
         }
     }
@@ -640,13 +640,14 @@ class GuiMain(file: File? = null) : JPanel() {
         val pane = JScrollPane(schoolList)
         pane.preferredSize = 242 by 298
 
-        schoolList.fixedCellHeight = 56
+        schoolList.fixedCellHeight = -1
 
         val l: ComponentListener = object : ComponentAdapter() {
             override fun componentResized(e: ComponentEvent?) {
                 // for core: force cache invalidation by temporarily setting fixed height
                 schoolList.fixedCellHeight = 10
-                schoolList.fixedCellHeight = 56
+//                schoolList.fixedCellHeight = 56
+                schoolList.fixedCellHeight = -1
             }
         }
 

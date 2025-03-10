@@ -24,7 +24,7 @@ class LeistungskurseLogik(
     private val wahlData: KurswahlData,
 ) {
     // Eine Fremdsprache, die erst in der Jahrgangsstufe 10 oder in der Einführungsphase begonnen wurde,
-    // darf nur als 3. oder 4. Prüfungsfach oder als Referenzfach der 5. PK gewählt werden.
+    // darf nur als 3. oder 4. Prüfungs- bzw. Referenzfach der 5. PK gewählt werden. (§23, Abs. 7)
     private val fs =
         wahlData.fremdsprachen.mapNotNull { (fach, jahr) -> fach.takeIf { (jahr < fachData.schultyp.ePhase) } }
     private val wpfs = wahlData.wpfs

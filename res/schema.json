@@ -130,8 +130,21 @@
 							"type": true,
 							"desc": true,
 							"errorMsg": true,
-							"regel1": { "$ref": "#/definitions/Regel" }
-						}, "required": [ "regel1" ], "additionalProperties": false
+							"regel": { "$ref": "#/definitions/Regel" }
+						}, "required": [ "regel" ], "additionalProperties": false
+					}
+				}, {
+					"if": {
+						"properties": { "type": { "const": "FremdsprachenRegel" } }
+					},
+					"then": {
+						"description": "FremdsprachenRegel - erfüllt, wenn eine in Klasse 10/E-Phase begonnene Fremdsprache gewählt wird. Mit `ohneFs2=true` kann die Regel auf die 3./4. FS begrenzt werden. Primär für die Aufhebung der Belegungsverpflichtung des künstlerischen Fachs bzw. dem Erzwingen einer weiteren Fremdsprache in Kombination mit der `IfThenRegel` gedacht.",
+						"properties": {
+							"type": true,
+							"desc": true,
+							"errorMsg": true,
+							"ohneFs2": { "type": "boolean", "default": false }
+						}, "additionalProperties": false
 					}
 				}
 			],
@@ -147,7 +160,8 @@
 						"OrRegel",
 						"AndRegel",
 						"IfThenRegel",
-						"NotRegel"
+						"NotRegel",
+						"FremdsprachenRegel"
 					]
 				},
 				"desc": {
@@ -187,6 +201,10 @@
 		"Kuerzel": { "type": "string", "description": "Kürzel eines Fachs", "pattern": "^[^$]+$" }
 	},
 	"properties": {
+		"$schema": {
+			"type": "string",
+			"format": "uri"
+		},
 		"schulId": {
 			"type": "string",
 			"description": "Eindeutiger Identifikator für diese Schule; Entspricht dem Dateinamen mit der Dateinamenerweiterung .json!",
@@ -217,8 +235,7 @@
 						"type": "integer",
 						"minimum": -1,
 						"maximum": 3,
-						"description": "Zu welchem Aufgabenfeld das Fach gehört. 0, wenn kein Aufgabenfeld gegeben ist (Sport), -1 bei Zusatzkursen",
-						"examples": [ ]
+						"description": "Zu welchem Aufgabenfeld das Fach gehört. 0, wenn kein Aufgabenfeld gegeben ist (Sport), -1 bei Zusatzkursen"
 					},
 
 					
@@ -389,11 +406,11 @@
 		},
 		"schultyp": {
 			"description": "Typ der Schule. Legt z.B. fest wann die E-Phase stattfindet",
-			"enum": [ "Gymnasium", "Sekundarschule", "Berufsschule" ]
+			"enum": [ "Gymnasium", "Sekundarschule", "Berufsschule12", "Berufsschule13" ]
 		},
 		"nutztLusd": {
 			"type": "boolean",
-			"description": "Ob der Export mit LUSD Formularen erfolgt",
+			"description": "Ob der Export direkt mit B-LUSD Formularen erfolgt, oder ob Kurswahl-Dateien gespeichert werden",
 			"default": false
 		},
 		"fnamePattern": {

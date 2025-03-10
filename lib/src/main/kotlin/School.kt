@@ -22,10 +22,14 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 
 data class School(
     val name: String,
+    var shortname: String? = null,
     val adresse: String,
     @JsonAlias("config")
     val schulId: String,
     val x: Double,
     val y: Double,
     @JsonDeserialize(using = VersionDeserializer::class) val version: Pair<Int, Int>
-)
+) {
+    // Shortname soll nicht leer sein
+    init { if (shortname == null) shortname = name }
+}

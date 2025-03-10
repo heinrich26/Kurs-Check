@@ -104,6 +104,21 @@ class FachData(
     val conflictGroups = regeln.filterIsInstance<KonfliktRegel>().map { wzWildcards[it.wildcard]!! }
 
     /**
+     * Überprüft die Wahlzeilen auf unbekannte Kürzel
+     */
+    fun checkWahlzeilen() {
+        val undefined = wahlzeilen
+            .flatMap { (_, wz) -> wz.toList()}
+            .toSet().minus("*")
+            .filter { !it.startsWith('$') && it !in faecherMap.keys }
+
+        if (undefined.isNotEmpty()) {
+            throw IllegalArgumentException("Undefinierte(s) Kürzel $undefined in den Wahlzeilen!")
+        }
+    }
+
+
+    /**
      * Bereitet einen [ObjectMapper][com.fasterxml.jackson.databind.ObjectMapper]
      * für's laden von [KurswahlData]-JSON vor.
      */
@@ -128,7 +143,7 @@ class FachData(
     fun loadKurswahl(s: String): KurswahlData = getMapper().readValue<KurswahlData>(s)
 
     /** Erstellt eine leere Kurswahl mit Standardwerten gesetzt! */
-    fun createKurswahl(schulId: String): KurswahlData =
+    fun createKurswahl(): KurswahlData =
         KurswahlData(
             gks = this.pflichtfaecher,
             pflichtfaecher = this.pflichtfaecher,
@@ -150,14 +165,14 @@ class FachData(
             "maxKurse=$maxKurse",
             "pf3_4AusschlussFaecher=$pf3_4AusschlussFaecher",
             "zweiWPFs=$zweiWPFs",
-            "semesterkurse=$semesterkurse",
+            "semesterkurse=${semesterkurse.asList()}",
             "klassen=$klassen",
             "schultyp=$schultyp",
             "nutztLUSD=$nutztLusd",
             "fnamePattern=$fnamePattern"
         ).joinToString(
             ",\n\t",
-            "FachData[schulID: $schulId - version ${jsonVersion.first}.${jsonVersion.second}](\n\t",
+            "FachData[schulID: $schulId - v${jsonVersion.first}.${jsonVersion.second}](\n\t",
             "\n)"
         )
 
@@ -166,7 +181,9 @@ class FachData(
         /**
          * Helferklasse um Version einer FachData-JSON zu bestimmen, ohne sie komplett laden zu müssen
          */
-        class FachDataInfo(@JsonDeserialize(using = VersionDeserializer::class) @JsonProperty val jsonVersion: JsonVersion)
+        class FachDataInfo(@JsonDeserialize(using = VersionDeserializer::class)
+                           @JsonProperty
+                           val jsonVersion: JsonVersion)
 
         @JvmStatic
         @JsonCreator
@@ -185,7 +202,7 @@ class FachData(
             @JsonProperty zweiWPFs: Boolean,
             @JsonProperty strikteWPFs: Boolean,
             @JsonProperty semesterkurse: Array<Int>,
-            @JsonProperty klassen: Set<String>,
+            @JsonProperty klassen: Set<String> = emptySet(),
             @JsonProperty schultyp: Schultyp,
             @JsonProperty nutztLusd: Boolean,
             @JsonProperty fnamePattern: String?

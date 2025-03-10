@@ -26,6 +26,8 @@ data class Wahlzeile(
     val pf5: String,
     val linien: WahlzeileLinientyp) {
 
+    fun toList(): List<String> = listOf(lk1, lk2, pf3, pf4, pf5)
+
     companion object {
         val String.isWildcard: Boolean
             get() = this.startsWith('$')
