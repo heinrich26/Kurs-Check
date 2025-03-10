@@ -169,7 +169,7 @@
             },
             "regel2": {
                 "type": "KuerzelRegel",
-                "anzahl": 4,
+                "anzahl": 2,
                 "kuerzel": "En",
                 "wann": "1-2"
             }
