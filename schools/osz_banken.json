@@ -57,6 +57,7 @@
         {
             "name": "Wirtschaft",
             "kuerzel": "VWL/BWL",
+            "isLk": true,
             "aufgabenfeld": 2
         },
         {
