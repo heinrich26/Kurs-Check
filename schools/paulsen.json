@@ -557,7 +557,7 @@
             "lk1": "$FS",
             "lk2": "in",
             "pf3": "de",
-            "pf4": "AF2",
+            "pf4": "$AF2",
             "pf5": "*",
             "linien": "gestrichelt"
         },
