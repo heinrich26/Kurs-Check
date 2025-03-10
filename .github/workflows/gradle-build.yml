@@ -50,6 +50,7 @@ jobs:
       with:
         name: application
         path: out/executable/
+        merge-multiple: true
 
     - name: Build RPMs with JPackage
       if: ${{ matrix.os == 'ubuntu-latest' }}
@@ -63,6 +64,7 @@ jobs:
       with:
         name: application
         path: out/executable/
+        merge-multiple: true
 
     # - name: Rename win32 Binaries
     #   if: ${{ matrix.arch == 'x86' }}
