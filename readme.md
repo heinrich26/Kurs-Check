@@ -5,7 +5,7 @@
 
 Eine App, um die Kurswahl an Berliner Schulen zu erleichtern.
 
-Ein Projekt des Informatik LKs 2021-2023 am Willi-Graf-Gymnasium.
+Entstanden als Software-Projekt des Informatik LKs 2021-2023 am Willi-Graf-Gymnasium.
 
 ## TODOs
 - [x] Echtzeitinfo bei unvollständiger Eingabe
@@ -30,6 +30,7 @@ Ein Projekt des Informatik LKs 2021-2023 am Willi-Graf-Gymnasium.
 - [ ] Mehr Tooltips, Infos & Hilfen
 - [ ] Möglichkeit 2. WPF nicht zu setzen, auch bei 2 WPFs (sollte nur die Standardeinstellung beeinflussen)
 - [ ] Möglichkeit einsemestrige Kurse (bspw. Skifahrt) anzubieten
+- [ ] Fremdsprache 3/4 ab E-Phase "richtig" umsetzen
 
 ## Windows Paket GUID
 Kurs-Check benutzt die GUID: `928348ff-a1f1-4e0d-881c-11256e369b08`
