@@ -46,7 +46,7 @@ jobs:
       run: gradle :merger:jpackage
 
     - name: Upload binaries
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: application
         path: out/executable/
@@ -59,7 +59,7 @@ jobs:
 
     - name: Upload rpm binaries
       if: ${{ matrix.os == 'ubuntu-latest' }}
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: application
         path: out/executable/
