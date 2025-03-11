@@ -161,17 +161,17 @@
         },
         {
             "type": "IfThenRegel", 
-            "desc": "Wird die 3./4. Fremdsprache fortgesetzt, muss eine weitere Fremdsprache in Q1 & Q2 belegt werden.",
-            "errorMsg": "Belege eine weitere Fremdsprache in Q1 & Q2 (Spreche mit deinem PäKo, wenn hier Probleme auftreten)",
+            "desc": "Wird die 3./4. Fremdsprache fortgesetzt, muss eine weitere Fremdsprache durchgehend belegt werden.",
+            "errorMsg": "Belege Englisch durchgängig (Spreche mit deinem PäKo, wenn hier Probleme auftreten)",
             "regel1": {
                 "type": "FremdsprachenRegel",
                 "ohneFs2": true
             },
             "regel2": {
                 "type": "KuerzelRegel",
-                "anzahl": 2,
+                "anzahl": 4,
                 "kuerzel": "En",
-                "wann": "1-2"
+                "wann": "1-4"
             }
         },
         {
