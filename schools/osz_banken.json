@@ -95,8 +95,7 @@
             "name": "Sport",
             "kuerzel": "Sp",
             "aufgabenfeld": 0,
-            "nurPf4_5": true,
-            "isExtra": true
+            "nurPf4_5": true
         },
         {
             "name": "Sport Theorie",
