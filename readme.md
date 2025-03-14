@@ -17,8 +17,7 @@ Entstanden als Software-Projekt des Informatik LKs 2021-2023 am Willi-Graf-Gymna
 - [x] Beschreibung fürs/besseres Öffnen-Icon
 - [x] Feld für Unterschrift & Datum im Output
 - [x] AndRegel für Mathe/-CAS bei lili.json implementieren
-- [x] Version für MacOS
-- [x] Version für Linux
+- [x] Version für MacOS & Linux
 - [x] Breite der Kursanzahlen an die Checkboxbreite im Grundkurswahl Fenster binden, damit es auch auf MacOS funzt
 - [x] Eingabe wird ungültig angezeigt bei Grundkurswahl
 - [ ] Dateiöffnung bei UNC-Pfaden fixen
