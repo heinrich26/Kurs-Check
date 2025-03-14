@@ -198,7 +198,7 @@
 			"required": [ "lk1", "lk2", "pf3", "pf4", "pf5", "linien" ],
 			"additionalProperties": false
 		},
-		"Kuerzel": { "type": "string", "description": "Kürzel eines Fachs", "pattern": "^[^$]+$" }
+		"Kuerzel": { "type": "string", "description": "Kürzel eines Fachs", "pattern": "^[^$*"'\\]+$" }
 	},
 	"properties": {
 		"$schema": {
