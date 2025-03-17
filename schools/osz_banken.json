@@ -282,7 +282,7 @@
     // Grundkurse und Leistungskurse zusammen
     "minKurse": 34,
     // Grundkurse und Leistungskurse zusammen
-    "maxKurse": 36,
+    "maxKurse": 38,
     // Fächer, von denen nur 1 gewählt werden darf (§ 23,6 VO-GO)
     "pf3_4AusschlussFaecher": [
         "Ku",
@@ -291,10 +291,10 @@
     ],
     // Limitiert die Anzahl Kurse die in einem Semester belegt werden können!
     "semesterkurse": [
-        8,
-        8,
-        8,
-        8
+        10,
+        10,
+        10,
+        10
     ],
     "schultyp": "Sekundarschule", // kann nach Softwareupdate zu "Berufsschule13" geändert werden
     "nutztLusd": false,
