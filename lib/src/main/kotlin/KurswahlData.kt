@@ -51,12 +51,12 @@ typealias WPFs = Pair<Fach, Fach?>?
     "jsonVersion", "lk1", "lk2", "pf3", "pf4", "pf5", "pf5Typ", "gks", "fremdsprachen", "wpfs", "klasse",
     "wahlzeile", "vorname", "nachname", "geburtsdatum", "geburtsort", "staatsangehoerigkeit", "schulId"
 )
-data class KurswahlData(
-    var lk1: Fach? = null,
-    var lk2: Fach? = null,
-    var pf3: Fach? = null,
-    var pf4: Fach? = null,
-    var pf5: Fach? = null,
+class KurswahlData(
+    lk1: Fach? = null,
+    lk2: Fach? = null,
+    pf3: Fach? = null,
+    pf4: Fach? = null,
+    pf5: Fach? = null,
     var pf5Typ: Pf5Typ = Pf5Typ.PRAESENTATION,
     var gks: Map<Fach, Wahlmoeglichkeit>,
     @get:JsonSerialize(using = ListOfPairSerializer::class) var fremdsprachen: List<Pair<Fach, Int>> = emptyList(),
@@ -77,6 +77,17 @@ data class KurswahlData(
     val readJsonVersion: Pair<Int, Int>,
     val schulId: String
 ) {
+
+    var lk1: Fach? = lk1
+        private set
+    var lk2: Fach? = lk2
+        private set
+    var pf3: Fach? = pf3
+        private set
+    var pf4: Fach? = pf4
+        private set
+    var pf5: Fach? = pf5
+        private set
 
     companion object {
         @JvmStatic
@@ -424,6 +435,69 @@ data class KurswahlData(
     fun toFilename(): String = "${vorname}_$nachname"
         .replace(Regex("[\\\\/:*?\"<>|.&$]"), "")
         .replace(' ', '_')
+
+    override fun toString(): String = listOf(
+            "lk1=$lk1, " +
+            "lk2=$lk2, " +
+            "pf3=$pf3, " +
+            "pf4=$pf4, " +
+            "pf5=$pf5, " +
+            "pf5Typ=$pf5Typ, " +
+            "gks=$gks, " +
+            "fremdsprachen=$fremdsprachen, " +
+            "wpfs=$wpfs, " +
+            "wahlzeile=$wahlzeile, " +
+            "klasse=$klasse, " +
+            "pflichtfaecher=$pflichtfaecher, " +
+            "vorname=$vorname, " +
+            "nachname=$nachname, " +
+            "geburtsdatum=$geburtsdatum, " +
+            "geburtsort=$geburtsort, " +
+            "staatsangehoerigkeit='$staatsangehoerigkeit', " +
+            "readJsonVersion=${readJsonVersion.toList().joinToString(".")}, " +
+            "schulId='$schulId')").joinToString("\n\t", prefix = "KurswahlData(\n")
+
+    fun copy(lk1: Fach? = this.lk1,
+             lk2: Fach? = this.lk2,
+             pf3: Fach? = this.pf3,
+             pf4: Fach? = this.pf4,
+             pf5: Fach? = this.pf5,
+             pf5Typ: Pf5Typ = this.pf5Typ,
+             gks: Map<Fach, Wahlmoeglichkeit> = this.gks,
+             fremdsprachen: List<Pair<Fach, Int>> = this.fremdsprachen,
+             wpfs: WPFs = this.wpfs,
+             wahlzeile: WahlzeileNummer = this.wahlzeile,
+             klasse: String? = this.klasse,
+             pflichtfaecher: Map<Fach, Wahlmoeglichkeit> = this.pflichtfaecher,
+             vorname: String? = this.vorname,
+             nachname: String? = this.nachname,
+             geburtsdatum: LocalDate? = this.geburtsdatum,
+             geburtsort: String? = this.geburtsort,
+             staatsangehoerigkeit: String = this.staatsangehoerigkeit,
+             readJsonVersion: Pair<Int, Int> = this.readJsonVersion,
+             schulId: String = this.schulId): KurswahlData =
+        KurswahlData(
+            lk1 = lk1,
+            lk2 = lk2,
+            pf3 = pf3,
+            pf4 = pf4,
+            pf5 = pf5,
+            pf5Typ = pf5Typ,
+            gks = gks,
+            fremdsprachen = fremdsprachen,
+            wpfs = wpfs,
+            wahlzeile = wahlzeile,
+            klasse = klasse,
+            pflichtfaecher = pflichtfaecher,
+            vorname = vorname,
+            nachname = nachname,
+            geburtsdatum = geburtsdatum,
+            geburtsort = geburtsort,
+            staatsangehoerigkeit = staatsangehoerigkeit,
+            readJsonVersion = readJsonVersion,
+            schulId = schulId
+        )
+
 
     // Annotation um Lockbare Props zu finden und beim locken zu aktualisieren.
     @Target(AnnotationTarget.PROPERTY)
