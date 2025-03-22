@@ -1,7 +1,6 @@
 <component name="InspectionProjectProfileManager">
   <profile version="1.0">
     <option name="myName" value="Project Default" />
-    <inspection_tool class="88d0d8d9-8c86-331b-a7f4-b071e7932545" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="Destructure" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
     <inspection_tool class="DuplicatedCode" enabled="true" level="WEAK WARNING" enabled_by_default="true">
       <Languages>
@@ -34,8 +33,8 @@
       <replaceConfiguration name="Ugly Construction of Dimension" description="Just use Number `by` Number!" text="$Type$($Parameter1$, $Parameter2$)" recursive="false" caseInsensitive="true" type="Kotlin" pattern_context="default" reformatAccordingToStyle="false" shortenFQN="false" replacement="$Parameter1$ by $Parameter2$">
         <constraint name="__context__" within="" contains="" />
         <constraint name="Type" regexp="java.awt.Dimension" reference="class constructors" within="" contains="" />
-        <constraint name="Parameter1" nameOfExprType="Int" within="" contains="" />
-        <constraint name="Parameter2" nameOfExprType="Int" within="" contains="" />
+        <constraint name="Parameter1" regexp="\w+" nameOfExprType="Int" within="" contains="" />
+        <constraint name="Parameter2" regexp="\w+" nameOfExprType="Int" within="" contains="" />
       </replaceConfiguration>
       <replaceConfiguration name="Ugly Dimension creation" description="Just use `by`" text="$Type$($Parameter1$, $Parameter2$)" recursive="false" caseInsensitive="false" type="Kotlin" pattern_context="default" reformatAccordingToStyle="true" shortenFQN="true" replacement="$Parameter1$ by $Parameter2$">
         <constraint name="__context__" within="" contains="" />

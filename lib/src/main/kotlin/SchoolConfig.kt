@@ -101,37 +101,33 @@ object SchoolConfig {
     }
 
     /** Loads the Config from the Server */
-    private fun fetchConfig(): String {
-        return doRequest(CONFIG_FILE_URL).also {
-            try {
-                AsynchronousFileChannel.open(
-                    Paths.get(LOCAL_MAIN_CONFIG),
-                    StandardOpenOption.CREATE,
-                    StandardOpenOption.WRITE
-                ).use { asyncChannel ->
-                    // Datei schreiben
-                    asyncChannel.write(ByteBuffer.wrap(it.encodeToByteArray()), 0)
-                }
-            } catch (_: IOException) {
+    @Throws(IOException::class, InterruptedException::class, ConnectException::class)
+    private fun fetchConfig(): String = doRequest(CONFIG_FILE_URL).also {
+        try {
+            AsynchronousFileChannel.open(
+                Paths.get(LOCAL_MAIN_CONFIG),
+                StandardOpenOption.CREATE,
+                StandardOpenOption.WRITE
+            ).use { asyncChannel ->
+                // Datei schreiben
+                asyncChannel.write(ByteBuffer.wrap(it.encodeToByteArray()), 0)
             }
-        }
+        } catch (_: IOException) {} // Konnte nicht gecached werden
     }
 
     /** Versucht die Konfiguration für die angeforderte Schule vom Server zu laden */
-    private fun fetchSchool(schoolKey: String): String {
-        return doRequest(CONFIG_FOLDER_URL + schoolKey).also {
-            try {
-                AsynchronousFileChannel.open(
-                    Paths.get(LOCAL_SCHOOLS_DIR + schoolKey),
-                    StandardOpenOption.CREATE,
-                    StandardOpenOption.WRITE
-                ).use { asyncChannel ->
-                    // Datei schreiben
-                    asyncChannel.write(ByteBuffer.wrap(it.encodeToByteArray()), 0)
-                }
-            } catch (_: IOException) {
+    @Throws(IOException::class, InterruptedException::class, ConnectException::class)
+    private fun fetchSchool(schoolKey: String): String = doRequest(CONFIG_FOLDER_URL + schoolKey).also {
+        try {
+            AsynchronousFileChannel.open(
+                Paths.get(LOCAL_SCHOOLS_DIR + schoolKey),
+                StandardOpenOption.CREATE,
+                StandardOpenOption.WRITE
+            ).use { asyncChannel ->
+                // Datei schreiben
+                asyncChannel.write(ByteBuffer.wrap(it.encodeToByteArray()), 0)
             }
-        }
+        } catch (_: IOException) {}
     }
 
     private fun loadSchool(schoolKey: String): String? {

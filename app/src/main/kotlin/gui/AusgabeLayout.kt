@@ -20,10 +20,7 @@ package com.kurswahlApp.gui
 
 import com.kurswahlApp.R
 import com.kurswahlApp.data.*
-import java.awt.Color
-import java.awt.Font
-import java.awt.GridBagConstraints
-import java.awt.GridBagLayout
+import java.awt.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -65,16 +62,15 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
                         weightx = 1.0*/
                     )
                 feld = fach.aufgabenfeld
-                feldPanel = JPanel(GridBagLayout())
-                feldPanel.border =
-                    TitledBorder(RoundedBorder(8), if (feld > 0) "${R.getString("aufgabenfeld")} $feld" else R.getString("additional_subjects"))
-
+                feldPanel = TitledPanel(if (feld > 0) "${R.getString("aufgabenfeld")} $feld" else R.getString("additional_subjects"), GridBagLayout())
             }
-            // if A: B else true == !A or B
-            val cond: Boolean =
-                if (fach.isFremdsprache) fach in fs
-                else (!fach.brauchtWPF || (wpfs != null && fach in wpfs))
+
             // cond == true -> wählbar, sonst versteckt
+            val cond: Boolean =
+                fach in wahlData.kurse || // Nullpointer verhinden, falls nicht alle Fälle abgedeckt werden
+                // if A: B else true == !A or B
+                if (fach.isFremdsprache) fach in fs
+                else (!fachData.strikteWPFs || !fach.brauchtWPF || (wpfs != null && fach in wpfs))
 
 
             if (cond) {
@@ -130,10 +126,9 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
 
         // Extrainformationen
         // Panel mit allen anderen Infos
-        feldPanel = JPanel().apply {
+        feldPanel = TitledPanel(R.getString("your_infos")).apply {
             layout = BoxLayout(this, BoxLayout.Y_AXIS)
             alignmentX = 0f
-            border = TitledBorder(RoundedBorder(8), R.getString("your_infos"))
         }
         feldPanel.add(JLabel("${R.getString("type_of_pk5")}: <b>${wahlData.pf5Typ.repr}</b>".wrapHtml()))
 
@@ -162,8 +157,7 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
 
         checkboxPanel.add(feldPanel)
 
-        feldPanel = JPanel(GridBagLayout())
-        feldPanel.border = TitledBorder(RoundedBorder(8), R.getString("course_count"))
+        feldPanel = TitledPanel(R.getString("course_count"), GridBagLayout())
 
 
         // Kursanzahlen
@@ -180,15 +174,21 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
 
 
         // Unterschriftfeld
-        feldPanel = JPanel(GridBagLayout())
-        feldPanel.border = TitledBorder(RoundedBorder(8), R.getString("signature"))
-        feldPanel.add(JLabel(LocalDate.now().format(DateTimeFormatter.ofPattern("d.M.yyyy"))).also {
-            Color(120, 120, 120).let { gray ->
-                it.border = MatteBorder(0, 0, 2, 0, gray)
-                it.foreground = gray
-            }
-            it.font = it.font.deriveFont(12f)
-        }, fill = GridBagConstraints.HORIZONTAL, margin = Insets(0, 0, 0, 0), weightx = 1.0)
+        feldPanel = TitledPanel(R.getString("signature"), GridBagLayout())
+        for (i in 0..1) {
+            feldPanel.add(JLabel(LocalDate.now().format(DateTimeFormatter.ofPattern("d.M.yyyy"))).also {
+                Color(120, 120, 120).let { gray ->
+                    it.border = MatteBorder(0, 0, 2, 0, gray)
+                    it.foreground = gray
+                }
+                it.font = it.font.deriveFont(12f)
+            },
+                fill = GridBagConstraints.HORIZONTAL,
+                margin = Insets(top = if (i==1) 8 else 0),
+                weightx = 1.0,
+                row = i
+            )
+        }
 
         checkboxPanel.add(Box.createVerticalStrut(4))
         checkboxPanel.add(feldPanel)
@@ -198,6 +198,16 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
         @JvmStatic
         fun main(args: Array<String>) {
             KurswahlPanel.runTest(614, 874) { AusgabeLayout(testFachdata, testKurswahl) }
+        }
+    }
+
+    private inner class TitledPanel(
+        title: String,
+        layout: LayoutManager = FlowLayout(),
+        isDoubleBuffered: Boolean = true
+    ) : JPanel(layout, isDoubleBuffered) {
+        init {
+            this.border = TitledBorder(RoundedBorder(8), title)
         }
     }
 }

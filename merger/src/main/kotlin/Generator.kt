@@ -18,17 +18,18 @@
 package com.kurswahlApp
 
 import com.kurswahlApp.data.*
-import com.kurswahlApp.gui.wrapHtml
 import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
 import kotlinx.cli.default
 import kotlinx.cli.optional
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVPrinter
+import java.awt.Component
 import java.io.File
 import java.io.IOException
 import java.io.PrintStream
 import java.nio.charset.Charset
+import javax.swing.Icon
 import javax.swing.JFileChooser
 import javax.swing.JOptionPane
 import javax.swing.filechooser.FileNameExtensionFilter
@@ -98,11 +99,13 @@ fun main(args: Array<String>) {
     parser.parse(args)
 
     if (gui) {
-        schulId = JOptionPane.showInputDialog(
-            null,
-            "Schul-ID mit <code>.json</code>-Endung:".wrapHtml(),
-            "Schuld-ID eingeben",
-            JOptionPane.QUESTION_MESSAGE
+        SchoolConfig.updateConfig()
+        val options = SchoolConfig.schools.map(School::schulId).toTypedArray()
+        schulId = showInputDialog(
+            title = "",
+            message = "Schule auswählen",
+            messageType = JOptionPane.QUESTION_MESSAGE,
+            options = options
         ) ?: run {
             JOptionPane.showMessageDialog(null, "Keine Eingabe, Abbruch!", "Programmabbruch", JOptionPane.ERROR_MESSAGE)
             exitProcess(0)
@@ -131,7 +134,8 @@ fun main(args: Array<String>) {
             output = chooser.selectedFile.absolutePath
         }
 
-        action = TYP.entries.toTypedArray().getOrElse(JOptionPane.showOptionDialog(null, "Aktion auswählen", "Auswählen", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, TYP.values(), TYP.CSV)
+        action = TYP.entries.toTypedArray().getOrElse(JOptionPane.showOptionDialog(null, "Aktion auswählen", "Auswählen", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+            TYP.entries.toTypedArray(), TYP.CSV)
         ) { TYP.CSV }
 
         try {
@@ -229,7 +233,7 @@ private fun mergeToCSV(fachData: FachData, files: Array<out File>, outputFile: F
         }
     }
 
-    val f = if (outputFile == null || !outputFile.isFile || !outputFile.extension.equals("csv", true)) {
+    val f = if (outputFile == null || !outputFile.extension.equals("csv", true) && !outputFile.isDirectory) {
         out.println("Ungültiger Pfad für die Output-Datei, nutze Default: $FILE_NAME im Ordner ${files[0].parentFile} !")
         File(files[0].parentFile, FILE_NAME)
     } else outputFile
@@ -239,8 +243,7 @@ private fun mergeToCSV(fachData: FachData, files: Array<out File>, outputFile: F
 
     val filteredFaecher = fachData.faecher.filter { it.isKurs }
     val headerMixin =
-        filteredFaecher.flatMap { listOf("${it.kuerzel}_1", "${it.kuerzel}_2", "${it.kuerzel}_3", "${it.kuerzel}_4") }
-            .toTypedArray()
+        filteredFaecher.flatMap { (1..4).map { i -> "${it.kuerzel}_$i" } }.toTypedArray()
 
     val csvPrinter =
         CSVPrinter(writer, CSVFormat.Builder.create(CSVFormat.EXCEL).setHeader(*CSV_HEADER, *headerMixin).build())
@@ -256,12 +259,12 @@ private fun mergeToCSV(fachData: FachData, files: Array<out File>, outputFile: F
             var skipped = 0
             val row = filteredFaecher.flatMap {
                 when (gks[it]) {
-                    com.kurswahlApp.data.Wahlmoeglichkeit.ERSTES_ZWEITES -> listOf(GK, GK, null, null)
-                    com.kurswahlApp.data.Wahlmoeglichkeit.ERSTES_DRITTES -> listOf(GK, GK, GK, null)
-                    com.kurswahlApp.data.Wahlmoeglichkeit.ZWEITES_DRITTES -> listOf(null, GK, GK, null)
-                    com.kurswahlApp.data.Wahlmoeglichkeit.ZWEITES_VIERTES -> listOf(null, GK, GK, GK)
-                    com.kurswahlApp.data.Wahlmoeglichkeit.DRITTES_VIERTES -> listOf(null, null, GK, GK)
-                    com.kurswahlApp.data.Wahlmoeglichkeit.DURCHGEHEND -> listOf(GK, GK, GK, GK)
+                    Wahlmoeglichkeit.ERSTES_ZWEITES -> listOf(GK, GK, null, null)
+                    Wahlmoeglichkeit.ERSTES_DRITTES -> listOf(GK, GK, GK, null)
+                    Wahlmoeglichkeit.ZWEITES_DRITTES -> listOf(null, GK, GK, null)
+                    Wahlmoeglichkeit.ZWEITES_VIERTES -> listOf(null, GK, GK, GK)
+                    Wahlmoeglichkeit.DRITTES_VIERTES -> listOf(null, null, GK, GK)
+                    Wahlmoeglichkeit.DURCHGEHEND -> listOf(GK, GK, GK, GK)
                     null -> when (pfs.indexOf(it)) {
                         0, 1 -> listOf(LK, LK, LK, LK)
                         2 -> listOf(PF3, PF3, PF3, PF3)
@@ -310,3 +313,17 @@ private fun mergeToCSV(fachData: FachData, files: Array<out File>, outputFile: F
 
     out.println("$filesProcessed Dateien zusammengefügt")
 }
+
+
+@Suppress("UNCHECKED_CAST")
+private fun <T> showInputDialog(
+    parent: Component? = null,
+    message: String = "",
+    title: String,
+    messageType: Int,
+    icon: Icon? = null,
+    options: Array<out T>,
+    initialValue: T? = null
+): T? =
+    JOptionPane.showInputDialog(parent, message, title, messageType,
+                                icon, options, initialValue) as T?
