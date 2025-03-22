@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ windows-latest, macos-latest, ubuntu-latest ]
+        os: [ windows-latest, macos-13, macos-latest, ubuntu-latest ]
         # arch: [ x64 ]
         # java-distro: [ corretto ]
         # include: 
@@ -44,6 +44,24 @@ jobs:
 
     - name: Build Commandline-Merger with JPackage
       run: gradle :merger:jpackage
+
+    - name: Rename Apple Silicon Binaries
+      if: ${{ matrix.os == 'macos-latest' }}
+      working-directory: ./out/executable/basic
+      shell: cmd
+      run: |
+        for %%F in (*.pkg) do RENAME %%F "%%~nF_arm64.pkg"
+        cd ../full
+        for %%F in (*.pkg) do RENAME %%F "%%~nF_arm64.pkg"
+
+    - name: Rename Apple Silicon Binaries
+      if: ${{ matrix.os == 'macos-13' }}
+      working-directory: ./out/executable/basic
+      shell: cmd
+      run: |
+        for %%F in (*.pkg) do RENAME %%F "%%~nF_intel.pkg"
+        cd ../full
+        for %%F in (*.pkg) do RENAME %%F "%%~nF_intel.pkg"
 
     - name: Upload binaries
       uses: actions/upload-artifact@v4
@@ -73,12 +91,3 @@ jobs:
         with:
           name: executables
           delete-merged: true
-
-    # - name: Rename win32 Binaries
-    #   if: ${{ matrix.arch == 'x86' }}
-    #   working-directory: ./out/executable/basic
-    #   shell: cmd
-    #   run: |
-    #     for %%F in (*.msi) do RENAME %%F "%%~nF_win32.msi"
-    #     cd ../full
-    #     for %%F in (*.msi) do RENAME %%F "%%~nF_win32.msi"
