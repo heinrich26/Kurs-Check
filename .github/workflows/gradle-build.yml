@@ -34,34 +34,27 @@ jobs:
         java-version: '18'
         # architecture: ${{ matrix.arch }}
         cache: 'gradle'
-    - name: Setup Gradle
-      uses: gradle/gradle-build-action@v2
-      with:
-        gradle-version: 8.5
+    # - name: Setup Gradle
+    #   uses: gradle/gradle-build-action@v2
+    #   with:
+    #     gradle-version: 8.5
 
     - name: Build Application with JPackage
-      run: gradle :app:jpackage
-
-    - name: Build Commandline-Merger with JPackage
-      run: gradle :merger:jpackage
-
-    - name: Rename Apple Silicon Binaries
-      if: ${{ matrix.os == 'macos-latest' }}
-      working-directory: ./out/executable/basic
-      shell: cmd
       run: |
-        for %%F in (*.pkg) do RENAME %%F "%%~nF_arm64.pkg"
-        cd ../full
-        for %%F in (*.pkg) do RENAME %%F "%%~nF_arm64.pkg"
+        ./gradlew :app:jpackage
+        ./gradlew :merger:jpackage
+
+    - name: Rename macOS x86 Binaries
+      if: ${{ matrix.os == 'macos-latest' }}
+      working-directory: ./out/executable
+      shell: bash
+      run: find . -name '*.pkg' -exec bash -c 'mv $0 ${0/.pkg/_arm64.pkg}' {} \;
 
     - name: Rename Apple Silicon Binaries
       if: ${{ matrix.os == 'macos-13' }}
-      working-directory: ./out/executable/basic
-      shell: cmd
-      run: |
-        for %%F in (*.pkg) do RENAME %%F "%%~nF_intel.pkg"
-        cd ../full
-        for %%F in (*.pkg) do RENAME %%F "%%~nF_intel.pkg"
+      working-directory: ./out/executable
+      shell: bash
+      run: find . -name '*.pkg' -exec bash -c 'mv $0 ${0/.pkg/_intel.pkg}' {} \;
 
     - name: Upload binaries
       uses: actions/upload-artifact@v4
@@ -72,8 +65,8 @@ jobs:
     - name: Build RPMs with JPackage
       if: ${{ matrix.os == 'ubuntu-latest' }}
       run: |
-        gradle :app:buildRPM
-        gradle :merger:buildRPM
+        ./gradlew :app:buildRPM
+        ./gradlew :merger:buildRPM
 
     - name: Upload rpm binaries
       if: ${{ matrix.os == 'ubuntu-latest' }}
