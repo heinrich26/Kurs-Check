@@ -2,7 +2,7 @@
     // eindeutiger Identifikator dieser FachDaten; Gleichzeitig der Dateiname dieser Datei!
     "schulId": "osz_banken.json",
     // Hauptversion.Subversion
-    "jsonVersion": "1.0",
+    "jsonVersion": "2.0",
     // "aufgabenfeld" -> 0, wenn kein Aufgabenfeld gg. ist (Sport), Zusatzkurse -> -1
     "faecher": [
         {
@@ -19,13 +19,27 @@
             "isFremdsprache": true
         },
         {
-            "name": "Französisch",
+            "name": "Französisch (Kl. 7/9)",
+            "kuerzel": "FrAlt",
+            "aufgabenfeld": 1,
+            "isFremdsprache": true,
+            "isKurs": false
+        },
+        {
+            "name": "Spanisch  (Kl. 7/9)",
+            "kuerzel": "SpaAlt",
+            "aufgabenfeld": 1,
+            "isFremdsprache": true,
+            "isKurs": false
+        },
+        {
+            "name": "Französisch (Kl. 10+)",
             "kuerzel": "Fr",
             "aufgabenfeld": 1,
             "isFremdsprache": true
         },
         {
-            "name": "Spanisch",
+            "name": "Spanisch  (Kl. 10+)",
             "kuerzel": "Spa",
             "aufgabenfeld": 1,
             "isFremdsprache": true
@@ -106,15 +120,8 @@
         },
         // Fächer, die nur als Fremdsprache/Wahlpflichtfach angezeigt werden sollen
         {
-            "name": "Altgriechisch",
-            "kuerzel": "AGr",
-            "aufgabenfeld": 1,
-            "isKurs": false,
-            "isFremdsprache": true
-        },
-        {
-            "name": "Griechisch",
-            "kuerzel": "Gr",
+            "name": "anerkannt B1",
+            "kuerzel": "B1",
             "aufgabenfeld": 1,
             "isKurs": false,
             "isFremdsprache": true
@@ -202,6 +209,43 @@
             },
             "desc": "Sport als PF -> zusätzlich Sport Theorie min. in Q3 & Q4",
             "errorMsg": "Wähle Sport Theorie in Q3 & Q4!"
+        },
+        {
+            "type": "IfThenRegel",
+            "regel1": {
+                "type": "NotRegel", 
+                "regel": {
+                    "type": "KuerzelRegel",
+                    "kuerzel": "Sp",
+                    "anzahl": 4,
+                    "scope": "1-5"
+                }
+            },
+            "regel2": {
+                "type": "NotRegel", 
+                "regel": {
+                    "type": "KuerzelRegel",
+                    "kuerzel": "SpT",
+                    "anzahl": 2,
+                    "wann": "3-4"
+                }
+            },
+            "desc": "Sport Theorie kann nur in Kombination mit Sport als PF gewählt werden.",
+            "errorMsg": "Wähle Sport Theorie ab oder Sport als PF!"
+        },
+        {
+            "type": "IfThenRegel",
+            "regel1": {
+                "type": "KuerzelRegel",
+                "kuerzel": "SpT",
+                "anzahl": 2
+            },
+            "regel2": {
+                "type": "KursanzahlRegel",
+                "min": 35
+            },
+            "desc": "Sport als PF -> Es müssen mind. 35 Kurse belegt werden",
+            "errorMsg": "Wähle mind. 35 Kurse!"
         }
     ],
     "wahlzeilen": {
