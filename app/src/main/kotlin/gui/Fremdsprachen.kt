@@ -231,7 +231,13 @@ class Fremdsprachen(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         container3.add(klasse, row = 9, column = 1, fill = GridBagConstraints.BOTH)
 
         add(container1, row = 0, fill = GridBagConstraints.BOTH)
-        add(container2, row = 1, fill = GridBagConstraints.BOTH)
+
+        // Wahlpflichtfach automatisch auswählen und ausblenden, wenn es nur eine Auswahlmöglichkeit gibt
+        if (fachData.wpfs.size == 1) {
+            wpf1.selectedItem = fachData.wpfs.first()
+        } else {
+            add(container2, row = 1, fill = GridBagConstraints.BOTH)
+        }
 
         if (fachData.klassen.isNotEmpty()) add(container3, row = 2, fill = GridBagConstraints.BOTH)
         add(Box.createHorizontalStrut(200), row = 0, column = 0)
