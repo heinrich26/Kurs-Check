@@ -77,7 +77,7 @@ jobs:
     - name: Upload binaries
       uses: actions/upload-artifact@v4
       with:
-        name: application-${{ matrix.os }}
+        name: application-${{ matrix.os }}-${{ matrix.arch }}
         path: out/executable/
         
   merge:
