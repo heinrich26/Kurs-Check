@@ -18,7 +18,6 @@
 package com.kurswahlApp.data
 
 import com.fasterxml.jackson.annotation.JsonAlias
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 
 data class School(
     val name: String,
@@ -28,7 +27,7 @@ data class School(
     val schulId: String,
     val x: Double,
     val y: Double,
-    @JsonDeserialize(using = VersionDeserializer::class) val version: Pair<Int, Int>
+    val version: JsonVersion
 ) {
     // Shortname soll nicht leer sein
     init { if (shortname == null) shortname = name }

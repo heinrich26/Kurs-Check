@@ -376,7 +376,7 @@ class GuiMain(file: File? = null) : JPanel() {
                 val data = mapper.readValue<KurswahlData>(file)
                 val newFachData: FachData = mirror.fachData!!
                 when {
-                    data.readJsonVersion.first != newFachData.jsonVersion.first -> {
+                    data.readJsonVersion.major != newFachData.jsonVersion.major -> {
                         JOptionPane.showMessageDialog(
                             this,
                             R.getString("incompatible_file_alert"),
@@ -386,14 +386,14 @@ class GuiMain(file: File? = null) : JPanel() {
                         return false
                     }
 
-                    data.readJsonVersion.second > newFachData.jsonVersion.second -> JOptionPane.showMessageDialog(
+                    data.readJsonVersion.minor > newFachData.jsonVersion.minor -> JOptionPane.showMessageDialog(
                         this,
                         R.getString("newer_file_alert"),
                         R.getString("version_differences"),
                         JOptionPane.WARNING_MESSAGE
                     )
 
-                    data.readJsonVersion.second < newFachData.jsonVersion.second -> JOptionPane.showMessageDialog(
+                    data.readJsonVersion.major < newFachData.jsonVersion.minor -> JOptionPane.showMessageDialog(
                         this,
                         R.getString("older_file_alert"),
                         R.getString("version_differences"),
@@ -490,7 +490,7 @@ class GuiMain(file: File? = null) : JPanel() {
                             f.createNewFile()
 
                             jacksonObjectMapper().writer()
-                                .withAttribute("jsonVersion", fachData.jsonVersion.let { "${it.first}.${it.second}" })
+                                .withAttribute("jsonVersion", fachData.jsonVersion)
                                 .writeValue(f, data)
                         } catch (exception: SecurityException) {
                             JOptionPane.showMessageDialog(

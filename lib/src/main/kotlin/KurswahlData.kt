@@ -51,12 +51,12 @@ typealias WPFs = Pair<Fach, Fach?>?
     "jsonVersion", "lk1", "lk2", "pf3", "pf4", "pf5", "pf5Typ", "gks", "fremdsprachen", "wpfs", "klasse",
     "wahlzeile", "vorname", "nachname", "geburtsdatum", "geburtsort", "staatsangehoerigkeit", "schulId"
 )
-class KurswahlData(
-    lk1: Fach? = null,
-    lk2: Fach? = null,
-    pf3: Fach? = null,
-    pf4: Fach? = null,
-    pf5: Fach? = null,
+data class KurswahlData(
+    var lk1: Fach? = null,
+    var lk2: Fach? = null,
+    var pf3: Fach? = null,
+    var pf4: Fach? = null,
+    var pf5: Fach? = null,
     var pf5Typ: Pf5Typ = Pf5Typ.PRAESENTATION,
     var gks: Map<Fach, Wahlmoeglichkeit>,
     @get:JsonSerialize(using = ListOfPairSerializer::class) var fremdsprachen: List<Pair<Fach, Int>> = emptyList(),
@@ -74,27 +74,16 @@ class KurswahlData(
     var geburtsort: String? = null,
     var staatsangehoerigkeit: String = "DE",
 
-    val readJsonVersion: Pair<Int, Int>,
+    val readJsonVersion: JsonVersion,
     val schulId: String
 ) {
-
-    var lk1: Fach? = lk1
-        private set
-    var lk2: Fach? = lk2
-        private set
-    var pf3: Fach? = pf3
-        private set
-    var pf4: Fach? = pf4
-        private set
-    var pf5: Fach? = pf5
-        private set
 
     companion object {
         @JvmStatic
         @JsonCreator
         @Throws(IllegalArgumentException::class)
         fun fromJson(
-            @JsonProperty @JsonDeserialize(using = VersionDeserializer::class) jsonVersion: Pair<Int, Int>,
+            @JsonProperty jsonVersion: JsonVersion,
             @JsonProperty lk1: String,
             @JsonProperty lk2: String,
             @JsonProperty pf3: String,
@@ -117,9 +106,8 @@ class KurswahlData(
             @JsonProperty schulId: String,
             @JacksonInject fachDataMirror: FachDataMirror
         ): KurswahlData {
-            val fachData: FachData = fachDataMirror.get(schulId)
-                ?: throw IllegalArgumentException("Die Schule der Nutzerdaten passt nicht zu den Fach-Daten!")
-
+            val fachData: FachData =
+                requireNotNull(fachDataMirror.get(schulId)) { "Die Schule der Nutzerdaten passt nicht zu den Fach-Daten!" }
 
             return KurswahlData(
                 lk1 = fachData.faecherMap[lk1]?.takeIf(Fach::isLk),
@@ -146,7 +134,7 @@ class KurswahlData(
             )
         }
 
-        private val lockables = KurswahlData::class.declaredMemberProperties.filter { it.hasAnnotation<Locked>() }
+        private val lockables = KurswahlData::class.declaredMemberProperties.filter { it.hasAnnotation<Lockable>() }
     }
 
     /**
@@ -206,7 +194,7 @@ class KurswahlData(
     /**
      * Alle 5 Prüfungsfächer
      */
-    @Locked
+    @Lockable
     var pfs: List<Fach?> = emptyList()
         get() {
             if (!locked) field = listOf(lk1, lk2, pf3, pf4, pf5)
@@ -217,7 +205,7 @@ class KurswahlData(
     /**
      * Prüfungsfächer 1 bis 4
      */
-    @Locked
+    @Lockable
     var pf1_4: List<Fach?> = emptyList()
         get() {
             if (!locked) field = listOf(lk1, lk2, pf3, pf4)
@@ -225,7 +213,7 @@ class KurswahlData(
         }
         private set
 
-    @Locked
+    @Lockable
     var pf3_5: List<Fach?> = emptyList()
         get() {
             if (!locked) field = listOf(pf3, pf4, pf5)
@@ -242,7 +230,7 @@ class KurswahlData(
     /**
      * Alle gewählten Kurse, einschließlich Prüfungsfächern
      */
-    @Locked
+    @Lockable
     var kurse: Map<Fach, Wahlmoeglichkeit> = emptyMap()
         get() {
             if (!locked) field = (gks + pfs.filterNotNull().associateWith { DURCHGEHEND })
@@ -336,6 +324,12 @@ class KurswahlData(
         fun checkKlasse(fach: Fach?) = fach?.nurFuer?.contains(klasse) != false
 
         val fachDif = (fremdsprachen - fremdsprachenNew.toSet()).map { it.first }.toMutableList()
+        // Überprüfen, ob sich die Jahre der Fremdsprachen geändert haben
+        // Nur spätere Sprachen beachten, da frühere Sprachen gültig bleiben.
+        fachDif += fremdsprachen.filter { (fOld, jOld) ->
+            val (fNew, jNew) = fremdsprachenNew.find { it.first == fOld } ?: return@filter true
+            fOld == fNew && jOld < jNew }.map { it.first }
+
         if (wpfs != null && wpfsNew != null) {
             if (wpfs!!.first != wpfsNew.first) fachDif += wpfs!!.first
 
@@ -437,69 +431,28 @@ class KurswahlData(
         .replace(' ', '_')
 
     override fun toString(): String = listOf(
-            "lk1=$lk1, " +
-            "lk2=$lk2, " +
-            "pf3=$pf3, " +
-            "pf4=$pf4, " +
-            "pf5=$pf5, " +
-            "pf5Typ=$pf5Typ, " +
-            "gks=$gks, " +
-            "fremdsprachen=$fremdsprachen, " +
-            "wpfs=$wpfs, " +
-            "wahlzeile=$wahlzeile, " +
-            "klasse=$klasse, " +
-            "pflichtfaecher=$pflichtfaecher, " +
-            "vorname=$vorname, " +
-            "nachname=$nachname, " +
-            "geburtsdatum=$geburtsdatum, " +
-            "geburtsort=$geburtsort, " +
-            "staatsangehoerigkeit='$staatsangehoerigkeit', " +
-            "readJsonVersion=${readJsonVersion.toList().joinToString(".")}, " +
+            "lk1=$lk1",
+            "lk2=$lk2",
+            "pf3=$pf3",
+            "pf4=$pf4",
+            "pf5=$pf5",
+            "pf5Typ=$pf5Typ",
+            "gks=$gks",
+            "fremdsprachen=$fremdsprachen",
+            "wpfs=$wpfs",
+            "wahlzeile=$wahlzeile",
+            "klasse=$klasse",
+            "pflichtfaecher=$pflichtfaecher",
+            "vorname=$vorname",
+            "nachname=$nachname",
+            "geburtsdatum=$geburtsdatum",
+            "geburtsort=$geburtsort",
+            "staatsangehoerigkeit='$staatsangehoerigkeit'",
+            "readJsonVersion=$readJsonVersion",
             "schulId='$schulId')").joinToString("\n\t", prefix = "KurswahlData(\n")
 
-    fun copy(lk1: Fach? = this.lk1,
-             lk2: Fach? = this.lk2,
-             pf3: Fach? = this.pf3,
-             pf4: Fach? = this.pf4,
-             pf5: Fach? = this.pf5,
-             pf5Typ: Pf5Typ = this.pf5Typ,
-             gks: Map<Fach, Wahlmoeglichkeit> = this.gks,
-             fremdsprachen: List<Pair<Fach, Int>> = this.fremdsprachen,
-             wpfs: WPFs = this.wpfs,
-             wahlzeile: WahlzeileNummer = this.wahlzeile,
-             klasse: String? = this.klasse,
-             pflichtfaecher: Map<Fach, Wahlmoeglichkeit> = this.pflichtfaecher,
-             vorname: String? = this.vorname,
-             nachname: String? = this.nachname,
-             geburtsdatum: LocalDate? = this.geburtsdatum,
-             geburtsort: String? = this.geburtsort,
-             staatsangehoerigkeit: String = this.staatsangehoerigkeit,
-             readJsonVersion: Pair<Int, Int> = this.readJsonVersion,
-             schulId: String = this.schulId): KurswahlData =
-        KurswahlData(
-            lk1 = lk1,
-            lk2 = lk2,
-            pf3 = pf3,
-            pf4 = pf4,
-            pf5 = pf5,
-            pf5Typ = pf5Typ,
-            gks = gks,
-            fremdsprachen = fremdsprachen,
-            wpfs = wpfs,
-            wahlzeile = wahlzeile,
-            klasse = klasse,
-            pflichtfaecher = pflichtfaecher,
-            vorname = vorname,
-            nachname = nachname,
-            geburtsdatum = geburtsdatum,
-            geburtsort = geburtsort,
-            staatsangehoerigkeit = staatsangehoerigkeit,
-            readJsonVersion = readJsonVersion,
-            schulId = schulId
-        )
 
-
-    // Annotation um Lockbare Props zu finden und beim locken zu aktualisieren.
+    // Annotation um lockbare Props zu finden und beim locken zu aktualisieren.
     @Target(AnnotationTarget.PROPERTY)
-    private annotation class Locked
+    private annotation class Lockable
 }

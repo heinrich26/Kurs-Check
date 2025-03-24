@@ -23,7 +23,6 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.core.exc.StreamReadException
 import com.fasterxml.jackson.databind.DatabindException
 import com.fasterxml.jackson.databind.InjectableValues
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import java.io.File
@@ -112,9 +111,7 @@ class FachData(
             .toSet().minus("*")
             .filter { !it.startsWith('$') && it !in faecherMap.keys }
 
-        if (undefined.isNotEmpty()) {
-            throw IllegalArgumentException("Undefinierte(s) Kürzel $undefined in den Wahlzeilen!")
-        }
+        require(undefined.isNotEmpty()) { "Undefinierte(s) Kürzel $undefined in den Wahlzeilen!" }
     }
 
 
@@ -172,7 +169,7 @@ class FachData(
             "fnamePattern=$fnamePattern"
         ).joinToString(
             ",\n\t",
-            "FachData[schulID: $schulId - v${jsonVersion.first}.${jsonVersion.second}](\n\t",
+            "FachData[schulID: $schulId - v$jsonVersion](\n\t",
             "\n)"
         )
 
@@ -181,14 +178,12 @@ class FachData(
         /**
          * Helferklasse um Version einer FachData-JSON zu bestimmen, ohne sie komplett laden zu müssen
          */
-        class FachDataInfo(@JsonDeserialize(using = VersionDeserializer::class)
-                           @JsonProperty
-                           val jsonVersion: JsonVersion)
+        class FachDataInfo(@JsonProperty val jsonVersion: JsonVersion)
 
         @JvmStatic
         @JsonCreator
         fun fromJson(
-            @JsonDeserialize(using = VersionDeserializer::class) @JsonProperty jsonVersion: JsonVersion,
+            @JsonProperty jsonVersion: JsonVersion,
             @JsonProperty schulId: String,
             @JsonProperty faecher: List<Fach>,
             @JsonProperty pflichtfaecher: Map<String, Wahlmoeglichkeit>,
@@ -207,9 +202,7 @@ class FachData(
             @JsonProperty nutztLusd: Boolean,
             @JsonProperty fnamePattern: String?
         ): FachData {
-            if (semesterkurse.size != 4) {
-                throw IllegalArgumentException("Die Länge von 'semesterkurse' muss exakt 4 sein")
-            }
+            require (semesterkurse.size == 4) { "Die Länge von 'semesterkurse' muss exakt 4 sein" }
 
             val wzWildcards = (wahlzeilen.flatMap { (_, value) ->
                 listOf(value.lk1, value.lk2, value.pf3, value.pf4, value.pf5).filter { it.startsWith('$') }
