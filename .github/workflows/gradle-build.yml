@@ -17,32 +17,44 @@ jobs:
       fail-fast: false
       matrix:
         os: [ windows-latest, macos-13, macos-latest, ubuntu-latest ]
-        # arch: [ x64 ]
-        # java-distro: [ corretto ]
-        # include: 
-        #   - os: windows-latest
-        #     arch: x86
-        #     java-distro: zulu
+        arch: [ x64 ]
+        java-distro: [ corretto ]
+        include: 
+          - os: windows-latest
+            arch: x86
+            java-distro: zulu
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout project sources
       uses: actions/checkout@v3
     - uses: actions/setup-java@v3
       with:
-        # distribution: ${{ matrix.java-distro }}
-        distribution: 'corretto'
+        distribution: ${{ matrix.java-distro }}
+        # distribution: 'corretto'
         java-version: '18'
-        # architecture: ${{ matrix.arch }}
+        architecture: ${{ matrix.arch }}
         cache: 'gradle'
     # - name: Setup Gradle
     #   uses: gradle/gradle-build-action@v2
     #   with:
     #     gradle-version: 8.5
 
+    - name: Prepare x86 Build
+      if: ${{ matrix.arch == 'x86' }}
+      working-directory: ./merger/res
+      shell: bash
+      run: sed -i -e 's/Platform="x64"/Platform="x86"/' main.wxs
+
     - name: Build Application with JPackage
       run: |
         ./gradlew :app:jpackage
         ./gradlew :merger:jpackage
+
+    - name: Build RPMs with JPackage
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      run: |
+        ./gradlew :app:buildRPM
+        ./gradlew :merger:buildRPM
 
     - name: Rename macOS x86 Binaries
       if: ${{ matrix.os == 'macos-latest' }}
@@ -56,23 +68,16 @@ jobs:
       shell: bash
       run: find . -name '*.pkg' -exec bash -c 'mv $0 ${0/.pkg/_intel.pkg}' {} \;
 
+    - name: Rename Win32 Binaries
+      if: ${{ matrix.arch == 'x86' }}
+      working-directory: ./out/executable
+      shell: bash
+      run: find . -name '*.msi' -exec bash -c 'mv $0 ${0/.msi/_win32.msi}' {} \;
+
     - name: Upload binaries
       uses: actions/upload-artifact@v4
       with:
         name: application-${{ matrix.os }}
-        path: out/executable/
-
-    - name: Build RPMs with JPackage
-      if: ${{ matrix.os == 'ubuntu-latest' }}
-      run: |
-        ./gradlew :app:buildRPM
-        ./gradlew :merger:buildRPM
-
-    - name: Upload rpm binaries
-      if: ${{ matrix.os == 'ubuntu-latest' }}
-      uses: actions/upload-artifact@v4
-      with:
-        name: application-rpm
         path: out/executable/
         
   merge:
