@@ -57,7 +57,7 @@ sealed class Regel(var desc: String?, var errorMsg: String?) {
         }
 
     protected fun toString(vararg fields: String?) =
-        fields.asList().plus(arrayOf(desc.named("desc"), errorMsg.named("errorMsg"))).filterNotNull().joinToString(prefix = "${this::class.simpleName}(", postfix = ")")
+        fields.asList().plus(arrayOf("'$desc'".named("desc"), "'$errorMsg'".named("errorMsg"))).filterNotNull().joinToString(prefix = "${this::class.simpleName}(", postfix = ")")
 
     override fun toString(): String = toString(null)
 }

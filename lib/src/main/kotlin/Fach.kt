@@ -17,7 +17,7 @@
 
 package com.kurswahlApp.data
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.annotation.JsonValue
 import org.intellij.lang.annotations.Language
 
 /**
@@ -42,10 +42,9 @@ import org.intellij.lang.annotations.Language
  * @property infoText über das [Fach], zur Hilfe in der Grundkurs-Übersicht.
  */
 @Suppress("PropertyName")
-@JsonSerialize(using = FachSerializer::class, keyUsing = FachKeySerializer::class)
 class Fach(
     val name: String,
-    val kuerzel: String,
+    @JsonValue val kuerzel: String,
     val aufgabenfeld: Int,
     val isLk: Boolean = false,
     val isGk: Boolean = true,

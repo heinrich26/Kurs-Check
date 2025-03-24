@@ -146,6 +146,20 @@
 							"ohneFs2": { "type": "boolean", "default": false }
 						}, "additionalProperties": false
 					}
+				}, {
+					"if": {
+						"properties": { "type": { "const": "KursanzahlRegel" } }
+					},
+					"then": {
+						"description": "KursanzahlRegel - erfüllt, wenn die Zahl der gewählten Kurse zwischen min und max liegt. (min <= n <= max)",
+						"properties": {
+							"type": true,
+							"desc": true,
+							"errorMsg": true,
+							"min": { "type": "integer", "default": 0 },
+							"max": { "type": "integer", "default": 2147483647 }
+						}, "additionalProperties": false
+					}
 				}
 			],
 			"required": [ "type" ],
@@ -161,7 +175,8 @@
 						"AndRegel",
 						"IfThenRegel",
 						"NotRegel",
-						"FremdsprachenRegel"
+						"FremdsprachenRegel",
+						"KursanzahlRegel"
 					]
 				},
 				"desc": {

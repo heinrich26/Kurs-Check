@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2025  Hendrik Horstmann
+ * Copyright (c) 2025  Hendrik Horstmann
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,13 +17,10 @@
 
 package com.kurswahlApp.data
 
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.databind.JsonSerializer
-import com.fasterxml.jackson.databind.SerializerProvider
+@Suppress("unused")
+class KursanzahlRegel(private val min: Int = 0, private val max: Int = Int.MAX_VALUE, desc: String?, errorMsg: String?) :
+    Regel(desc, errorMsg) {
+    override fun match(data: KurswahlData): Boolean = data.kurse.sumOf { (_, wm) -> wm.n } in min..max
 
-class FachKeySerializer : JsonSerializer<Fach>() {
-    override fun serialize(value: Fach?, gen: JsonGenerator, serializers: SerializerProvider) {
-        if (value == null) gen.writeNull()
-        else gen.writeFieldName(value.kuerzel)
-    }
+    override fun toString(): String = toString(min.named("min"), max.named("max"))
 }

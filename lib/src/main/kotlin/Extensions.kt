@@ -40,3 +40,14 @@ operator fun Pair<*, *>.contains(other: Any): Boolean = this.first == other || t
 operator fun <R> KCallable<R>.getValue(thisRef: Any?, property: KProperty<*>): R {
     return this.call()
 }
+
+/**
+ * Returns the sum of all values produced by [selector] function applied to each element in the collection.
+ */
+inline fun <K, V> Map<out K, V>.sumOf(selector: (Map.Entry<K, V>) -> Int): Int {
+    var sum = 0
+    for (element in this) {
+        sum += selector(element)
+    }
+    return sum
+}
