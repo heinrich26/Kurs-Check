@@ -140,7 +140,7 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
             val year = it[Calendar.YEAR].let { year ->
                 if (it.before(Calendar.Builder().setDate(year, Calendar.JULY, 1).build())) year else year + 1
             }
-            feldPanel!!.add(JLabel("${R.getString("entry_year_sek2")}: ${year.toString().bold()}".wrapHtml()))
+            feldPanel.add(JLabel("${R.getString("entry_year_sek2")}: ${year.toString().bold()}".wrapHtml()))
         }
 
         feldPanel.add(JLabel("${R.getString("first_name")}: <b>${wahlData.vorname}</b>".wrapHtml()))

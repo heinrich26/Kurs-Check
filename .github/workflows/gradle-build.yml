@@ -29,10 +29,15 @@ jobs:
 
     - uses: actions/setup-java@v3
       with:
-        distribution: ${{ matrix.java-distro }}
+        distribution: 'temurin'
         java-version: '17'
-        architecture: ${{ matrix.arch }}
         cache: 'gradle'
+    - uses: actions/setup-java@v3
+      if: ${{ matrix.arch == 'x86' }}
+      with:
+        distribution: 'zulu'
+        architecture: 'x86'
+        java-version: '17'
 
     - name: Build Application with JPackage
       env:
