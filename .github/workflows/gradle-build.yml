@@ -18,7 +18,7 @@ jobs:
       matrix:
         os: [ windows-latest, macos-13, macos-latest, ubuntu-latest ]
         arch: [ x64 ]
-        java-distro: [ corretto ]
+        java-distro: [ temurin ]
         include: 
           - os: windows-latest
             arch: x86
@@ -30,7 +30,7 @@ jobs:
     - uses: actions/setup-java@v3
       with:
         distribution: ${{ matrix.java-distro }}
-        java-version: '18'
+        java-version: '17'
         architecture: ${{ matrix.arch }}
         cache: 'gradle'
 
@@ -44,7 +44,7 @@ jobs:
     - name: Build Linux-Binaries with JPackage
       if: ${{ matrix.os == 'ubuntu-latest' }}
       run: |
-        ./gradlew :app:jpackage :merger:jpackage :app:buildRPM
+        ./gradlew :app:jpackage :merger:jpackage
 
     - name: Rename macOS x86 Binaries
       if: ${{ matrix.os == 'macos-latest' }}

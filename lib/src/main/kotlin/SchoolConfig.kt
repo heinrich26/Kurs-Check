@@ -69,7 +69,7 @@ object SchoolConfig {
 
     private const val CONFIG_SERVER_URL = "https://raw.githubusercontent.com/heinrich26/Kurs-Check/data/"
     private const val CONFIG_FOLDER_URL = CONFIG_SERVER_URL + "schools/"
-    private val CONFIG_FILE_URL = URL(CONFIG_SERVER_URL + "per-school-settings.json")
+    private val CONFIG_FILE_URL = URI(CONFIG_SERVER_URL + "per-school-settings.json").toURL()
 
     private val LOCAL_CONFIG_DIR = System.getProperty("os.name").lowercase().let {
         when {

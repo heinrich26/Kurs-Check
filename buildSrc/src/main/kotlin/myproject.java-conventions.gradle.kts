@@ -42,17 +42,21 @@ dependencies {
 
 group = "com.kurswahlApp"
 
-val projectJavaVersion = "18"
+val projectJavaVersion = "17"
+val arch = providers.gradleProperty("arch").getOrElse("x64")
+
 
 tasks.withType<JavaCompile>().configureEach {
     javaCompiler = javaToolchains.compilerFor {
         languageVersion.set(JavaLanguageVersion.of(projectJavaVersion))
+        if (arch == X86) vendor.set(JvmVendorSpec.AZUL)
     }
 }
 
 tasks.withType<JavaExec>().configureEach {
     javaLauncher = javaToolchains.launcherFor {
         languageVersion.set(JavaLanguageVersion.of(projectJavaVersion))
+        if (arch == X86) vendor.set(JvmVendorSpec.AZUL)
     }
 }
 
@@ -64,11 +68,17 @@ tasks.withType<KotlinJvmCompile>().configureEach {
 }
 
 kotlin {
-    jvmToolchain { languageVersion.set(JavaLanguageVersion.of(projectJavaVersion)) }
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(projectJavaVersion))
+        if (arch == X86) vendor.set(JvmVendorSpec.AZUL)
+    }
 }
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(projectJavaVersion))
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(projectJavaVersion))
+        if (arch == X86) vendor.set(JvmVendorSpec.AZUL)
+    }
 }
 
 tasks.test {
@@ -85,8 +95,6 @@ val jlinkJvmModules by extra(
 )
 
 tasks.register<Copy>("copyInstallerResources") {
-    val arch = providers.gradleProperty("arch").getOrElse("x64")
-
     from("${rootProject.projectDir}/res/icons") {
         include("app_icon.ico", "app_icon.icns", "app_icon.png")
         rename("app_icon(.*)", "${rootProject.name}\$1")

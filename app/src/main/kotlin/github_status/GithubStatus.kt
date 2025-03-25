@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import java.io.IOException
-import java.net.URL
+import java.net.URI
 import java.nio.charset.StandardCharsets
 import java.util.*
 
@@ -60,7 +60,7 @@ data class GithubStatus(
         fun get(): GithubStatus? =
             try {
                 Scanner(
-                    URL("https://www.githubstatus.com/api/v2/status.json").openStream(),
+                    URI("https://www.githubstatus.com/api/v2/status.json").toURL().openStream(),
                     StandardCharsets.UTF_8.toString()
                 ).use { scanner ->
                     scanner.useDelimiter("\\A")

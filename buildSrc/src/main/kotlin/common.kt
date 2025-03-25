@@ -68,3 +68,5 @@ fun Project.platformFromCatalog(libName: String) =
 
 fun Project.idea(block: IdeaModel.() -> Unit) =
     (this as ExtensionAware).extensions.configure("idea", block)
+
+const val X86 = "x86"
