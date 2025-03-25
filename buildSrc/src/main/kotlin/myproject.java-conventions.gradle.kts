@@ -95,6 +95,8 @@ val jlinkJvmModules by extra(
 )
 
 tasks.register<Copy>("copyInstallerResources") {
+    if (arch == X86) println("Building for x86")
+
     from("${rootProject.projectDir}/res/icons") {
         include("app_icon.ico", "app_icon.icns", "app_icon.png")
         rename("app_icon(.*)", "${rootProject.name}\$1")
