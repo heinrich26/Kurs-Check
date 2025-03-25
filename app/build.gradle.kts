@@ -1,4 +1,3 @@
-
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.beryx.runtime.JPackageTask
 import org.jetbrains.gradle.ext.packagePrefix
@@ -54,16 +53,15 @@ val osSpec = when {
     else -> listOf("linux", "png", "deb")
 }
 val (osPrefix, iconExt, packageType) = osSpec
-val javaModules = listOf("java.base", "java.datatransfer", "java.desktop", "java.logging",
-    "java.management", "java.net.http", "java.prefs", "java.sql",
-    "java.transaction.xa", "java.xml", "jdk.crypto.cryptoki", "jdk.crypto.ec")
+
+val jlinkJvmModules: List<String> by extra
 
 val projectName = rootProject.name
 
 runtime {
     addOptions("--strip-debug", "--compress", "2", "--no-header-files", "--no-man-pages")
 
-    modules.set(javaModules)
+    modules.set(jlinkJvmModules)
 
     jpackage {
         imageName = projectName
@@ -88,7 +86,7 @@ tasks.register<JPackageTask>("buildRPM") {
     runtime {
         addOptions("--strip-debug", "--compress", "2", "--no-header-files", "--no-man-pages")
 
-        modules.set(javaModules)
+        modules.set(jlinkJvmModules)
 
         jpackage {
             imageName = projectName

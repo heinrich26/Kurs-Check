@@ -14,3 +14,4 @@ out.pdf
 /merger/bin/
 /resource-generator/bin/
 /.idea/workspace.xml
+/buildSrc/.kotlin/

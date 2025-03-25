@@ -18,7 +18,7 @@
 import org.apache.tools.ant.filters.ReplaceTokens
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
-import java.net.URL
+import java.net.URI
 import java.nio.file.Files
 
 
@@ -76,11 +76,19 @@ tasks.test {
 }
 
 val resDirName by extra("installerResources")
-val arch by extra("x64")
+val jlinkJvmModules by extra(
+    listOf(
+        "java.base", "java.datatransfer", "java.desktop", "java.logging",
+        "java.management", "java.net.http", "java.prefs", "java.sql", "jdk.localedata",
+        "java.transaction.xa", "java.xml", "jdk.crypto.cryptoki", "jdk.crypto.ec"
+    )
+)
 
 tasks.register<Copy>("copyInstallerResources") {
+    val arch = providers.gradleProperty("arch").getOrElse("x64")
+
     from("${rootProject.projectDir}/res/icons") {
-        include("app_icon.*")
+        include("app_icon.ico", "app_icon.icns", "app_icon.png")
         rename("app_icon(.*)", "${rootProject.name}\$1")
     }
     from(layout.projectDirectory.dir("res"), "${rootProject.projectDir}/app/res")
@@ -93,7 +101,8 @@ tasks.register("downloadSchoolsData") {
 
     doFirst {
         Files.createDirectories(f.parentFile.toPath())
-        URL("https://raw.githubusercontent.com/heinrich26/Kurs-Check/data/per-school-settings.json")
+        URI("https://raw.githubusercontent.com/heinrich26/Kurs-Check/data/per-school-settings.json")
+            .toURL()
             .openStream()
             .use {
                 i -> f.outputStream().use { i.copyTo(it) }

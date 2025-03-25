@@ -42,22 +42,23 @@ val osSpec = when {
 }
 val (osPrefix, iconExt, packageType) = osSpec
 
-val javaModules = listOf("java.base", "java.datatransfer", "java.desktop", "java.logging",
-    "java.management", "java.net.http", "java.prefs", "java.sql",
-    "java.transaction.xa", "java.xml", "jdk.crypto.cryptoki", "jdk.crypto.ec")
+val jlinkJvmModules: List<String> by extra
 
 val projectName = rootProject.name
 
+val imageOpts = listOf(
+    "--add-launcher", "wahl-merger=res/$osPrefix-merger.properties",
+    "--icon", "$rootDir/res/icons/app_icon.$iconExt"
+)
 runtime {
     addOptions("--strip-debug", "--compress", "2", "--no-header-files", "--no-man-pages")
 
     additive = true
-    modules.set(javaModules)
+    modules.set(jlinkJvmModules)
 
     jpackage {
         imageName = projectName
-        imageOptions = listOf("--add-launcher", "wahl-merger=res/$osPrefix-merger.properties",
-            "--icon", "$rootDir/res/icons/app_icon.$iconExt")
+        imageOptions = imageOpts
 
         installerName = "$projectName-full"
         installerOutputDir = file("$rootDir/out/executable/full")
@@ -78,12 +79,11 @@ tasks.register<JPackageTask>("buildRPM") {
         addOptions("--strip-debug", "--compress", "2", "--no-header-files", "--no-man-pages")
 
         additive = true
-        modules.set(javaModules)
+        modules.set(jlinkJvmModules)
 
         jpackage {
             imageName = projectName
-            imageOptions = listOf("--add-launcher", "wahl-merger=res/linux-merger.properties",
-                "--icon", "$rootDir/res/icons/app_icon.png")
+            imageOptions = imageOpts
 
             installerName = "$projectName-full"
             installerOutputDir = file("$rootDir/out/executable/full")
