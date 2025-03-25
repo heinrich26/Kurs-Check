@@ -60,7 +60,7 @@ jobs:
       env:
         ORG_GRADLE_PROJECT_arch: 'x86'  # arch beeinflusst nur Windows-Builds
         BADASS_RUNTIME_JAVA_HOME: '${{ env.JAVA_HOME_17_X86 }}'
-      run: ./gradlew :app:jpackage :merger:jpackage
+      run: ./gradlew :app:jpackage --rerun :merger:jpackage --rerun
 
     - name: Rename 32-bit Binaries
       if: ${{ matrix.os == 'windows-latest' }}
