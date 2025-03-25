@@ -35,14 +35,8 @@ jobs:
         cache: 'gradle'
 
     - name: Build Application with JPackage
-      if: ${{ matrix.os != 'ubuntu-latest' }}
       env:
-        ORG_GRADLE_PROJECT_arch: ${{ matrix.arch }}  # arch betrifft nur Windows-Builds
-      run: |
-        ./gradlew :app:jpackage :merger:jpackage
-
-    - name: Build Linux-Binaries with JPackage
-      if: ${{ matrix.os == 'ubuntu-latest' }}
+        ORG_GRADLE_PROJECT_arch: ${{ matrix.arch }}  # arch beeinflusst nur Windows-Builds
       run: |
         ./gradlew :app:jpackage :merger:jpackage
 
