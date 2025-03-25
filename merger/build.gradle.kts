@@ -38,7 +38,7 @@ val buildDir = layout.buildDirectory
 val osSpec = when {
     Os.isFamily(Os.FAMILY_WINDOWS) -> listOf("win", "ico", "msi")
     Os.isFamily(Os.FAMILY_MAC) -> listOf("mac", "icns", "pkg")
-    else -> listOf("linux", "png", "deb")
+    else -> listOf("linux", "png", null)
 }
 val (osPrefix, iconExt, packageType) = osSpec
 
@@ -62,7 +62,7 @@ runtime {
 
         installerName = "$projectName-full"
         installerOutputDir = file("$rootDir/out/executable/full")
-        installerType = packageType
+        packageType?.let { installerType = it } // baut alle möglichen Installertypen auf Linux
         installerOptions = listOf("--file-associations", buildDir.file("$resDirName/kurswahl-$osPrefix.properties").get().toString(),
             "--vendor", "\"Willi-Graf-Gymnasium\"",
             "--description", "\"$description\"",

@@ -35,13 +35,14 @@ application {
 
 val resDirName: String by extra
 
-val downloadSchoolsData by tasks.existing
-val copyInstallerResources by tasks.existing {
-    dependsOn(downloadSchoolsData)
+tasks.named("compileKotlin").configure {
+    dependsOn(":resource-generator:processVectors")
 }
 
+val downloadSchoolsData by tasks.existing
+val copyInstallerResources by tasks.existing
 tasks.jpackageImage {
-    dependsOn(copyInstallerResources)
+    dependsOn(downloadSchoolsData, copyInstallerResources)
 }
 
 val buildDir = layout.buildDirectory

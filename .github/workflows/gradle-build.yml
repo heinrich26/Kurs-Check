@@ -44,7 +44,7 @@ jobs:
     - name: Build Linux-Binaries with JPackage
       if: ${{ matrix.os == 'ubuntu-latest' }}
       run: |
-        ./gradlew :app:jpackage :merger:jpackage :app:buildRPM :merger:buildRPM
+        ./gradlew :app:jpackage :merger:jpackage :app:buildRPM
 
     - name: Rename macOS x86 Binaries
       if: ${{ matrix.os == 'macos-latest' }}
