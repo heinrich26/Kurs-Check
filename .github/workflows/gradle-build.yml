@@ -17,19 +17,13 @@ jobs:
       fail-fast: false
       matrix:
         os: [ windows-latest, macos-13, macos-latest, ubuntu-latest ]
-        arch: [ x64 ]
-        java-distro: [ temurin ]
-        include: 
-          - os: windows-latest
-            arch: x86
-            java-distro: zulu
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v3
 
     # Setup 32 bit Java before 64 bit Java, so gradle uses the correct one
     - uses: actions/setup-java@v3
-      if: ${{ matrix.arch == 'x86' }}
+      if: ${{ matrix.os == 'windows-latest' }}
       with:
         distribution: 'zulu'
         architecture: 'x86'
@@ -41,12 +35,8 @@ jobs:
         java-version: '17'
         cache: 'gradle'
 
-
     - name: Build Application with JPackage
-      env:
-        ORG_GRADLE_PROJECT_arch: ${{ matrix.arch }}  # arch beeinflusst nur Windows-Builds
-      run: |
-        ./gradlew :app:jpackage :merger:jpackage
+      run: ./gradlew :app:jpackage :merger:jpackage
 
     - name: Rename macOS x86 Binaries
       if: ${{ matrix.os == 'macos-latest' }}
@@ -60,16 +50,29 @@ jobs:
       shell: bash
       run: find . -name '*.pkg' -exec bash -c 'mv $0 ${0/.pkg/_intel.pkg}' {} \;
 
-    - name: Rename Win32 Binaries
-      if: ${{ matrix.arch == 'x86' }}
-      working-directory: ./out/executable
-      shell: bash
-      run: find . -name '*.msi' -exec bash -c 'mv $0 ${0/.msi/_win32.msi}' {} \;
-
     - name: Upload binaries
       uses: actions/upload-artifact@v4
       with:
         name: application-${{ matrix.os }}-${{ matrix.arch }}
+        path: out/executable/
+
+    - name: Build 32-bit Application with JPackage
+      if: ${{ matrix.os == 'windows-latest' }}
+      env:
+        ORG_GRADLE_PROJECT_arch: x86  # arch beeinflusst nur Windows-Builds
+      run: ./gradlew :app:jpackage :merger:jpackage
+
+    - name: Rename 32-bit Binaries
+      if: ${{ matrix.os == 'windows-latest' }}
+      working-directory: ./out/executable
+      shell: bash
+      run: find . -name '*.msi' -exec bash -c 'mv $0 ${0/.msi/_win32.msi}' {} \;
+
+    - name: Upload 32-bit binaries
+      if: ${{ matrix.os == 'windows-latest' }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: application-windows-x86
         path: out/executable/
         
   merge:
