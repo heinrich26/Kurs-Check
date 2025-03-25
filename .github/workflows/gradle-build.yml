@@ -27,17 +27,20 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - uses: actions/setup-java@v3
-      with:
-        distribution: 'temurin'
-        java-version: '17'
-        cache: 'gradle'
+    # Setup 32 bit Java before 64 bit Java, so gradle uses the correct one
     - uses: actions/setup-java@v3
       if: ${{ matrix.arch == 'x86' }}
       with:
         distribution: 'zulu'
         architecture: 'x86'
         java-version: '17'
+
+    - uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+        cache: 'gradle'
+
 
     - name: Build Application with JPackage
       env:
