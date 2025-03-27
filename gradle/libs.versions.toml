@@ -1,5 +1,5 @@
 [versions]
-jackson = "2.18.3"
+jackson = "2.16.1" # dont touch me, 2.18.3 ist bugged
 kotlin = "2.1.20"
 junit = "5.8.1"
 
@@ -17,8 +17,8 @@ apache-pdfbox = { group = 'org.apache.pdfbox', name = 'pdfbox', version = '2.0.2
 apache-commonsCSV = { group = "org.apache.commons", name = "commons-csv", version = "1.9.0" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-bom = { group = "org.jetbrains.kotlin", name = "kotlin-bom", version.ref = "kotlin" }
-kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib" }
-kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect"}
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlin"  }
 junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junit" }
 junit-jupiterParams = { group = "org.junit.jupiter", name = "junit-jupiter-params", version.ref = "junit" }
 squareup-kotlinpoet = { group = 'com.squareup', name = 'kotlinpoet', version = '1.10.0' }

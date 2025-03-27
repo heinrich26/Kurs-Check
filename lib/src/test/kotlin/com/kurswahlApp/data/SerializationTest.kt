@@ -37,9 +37,16 @@ class SerializationTest {
         data.checkWahlzeilen()
     }
 
-    @Test
-    fun testKurswahlDeserialization() =
-        Unit
+    @Test()
+    fun testKurswahlDeserialization() {
+        val json =  """
+{"jsonVersion":"1.0","lk1":"Ma","lk2":"VWL/BWL","pf3":"En","pf4":"Ge","pf5":"DS","pf5Typ":"praes","gks":{"De":"1-4","RW":"1-2","Ch":"1-4","Sp":"1-4"},"fremdsprachen":{"En":1,"Fr":7},"wpfs":{"first":"--","second":null},"klasse":null,"wahlzeile":6,"vorname":"dsfs","nachname":"sdfdsdfsasffsyys","geburtsdatum":"2010-01-07","geburtsort":"fsyysf","staatsangehoerigkeit":"DE","schulId":"osz_banken.json","umfrageData": []}
+        """
+        SchoolConfig.updateConfig()
+        val school = SchoolConfig.getSchool("osz_banken.json")!!
+        val data = school.loadKurswahl(json)
+        println(data)
+    }
 
     @Test
     fun testKurswahlSerialization() = Unit
