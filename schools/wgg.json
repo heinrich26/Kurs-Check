@@ -932,7 +932,7 @@
 			"options": [ "Medizin Zusatz (Q3/4)", "Psychologie (Q1/2)", "Musik Ensemble (Q1/2)", "Kunst Werkstatt (Q3/4)", "Geschichte Zusatz (Q1/2)" ]
 		},
 		{
-	        	"type": "NumberRangeUmfrage"
+	        	"type": "NumberRangeUmfrage",
 			"title": "Kursanzahl",
 			"desc": "Wie viele dieser Zusatzkurse möchtest du maximal belegen?", 
 			"min": 0,
