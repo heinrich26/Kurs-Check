@@ -34,7 +34,7 @@ data class JsonVersion(val major: Int, val minor: Int) {
                     .takeIf { it.size == 2 }
                     ?.map(String::toInt) ?: throw IllegalArgumentException(INVALID_VERSION_ERROR_MSG)
                 return JsonVersion(maj, min)
-            } catch (e: NumberFormatException) {
+            } catch (_: NumberFormatException) {
                 throw IllegalArgumentException(INVALID_VERSION_ERROR_MSG)
             }
         }

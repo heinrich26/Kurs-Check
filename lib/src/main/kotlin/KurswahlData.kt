@@ -49,7 +49,7 @@ typealias WPFs = Pair<Fach, Fach?>?
 @JsonAppend(attrs = [JsonAppend.Attr(value = "jsonVersion")], prepend = true)
 @JsonIncludeProperties(
     "jsonVersion", "lk1", "lk2", "pf3", "pf4", "pf5", "pf5Typ", "gks", "fremdsprachen", "wpfs", "klasse",
-    "wahlzeile", "vorname", "nachname", "geburtsdatum", "geburtsort", "staatsangehoerigkeit", "schulId"
+    "wahlzeile", "vorname", "nachname", "geburtsdatum", "geburtsort", "staatsangehoerigkeit", "umfrageData", "schulId"
 )
 data class KurswahlData(
     var lk1: Fach? = null,
@@ -73,6 +73,7 @@ data class KurswahlData(
     var geburtsdatum: LocalDate? = null,
     var geburtsort: String? = null,
     var staatsangehoerigkeit: String = "DE",
+    val umfrageData: List<Any> = emptyList(),
 
     val readJsonVersion: JsonVersion,
     val schulId: String
@@ -103,6 +104,7 @@ data class KurswahlData(
             geburtsdatum: LocalDate,
             @JsonProperty geburtsort: String,
             @JsonProperty staatsangehoerigkeit: String,
+            @JsonProperty umfrageData: List<Any>?, // TODO entfernen in 2.0
             @JsonProperty schulId: String,
             @JacksonInject fachDataMirror: FachDataMirror
         ): KurswahlData {
@@ -128,6 +130,7 @@ data class KurswahlData(
                 geburtsdatum = geburtsdatum,
                 geburtsort = geburtsort,
                 staatsangehoerigkeit = staatsangehoerigkeit,
+                umfrageData = umfrageData ?: emptyList(),
 
                 readJsonVersion = jsonVersion,
                 schulId = schulId
@@ -260,22 +263,25 @@ data class KurswahlData(
      * Überprüft ob die Wahl exportiert werden kann und wenn nicht,
      * wird eine Nachricht mit noch zu erledigenden Aktionen zurückgegeben
      */
-    fun check(): String? {
-        var errorMsg = ""
+    fun check(fachData: FachData): String? =
+        buildList(6) {
+            if (fremdsprachen.isEmpty())
+                add("Deine 2 oder mehr Fremdsprachen angeben!")
+            if (wpfs?.first == null)
+                add("Dein Wahlpflichtfach angeben!")
+            if (lk1 == null || lk2 == null)
+                add("Leistungskurse wählen!")
+            if (pf3 == null || pf4 == null || pf5 == null)
+                add("Deine weiteren Prüfungsfächer wählen!")
+            if (vorname == null) /* wenn eins null ist, sind alle null || nachname == null || geburtsdatum == null || geburtsort == null*/
+                add("Deine persönlichen Daten eintragen!")
+            if (umfrageData.size != fachData.umfragen.size)
+                add("Schaue wir wenigstens einmal die Umfragen an!")
+        }.ifEmpty { null }?.joinToString(
+            "\n",
+            prefix = "Bevor du deine Kurswahl exportieren kannst, musst du noch folgendes erledigen:\n"
+        )
 
-        if (fremdsprachen.isEmpty())
-            errorMsg = "Deine 2 oder mehr Fremdsprachen angeben!\n"
-        if (wpfs?.first == null)
-            errorMsg += "Dein Wahlpflichtfach angeben!\n"
-        if (lk1 == null || lk2 == null)
-            errorMsg += "Leistungskurse wählen!\n"
-        if (pf3 == null || pf4 == null || pf5 == null)
-            errorMsg += "Deine weiteren Prüfungsfächer wählen!\n"
-        if (vorname == null) /* wenn eins null ist, sind alle null || nachname == null || geburtsdatum == null || geburtsort == null*/
-            errorMsg += "Deine persönlichen Daten eintragen!"
-
-        return "Bevor du deine Kurswahl exportieren kannst, musst du noch folgendes erledigen:\n" + errorMsg.ifEmpty { return null }
-    }
 
     /**
      * Entfernt LKs aus den PFs und GKs
@@ -448,6 +454,7 @@ data class KurswahlData(
             "geburtsdatum=$geburtsdatum",
             "geburtsort=$geburtsort",
             "staatsangehoerigkeit='$staatsangehoerigkeit'",
+            "umfrageData=$umfrageData",
             "readJsonVersion=$readJsonVersion",
             "schulId='$schulId')").joinToString("\n\t", prefix = "KurswahlData(\n")
 

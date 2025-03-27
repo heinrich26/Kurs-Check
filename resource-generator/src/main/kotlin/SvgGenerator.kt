@@ -139,7 +139,7 @@ fun GeneralPath.fromSVG(path: String, scale: Double = 1.0): MutableList<String> 
             }
 
             'S' -> for ((x1, y1, x, y) in coords.chunked(4)) {
-                (if (prevInstruction in "cqs") currentPoint.mirror(handle) else currentPoint).let { (hx, hy) ->
+                (if (prevInstruction in "cs") currentPoint.mirror(handle) else currentPoint).let { (hx, hy) ->
                     addCall("curveTo", hx, hy, x1, y1, x, y)
                     curveTo(hx, hy, x1, y1, x, y)
                 }
@@ -148,19 +148,37 @@ fun GeneralPath.fromSVG(path: String, scale: Double = 1.0): MutableList<String> 
 
             's' -> for ((dx1, dy1, dx, dy) in coords.chunked(4)) {
                 currentPoint.let { (x, y) ->
-                    (if (prevInstruction in "cqs") currentPoint.mirror(handle) else currentPoint).let { (hx, hy) ->
+                    (if (prevInstruction in "cs") currentPoint.mirror(handle) else currentPoint).let { (hx, hy) ->
                         addCall("curveTo", hx, hy, dx1 + x, dy1 + y, dx + x, dy + y)
                         curveTo(hx, hy, dx1 + x, dy1 + y, dx + x, dy + y)
                     }
                     handle = Point2D.Double(x + dx1, y + dy1)
                 }
             }
+
+            'T' -> for ((x, y) in coords.chunked(2)) {
+                val (hx, hy) = (if (prevInstruction in "ct") currentPoint.mirror(handle) else currentPoint)
+                addCall("quadTo", hx, hy, x, y)
+                quadTo(hx, hy, x, y)
+                handle = Point2D.Double(hx, hy)
+            }
+
+            't' -> for ((dx, dy) in coords.chunked(2)) {
+                currentPoint.let { (x, y) ->
+                    val (hx, hy) = (if (prevInstruction in "ct") currentPoint.mirror(handle) else currentPoint)
+                    addCall("quadTo", hx, hy, dx + x, dy + y)
+                    quadTo(hx, hy, dx + x, dy + y)
+                    handle = Point2D.Double(hx, hy)
+                }
+            }
+
             'A' -> coords.let { (rx, ry, phi, fa, fs, x2, y2) ->
                 a2c(currentPoint.x, currentPoint.y, x2, y2, fa, fs, rx, ry, phi)
             }.forEach { (x1, y1, x2, y2, x, y) ->
                 addCall("curveTo", x1, y1, x2, y2, x, y)
                 curveTo(x1, y1, x2, y2, x, y)
             }
+
             'a' -> coords.let { (rx, ry, phi, fa, fs, dx, dy) ->
                 currentPoint.let { (x, y) ->
                     a2c(x, y, x + dx, y + dy, fa, fs, rx, ry, phi)

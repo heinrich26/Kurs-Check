@@ -40,7 +40,7 @@ fun Container.add(
     weighty: Double = 0.0,
     anchor: Int = GridBagConstraints.CENTER,
     fill: Int = GridBagConstraints.NONE,
-    margin: Insets = Insets(0, 0, 0, 0),
+    margin: Insets = Insets(0),
     ipadx: Int = 0,
     ipady: Int = 0
 ) {

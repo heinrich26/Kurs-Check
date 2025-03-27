@@ -72,7 +72,7 @@ val CSV_HEADER = arrayOf(
 enum class TYP { CSV, PDF }
 
 /**
- * Runnable, die KursWahl-Dateien in eine große CSV-Tabelle zusammenfasst.
+ * Runnable, die [KursWahl][KurswahlData]-Dateien in eine einzelne CSV-Tabelle zusammenfasst.
  * @see CSV_HEADER
  */
 fun main(args: Array<String>) {
@@ -183,7 +183,7 @@ private fun run(schulId: String, directory: String, output: String?, action: TYP
 private fun convertToPDF(fachData: FachData, files: Array<out File>, pdfs: Array<out File>, outputDir: File, out: PrintStream) {
     try {
         outputDir.mkdirs()
-    } catch (e: IOException) {
+    } catch (_: IOException) {
         out.println("Keine Berechtigung diesen Ordner zu erstellen")
         return
     }
@@ -209,14 +209,14 @@ private fun convertToPDF(fachData: FachData, files: Array<out File>, pdfs: Array
                     )
                 )
             } ?: throw RuntimeException()
-        } catch (ignored: RuntimeException) {
+        } catch (_: RuntimeException) {
             out.println("Fehler ${f.name}: konnte keine PDF für ${data.vorname} ${data.nachname} finden.")
             continue
         }
 
         try {
             data.exportPDF(form, File(outputDir, form.name), fachData)
-        } catch (ignored: Exception) {
+        } catch (_: Exception) {
             out.println("Fehler ${f.name}: Unerwarteter Fehler beim Export.")
         }
     }
@@ -227,7 +227,7 @@ private fun mergeToCSV(fachData: FachData, files: Array<out File>, outputFile: F
     val wahlDataList = files.mapNotNull {
         try {
             fachData.loadKurswahl(it)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             out.println("Fehler ${it.name}: Die Datei wurde für eine andere Schule erstellt oder ist ungültig, der/die Schüler*in muss seine/ihre Wahl wiederholen")
             null
         }
@@ -245,8 +245,11 @@ private fun mergeToCSV(fachData: FachData, files: Array<out File>, outputFile: F
     val headerMixin =
         filteredFaecher.flatMap { (1..4).map { i -> "${it.kuerzel}_$i" } }.toTypedArray()
 
+    val umfrageMixin =
+        fachData.umfragen.flatMap(UmfrageBase<*>::getCSVHeader).map { it.replace(' ', '_') }.toTypedArray()
+
     val csvPrinter =
-        CSVPrinter(writer, CSVFormat.Builder.create(CSVFormat.EXCEL).setHeader(*CSV_HEADER, *headerMixin).build())
+        CSVPrinter(writer, CSVFormat.Builder.create(CSVFormat.EXCEL).setHeader(*CSV_HEADER, *headerMixin, *umfrageMixin).build())
 
     var filesProcessed = 0
     for (record in wahlDataList) {
@@ -292,6 +295,8 @@ private fun mergeToCSV(fachData: FachData, files: Array<out File>, outputFile: F
                 } ?: break
             }
 
+            val umfrageRow = fachData.umfragen.zip(umfrageData).flatMap { (uf, dat) -> uf.toCSVRow(dat) }.toTypedArray()
+
             csvPrinter.printRecord(
                 vorname, // vorname
                 nachname, // nachname
@@ -303,7 +308,8 @@ private fun mergeToCSV(fachData: FachData, files: Array<out File>, outputFile: F
                 wpfs!!.first.kuerzel, // wpf1
                 wpfs!!.second?.kuerzel, // wpf2
                 pf5Typ.toString(), //pf5_typ
-                *row // faecher p. Semester
+                *row, // faecher p. Semester
+                *umfrageRow // umfrage ergebnisse
             )
             filesProcessed++
         }

@@ -25,17 +25,18 @@ import com.fasterxml.jackson.databind.DatabindException
 import com.fasterxml.jackson.databind.InjectableValues
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import com.kurswahlApp.data.FachData.Companion.fromJson
 import java.io.File
 import java.io.IOException
 
 /**
  * Hält alle statischen Daten für die Kurswahl
  *
- * Daten werden aus der `dataStruct.json` gezogen oder vom Webserver geladen
+ * Daten werden vom [Webserver](https://github.com/heinrich26/Kurs-Check/blob/data/) geladen
  *
  * Neue Felder müssen den selben Namen wie in der `JSON` haben,
- * mit dem Finalen Typen im Primary Constructor hinzugefügt und mit dem eingelesenen Typ
- * (so wies in der JSON steht) in der JSON-Factory deklariert (u. ggf. umgeformt) werden.
+ * mit dem finalen Typen im Primary Constructor hinzugefügt und mit dem eingelesenen Typ
+ * (so wies in der JSON steht) in der [Factory][fromJson] deklariert (u. ggf. transformiert) werden.
  *
  * @property schulId Eindeutiger Identifikator der Schule für diese JSON
  * @property jsonVersion (major-, sub-) Version der FachData-JSON
@@ -57,13 +58,14 @@ import java.io.IOException
  * @property schultyp Bestimmt welcher Schultyp vorliegt
  * @property nutztLusd Legt fest, ob LUSD PDFs geladen und gespeichert werden können
  * @property fnamePattern Regex, das die passende LUSD-PDF zum Schülernamen findet.
- * Mögliche Variablen: [%vname%](KurswahlData.vorname) und [%nname%](KurswahlData.nachname) (Leerzeichen werden durch Unterstriche ersetzt)
+ * Mögliche Variablen: [%vname%][KurswahlData.vorname] und [%nname%][KurswahlData.nachname] (Leerzeichen werden durch Unterstriche ersetzt)
+ * @property umfragen Liste von [Umfragen][UmfrageBase], die den Schüler*innen angezeigt werden
  */
 @Suppress("unused", "PropertyName", "LocalVariableName")
 @JsonIncludeProperties(
     "schulId", "jsonVersion", "faecher", "pflichtfaecher", "wpfs", "regeln", "wahlzeilen",
-    "wildcards", "minKurse", "maxKurse", "pf3_4AusschlussFaecher", "zweiWPFs",
-    "strikteWPFs", "semesterkurse", "klassen", "schultyp", "nutztLusd", "fnamePattern"
+    "wildcards", "minKurse", "maxKurse", "pf3_4AusschlussFaecher", "zweiWPFs", "strikteWPFs",
+    "semesterkurse", "klassen", "schultyp", "nutztLusd", "fnamePattern", "umfragen"
 )
 class FachData(
     val schulId: String,
@@ -84,7 +86,15 @@ class FachData(
     val klassen: Set<String> = emptySet(),
     val schultyp: Schultyp,
     val nutztLusd: Boolean = false,
-    val fnamePattern: String?
+    val fnamePattern: String?,
+    val umfragen: List<UmfrageBase<*>> = emptyList() /*listOf(
+        PriorityUmfrage("Prioritäten", "An welchen Zusatzkursen hättest du Interesse? Bitte wähle die Priorität der Fächer aus, oder 0 bei keinem Interesse!", listOf("Medizin Zusatz (Q3/4)",
+            "Psychologie (Q1/2)",
+            "Musik Ensemble (Q1/2)",
+            "Kunst Werkstatt (Q1/2)",
+            "Geschichte Zusatz (Q1/2)")),
+        NumberRangeUmfrage("Kursanzahl", "Wie viele Zusatzkurse möchtest du maximal belegen?", 0..2),
+    )*/
 ) {
     val faecher: List<Fach> = faecherMap.values.toList()
     val fremdsprachen: List<Fach> = faecher.filter(Fach::isFremdsprache)
@@ -111,7 +121,7 @@ class FachData(
             .toSet().minus("*")
             .filter { !it.startsWith('$') && it !in faecherMap.keys }
 
-        require(undefined.isNotEmpty()) { "Undefinierte(s) Kürzel $undefined in den Wahlzeilen!" }
+        require(undefined.isEmpty()) { "Undefinierte(s) Kürzel $undefined in den Wahlzeilen!" }
     }
 
 
@@ -200,7 +210,8 @@ class FachData(
             @JsonProperty klassen: Set<String> = emptySet(),
             @JsonProperty schultyp: Schultyp,
             @JsonProperty nutztLusd: Boolean,
-            @JsonProperty fnamePattern: String?
+            @JsonProperty fnamePattern: String?,
+            @JsonProperty umfragen: List<UmfrageBase<*>> = emptyList()
         ): FachData {
             require (semesterkurse.size == 4) { "Die Länge von 'semesterkurse' muss exakt 4 sein" }
 
@@ -231,7 +242,8 @@ class FachData(
                 klassen = klassen,
                 schultyp = schultyp,
                 nutztLusd = nutztLusd,
-                fnamePattern = fnamePattern
+                fnamePattern = fnamePattern,
+                umfragen = umfragen
             )
         }
     }

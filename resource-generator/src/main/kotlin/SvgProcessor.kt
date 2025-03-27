@@ -74,6 +74,7 @@ fun process(resourcesDir: String, dest: Any) {
                     .addParameter("params", Any::class.asTypeName().copy(nullable = true), KModifier.VARARG)
                     .addStatement("val value: String = bundle.getString(key)")
                     .addStatement("return if (params.isNotEmpty()) %T.format(value, *params) else value", MessageFormat::class)
+                    .addKdoc("Gibt den lokalisierten String mit key [key] zurück.\nKann durch [params] formatiert werden.\n@see [MessageFormat]\n@see [ResourceBundle]")
                     .build()
             )
         }.build()

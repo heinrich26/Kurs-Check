@@ -26,7 +26,7 @@ kotlin {
     }
 }
 
-rootProject.idea.module.settings.packagePrefix["src/main/kotlin"] = group as String
+project.idea.module.settings.packagePrefix["src/main/kotlin"] = group as String
 
 application {
     mainClass = "${group}.gui.GuiMain"

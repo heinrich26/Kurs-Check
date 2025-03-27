@@ -95,7 +95,7 @@ object SchoolConfig {
         val mapper = fachdataObjectMapper()
         schools = try {
             mapper.readValue(fetchConfig())
-        } catch (e: IOException) {
+        } catch (_: IOException) {
             mapper.readValue(loadConfig())
         }
     }

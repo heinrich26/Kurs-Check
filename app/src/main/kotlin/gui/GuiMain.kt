@@ -99,7 +99,7 @@ class GuiMain(file: File? = null) : JPanel() {
             if (it == currentSchool) return
 
             val data = try {
-            SchoolConfig.getSchool(it.schulId)
+                SchoolConfig.getSchool(it.schulId)
             } catch (e: Exception) {
                 e.printStackTrace()
                 // Die Konfiguration war inkompatibel mit der Version von Kurs-Check/ist ungültig.
@@ -191,9 +191,10 @@ class GuiMain(file: File? = null) : JPanel() {
         SidebarLabel("LKs") { navTo(Leistungskurse::class, 2) },
         PfPkIcon { navTo(Pruefungsfaecher::class, 3) },
         SidebarLabel("GKs") { navTo(GrundkursWahl::class, 4) },
-        PolyIcon(R.home, true) { navTo(Overview::class, 5) }).apply {
+        PolyIcon(R.priority_list, false) { navTo(UmfragePanel::class, 5) },
+        PolyIcon(R.home, true) { navTo(Overview::class, 6) }).apply {
         this.forEachIndexed { i, dest ->
-            sidebar.add(dest, row = i, anchor = GridBagConstraints.SOUTH, weighty = if (i == 5) 1.0 else 0.0)
+            sidebar.add(dest, row = i, anchor = GridBagConstraints.SOUTH, weighty = if (i == 6) 1.0 else 0.0)
         }
     }
 
@@ -223,10 +224,10 @@ class GuiMain(file: File? = null) : JPanel() {
     private fun reloadToStart() {
         disableDestinations()
 
-        swapPanel(Overview::class, 5)
+        swapPanel(Overview::class, 6)
 
         // Sidebar Knöpfe updaten
-        for ((i, dest) in sidebarBtns.withIndex()) dest.isSelected = i == 5
+        for ((i, dest) in sidebarBtns.withIndex()) dest.isSelected = i == 6
     }
 
     /**
@@ -239,13 +240,13 @@ class GuiMain(file: File? = null) : JPanel() {
             -1 -> curPanel.notifier
             in 1..3 -> { it ->
                 // TODO Fixen, dass man wenn man eine komplette Wahl hat,
-                //  von den LKS nicht direkt zu den Grundkursen gehen kann!
+                //  von den LKS nicht direkt zu den Grundkursen gehen kann! (Non Breaking)
                 unvollstaendigeEingabeLabel.isVisible = !it
                 if (it) sidebarBtns[index + 1].isEnabled = true
                 else for (i in (index + 1)..4) sidebarBtns[i].isEnabled = false
             }
 
-            0, 4 -> { it -> unvollstaendigeEingabeLabel.isVisible = !it }
+            0, 4, 5 -> { it -> unvollstaendigeEingabeLabel.isVisible = !it }
             else -> { _ -> }
         }
 
@@ -301,6 +302,9 @@ class GuiMain(file: File? = null) : JPanel() {
         }
 
         add(chooseSchoolButton, row = 2, column = 2, anchor = GridBagConstraints.WEST, margin = Insets(4))
+
+        // Umfragen Knopf abhängig von der Schul-Konfig verstecken
+        sidebarBtns[5].isVisible = fachData.umfragen.isNotEmpty()
     }
 
     /**
@@ -354,6 +358,10 @@ class GuiMain(file: File? = null) : JPanel() {
         this.fachData = data
         this.currentSchool = SchoolConfig.schools.find { it.schulId == data.schulId }
         thread { SchoolConfig.writeLastSchool(data.schulId) }
+
+        try {
+            sidebarBtns[5].isVisible = fachData.umfragen.isNotEmpty()
+        } catch (_: NullPointerException) {} // sind grade am Initialisieren, wird in der init {} erledigt
     }
 
     /**
@@ -452,7 +460,7 @@ class GuiMain(file: File? = null) : JPanel() {
         val data = curPanel.close()
         data.lock()
 
-        val todos = data.check()
+        val todos = data.check(fachData)
 
         if (todos != null) {
             JOptionPane.showMessageDialog(this, todos, R.getString("invalid_wahl"), JOptionPane.ERROR_MESSAGE)
@@ -726,4 +734,3 @@ class GuiMain(file: File? = null) : JPanel() {
         else for (i in 2..4) sidebarBtns[i].isEnabled = true
     }
 }
-

@@ -12,7 +12,7 @@ dependencies {
     implementation(libs.apache.pdfbox)
 }
 
-rootProject.idea.module.settings.packagePrefix["src/main/kotlin"] = group as String
+project.idea.module.settings.packagePrefix["src/main/kotlin"] = "${group as String}.data"
 
 val javaMainClass = "${group}.data.lusd_pdf.MainKt"
 
