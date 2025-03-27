@@ -120,6 +120,19 @@
 			"brauchtWPF": true
 		},
 		{
+			"name": "Sport",
+			"kuerzel": "Sp",
+			"aufgabenfeld": 0,
+			"nurPf4_5": true
+		},
+		{
+			"name": "Sport Theorie",
+			"kuerzel": "SpT",
+			"aufgabenfeld": -1,
+			// Aufgabenfeld -1, damit es nicht als Prüfungsfach gewählt werden kann!
+			"nurIn": "3-4"
+		},
+		{
 			"name": "Studium und Beruf",
 			"kuerzel": "SuB",
 			"aufgabenfeld": -1,
@@ -145,19 +158,6 @@
 		//	"aufgabenfeld": -1,
 		//	"nurIn": "1-2"
 		//},
-		{
-			"name": "Sport",
-			"kuerzel": "Sp",
-			"aufgabenfeld": 0,
-			"nurPf4_5": true
-		},
-		{
-			"name": "Sport Theorie",
-			"kuerzel": "SpT",
-			"aufgabenfeld": -1,
-			// Auf -1, damit es nicht als Prüfungsfach gewählt werden kann!
-			"nurIn": "3-4"
-		},
 		// Fächer, die nur als Fremdsprache/Wahlpflichtfach angezeigt werden sollen
 		{
 			"name": "Italienisch",
