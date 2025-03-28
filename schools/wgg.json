@@ -146,18 +146,18 @@
 			"nurIn": "1-2",
 			"isExtra": true
 		},
-		//{
-		//	"name": "Psychologie",
-		//	"kuerzel": "Psy",
-		//	"aufgabenfeld": -1,
-		//	"nurIn": "1-2"
-		//},
-		//{
-		//	"name": "Medizin",
-		//	"kuerzel": "Med",
-		//	"aufgabenfeld": -1,
-		//	"nurIn": "1-2"
-		//},
+		{
+			"name": "Psychologie",
+			"kuerzel": "Psy",
+			"aufgabenfeld": -1,
+			"nurIn": "1-2"
+		},
+		{
+			"name": "Medizin",
+			"kuerzel": "Med",
+			"aufgabenfeld": -1,
+			"nurIn": "3-4"
+		},
 		// Fächer, die nur als Fremdsprache/Wahlpflichtfach angezeigt werden sollen
 		{
 			"name": "Italienisch",
@@ -928,13 +928,13 @@
 		{
 			"type": "PriorityUmfrage",
 			"title": "Prioritäten",
-			"desc": "An welchen Zusatzkursen hättest du Interesse? Bitte wähle die Priorität der Fächer aus, oder 0 bei keinem Interesse!",
-			"options": [ "Medizin Zusatz (Q3/4)", "Psychologie (Q1/2)", "Musik Ensemble (Q1/2)", "Kunst Werkstatt (Q3/4)", "Geschichte Zusatz (Q1/2)" ]
+			"desc": "An welchen Zusatzkursen hättest du Interesse? Sollten genug SuS Interesse haben, kontaktieren wir dich, sodass du ggf. deine Wahl anpassen kannst.<br>Bitte wähle die Priorität der Fächer aus, oder 0 bei keinem Interesse!",
+			"options": [ "Musik Ensemble (Q1/2)", "Kunst Werkstatt (Q3/4)", "Geschichte Zusatz (Q1/2)" ]
 		},
 		{
 	        	"type": "NumberRangeUmfrage",
 			"title": "Kursanzahl",
-			"desc": "Wie viele dieser Zusatzkurse möchtest du maximal belegen?", 
+			"desc": "Wie viele dieser Zusatzkurse würdest du maximal belegen?", 
 			"min": 0,
 			"max": 2
 		}
