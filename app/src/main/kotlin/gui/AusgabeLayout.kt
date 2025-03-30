@@ -20,10 +20,13 @@ package com.kurswahlApp.gui
 
 import com.kurswahlApp.R
 import com.kurswahlApp.data.*
+import com.kurswahlApp.gui.UmfragePanel.Companion.toPanel
 import gui.TitledPanel
 import java.awt.Color
 import java.awt.Font
 import java.awt.GridBagConstraints
+import java.awt.GridBagConstraints.HORIZONTAL
+import java.awt.GridBagConstraints.WEST
 import java.awt.GridBagLayout
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -38,9 +41,9 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
     private val checkboxMap = mutableMapOf<Fach, Array<AusgabeCheckBox>>()
 
     init {
-        preferredSize = 614 by 874 // Din A4
+        preferredSize = 614 by 942 // Din A4
         minimumSize = preferredSize
-        add(JLabel(R.getString("overview")).apply { font = font.deriveFont(Font.BOLD, 18f) }, margin = Insets(left = 5, top = 5), anchor = GridBagConstraints.WEST)
+        add(JLabel(R.getString("overview")).apply { font = font.deriveFont(Font.BOLD, 18f) }, margin = Insets(left = 5, top = 5), anchor = WEST)
 
 
         val checkboxPanel = JPanel(VerticalLayout(alignment = VerticalLayout.EQUAL))
@@ -79,13 +82,13 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
             if (cond) {
                 val label = JLabel(fach.name)
 
-                feldPanel!!.add(label, row = i, column = 0, fill = GridBagConstraints.HORIZONTAL, weightx = 1.0)
+                feldPanel!!.add(label, row = i, column = 0, fill = HORIZONTAL, weightx = 1.0)
 
                 // Checkboxen bauen und hinzufügen
                 checkboxMap[fach] =
                     arrayOf(AusgabeCheckBox(), AusgabeCheckBox(), AusgabeCheckBox(), AusgabeCheckBox()).apply {
                         val insets = Insets(4, 4, 4, 4)
-                        forEachIndexed { j, box -> feldPanel!!.add(box, row = i, column = j + 1, margin = insets) }
+                        forEachIndexed { j, box -> feldPanel.add(box, row = i, column = j + 1, margin = insets) }
                     }
             }
         }
@@ -165,15 +168,29 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
 
         // Kursanzahlen
         val anzahlen = wahlData.countCourses()
-        feldPanel.add(Box.createVerticalStrut(1), column = 0, weightx = 1.0)
+        val font = JLabel().font.deriveFont(Font.BOLD)
         for ((i, n) in anzahlen.withIndex()) {
-            feldPanel.add(JLabel("Q${i + 1}", JLabel.LEFT), row = i, column = 1, anchor = GridBagConstraints.WEST)
-            feldPanel.add(JLabel("$n".wrapHtml("b", "font-size: 10px").wrapHtml()), row = i, column = 2)
+            feldPanel.add(JLabel("Q${i + 1}"), column = 2*i, anchor = WEST, weightx = 0.266)
+            feldPanel.add(JLabel("$n").also { it.font = font }, column = 2 * i + 1, anchor = WEST, weightx = 1.0)
         }
 
-        feldPanel.add(JLabel("${R.getString("total")}   ", JLabel.LEFT), row = 4, column = 1, anchor = GridBagConstraints.WEST)
-        feldPanel.add(JLabel("${anzahlen.sum()}".wrapHtml("b", "font-size: 10px").wrapHtml()), row = 4, column = 2)
+        feldPanel.add(JLabel("="), column = 8, anchor = WEST, weightx = 0.3)
+        feldPanel.add(JLabel("${anzahlen.sum()}").also { it.font = font }, column = 9)
         checkboxPanel.add(feldPanel)
+
+        // Umfragen
+        if (fachData.umfragen.isNotEmpty()) {
+            feldPanel = TitledPanel(R.getString("survey"), layout = GridBagLayout())
+
+            fachData.umfragen.mapIndexed { i, umfrage ->
+                umfrage
+                    .toPanel()
+                    .constructors.first()
+                    .call(umfrage, wahlData.umfrageData.getOrNull(i), { _: Boolean -> }, true)
+                    .also { feldPanel.add(it, fill = HORIZONTAL, row = i) }
+            }
+            checkboxPanel.add(feldPanel)
+        }
 
 
         // Unterschriftfeld
@@ -186,7 +203,7 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
                 }
                 it.font = it.font.deriveFont(12f)
             },
-                fill = GridBagConstraints.HORIZONTAL,
+                fill = HORIZONTAL,
                 margin = Insets(top = if (i==1) 8 else 0),
                 weightx = 1.0,
                 row = i

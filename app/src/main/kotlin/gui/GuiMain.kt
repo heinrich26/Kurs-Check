@@ -42,6 +42,7 @@ import java.awt.event.ComponentAdapter
 import java.awt.event.ComponentEvent
 import java.awt.event.ComponentListener
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.IOException
 import java.net.URL
 import javax.imageio.ImageIO
@@ -60,6 +61,8 @@ class GuiMain(file: File? = null) : JPanel() {
     private lateinit var fachData: FachData
     private lateinit var wahlData: KurswahlData
     private var currentSchool: School? = null
+
+    private var lastFilename: File? = null
 
 
     init {
@@ -265,7 +268,6 @@ class GuiMain(file: File? = null) : JPanel() {
     init {
         layout = GridBagLayout()
 
-
         add(toolbar, fill = GridBagConstraints.HORIZONTAL, row = 0, column = 0, columnspan = 3)
         toolbar.addActionItem(R.file_open, "open-action", R.getString("open_kurswahl"), this::openKurswahlAction)
         toolbar.addActionItem(R.save, "save-action", R.getString("save_kurswahl"), this::saveKurswahlAction)
@@ -373,7 +375,7 @@ class GuiMain(file: File? = null) : JPanel() {
         if (file.exists() && file.canRead()) {
             val mirror = try {
                 FachDataMirror(if (this::fachData.isInitialized) fachData else null, SchoolConfig::getSchool)
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 return false
             }
 
@@ -410,23 +412,24 @@ class GuiMain(file: File? = null) : JPanel() {
                 }
                 updateFachData(newFachData)
                 wahlData = data
+                lastFilename = file
                 data.updatePflichtfaecher()
                 return true
-            } catch (e: DatabindException) {
+            } catch (_: DatabindException) {
                 JOptionPane.showMessageDialog(
                     this,
                     R.getString("cannot_read_alert"),
                     R.getString("bad_file"),
                     JOptionPane.ERROR_MESSAGE
                 )
-            } catch (e: MismatchedInputException) {
+            } catch (_: MismatchedInputException) {
                 JOptionPane.showMessageDialog(
                     this,
                     R.getString("cannot_read_alert"),
                     R.getString("bad_file"),
                     JOptionPane.ERROR_MESSAGE
                 )
-            } catch (e: RuntimeException) {
+            } catch (_: RuntimeException) {
                 showLoadingError()
             }
         }
@@ -487,11 +490,10 @@ class GuiMain(file: File? = null) : JPanel() {
             fun saveKurswahl() {
                 chooser.fileFilter = KurswahlFileFilter
                 chooser.dialogTitle = R.getString("save_file_for_paeko")
-                chooser.selectedFile = File("${data.toFilename()}.$FILETYPE_EXTENSION")
+                chooser.selectedFile = File(lastFilename?.parentFile, "${data.toFilename()}.$FILETYPE_EXTENSION")
 
                 if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-                    val f =
-                        chooser.selectedFile.let { File(it.parent, "${it.nameWithoutExtension}.$FILETYPE_EXTENSION") }
+                    val f = chooser.selectedFile.withExtension(FILETYPE_EXTENSION).also { lastFilename = it }
 
                     thread {
                         try {
@@ -500,7 +502,7 @@ class GuiMain(file: File? = null) : JPanel() {
                             jacksonObjectMapper().writer()
                                 .withAttribute("jsonVersion", fachData.jsonVersion)
                                 .writeValue(f, data)
-                        } catch (exception: SecurityException) {
+                        } catch (_: SecurityException) {
                             JOptionPane.showMessageDialog(
                                 this,
                                 R.getString("missing_write_permission"),
@@ -516,23 +518,31 @@ class GuiMain(file: File? = null) : JPanel() {
              * Speichert ein Bild der Kurswahl
              */
             fun saveImage() {
-                if (chooser.selectedFile != null) chooser.selectedFile = chooser.selectedFile.withExtension("png")
-                chooser.fileFilter = PngFileFilter
+                if (chooser.selectedFile != null) chooser.selectedFile = chooser.selectedFile.withExtension("pdf")
+                chooser.fileFilter = PdfFileFilter
                 chooser.dialogTitle = R.getString("save_for_you")
 
 
                 if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-                    val f = chooser.selectedFile.withExtension("png")
+                    val f = chooser.selectedFile.withExtension("pdf")
 
                     thread {
                         try {
-                            val img = ScreenImage.createImage(AusgabeLayout(fachData, data))
-                            ImageIO.write(img, "png", f)
-                        } catch (exception: SecurityException) {
+                            val img = ScreenImage.createImage(AusgabeLayout(fachData, data), scale = 3.0)
+                            createAndSaveImagePDF(f, img)
+                        } catch (_: SecurityException) {
                             JOptionPane.showMessageDialog(
                                 this,
                                 R.getString("missing_write_permission"),
                                 R.getString("no_rights"),
+                                JOptionPane.ERROR_MESSAGE
+                            )
+                        } catch (_: FileNotFoundException) {
+                            // zugriff auf PDF nicht mögich, da in anderer App geöffnet
+                            JOptionPane.showMessageDialog(
+                                this,
+                                R.getString("file_locked"),
+                                R.getString("fileaccess_not_possible"),
                                 JOptionPane.ERROR_MESSAGE
                             )
                         }
@@ -553,7 +563,7 @@ class GuiMain(file: File? = null) : JPanel() {
             }
 
             if (fachData.nutztLusd) {
-                chooser.fileFilter = PdfFileFilter
+                chooser.fileFilter = LusdPdfFileFilter
                 chooser.dialogTitle = R.getString("open_lusd_file")
 
                 if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
@@ -564,10 +574,10 @@ class GuiMain(file: File? = null) : JPanel() {
                     chooser.selectedFile = File(formFile.parent, data.toFilename() + ".pdf")
 
                     if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-                        val dest = chooser.selectedFile.let { File(it.parent, "${it.nameWithoutExtension}.pdf") }
+                        val dest = chooser.selectedFile.withExtension("pdf")
                         thread {
                             try {
-                                measureNanos { data.exportPDF(formFile, dest, fachData) }
+                                data.exportPDF(formFile, dest, fachData)
                             } catch (_: IOException) {
                                 JOptionPane.showMessageDialog(
                                     this,

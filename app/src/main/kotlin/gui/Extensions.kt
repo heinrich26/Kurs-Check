@@ -17,6 +17,7 @@
 
 package com.kurswahlApp.gui
 
+import org.jetbrains.annotations.Contract
 import java.awt.*
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
@@ -135,15 +136,21 @@ operator fun Insets.component2() = left
 operator fun Insets.component3() = bottom
 operator fun Insets.component4() = right
 
-@Suppress("SSBasedInspection")
 infix fun Int.by(y: Int): Dimension = Dimension(this, y)
 operator fun Dimension.component1() = width
 operator fun Dimension.component2() = height
 
 fun Path2D.scale(sx: Double, sy: Double): Shape = createTransformedShape(AffineTransform.getScaleInstance(sx, sy))
 
+/**
+ * Erstellt eine kopie der [File] mit der gegebenen Dateinamenerweiterung [ext].
+ *
+ * @return Datei mit gleichen Namen und neuer [Erweiterung][ext].
+ */
+@Contract(value = "_->new", pure = true)
 fun File.withExtension(ext: String): File = File(this.parentFile, "$nameWithoutExtension.$ext")
 
+@Contract(value = "_->new", pure = true)
 fun Color.hexString() = "#${Integer.toHexString(rgb and 0x00ffffff)}"
 
 @Suppress("UNCHECKED_CAST", "UsePropertyAccessSyntax")

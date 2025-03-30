@@ -71,10 +71,16 @@ object KurswahlFileFilter : FileFilter() {
 object PngFileFilter : FileFilter() {
     override fun accept(f: File): Boolean = f.isDirectory || f.extension == "png"
 
-    override fun getDescription(): String = "Png Dateien (.png)"
+    override fun getDescription(): String = "PNG Dateien (.png)"
 }
 
 object PdfFileFilter : FileFilter() {
+    override fun accept(f: File): Boolean = f.isDirectory || f.extension == "pdf"
+
+    override fun getDescription(): String = "PDF Dateien (.pdf)"
+}
+
+object LusdPdfFileFilter : FileFilter() {
     override fun accept(f: File): Boolean = f.isDirectory || (f.extension == "pdf" && (!f.exists() || f.canWrite()))
 
     override fun getDescription(): String = "LUSD Formulare (.pdf)"

@@ -17,9 +17,8 @@
 
 package com.kurswahlApp.gui
 
-import java.awt.Component
-import java.awt.Container
-import java.awt.Rectangle
+import java.awt.*
+import java.awt.geom.AffineTransform
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 import javax.swing.JComponent
@@ -68,16 +67,18 @@ object ScreenImage {
      *  The entire component will be captured to an image.
      *
      *  @param  component Swing component to create image from
+     *  @param  bgColor The background color to be used for non-opaque components
+     *  @param  scale The scale factor to be applied to the image
      *  @return a [BufferedImage], the image for the given region
      */
-    fun createImage(component: JComponent): BufferedImage {
+    fun createImage(component: JComponent, bgColor: Color? = Color.WHITE, scale: Double = 1.0): BufferedImage {
         var d = component.size
         if (d.width == 0 || d.height == 0) {
             d = component.preferredSize
             component.size = d
         }
         val region = Rectangle(0, 0, d.width, d.height)
-        return createImage(component, region)
+        return createImage(component, region, bgColor, scale)
     }
 
     /**
@@ -86,9 +87,14 @@ object ScreenImage {
      *
      *  @param  component Swing component to create image from
      *  @param  region The region of the component to be captured to an image
+     *  @param  bgColor The background color to be used for non-opaque components
+     *  @param  scale The scale factor to be applied to the image
      *  @return a [BufferedImage], the image for the given region
      */
-    fun createImage(component: JComponent, region: Rectangle): BufferedImage {
+    fun createImage(component: JComponent, region: Rectangle, bgColor: Color? = null, scale: Double = 1.0): BufferedImage {
+        val regionScaled =
+            if (scale == 1.0) region
+            else Rectangle(region.x, region.y, (region.width * scale).toInt(), (region.height * scale).toInt())
         //  Make sure the component has a size and has been layed out.
         //  (necessary check for components not added to a realized frame)
         if (!component.isDisplayable) {
@@ -99,26 +105,30 @@ object ScreenImage {
             }
             layoutComponent(component)
         }
-        val image = BufferedImage(region.width, region.height, BufferedImage.TYPE_INT_RGB)
+        val image = BufferedImage(regionScaled.width, regionScaled.height, BufferedImage.TYPE_INT_RGB)
         val g2d = image.createGraphics()
+        g2d.addRenderingHints(mapOf(RenderingHints.KEY_TEXT_ANTIALIASING to RenderingHints.VALUE_TEXT_ANTIALIAS_ON))
+        if (scale != 1.0) g2d.transform = AffineTransform.getScaleInstance(scale, scale)
 
         //  Paint a background for non-opaque components,
         //  otherwise the background will be black
         if (!component.isOpaque) {
-            g2d.color = component.background
-            g2d.fillRect(region.x, region.y, region.width, region.height)
+            g2d.color = bgColor ?: component.background
+            g2d.fillRect(regionScaled.x, regionScaled.y, regionScaled.width, regionScaled.height)
         }
-        g2d.translate(-region.x, -region.y)
+        g2d.translate(-regionScaled.x, -regionScaled.y)
         component.print(g2d)
         g2d.dispose()
         return image
     }
 
-    private fun layoutComponent(component: Component) {
+    private fun layoutComponent(component: Component, transparentize: Boolean = true) {
         synchronized(component.treeLock) {
             component.doLayout()
             if (component is Container) {
-                component.components.forEach(::layoutComponent)
+                if (component is JComponent && transparentize) component.isOpaque = false
+
+                component.components.forEach { layoutComponent(it, transparentize) }
             }
         }
     }

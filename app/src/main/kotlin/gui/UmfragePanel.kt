@@ -50,7 +50,7 @@ class UmfragePanel(wahlData: KurswahlData, fachData: FachData, notifier: (Boolea
                 umfrage.toPanel().constructors.first().call(umfrage, wahlData.umfrageData.getOrNull(i), { b: Boolean ->
                     validities[i] = b
                     handleUmfrageNotifiers()
-                }).also { add(it, fill = HORIZONTAL, row = i) }
+                }, false).also { add(it, fill = HORIZONTAL, row = i) }
             }
         }
     }
@@ -64,23 +64,36 @@ class UmfragePanel(wahlData: KurswahlData, fachData: FachData, notifier: (Boolea
     override val windowName: String = "Umfragen"
 
     sealed class UmfrageComponent<T : Any>(
-        val content: UmfrageBase<T>,
+        internal val content: UmfrageBase<T>,
         value: T?,
-        private val notifier: (Boolean) -> Unit
+        internal val notifier: (Boolean) -> Unit,
+        private val display: Boolean = false
     ) : TitledPanel(content.title, radius = 8, layout = GridBagLayout()) {
         abstract fun isDataValid(): Boolean
         abstract fun getData(): T
+        abstract fun setupInput()
+        abstract fun setupDisplay()
 
         init {
-            content.desc?.let { add(JLabel(it.wrappable(200)), columnspan = 3, fill = BOTH, margin = Insets(bottom = 8)) }
+            if (!display) content.desc?.let {
+                add(JLabel(it.wrappable(200)), columnspan = 3,
+                    fill = BOTH, margin = Insets(bottom = 8))
+            }
+        }
+
+        internal fun setup() {
+            if (display) this.setupDisplay() else {
+                this.setupInput()
+                this.notifier(isDataValid())
+            }
         }
     }
 
 
     class NumberRangeUmfrageComponent(
-        content: NumberRangeUmfrage,
-        value: Int?, notifier: (Boolean) -> Unit
-    ) : UmfrageComponent<Int>(content, value, notifier) {
+        content: NumberRangeUmfrage, value: Int?,
+        notifier: (Boolean) -> Unit, display: Boolean = false
+    ) : UmfrageComponent<Int>(content, value, notifier, display) {
         private val model: SpinnerNumberModel = SpinnerNumberModel(
             value ?: content.range.first,
             content.range.first,
@@ -88,41 +101,37 @@ class UmfragePanel(wahlData: KurswahlData, fachData: FachData, notifier: (Boolea
             1
         )
 
-        init {
-            val spinner = JSpinner(model)
-            add(spinner, margin = Insets(left = 4))
-            notifier(true)
-        }
-
         override fun isDataValid(): Boolean = true
 
         override fun getData(): Int = model.number as Int
+
+        override fun setupInput() {
+            this.add(JSpinner(model), margin = Insets(left = 4))
+        }
+
+        override fun setupDisplay() {
+            content.desc?.let {
+                add(JLabel(it.wrappable(200)), columnspan = 3,
+                    fill = BOTH, margin = Insets(bottom = 8))
+            }
+            this.add(JLabel(getData().toString()), margin = Insets(left = 4))
+        }
+
+        init {
+            setup()
+        }
     }
 
     class PriorityUmfrageComponent(
-        content: PriorityUmfrage,
-        value: List<Int>?, umfrageNotifier: (Boolean) -> Unit
-    ) : UmfrageComponent<List<Int>>(content, value, umfrageNotifier) {
-        init {
-            assert(this.content is PriorityUmfrage)
-        }
-
+        content: PriorityUmfrage, value: List<Int>?,
+        notifier: (Boolean) -> Unit, display: Boolean = false
+    ) : UmfrageComponent<List<Int>>(content, value, notifier, display) {
         private val errorLabel: JLabel = JLabel().also {
             it.foreground = Consts.COLOR_ERROR
         }
 
         private val models: List<SpinnerNumberModel> = (value ?: listOfNulls<Int>(content.options.size)).map {
             SpinnerNumberModel(it ?: 0, 0, min(content.max, content.options.size), 1)
-        }
-
-        init {
-            for ((text, model) in content.options.zip(models)) {
-                model.addChangeListener { umfrageNotifier(this@PriorityUmfrageComponent.isDataValid()) }
-                this.add(JLabel(text), fill = BOTH, column = 0, weightx = 1.0)
-                this.add(JSpinner(model), column = 1, margin = Insets(left = 4))
-            }
-            add(errorLabel, column = 0, columnspan = 2, fill = BOTH, margin = Insets(top = 4))
-            umfrageNotifier(isDataValid())
         }
 
         private val errorText = R.getString("prioUmfrageErrorMsg", content.min).wrappable(200)
@@ -133,9 +142,29 @@ class UmfragePanel(wahlData: KurswahlData, fachData: FachData, notifier: (Boolea
         }
 
         override fun getData(): List<Int> = models.map { it.number as Int }
+
+        override fun setupInput() {
+            for ((text, model) in (this.content as PriorityUmfrage).options.zip(models)) {
+                model.addChangeListener { this.notifier(this@PriorityUmfrageComponent.isDataValid()) }
+                this.add(JLabel(text), fill = BOTH, column = 0, weightx = 1.0)
+                this.add(JSpinner(model), column = 1, margin = Insets(left = 4))
+            }
+            this.add(errorLabel, column = 0, columnspan = 2, fill = BOTH, margin = Insets(top = 4))
+        }
+
+        override fun setupDisplay() {
+            for ((text, model) in (this.content as PriorityUmfrage).options.zip(models)) {
+                this.add(JLabel(text), fill = BOTH, column = 0, weightx = 1.0)
+                this.add(JLabel(model.number.toString()), column = 1, margin = Insets(left = 4))
+            }
+        }
+
+        init {
+            setup()
+        }
     }
 
-    private companion object {
+    internal companion object {
         fun UmfrageBase<*>.toPanel() = when (this) {
             is NumberRangeUmfrage -> NumberRangeUmfrageComponent::class
             is PriorityUmfrage -> PriorityUmfrageComponent::class
