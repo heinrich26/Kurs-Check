@@ -61,12 +61,14 @@
             "name": "Geschichte",
             "kuerzel": "Ge",
             "aufgabenfeld": 2,
-            "isLk": true
+            "isLk": true,
+            "blockAsPf": false
         },
         {
             "name": "Politikwissenschaft",
             "kuerzel": "Pw",
-            "aufgabenfeld": 2
+            "aufgabenfeld": 2,
+            "blockAsPf": false
         },
         {
             "name": "Wirtschaft",
@@ -156,19 +158,19 @@
         "Ge": "3-4"
     },
     "zweiWPFs": false,
-    "wpfs": ["--"],
+    "wpfs": [ "--" ],
     "regeln": [
         {
             "type": "WildcardRegel",
             "wildcard": "$FS",
             "anzahl": 4,
-            "desc": "Eine Fremdsprache muss 4 Semester belegt werden",
+            "desc": "Eine Fremdsprache muss 4 Semester belegt werden.",
             "errorMsg": "Wähle eine Fremdsprache durchgehend!"
         },
         {
             "type": "IfThenRegel", 
             "desc": "Wird die 3./4. Fremdsprache fortgesetzt, muss eine weitere Fremdsprache durchgehend belegt werden.",
-            "errorMsg": "Belege Englisch durchgängig (Spreche mit deinem PäKo, wenn hier Probleme auftreten)",
+            "errorMsg": "Belege Englisch durchgängig! (Spreche mit deinem PäKo, wenn hier Probleme auftreten)",
             "regel1": {
                 "type": "FremdsprachenRegel",
                 "ohneFs2": true
@@ -184,13 +186,13 @@
             "type": "WildcardRegel",
             "wildcard": "$NW",
             "anzahl": 4,
-            "desc": "Eine Naturwissenschaft muss 4 Semester belegt werden",
+            "desc": "Eine Naturwissenschaft muss 4 Semester belegt werden.",
             "errorMsg": "Wähle eine Naturwissenschaft durchgehend!"
         },
         {
             "type": "KonfliktRegel",
             "wildcard": "$KF",
-            "desc": "Kunst und Darstellendes Spiel können nicht gleichzeitig belegt werden",
+            "desc": "Kunst und Darstellendes Spiel können nicht gleichzeitig belegt werden.",
             "errorMsg": "Du kannst zur gleichen Zeit nur Kunst <b>oder</b> Darstellendes Spiel belegen!"
         },
         {
@@ -207,7 +209,7 @@
                 "anzahl": 2,
                 "wann": "3-4"
             },
-            "desc": "Sport als PF -> zusätzlich Sport Theorie min. in Q3 & Q4",
+            "desc": "Sport als PF -> zusätzlich Sport Theorie in Q3 & Q4.",
             "errorMsg": "Wähle Sport Theorie in Q3 & Q4!"
         },
         {
@@ -244,8 +246,32 @@
                 "type": "KursanzahlRegel",
                 "min": 35
             },
-            "desc": "Sport als PF -> Es müssen mind. 35 Kurse belegt werden",
+            "desc": "Sport als PF -> Es müssen mind. 35 Kurse belegt werden.",
             "errorMsg": "Wähle mind. 35 Kurse!"
+        },
+        {
+            "type": "KuerzelRegel",
+            "kuerzel": "Ge",
+            "scope": "1-4",
+            "anzahl": "4",
+            "desc": "Geschichte als PF 1-4 -> in allen Semestern belegen.",
+            "errorMsg": "Belege <b>Geschichte</b> durchgängig!"
+        },
+        {
+            "type": "KuerzelRegel",
+            "kuerzel": "Pw",
+            "scope": "1-4",
+            "anzahl": "4",
+            "desc": "PW als PF 1-4 -> in allen Semestern belegen.",
+            "errorMsg": "Belege <b>Politikwissenschaft</b> durchgängig!"
+        },
+        {
+            "type": "KuerzelRegel",
+            "kuerzel": "Pw",
+            "scope": "5",
+            "wann": "3-4",
+            "desc": "PW als 5. PK -> in Q3/Q4 belegen.",
+            "errorMsg": "Belege <b>Politikwissenschaft</b> in Q3/Q4!"
         }
     ],
     "wahlzeilen": {
@@ -299,12 +325,7 @@
         }
     },
     "wildcards": {
-        "$AF3": [
-            "Ma",
-            "Inf",
-            "Ph",
-            "Ch"
-        ],
+        "$AF3": [ "Ma", "Inf", "Ph", "Ch" ],
         // Kurse aus dem Aufgabenfeld 2
         "$FS": [
             "En",
@@ -313,33 +334,19 @@
             "Lat",
             "I"
         ],
-        "$NW": [
-            "Ch",
-            "Ph"
-        ],
+        "$NW": [ "Ch", "Ph" ],
         // Andere Wildcards (z.B. f. Regeln)
-        "$KF": [
-            "Ku",
-            "DS"
-        ]
+        "$KF": [ "Ku", "DS" ],
+        "$GePW": [ "Ge", "Pw" ]
     },
     // Grundkurse und Leistungskurse zusammen
     "minKurse": 34,
     // Grundkurse und Leistungskurse zusammen
     "maxKurse": 38,
     // Fächer, von denen nur 1 gewählt werden darf (§ 23,6 VO-GO)
-    "pf3_4AusschlussFaecher": [
-        "Ku",
-        "DS",
-        "Sp"
-    ],
+    "pf3_4AusschlussFaecher": [ "Ku", "DS", "Sp" ],
     // Limitiert die Anzahl Kurse die in einem Semester belegt werden können!
-    "semesterkurse": [
-        10,
-        10,
-        10,
-        10
-    ],
+    "semesterkurse": [ 10, 10, 10, 10 ],
     "schultyp": "Sekundarschule", // kann nach Softwareupdate zu "Berufsschule13" geändert werden
     "nutztLusd": false,
     "fnamePattern": ".+?_Kurswahl_Abitur_\\d{4}_\\d{2}_OSZ_SEK_II_%vname%_%nname%_(\\d+).*"
