@@ -20,6 +20,7 @@ package com.kurswahlApp.gui
 
 import com.kurswahlApp.R
 import com.kurswahlApp.data.*
+import com.kurswahlApp.gui.AusgabeCheckBox.STYLE.*
 import com.kurswahlApp.gui.UmfragePanel.Companion.toPanel
 import gui.TitledPanel
 import java.awt.Color
@@ -41,7 +42,7 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
     private val checkboxMap = mutableMapOf<Fach, Array<AusgabeCheckBox>>()
 
     init {
-        preferredSize = 614 by 942 // Din A4
+        preferredSize = 614 by 942 // Din A4 + Page-Margin
         minimumSize = preferredSize
         add(JLabel(R.getString("overview")).apply { font = font.deriveFont(Font.BOLD, 18f) }, margin = Insets(left = 5, top = 5), anchor = WEST)
 
@@ -86,9 +87,8 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
 
                 // Checkboxen bauen und hinzufügen
                 checkboxMap[fach] =
-                    arrayOf(AusgabeCheckBox(), AusgabeCheckBox(), AusgabeCheckBox(), AusgabeCheckBox()).apply {
-                        val insets = Insets(4, 4, 4, 4)
-                        forEachIndexed { j, box -> feldPanel.add(box, row = i, column = j + 1, margin = insets) }
+                    Array(4) { AusgabeCheckBox() }.apply {
+                        forEachIndexed { j, box -> feldPanel.add(box, row = i, column = j + 1, margin = Insets(4)) }
                     }
             }
         }
@@ -98,7 +98,7 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
             val row = checkboxMap[gk]!!
             for ((k, isActive) in choice.bools.withIndex()) {
                 if (isActive) {
-                    row[k].style = AusgabeCheckBox.STYLE.CHECKED
+                    row[k].style = CHECKED
                 }
             }
         }
@@ -106,25 +106,15 @@ class AusgabeLayout(fachData: FachData, wahlData: KurswahlData) : JPanel(GridBag
         for ((fach, boxes) in checkboxMap.entries) {
             if (fach.nurIn != Wahlmoeglichkeit.DURCHGEHEND) {
                 for ((box, b) in boxes.zip(fach.nurIn.bools))
-                    if (!b) box.style = AusgabeCheckBox.STYLE.UNAVAILABLE
+                    if (!b) box.style = UNAVAILABLE
             }
         }
 
-        for (lk in wahlData.lks.filterNotNull()) {
-            for (box in checkboxMap[lk]!!)
-                box.style = AusgabeCheckBox.STYLE.LK
-        }
-
-        for (box in checkboxMap[wahlData.pf3!!]!!) {
-            box.style = AusgabeCheckBox.STYLE.PF3
-        }
-
-        for (box in checkboxMap[wahlData.pf4!!]!!) {
-            box.style = AusgabeCheckBox.STYLE.PF4
-        }
-
-        for (box in checkboxMap[wahlData.pf5!!]!!) {
-            box.style = AusgabeCheckBox.STYLE.PF5
+        for ((fach, style) in wahlData.pfs.filterNotNull().zip(listOf(LK, LK, PF3, PF4, PF5))) {
+            for (box in checkboxMap[fach]!!) {
+                // normale Fächer werden gesetzt und bereits angekreuzte zum entsprechenden Stil geändert
+                if (fach.blockAsPf || box.style == CHECKED) box.style = style
+            }
         }
 
         add(checkboxPanel, row = 1, column = 0, margin = Insets(4, 4, 4, 4), fill = GridBagConstraints.BOTH, weightx = 1.0, weighty = 1.0)

@@ -58,7 +58,8 @@ import java.io.IOException
  * @property schultyp Bestimmt welcher Schultyp vorliegt
  * @property nutztLusd Legt fest, ob LUSD PDFs geladen und gespeichert werden können
  * @property fnamePattern Regex, das die passende LUSD-PDF zum Schülernamen findet.
- * Mögliche Variablen: [%vname%][KurswahlData.vorname] und [%nname%][KurswahlData.nachname] (Leerzeichen werden durch Unterstriche ersetzt)
+ * Mögliche Variablen: [%vname%][KurswahlData.vorname] und [%nname%][KurswahlData.nachname]
+ * (Leerzeichen werden durch Unterstriche ersetzt)
  * @property umfragen Liste von [Umfragen][UmfrageBase], die den Schüler*innen angezeigt werden
  */
 @Suppress("unused", "PropertyName", "LocalVariableName")
@@ -87,14 +88,7 @@ class FachData(
     val schultyp: Schultyp,
     val nutztLusd: Boolean = false,
     val fnamePattern: String?,
-    val umfragen: List<UmfrageBase<*>> = emptyList() /*listOf(
-        PriorityUmfrage("Prioritäten", "An welchen Zusatzkursen hättest du Interesse? Bitte wähle die Priorität der Fächer aus, oder 0 bei keinem Interesse!", listOf("Medizin Zusatz (Q3/4)",
-            "Psychologie (Q1/2)",
-            "Musik Ensemble (Q1/2)",
-            "Kunst Werkstatt (Q1/2)",
-            "Geschichte Zusatz (Q1/2)")),
-        NumberRangeUmfrage("Kursanzahl", "Wie viele Zusatzkurse möchtest du maximal belegen?", 0..2),
-    )*/
+    val umfragen: List<UmfrageBase<*>> = emptyList()
 ) {
     val faecher: List<Fach> = faecherMap.values.toList()
     val fremdsprachen: List<Fach> = faecher.filter(Fach::isFremdsprache)
@@ -117,7 +111,7 @@ class FachData(
      */
     fun checkWahlzeilen() {
         val undefined = wahlzeilen
-            .flatMap { (_, wz) -> wz.toList()}
+            .flatMap { (_, wz) -> wz.toList() }
             .toSet().minus("*")
             .filter { !it.startsWith('$') && it !in faecherMap.keys }
 
@@ -176,7 +170,8 @@ class FachData(
             "klassen=$klassen",
             "schultyp=$schultyp",
             "nutztLUSD=$nutztLusd",
-            "fnamePattern=$fnamePattern"
+            "fnamePattern=$fnamePattern",
+            "umfragen=$umfragen"
         ).joinToString(
             ",\n\t",
             "FachData[schulID: $schulId - v$jsonVersion](\n\t",

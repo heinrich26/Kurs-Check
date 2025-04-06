@@ -36,7 +36,10 @@ sealed class Regel(var desc: String?, var errorMsg: String?) {
     open fun fillData(data: FachData) {}
 
     /**
-     * Erstellt ein Scope für
+     * Erstellt ein Auswahl der Kurse mit dem gegebenen [RegelScope].
+     * Prüfungsfächer werden in dieser Auswahl immer mit [Wahlmoeglichkeit.DURCHGEHEND] belegt, zur Nutzung
+     * mit [Fach.blockAsPf] sollte eine [IfThenRegel] mit Scope nur in `regel1` und *ohne Scope* in `regel2`
+     * verwendet werden.
      */
     protected fun getScope(scope: RegelScope?): (KurswahlData) -> Map<Fach, Wahlmoeglichkeit> =
         when (scope) {
@@ -53,7 +56,7 @@ sealed class Regel(var desc: String?, var errorMsg: String?) {
             RegelScope.PF4_5 -> { w ->
                 buildMap { w.pf4?.let { put(it, DURCHGEHEND) }; w.pf5?.let { put(it, DURCHGEHEND) } }
             }
-            RegelScope.PF5 -> { w -> w.pf3?.let { mapOf(it to DURCHGEHEND) } ?: emptyMap() }
+            RegelScope.PF5 -> { w -> w.pf5?.let { mapOf(it to DURCHGEHEND) } ?: emptyMap() }
         }
 
     protected fun toString(vararg fields: String?) =

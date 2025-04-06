@@ -40,7 +40,6 @@ class KuerzelRegel(
             if (fach != target) continue
             // Checken ob die Wahlmoeglichkeit passt
             if (predicate(wmoegl)) return true
-
         }
 
         return false

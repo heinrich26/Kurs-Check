@@ -35,7 +35,7 @@ class FeldZeile {
     var q4: PDField? = null
 
     var wahlmoeglichkeit: Wahlmoeglichkeit?
-        get() = Wahlmoeglichkeit.fromBools(listOf(q1?.checked ?: false, q2?.checked ?: false, q3?.checked ?: false, q4?.checked ?: false))
+        get() = Wahlmoeglichkeit.fromBools(listOf(q1?.checked == true, q2?.checked == true, q3?.checked == true, q4?.checked == true))
         set(value) {
             val bools = value?.bools ?: Wahlmoeglichkeit.UNGEWAEHLT_BOOLS
             q1?.checked = bools[0]
@@ -46,45 +46,27 @@ class FeldZeile {
 
 
     fun checkLK1() {
-        if (lk1 != null) {
-            lk1!!.checked = true
-            wahlmoeglichkeit = Wahlmoeglichkeit.DURCHGEHEND
-        }
+        lk1?.checked = true
     }
 
     fun checkLK2() {
-        if (lk2 != null) {
-            lk2!!.checked = true
-            wahlmoeglichkeit = Wahlmoeglichkeit.DURCHGEHEND
-        }
+        lk2?.checked = true
     }
 
     fun checkLK3() {
-        if (lk3 != null) {
-            lk3!!.checked = true
-            wahlmoeglichkeit = Wahlmoeglichkeit.DURCHGEHEND
-        }
+        lk3?.checked = true
     }
 
     fun checkPF3() {
-        if (pf3 != null) {
-            pf3!!.checked = true
-            wahlmoeglichkeit = Wahlmoeglichkeit.DURCHGEHEND
-        }
+        pf3?.checked = true
     }
 
     fun checkPF4() {
-        if (pf4 != null) {
-            pf4!!.checked = true
-            wahlmoeglichkeit = Wahlmoeglichkeit.DURCHGEHEND
-        }
+        pf4?.checked = true
     }
 
     fun checkPK5() {
-        if (pk5 != null) {
-            pk5!!.checked = true
-            wahlmoeglichkeit = Wahlmoeglichkeit.DURCHGEHEND
-        }
+        pk5?.checked = true
     }
 
     fun clear() {

@@ -40,6 +40,8 @@ import org.intellij.lang.annotations.Language
  * @property nurFuer bestimmt welche Klassen dieses [Fach] wählen können.
  * @property lusdId Id des [Fachs][Fach] im LUSD-System.
  * @property infoText über das [Fach], zur Hilfe in der Grundkurs-Übersicht.
+ * @property blockAsPf ob das [Fach] als Prüfungsfach automatisch [Wahlmoeglichkeit.DURCHGEHEND] gewählt (geblockt)
+ * wird. Nützlich um §47.4 umzusetzen.
  */
 @Suppress("PropertyName")
 class Fach(
@@ -57,7 +59,8 @@ class Fach(
     val nurIn: Wahlmoeglichkeit = Wahlmoeglichkeit.DURCHGEHEND,
     val nurFuer: Set<String>? = null,
     val lusdId: Int = -1,
-    @Language("html") val infoText: String? = null
+    @Language("html") val infoText: String? = null,
+    val blockAsPf: Boolean = true
 ) {
     // Stellt sicher, dass Zusatzkurse nicht als Prüfungsfächer belegt werden können.
     val isPf = isPf && aufgabenfeld >= 0
@@ -75,8 +78,24 @@ class Fach(
 
     override fun hashCode(): Int = kuerzel.hashCode() // nimmt an, dass das selbe Kürzel nur 1x vorkommt
 
-    override fun toString(): String =
-        "Fach(name='$name', kuerzel='$kuerzel', aufgabenfeld=$aufgabenfeld, isLk=$isLk, isGk=$isGk, isFremdsprache=$isFremdsprache, isKurs=$isKurs, isPf=$isPf, isExtra=$isExtra, brauchtWPF=$brauchtWPF, nurPf4_5=$nurPf4_5, nurIn=$nurIn, nurFuer=$nurFuer, lusdId=$lusdId, infoText=$infoText)"
+    override fun toString(): String = listOf(
+        "name='$name'",
+        "kuerzel='$kuerzel'",
+        "aufgabenfeld=$aufgabenfeld",
+        "isLk=$isLk",
+        "isGk=$isGk",
+        "isFremdsprache=$isFremdsprache",
+        "isKurs=$isKurs",
+        "isPf=$isPf",
+        "isExtra=$isExtra",
+        "brauchtWPF=$brauchtWPF",
+        "nurPf4_5=$nurPf4_5",
+        "nurIn=$nurIn",
+        "nurFuer=$nurFuer",
+        "lusdId=$lusdId",
+        "infoText='$infoText'",
+        "blockAsPf=$blockAsPf"
+    ).joinToString(prefix = "Fach(", postfix = ")")
 
     /** Überprüft ob das Fach mit der gegebenen Klasse gewählt werden kann. */
     fun checkKlasse(klasse: String?): Boolean = nurFuer?.contains(klasse) != false

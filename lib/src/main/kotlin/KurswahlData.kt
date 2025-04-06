@@ -233,10 +233,11 @@ data class KurswahlData(
     /**
      * Alle gewählten Kurse, einschließlich Prüfungsfächern
      */
+    @Suppress("UNCHECKED_CAST")
     @Lockable
     var kurse: Map<Fach, Wahlmoeglichkeit> = emptyMap()
         get() {
-            if (!locked) field = (gks + pfs.filterNotNull().associateWith { DURCHGEHEND })
+            if (!locked) field = (gks + (pfs.filter { it != null && it.blockAsPf } as List<Fach>).associateWith { DURCHGEHEND })
             return field
         }
         private set
@@ -281,7 +282,6 @@ data class KurswahlData(
             "\n",
             prefix = "Bevor du deine Kurswahl exportieren kannst, musst du noch folgendes erledigen:\n"
         )
-
 
     /**
      * Entfernt LKs aus den PFs und GKs
@@ -378,7 +378,7 @@ data class KurswahlData(
      */
     fun updatePflichtfaecher() {
         lock()
-        gks += pflichtfaecher.filter { (k, v) -> k !in pfs && gks[k].let { it == null || it in v } }
+        gks += pflichtfaecher.filter { (k, v) -> (k !in pfs || !k.blockAsPf) && gks[k].let { it == null || it in v } }
         unlock()
     }
 
@@ -387,7 +387,7 @@ data class KurswahlData(
      */
     @Throws(InvalidPasswordException::class, IOException::class)
     fun exportPDF(`in`: File, out: File, fachData: FachData) {
-        val fachIdMap = fachData.faecher.reversed().associateBy(Fach::lusdId)
+        val fachIdMap = fachData.faecher.reversed().associateBy(Fach::lusdId) // TODO: wofür das .reversed()?
         val felder = fachIdMap.values.associateWith { FeldZeile() }
 
         val doc = PDDocument.load(`in`)
@@ -425,7 +425,7 @@ data class KurswahlData(
         felder[pf4]!!.checkPF4()
         felder[pf5]!!.checkPK5()
 
-        for ((fach, wm) in gks) {
+        for ((fach, wm) in kurse) {
             felder[fach]!!.wahlmoeglichkeit = wm
         }
 
@@ -449,14 +449,14 @@ data class KurswahlData(
             "wahlzeile=$wahlzeile",
             "klasse=$klasse",
             "pflichtfaecher=$pflichtfaecher",
-            "vorname=$vorname",
-            "nachname=$nachname",
+            "vorname='$vorname'",
+            "nachname='$nachname'",
             "geburtsdatum=$geburtsdatum",
             "geburtsort=$geburtsort",
             "staatsangehoerigkeit='$staatsangehoerigkeit'",
             "umfrageData=$umfrageData",
             "readJsonVersion=$readJsonVersion",
-            "schulId='$schulId')").joinToString("\n\t", prefix = "KurswahlData(\n")
+            "schulId='$schulId'").joinToString("\n\t", prefix = "KurswahlData(\n", postfix = ")")
 
 
     // Annotation um lockbare Props zu finden und beim locken zu aktualisieren.

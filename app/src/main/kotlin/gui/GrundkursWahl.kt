@@ -32,7 +32,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
     KurswahlPanel(wahlData, fachData, notifier) {
 
     override fun close(): KurswahlData = wahlData.copy(gks = buildMap {
-        val pfs = wahlData.pfs
+        val pfs = wahlData.pfs.filter { it?.blockAsPf == true }
         for ((i, fach) in fachData.faecher.withIndex()) {
             if (fach in pfs) continue
             // Speichern der gewählten Grundkurse und dessen Semester
@@ -443,6 +443,8 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         var af = Int.MIN_VALUE
         var offset = 1
 
+        // Versteckt Fächer, die aufgrund von Konflikten mit Prüfungsfächern nicht gewählt werden können
+        // Kann mit einer doppelt genesteden Not(Not(KonflitkRegel)) umgangen werden
         val versteckte = fachData.regeln.filterIsInstance<KonfliktRegel>().mapNotNull {
             it.wildcardMembers.takeIf { m -> m.any { f -> f in wahlData.pfs } }
         }.flatten().minus(wahlData.pfs)
@@ -525,7 +527,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
 
 
         // Blockt Prüfungsfächer
-        for (pos in wahlData.pfs.mapNotNull { it?.let { fachPos(it) } }) {
+        for (pos in wahlData.pfs.mapNotNull { it?.takeIf { it.blockAsPf }?.let { fachPos(it) } }) {
             checkboxRows[pos]!!.apply(DURCHGEHEND, true)
         }
     }
