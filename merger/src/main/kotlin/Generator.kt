@@ -152,7 +152,6 @@ fun main(args: Array<String>) {
     } else {
         run(schulId, input, output, action, System.out) // CLI merger starten
     }
-
 }
 
 private fun run(schulId: String, directory: String, output: String?, action: TYP, out: PrintStream) {
@@ -160,14 +159,13 @@ private fun run(schulId: String, directory: String, output: String?, action: TYP
         ?: throw RuntimeException("Die gegebene 'schulId' existiert nicht! Bitte versuchen sie es erneut!")
 
     val dirFile = File(directory)
-    if (!dirFile.isDirectory) {
-        throw RuntimeException("Der angegebene Pfad ist kein Ordner!")
-    }
+    require(dirFile.isDirectory) { "Der angegebene Pfad ist kein Ordner!" }
+
 
     val files = dirFile.listFiles { f -> f.extension.equals(Consts.FILETYPE_EXTENSION, true) }
         ?: throw RuntimeException("Ungültiger Pfad")
 
-    if (files.isEmpty()) throw RuntimeException("Der Ordner war leer, keine Datei konnte erstellt werden!")
+    require(files.isNotEmpty()) { "Der Ordner war leer, keine Datei konnte erstellt werden!" }
 
     val outputFile = output?.let { File(it) }
 
@@ -189,30 +187,26 @@ private fun convertToPDF(fachData: FachData, files: Array<out File>, pdfs: Array
     }
 
     for (f in files) {
-        val data: KurswahlData
-        try {
-            data = fachData.loadKurswahl(f)
+        val data = try {
+            fachData.loadKurswahl(f)
         } catch (e: Exception) {
             out.println(e.stackTraceToString())
             out.println("Fehler ${f.name}: Die Datei wurde für eine andere Schule erstellt oder ist ungültig, der/die Schüler*in muss seine/ihre Wahl wiederholen")
             continue
         }
 
-        val form: File
-        try {
-            form = pdfs.find {
-                it.nameWithoutExtension.matches(
-                    Regex(
-                        fachData.fnamePattern!!
-                            .replace("%vname%", data.vorname!!.replace(' ', '_'))
-                            .replace("%nname%", data.nachname!!.replace(' ', '_'))
-                    )
+        val form = pdfs.find {
+            it.nameWithoutExtension.matches(
+                Regex(
+                    fachData.fnamePattern!!
+                        .replace("%vname%", data.vorname!!.replace(' ', '_'))
+                        .replace("%nname%", data.nachname!!.replace(' ', '_'))
                 )
-            } ?: throw RuntimeException()
-        } catch (_: RuntimeException) {
+            )
+        } ?: run {
             out.println("Fehler ${f.name}: konnte keine PDF für ${data.vorname} ${data.nachname} finden.")
-            continue
-        }
+            null
+        } ?: continue
 
         try {
             data.exportPDF(form, File(outputDir, form.name), fachData)
@@ -223,16 +217,6 @@ private fun convertToPDF(fachData: FachData, files: Array<out File>, pdfs: Array
 }
 
 private fun mergeToCSV(fachData: FachData, files: Array<out File>, outputFile: File?, out: PrintStream) {
-    // Dateien laden, ungültige aussortieren
-    val wahlDataList = files.mapNotNull {
-        try {
-            fachData.loadKurswahl(it)
-        } catch (_: Exception) {
-            out.println("Fehler ${it.name}: Die Datei wurde für eine andere Schule erstellt oder ist ungültig, der/die Schüler*in muss seine/ihre Wahl wiederholen")
-            null
-        }
-    }
-
     val f = if (outputFile == null || !outputFile.extension.equals("csv", true) && !outputFile.isDirectory) {
         out.println("Ungültiger Pfad für die Output-Datei, nutze Default: $FILE_NAME im Ordner ${files[0].parentFile} !")
         File(files[0].parentFile, FILE_NAME)
@@ -252,9 +236,16 @@ private fun mergeToCSV(fachData: FachData, files: Array<out File>, outputFile: F
         CSVPrinter(writer, CSVFormat.Builder.create(CSVFormat.EXCEL).setHeader(*CSV_HEADER, *headerMixin, *umfrageMixin).build())
 
     var filesProcessed = 0
-    for (record in wahlDataList) {
+    for (file in files) {
+        val record = try {
+            fachData.loadKurswahl(file)
+        } catch (_: Exception) {
+            out.println("Fehler ${file.name}: Die Datei wurde für eine andere Schule erstellt oder ist ungültig, der/die Schüler*in muss seine/ihre Wahl wiederholen")
+            continue
+        }
+
         if (record.pfs.filterNotNull().size != 5) {
-            out.println("Ungültige Kurswahl Datei, überspringe!")
+            out.println("Fehler ${file.name}: Ungültige Kurswahl-Datei, überspringe!")
             continue
         }
 
@@ -268,7 +259,7 @@ private fun mergeToCSV(fachData: FachData, files: Array<out File>, outputFile: F
                     Wahlmoeglichkeit.ZWEITES_VIERTES -> listOf(null, GK, GK, GK)
                     Wahlmoeglichkeit.DRITTES_VIERTES -> listOf(null, null, GK, GK)
                     Wahlmoeglichkeit.DURCHGEHEND -> listOf(GK, GK, GK, GK)
-                    null -> when (pfs.indexOf(it)) {
+                    null -> when (pfs.indexOf(it)) { // wird nicht für Fächer mit Fach::blockAsPf aufgerufen
                         0, 1 -> listOf(LK, LK, LK, LK)
                         2 -> listOf(PF3, PF3, PF3, PF3)
                         3 -> listOf(PF4, PF4, PF4, PF4)
@@ -278,12 +269,23 @@ private fun mergeToCSV(fachData: FachData, files: Array<out File>, outputFile: F
                             listOfNulls(4)
                         }
                     }
+                }.let { l ->
+                    // nur für Fächer durchführen die nicht automatisch geblockt werden
+                    if (!it.blockAsPf && it in pfs) {
+                        val value = when (pfs.indexOf(it)) {
+                            0, 1 -> LK
+                            2 -> PF3
+                            3 -> PF4
+                            else /* 4 */ -> PK5
+                        }
+                        l.map { v -> if (v != null) value else null }
+                    } else l
                 }
             }.toTypedArray()
 
             // Überprüfen ob gks Kurse enthält, die wir nicht kennen
-            if (row.size != gks.size * 4 + 20 + skipped /* 4*5 für die PFs */) {
-                out.println("Ungültige Kurswahl Datei, überspringe!")
+            if (row.size != kurse.size * 4 + skipped) {
+                out.println("Fehler ${file.name}: Ungültige Kurswahl-Datei, überspringe!")
                 return@with
             }
 

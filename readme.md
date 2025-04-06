@@ -38,3 +38,9 @@ Entstanden als Software-Projekt des Informatik LKs 2021-2023 am Willi-Graf-Gymna
 
 ## Windows Paket GUID
 Kurs-Check benutzt die GUID: `928348ff-a1f1-4e0d-881c-11256e369b08`
+
+## Notes
+
+- mit einer lokalen Kurswahldatei (in IntelliJ) ausführen:\
+`:app:run --args="C:\Users\...\<...>.kurswahl"`
+- Kurse mit `KonfliktRegel` nicht automatisch verstecken: 2-fach in `NotRegel` wrappen

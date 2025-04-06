@@ -32,7 +32,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
     KurswahlPanel(wahlData, fachData, notifier) {
 
     override fun close(): KurswahlData = wahlData.copy(gks = buildMap {
-        val pfs = wahlData.pfs
+        val pfs = wahlData.pfs.filter { it?.blockAsPf == true }
         for ((i, fach) in fachData.faecher.withIndex()) {
             if (fach in pfs) continue
             // Speichern der gewählten Grundkurse und dessen Semester
@@ -115,7 +115,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
     private inner class CheckboxRow(fach: Fach) : JPanel(GridBagLayout()) {
         private val label = JLabel(fach.name)
 
-        private val zeile = arrayOf(JCheckBox(), JCheckBox(), JCheckBox(), JCheckBox())
+        private val zeile = Array(4) { JCheckBox() }
 
         val isExtra = fach.isExtra
 
@@ -227,13 +227,14 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         }
 
         fun apply(wm: Wahlmoeglichkeit, block: Boolean = false) {
-            val f: (Pair<JCheckBox, Boolean>) -> Unit = if (block) { (box, state) ->
-                box.isSelected = state
-                box.isEnabled = !state
-            } else { (box, state) ->
-                box.isSelected = state
-            }
-            zeile.zip(wm.bools).forEach(f)
+            zeile.zip(wm.bools).forEach(
+                if (block) { (box, state) ->
+                    box.isSelected = state
+                    box.isEnabled = !state
+                } else { (box, state) ->
+                    box.isSelected = state
+                }
+            )
         }
 
         fun selection() = zeile.map(JCheckBox::isSelected)
@@ -269,7 +270,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
     private var anzahl: Int = 0
         set(value) {
             field = value
-            anzahlLabel.text = "$anzahl Kurse"
+            anzahlLabel.text = "$value Kurse"
 
             when {
                 value < fachData.minKurse -> {
@@ -280,7 +281,6 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
                 value > fachData.maxKurse -> {
                     anzahlInfoLabel.text = "Bitte wähle maximal ${fachData.maxKurse} Kurse"
                     anzahlInfoLabel.foreground = Consts.COLOR_ERROR
-
                 }
 
                 else -> {
@@ -443,6 +443,8 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
         var af = Int.MIN_VALUE
         var offset = 1
 
+        // Versteckt Fächer, die aufgrund von Konflikten mit Prüfungsfächern nicht gewählt werden können
+        // Kann mit einer doppelt genesteden Not(Not(KonflitkRegel)) umgangen werden
         val versteckte = fachData.regeln.filterIsInstance<KonfliktRegel>().mapNotNull {
             it.wildcardMembers.takeIf { m -> m.any { f -> f in wahlData.pfs } }
         }.flatten().minus(wahlData.pfs)
@@ -525,7 +527,7 @@ class GrundkursWahl(wahlData: KurswahlData, fachData: FachData, notifier: (Boole
 
 
         // Blockt Prüfungsfächer
-        for (pos in wahlData.pfs.mapNotNull { it?.let { fachPos(it) } }) {
+        for (pos in wahlData.pfs.mapNotNull { it?.takeIf { it.blockAsPf }?.let { fachPos(it) } }) {
             checkboxRows[pos]!!.apply(DURCHGEHEND, true)
         }
     }

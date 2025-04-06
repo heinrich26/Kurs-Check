@@ -37,7 +37,7 @@ class WildcardRegel(
     private lateinit var wildcardMembers: List<Fach>
 
     override fun match(data: KurswahlData): Boolean {
-        for ((fach, wmoegl) in dataScope.invoke(data)) {
+        for ((fach, wmoegl) in dataScope(data)) {
             // Checken ob die Wahlmoeglichkeit passt
             if (!predicate(wmoegl)) continue
 

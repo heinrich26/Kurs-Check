@@ -110,10 +110,8 @@ class GuiMain(file: File? = null) : JPanel() {
             }
 
             if (data != null) {
-                currentSchool = it
-                fachData = data
+                updateFachData(data)
                 wahlData = data.createKurswahl()
-                thread { SchoolConfig.writeLastSchool(it.schulId) }
 
                 if (!initial) reloadToStart()
             } else {
@@ -362,7 +360,7 @@ class GuiMain(file: File? = null) : JPanel() {
         thread { SchoolConfig.writeLastSchool(data.schulId) }
 
         try {
-            sidebarBtns[5].isVisible = fachData.umfragen.isNotEmpty()
+            sidebarBtns[5].isVisible = data.umfragen.isNotEmpty()
         } catch (_: NullPointerException) {} // sind grade am Initialisieren, wird in der init {} erledigt
     }
 
