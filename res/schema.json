@@ -213,7 +213,53 @@
 			"required": [ "lk1", "lk2", "pf3", "pf4", "pf5", "linien" ],
 			"additionalProperties": false
 		},
-		"Kuerzel": { "type": "string", "description": "Kürzel eines Fachs", "pattern": "^[^$*\"'\\\\]+$" }
+		"Kuerzel": { "type": "string", "description": "Kürzel eines Fachs", "pattern": "^[^$*\"'\\\\]+$" },
+		"Umfrage": {
+			"type": "object",
+			"properties": {
+				"type": {
+					"type": "string",
+					"enum": [ "NumberRangeUmfrage", "PriorityUmfrage" ],
+					"description": "Art der Umfrage. Je nach Typ sind andere Attribute möglich"
+				},
+				"title": { "type": "string", "description": "Titel der über der Umfrage angezeigt wird" },
+				"desc": { "type": "string", "default": null, "description": "Optionale Beschreibung der Umfrage" }
+			},
+			"required": [ "type" ],
+			"allOf": [
+				{
+					"if": {
+						"properties": { "type": { "const": "NumberRangeUmfrage" } }
+					}, "then": {
+						"description": "NumberRangeUmfrage - Spinner bei dem eine Zahl zwischen min und max gewählt werden kann",
+						"properties": {
+							"type": true,
+							"title": true,
+							"desc": true,
+							"min": { "type": "integer" },
+							"max": { "type": "integer" }
+						}, "required": [ "min", "max" ], "additionalProperties": false
+					}
+				}, {
+					"if": {
+						"properties": { "type": { "const": "PriorityUmfrage" } }
+					}, "then": {
+						"description": "PriorityUmfrage - Priorisierung einer oder mehrerer Optionen zwischen min und max gewählt werden kann",
+						"properties": {
+							"type": true,
+							"title": true,
+							"desc": true,
+							"options": {
+								"type": "array", "uniqueItems": true, "items": { "type": "string" },
+								"description": "Optionen die zur Auswahl stehen"
+							},
+							"min": { "type": "integer", "default": 0, "description": "Wieviele Optionen mind. priorisiert werden müssen" },
+							"max": { "type": "integer", "default": 2147483647, "description": "Wieviele Optionen max. priorisiert werden können" }
+						}, "required": [ "options" ], "additionalProperties": false
+					}
+				}
+			]
+		}
 	},
 	"properties": {
 		"$schema": {
@@ -314,6 +360,11 @@
 						"type": "string",
 						"description": "Kurze Beschreibung des Fachs/Kurses, welche in der Grundkursübersicht angezeigt wird. Darf im HTML Format sein! Möchtest du einen neuen Paragraphen beginnen, kannst du im Text </p><p> eingeben. (Der Text wird innerhalb von <p>...</p> eingebettet)",
 						"default": null
+					},
+					"blockAsPf": {
+						"type": "boolean",
+						"default": true,
+						"description": "Ob das Fach als Prüfungsfach automatisch DURCHGEHEND gewählt (geblockt) wird. Nützlich um §47.4 umzusetzen."
 					}
 				},
 				"type": "object",
@@ -432,6 +483,13 @@
 			"type": "string",
 			"description": "Regex, das die passende LUSD-PDF zum Schülernamen findet. Mögliche Variablen: %vname% und %nname%",
 			"default": false
+		},
+		"umfragen": {
+			"description": "Umfragen die in der App angezeigt werden",
+			"type": "array",
+			"items": { "$ref": "#/definitions/Umfrage" },
+			"uniqueItems": true,
+			"default": [ ]
 		}
 	},
 	"required": [
