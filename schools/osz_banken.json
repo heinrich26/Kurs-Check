@@ -259,7 +259,7 @@
             "regel2": {
                 "type": "KuerzelRegel",
                 "kuerzel": "Ge",
-                "anzahl": "4"
+                "anzahl": 4
             },
             "desc": "Geschichte als PF 1-4 -> in allen Semestern belegen.",
             "errorMsg": "Belege <b>Geschichte</b> durchgängig!"
@@ -274,7 +274,7 @@
             "regel2": {
                 "type": "KuerzelRegel",
                 "kuerzel": "Pw",
-                "anzahl": "4"
+                "anzahl": 4
             },
             "desc": "PW als PF 1-4 -> in allen Semestern belegen.",
             "errorMsg": "Belege <b>Politikwissenschaft</b> durchgängig!"
@@ -289,7 +289,7 @@
             "regel2": {
                 "type": "KuerzelRegel",
                 "kuerzel": "Pw",
-                "anzahl": "3-4"
+                "wann": "3-4"
             },
             "desc": "PW als 5. PK -> in Q3/Q4 belegen.",
             "errorMsg": "Belege <b>Politikwissenschaft</b> in Q3/Q4!"
