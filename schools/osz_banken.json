@@ -19,27 +19,27 @@
             "isFremdsprache": true
         },
         {
-            "name": "Französisch (Kl. 7/9)",
+            "name": "Französisch (Kl. 7)",
             "kuerzel": "FrAlt",
             "aufgabenfeld": 1,
             "isFremdsprache": true,
             "isKurs": false
         },
         {
-            "name": "Spanisch  (Kl. 7/9)",
+            "name": "Spanisch  (Kl. 7)",
             "kuerzel": "SpaAlt",
             "aufgabenfeld": 1,
             "isFremdsprache": true,
             "isKurs": false
         },
         {
-            "name": "Französisch (Kl. 10+)",
+            "name": "Französisch (Kl. 9+)",
             "kuerzel": "Fr",
             "aufgabenfeld": 1,
             "isFremdsprache": true
         },
         {
-            "name": "Spanisch  (Kl. 10+)",
+            "name": "Spanisch  (Kl. 9+)",
             "kuerzel": "Spa",
             "aufgabenfeld": 1,
             "isFremdsprache": true
