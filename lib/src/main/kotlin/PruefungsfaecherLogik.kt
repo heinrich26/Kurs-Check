@@ -85,8 +85,13 @@ class PruefungsfaecherLogik(
 
     fun pf3Faecher(): Collection<Fach> {
         val kuerzel = mutableSetOf<String>()
+        val predicate: (Fach) -> Boolean = { f1 ->
+            // VOGO §23, Nr.7-3: Fremdsprachen aus der E-Phase dürfen nur als 4./5. PF gewählt werden.
+            f1.nurPf4_5 || (f1.isFremdsprache
+                    && wahlData.fremdsprachen.any { (f2, yr) -> f1 == f2 && yr >= fachData.schultyp.ePhase })
+        }
 
-        fun beliebig() = filteredFaecher.mapNotNull { it.value.takeUnless(Fach::nurPf4_5) }
+        fun beliebig() = filteredFaecher.mapNotNull { it.value.takeUnless(predicate) }
 
         for ((_, _, pf3, pf4, pf5, linien) in filteredZeilen.values) {
             if (pf3.isAny) return beliebig()
@@ -109,9 +114,7 @@ class PruefungsfaecherLogik(
             }
         }
 
-        return kuerzel.mapNotNull {
-            filteredFaecher[it]?.takeUnless(Fach::nurPf4_5)
-        }
+        return kuerzel.mapNotNull { filteredFaecher[it]?.takeUnless(predicate) }
     }
 
 
