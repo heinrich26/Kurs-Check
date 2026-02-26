@@ -37,14 +37,14 @@ jobs:
     - name: Build Application with JPackage
       run: ./gradlew :app:jpackage :merger:jpackage
 
-    - name: Rename macOS x86 Binaries
+    - name: Rename Apple Silicon Binaries
       if: ${{ matrix.os == 'macos-latest' }}
       working-directory: ./out/executable
       shell: bash
       run: find . -name '*.pkg' -exec bash -c 'mv $0 ${0/.pkg/_arm64.pkg}' {} \;
 
-    - name: Rename Apple Silicon Binaries
-      if: ${{ matrix.os == 'macos-13' }}
+    - name: Rename macOS x86 Binaries
+      if: ${{ matrix.os == 'macos-latest-large' }}
       working-directory: ./out/executable
       shell: bash
       run: find . -name '*.pkg' -exec bash -c 'mv $0 ${0/.pkg/_intel.pkg}' {} \;
