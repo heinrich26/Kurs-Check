@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ windows-latest, macos-latest-large, macos-latest, ubuntu-latest ]
+        os: [ windows-latest, macos-15-intel, macos-latest, ubuntu-latest ]
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v3
@@ -44,7 +44,7 @@ jobs:
       run: find . -name '*.pkg' -exec bash -c 'mv $0 ${0/.pkg/_arm64.pkg}' {} \;
 
     - name: Rename macOS x86 Binaries
-      if: ${{ matrix.os == 'macos-latest-large' }}
+      if: ${{ matrix.os == 'macos-15-intel' }}
       working-directory: ./out/executable
       shell: bash
       run: find . -name '*.pkg' -exec bash -c 'mv $0 ${0/.pkg/_intel.pkg}' {} \;
