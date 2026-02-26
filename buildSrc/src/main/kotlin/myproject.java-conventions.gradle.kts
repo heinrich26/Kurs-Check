@@ -65,6 +65,7 @@ tasks.withType<KotlinJvmCompile>().configureEach {
     compilerOptions {
         jvmTarget.set(JvmTarget.fromTarget(projectJavaVersion))
         freeCompilerArgs.add("-Xmulti-dollar-interpolation")
+        freeCompilerArgs.add("-Xannotation-default-target=param-property")
     }
 }
 

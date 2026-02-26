@@ -76,7 +76,7 @@ jobs:
         path: out/executable/
         
   merge:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     needs: gradle
     steps:
       - name: Merge Artifacts
